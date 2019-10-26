@@ -1,0 +1,61 @@
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #d7e5f0ff;
+}
+
+.purple
+{
+    background-color:#444483ff;
+}
+.lightpurple
+{
+    background-color:#9685b8ff;
+}
+
+.noPadding
+{
+    padding: 10px 0px 0px 10px;
+    margin:0;
+
+
+
+}
+.noMargin
+{
+    marginLeft:0;
+    margin-right:0;
+
+}
+.jumbotron {
+    background-color:transparent !important;
+}
+.transparent
+{
+    background-color:transparent !important;
+}
+h2
+{
+    color:white;
+    text-align:left;
+    padding-top:15px;
+}
+h1
+{
+    color:white;
+
+    text-align:left;
+
+}
+p{
+    color:white;
+
+    text-align: left;
+
+}
+.image
+{
+    float:left;
+
+}
+
