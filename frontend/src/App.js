@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './stylesheets/App.css';
 import Login from './components/login.jsx';
+import SignUp from './components/signup.jsx';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -12,7 +14,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
-              {/*<Route exact path="/signup" component={SignUp} />*/}
+              <Route exact path="/signup" component={SignUp} />
 
             </Switch>
           </div>

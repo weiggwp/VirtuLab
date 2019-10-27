@@ -34,22 +34,22 @@ body {
 {
     background-color:transparent !important;
 }
-h2
+.loginH2
 {
     color:white;
     text-align:left;
     padding-top:15px;
 }
-h1
+.loginH1
 {
     color:white;
-
+    font-family:arial regular;
     text-align:left;
 
 }
-p{
+.loginP{
     color:white;
-
+    font-family:arial regular;
     text-align: left;
 
 }
@@ -57,5 +57,11 @@ p{
 {
     float:left;
 
+}
+
+
+.lightblue
+{
+    background-color:#b1d9e6ff;
 }
 
