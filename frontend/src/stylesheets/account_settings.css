@@ -1,0 +1,52 @@
+.accountH3
+{
+    color:black;
+    text-align:left;
+    font-family:arial regular;
+    font-size:16px;
+}
+.accountH2
+{
+    background-color: #90d7ff;
+    border-width:thin;
+    border-style:dashed;
+    text-align:left;
+    color:black;
+    font-size:20px;
+    font-family:arial regular;
+    padding: 5px 10px 5px 10px;
+}
+.accountH1
+{
+
+    color:black;
+    font-size:30px;
+    font-family:arial regular;
+    text-align:left;
+    padding-top:15px;
+}
+.Account
+{
+    /*display: flex;*/
+    /*justify-content:center;*/
+    alignItems:center;
+    padding-top:20px;
+}
+.noPadding
+{
+    padding: 0px 0px 0px 10px;
+    margin:0;
+
+}
+.gray
+{
+    background-color:lightslategray;
+}
+.dropButton
+{
+    background-color:white;
+    color:royalblue;
+    border-style:none;
+    font-size:6px;
+}
+

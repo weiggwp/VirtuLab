@@ -69,7 +69,7 @@ class signup extends Component {
                     </div>
 
 
-                    <Container fluid className="noPadding">
+                    <Container className="noPadding">
                         <Row className="noMargin">
                             <Col lg={{span:5}} style={{justifyContent:'center', alignItems:'center', height: '100vh'}}>
                                 <h1 className={"signupH1"}>Join the <br/>VirtuLab <br/>Community<br/></h1>
@@ -83,7 +83,7 @@ class signup extends Component {
                                     <form className="signup_form" onSubmit={this.handleSignUp}>
                                     <Container>
                                         <Row>
-                                            <Col md={{span:5,offset:2}}>
+                                            <Col md={{span:5,offset:0}}>
                                                 <h2 className="signupH2">First Name</h2>
 
                                             </Col>
@@ -93,7 +93,7 @@ class signup extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={{ span: 5, offset: 2 }}>
+                                            <Col md={{ span: 5, offset: 0 }}>
                                                 <FormGroup controlId="formBasicText" bsSize="large">
                                                     <FormControl
                                                         autoFocus
@@ -117,13 +117,13 @@ class signup extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={{span:5,offset:2}}>
+                                            <Col md={{span:5,offset:0}}>
                                                 <h2 className="signupH2">Email Address</h2>
 
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={{ span: 10, offset: 2 }}>
+                                            <Col md={{ span: 10, offset:0 }}>
                                                 <FormGroup controlId="formBasicText" bsSize="large">
                                                     <FormControl
                                                         autoFocus
@@ -138,7 +138,7 @@ class signup extends Component {
 
                                         </Row>
                                         <Row>
-                                            <Col md={{span:5,offset:2}}>
+                                            <Col md={{span:5,offset:0}}>
                                                 <h2 className="signupH2">Password</h2>
 
                                             </Col>
@@ -148,7 +148,7 @@ class signup extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={{ span: 5, offset: 2 }}>
+                                            <Col md={{ span: 5, offset: 0 }}>
                                                 <FormGroup controlId="formBasicText" bsSize="large">
                                                     <FormControl
                                                         autoFocus
@@ -172,7 +172,7 @@ class signup extends Component {
                                             </Col>
                                         </Row>
                                         <Row style={{paddingTop:20}}>
-                                            <Col md={{ span: 5, offset: 2 }}>
+                                            <Col md={{ span: 5, offset: 0 }}>
                                                 <Button style={{ backgroundColor: 'blue',color:"white"}} block bsSize="large" type="submit">
                                                     Create Account
                                                 </Button>
