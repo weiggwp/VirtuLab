@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
+import {Classes} from './classes.jsx'
 
 export class account_settings extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ export class account_settings extends Component {
             errors: '',
             old_password:'',
             new_password:'',
-            confirm_new_password:''
+            confirm_new_password:'',
+        //     classes:["Class 1: Study of Organisms and Behaviors| Fall 2019",'Class 2: Introduction to General Chemistry| Fall 2019']
+        //
         };
     }
 
@@ -150,30 +153,9 @@ export class account_settings extends Component {
                                     <h2 className="accountH2">Manage Classes</h2>
                                 </Col>
                             </Row>
-                            <Row >
-                                    <Col md={{span:5,offset:2}}>
-                                        <h3 className="accountH3">Class 1: Study of Organisms and Behaviors| Fall 2019</h3>
 
-                                    </Col>
-                                    <Col md={{ span: 1, offset: 0 }}>
 
-                                        <Button className={"dropButton"} block bsSize="small" type="submit">
-                                            Drop Class
-                                        </Button>
-                                    </Col>
-                            </Row>
-                            <Row >
-                                <Col md={{span:5,offset:2}}>
-                                    <h3 className="accountH3">Class 2: Introduction to General Chemistry| Fall 2019</h3>
-
-                                </Col>
-                                <Col md={{ span: 1, offset: 0 }}>
-
-                                    <Button className={"dropButton"} block bsSize="small" type="submit">
-                                        Drop Class
-                                    </Button>
-                                </Col>
-                            </Row>
+                            {<Classes style={"accountH3"}/>}
 
                             <Row style={{paddingTop:20}}>
                                 <Col md={{ span: 1, offset: 2 }}>
