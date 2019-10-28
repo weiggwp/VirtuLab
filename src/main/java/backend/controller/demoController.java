@@ -11,6 +11,7 @@ public class demoController {
 
     @RequestMapping("/greeting")
     public Message greeting(@RequestParam(value="name", defaultValue="World") String name) {
+
         return new Message(name);
     }
 }

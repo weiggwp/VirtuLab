@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import {Button, FormGroup, FormControl, FormLabel, ControlLabel, Row, Col, Container} from 'react-bootstrap';
 import icon from "../Images/v.jpg";
-// import axios from 'axios';
+import axios from 'axios';
 import '../stylesheets/banner.css';
 import '../stylesheets/signup.css';
 
@@ -31,25 +31,34 @@ class signup extends Component {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
             email_address:this.state.email_address,
-            password: this.state.last_name,
-            confirm_password:this.state.confirm_password,
+            password: this.state.password,
+            // confirm_password:this.state.confirm_password,
         };
         e.preventDefault();
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
 
         //axio sends message to backend to handle authentication
-        // axios.post('aws_website:8080/userPost', user).then(
-        //     (response) => {
-        //         console.log(response);
-        //         this.setState({ redirect: true });
-        //     },
-        //     (error) => {
-        //         this.setState({
-        //             errors: 'Error signing up! Try a different username',
-        //             username: '',
-        //             password: ''
-        //         });
-        //     }
-        // );
+        // 'aws_website:8080/userPost'
+        axios.post('http://localhost:5000/signup', user,axiosConfig).then(
+            (response) => {
+                console.log("Sending response")
+                console.log(response);
+                this.setState({ redirect: true });
+            },
+            (error) => {
+                console.log("reject logging message")
+                this.setState({
+                    errors: 'Error signing up! Try a different username',
+                    username: '',
+                    password: ''
+                });
+            }
+        );
     };
 
     render() {
