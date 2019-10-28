@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Col, Row} from "react-bootstrap";
 
-class Classes extends React.Component
+class Droppable_course extends React.Component
 {
     constructor(props)
     {
@@ -12,9 +12,11 @@ class Classes extends React.Component
         let style = this.props.style;
         let classes = [
         {classname:"Class 1: Study of Organisms and Behaviors| Fall 2019"},
-        {classname:'Class 2: Introduction to General Chemistry| Fall 2019'}]
+        {classname:'Class 2: Introduction to General Chemistry| Fall 2019'}];
 
-        ;
+
+
+
         return (
             <div>
                 {classes.map(classItem => (
@@ -45,4 +47,4 @@ class Classes extends React.Component
 
 }
 
-export {Classes};
+export {Droppable_course};

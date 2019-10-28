@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
-import {Classes} from './classes.jsx'
+import {Droppable_course} from './droppable_course.jsx'
 
 export class account_settings extends Component {
     constructor(props) {
@@ -155,7 +155,7 @@ export class account_settings extends Component {
                             </Row>
 
 
-                            {<Classes style={"accountH3"}/>}
+                            {<Droppable_course style={"accountH3"}/>}
 
                             <Row style={{paddingTop:20}}>
                                 <Col md={{ span: 1, offset: 2 }}>
