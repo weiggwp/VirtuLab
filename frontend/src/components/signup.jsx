@@ -31,14 +31,20 @@ class signup extends Component {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
             email_address:this.state.email_address,
-            password: this.state.last_name,
-            confirm_password:this.state.confirm_password,
+            password: this.state.password,
+            // confirm_password:this.state.confirm_password,
         };
         e.preventDefault();
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post('localhost:8080/signup', user).then(
+        axios.post('localhost:8080/signup', user,axiosConfig).then(
             (response) => {
                 console.log("Sending response")
                 console.log(response);

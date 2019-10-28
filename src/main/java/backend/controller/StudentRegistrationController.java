@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/register_student")
+
 public class StudentRegistrationController {
 
 
