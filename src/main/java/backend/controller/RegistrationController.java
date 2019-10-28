@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-//@CrossOrigin(origins = "localhost:3001",allowCredentials = "true")
+@CrossOrigin(origins = "*")
 @RequestMapping("/signup")
 public class RegistrationController {
 
@@ -31,7 +31,7 @@ public class RegistrationController {
         return "register";
     }
 
-    @CrossOrigin(origins = "localhost:3001")
+    @CrossOrigin(origins = "*")
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserDTO userDto, BindingResult result,
                                       Model model) {

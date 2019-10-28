@@ -44,7 +44,7 @@ class signup extends Component {
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post('localhost:8080/signup', user,axiosConfig).then(
+        axios.post('http://localhost:5000/signup', user,axiosConfig).then(
             (response) => {
                 console.log("Sending response")
                 console.log(response);
