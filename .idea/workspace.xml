@@ -2,253 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0dfb104-545c-497c-a9ab-28a410f3d7b4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__antlr_antlr_2_7_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_classic_1_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_core_1_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_classmate_1_4_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_9_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_9_9_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_9_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_9_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_module_jackson_module_parameter_names_2_9_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_h2database_h2_1_4_199.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jayway_jsonpath_json_path_2_4_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_zaxxer_HikariCP_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_activation_javax_activation_api_1_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_annotation_javax_annotation_api_1_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_persistence_javax_persistence_api_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_transaction_javax_transaction_api_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_validation_validation_api_2_0_1_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_xml_bind_jaxb_api_2_3_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__mysql_mysql_connector_java_8_0_17.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__net_bytebuddy_byte_buddy_1_9_16.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__net_bytebuddy_byte_buddy_agent_1_9_16.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_accessors_smart_1_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_json_smart_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_api_2_11_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_to_slf4j_2_11_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_core_9_0_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_el_9_0_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_aspectj_aspectjweaver_1_9_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_assertj_assertj_core_3_11_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_dom4j_dom4j_2_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_common_hibernate_commons_annotations_5_0_4_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_hibernate_core_5_3_11_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_validator_hibernate_validator_6_0_17_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_javassist_javassist_3_23_2_GA.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jboss_jandex_2_0_5_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jboss_logging_jboss_logging_3_3_3_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_core_2_23_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_objenesis_objenesis_2_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_5_0_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_skyscreamer_jsonassert_1_5_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_jul_to_slf4j_1_7_28.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_slf4j_api_1_7_28.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_autoconfigure_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_aop_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_data_jpa_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_jdbc_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_json_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_logging_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_security_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_test_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_tomcat_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_web_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_autoconfigure_2_1_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_data_spring_data_commons_2_1_10_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_data_spring_data_jpa_2_1_10_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_config_5_1_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_core_5_1_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_web_5_1_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aop_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aspects_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_beans_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_core_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_expression_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_jcl_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_jdbc_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_orm_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_test_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_tx_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_web_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_webmvc_5_1_9_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_xmlunit_xmlunit_core_2_6_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_yaml_snakeyaml_1_23.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/backend.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/backend.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/UPGRADE_GUIDE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/dist/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/dist/axios.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/dist/axios.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/dist/axios.min.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/adapters/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/adapters/http.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/adapters/xhr.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/cancel/Cancel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/cancel/CancelToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/cancel/isCancel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/Axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/InterceptorManager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/createError.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/dispatchRequest.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/enhanceError.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/mergeConfig.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/settle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/core/transformData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/defaults.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/bind.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/buildURL.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/combineURLs.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/cookies.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/deprecatedMethod.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/isAbsoluteURL.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/isURLSameOrigin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/normalizeHeaderName.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/parseHeaders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/helpers/spread.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/lib/utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/axios/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.coveralls.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.eslintrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.npmignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/karma.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/node.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/browser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/debug.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/debug/src/node.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/http.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/https.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/follow-redirects/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/is-buffer/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/is-buffer/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/is-buffer/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/is-buffer/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/is-buffer/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/license.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/ms/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/META-INF/backend.main.kotlin_module" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/Application.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/MVCConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/WebSecurityConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/CourseController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/LoginController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/RegistrationController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/StudentRegistrationController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/demoController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/dto/InstructorDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/dto/StudentDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/dto/UserDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/Course.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/Instructor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/Lab.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/Message.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/Role.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/Student.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/model/User.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/repository/CourseRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/repository/InstructorRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/repository/LabRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/repository/StudentRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/repository/UserRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/service/CourseService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/service/InstructorService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/service/LabService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/service/StudentService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/service/UserService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/classes/backend/service/UserServiceImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/CorsFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/controller/StudentRegistrationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/dto/InstructorDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/dto/StudentDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Instructor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Lab.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/repository/CourseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/repository/InstructorRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/repository/LabRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/repository/StudentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/CourseService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/InstructorService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/LabService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/StudentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/signup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/demoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/demoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/MVCConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/MVCConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/WebSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/WebSecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/RegistrationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/RegistrationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/StudentRegistrationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/StudentRegistrationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/demoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/controller/demoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/service/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -263,15 +43,126 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="backend" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="backend" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="32" column="66" selection-start-line="32" selection-start-column="56" selection-end-line="32" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="49">
+              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/CorsFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-68">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="49">
+              <caret line="42" column="63" selection-start-line="42" selection-start-column="63" selection-end-line="42" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/signup.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/lab.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/Course.jsx">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/login.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="193">
+              <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/App.test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -279,6 +170,15 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>login</find>
+      <find>handle</find>
+      <find>error</find>
+      <find>response</find>
+      <find>handleSubmit</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -288,8 +188,122 @@
       </map>
     </option>
   </component>
-  <component name="ProjectId" id="1SqgsDKDQtdrrNW0Mph3O5nwdPS" />
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" />
+        <option value="$PROJECT_DIR$/frontend/src/components/login.jsx" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="444" />
+    <option name="y" value="46" />
+    <option name="width" value="2196" />
+    <option name="height" value="1952" />
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="LoginConfig" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
@@ -326,25 +340,19 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="VirtuLab [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="dependencies" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
+  <component name="RunManager" selected="npm.start">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="backend.Application" />
+      <module name="backend.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="backend.main" />
@@ -366,7 +374,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.start" />
-        <item itemvalue="Gradle.VirtuLab [dependencies]" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -383,7 +391,6 @@
       <workItem from="1572131118792" duration="662000" />
       <workItem from="1572132337913" duration="32656000" />
       <workItem from="1572272580295" duration="8457000" />
-      <workItem from="1572296745847" duration="80000" />
     </task>
     <task id="LOCAL-00001" summary="issue: cross origin requests still not fixed">
       <created>1572287337924</created>
@@ -395,6 +402,9 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6363000" />
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -403,6 +413,49 @@
       <are-packages-shown value="true" />
       <is-autoscroll-to-source value="true" />
     </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-6" y="-6" width="1513" height="983" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2281787" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32942554" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.40797186" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39976552" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32942554" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32942554" />
+      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32942554" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Spring" order="13" weight="0.32942554" />
+      <window_info anchor="bottom" id="Database Changes" order="14" />
+      <window_info anchor="bottom" id="Version Control" order="15" />
+      <window_info anchor="bottom" id="Messages" order="16" weight="0.32942554" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="sbt" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Gradle" order="8" weight="0.3298969" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info anchor="right" id="Bean Validation" order="11" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -413,8 +466,27 @@
         <entry key="MAIN">
           <value>
             <State>
-              <option name="COLUMN_ORDER" />
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -423,6 +495,235 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="issue: cross origin requests still not fixed" />
     <option name="LAST_COMMIT_MESSAGE" value="issue: cross origin requests still not fixed" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4080">
+          <caret line="240" column="31" selection-start-line="240" selection-start-column="31" selection-end-line="240" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/demoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#2367#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="39" column="28" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/StudentDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-165">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/account_settings.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/logo.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/serviceWorker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="131" column="16" selection-start-line="131" selection-start-column="16" selection-end-line="131" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/student_home.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="40" column="50" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/droppable_course.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/expandable_course.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Course.jsx">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/lab.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/signup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/login.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="49">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/CorsFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-68">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="32" column="66" selection-start-line="32" selection-start-column="56" selection-end-line="32" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="49">
+          <caret line="42" column="63" selection-start-line="42" selection-start-column="63" selection-end-line="42" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>

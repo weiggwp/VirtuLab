@@ -6,11 +6,15 @@ import backend.dto.UserDTO;
 import backend.model.User;
 import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Map;
 
 
 @Controller
@@ -33,8 +37,8 @@ public class RegistrationController {
 
     @CrossOrigin(origins = "*")
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") UserDTO userDto, BindingResult result,
-                                      Model model) {
+    public ResponseEntity registerUserAccount(@RequestBody UserDTO userDto, BindingResult result,
+                                              Model model) {
         System.out.println(userDto);
         System.out.println("RegistrationController is called");
 
@@ -49,11 +53,12 @@ public class RegistrationController {
         }
         model.addAttribute("errorMessge", errorMessge);
         if (errorMessge != null) {
-            return "register";
+//            return "register";
         }
 
         userService.register(userDto);
 
-        return "redirect:/login";
+//        return "redirect:/login";
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
