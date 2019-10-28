@@ -1,0 +1,43 @@
+.noPadding
+{
+    padding: 0px 0px 0px 10px;
+    margin:0;
+
+}
+.noMargin
+{
+    marginLeft:0;
+    margin-right:0;
+
+}
+.signupH1
+ {
+    padding-top:20px;
+    padding-bottom: 20px;
+    color:black;
+    font-family:arial regular;
+    text-align:right;
+
+ }
+.signupP
+{
+    color:black;
+    font-family:arial regular;
+    text-align: right;
+
+}
+.Signup
+{
+    display: flex;
+    justify-content:center;
+    alignItems:center;
+    padding-top:20px;
+}
+.signupH2
+{
+    color:black;
+    text-align:left;
+    padding-top:15px;
+    font-family:arial regular;
+    font-size:20px;
+}
