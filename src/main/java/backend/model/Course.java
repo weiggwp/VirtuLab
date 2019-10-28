@@ -10,6 +10,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long courseID;
     private String courseName;
+    private String courseDescription;
+    private int courseNumber;
+    private int courseEnrollment;
+
 
     @ManyToMany
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},

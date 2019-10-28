@@ -9,7 +9,8 @@ public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long instructorID;
-    private String userName;
+    private String firstName;
+    private String lastName;
     private String password;
     private String email;
 
@@ -25,12 +26,20 @@ public class Instructor {
         this.instructorID = instructorID;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {

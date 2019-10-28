@@ -1,11 +1,11 @@
 package backend.repository;
 
-import backend.model.Student;
+import backend.model.Course;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends CrudRepository<Student, Long> {
+public interface CourseRepository extends CrudRepository<Course, Long> {
 
-    Student findByEmail(String email);
+
 }
