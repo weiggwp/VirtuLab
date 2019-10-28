@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@CrossOrigin(origins = "localhost:3000")
 @RequestMapping("/signup")
 public class RegistrationController {
 
@@ -30,13 +31,15 @@ public class RegistrationController {
         return "register";
     }
 
+    @CrossOrigin(origins = "localhost:3000")
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserDTO userDto, BindingResult result,
+    public String registerUserAccount(@ModelAttribute("user") UserDTO userDto, BindingResult result,
                                       Model model) {
-
+        System.out.println(userDto);
         System.out.println("RegistrationController is called");
+
         String errorMessge = null;
-        User existing = userService.findByEmail(userDto.getEmail());
+        User existing = userService.findByEmail(userDto.getEmail_address());
         if (result.hasErrors()) {
             errorMessge =  "Username or Password is invalid !";
         }
@@ -45,7 +48,7 @@ public class RegistrationController {
             errorMessge = "Username occupied! Please use another username.";
         }
         model.addAttribute("errorMessge", errorMessge);
-        if (errorMessge!=null) {
+        if (errorMessge != null) {
             return "register";
         }
 

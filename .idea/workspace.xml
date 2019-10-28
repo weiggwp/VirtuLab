@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0dfb104-545c-497c-a9ab-28a410f3d7b4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/signup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/MVCConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/MVCConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/InstructorRegistrationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/backend/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -55,26 +51,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/StudentRegistrationController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#865#866#0" expanded="true" />
-                <element signature="e#904#905#0" expanded="true" />
-                <element signature="e#975#976#0" expanded="true" />
-                <element signature="e#1008#1009#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/signup.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="33" column="43" lean-forward="true" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
+            <state relative-caret-position="51">
+              <caret line="42" column="47" lean-forward="true" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -83,60 +63,30 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java">
+        <entry file="file://$PROJECT_DIR$/frontend/src/App.test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="52" lean-forward="true" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
+            <state>
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/package.json">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/demoController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="35" lean-forward="true" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+            <state relative-caret-position="102">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/package-lock.json">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/login.jsx">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="27" column="22" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="33" column="87" selection-start-line="33" selection-start-column="87" selection-end-line="33" selection-end-column="87" />
+            <state relative-caret-position="75">
+              <caret line="36" column="53" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -147,8 +97,76 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3">
+            <state relative-caret-position="17">
               <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="33" column="39" lean-forward="true" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#470#471#0" expanded="true" />
+                <element signature="e#503#504#0" expanded="true" />
+                <element signature="e#555#556#0" expanded="true" />
+                <element signature="e#599#600#0" expanded="true" />
+                <element signature="e#635#636#0" expanded="true" />
+                <element signature="e#667#668#0" expanded="true" />
+                <element signature="e#717#718#0" expanded="true" />
+                <element signature="e#759#760#0" expanded="true" />
+                <element signature="e#799#800#0" expanded="true" />
+                <element signature="e#835#836#0" expanded="true" />
+                <element signature="e#893#894#0" expanded="true" />
+                <element signature="e#943#944#0" expanded="true" />
+                <element signature="e#978#979#0" expanded="true" />
+                <element signature="e#1009#1010#0" expanded="true" />
+                <element signature="e#1057#1058#0" expanded="true" />
+                <element signature="e#1097#1098#0" expanded="true" />
+                <element signature="e#1140#1141#0" expanded="true" />
+                <element signature="e#1179#1180#0" expanded="true" />
+                <element signature="e#1243#1244#0" expanded="true" />
+                <element signature="e#1299#1300#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" column="51" lean-forward="true" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -193,7 +211,6 @@
         <option value="$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/model/Lab.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/repository/StudentRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/backend/dto/InstructorDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/dto/StudentDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/model/Instructor.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/service/InstructorService.java" />
@@ -203,26 +220,27 @@
         <option value="$PROJECT_DIR$/src/main/java/backend/repository/LabRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/repository/CourseRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/repository/InstructorRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/model/Student.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/service/StudentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/model/Role.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/repository/UserRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/model/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/controller/StudentRegistrationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/service/UserService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/dto/InstructorDTO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" />
         <option value="$PROJECT_DIR$/frontend/src/components/signup.jsx" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-144" />
+    <option name="y" value="200" />
     <option name="width" value="1522" />
     <option name="height" value="1952" />
   </component>
@@ -292,6 +310,15 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VirtuLab" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="backend" type="b2602c69:ProjectViewProjectNode" />
@@ -408,12 +435,12 @@
       <updated>1572131114805</updated>
       <workItem from="1572131118792" duration="662000" />
       <workItem from="1572132337913" duration="32656000" />
-      <workItem from="1572272580295" duration="4919000" />
+      <workItem from="1572272580295" duration="8457000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40708000" />
+    <option name="totallyTimeSpent" value="44246000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -426,7 +453,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="983" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18762887" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -438,7 +464,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32942554" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32942554" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30480656" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39976552" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -471,13 +497,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="45" selection-start-line="31" selection-start-column="2" selection-end-line="32" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/stylesheets/banner.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -485,83 +504,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/StudentRegistration.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/InstructorDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#431#432#0" expanded="true" />
-            <element signature="e#481#482#0" expanded="true" />
-            <element signature="e#523#524#0" expanded="true" />
-            <element signature="e#558#559#0" expanded="true" />
-            <element signature="e#589#590#0" expanded="true" />
-            <element signature="e#637#638#0" expanded="true" />
-            <element signature="e#677#678#0" expanded="true" />
-            <element signature="e#709#710#0" expanded="true" />
-            <element signature="e#737#738#0" expanded="true" />
-            <element signature="e#779#780#0" expanded="true" />
-            <element signature="e#813#814#0" expanded="true" />
-            <element signature="e#848#849#0" expanded="true" />
-            <element signature="e#879#880#0" expanded="true" />
-            <element signature="e#927#928#0" expanded="true" />
-            <element signature="e#967#968#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#338#339#0" expanded="true" />
-            <element signature="e#388#389#0" expanded="true" />
-            <element signature="e#430#431#0" expanded="true" />
-            <element signature="e#465#466#0" expanded="true" />
-            <element signature="e#496#497#0" expanded="true" />
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#584#585#0" expanded="true" />
-            <element signature="e#616#617#0" expanded="true" />
-            <element signature="e#644#645#0" expanded="true" />
-            <element signature="e#686#687#0" expanded="true" />
-            <element signature="e#720#721#0" expanded="true" />
-            <element signature="e#755#756#0" expanded="true" />
-            <element signature="e#786#787#0" expanded="true" />
-            <element signature="e#834#835#0" expanded="true" />
-            <element signature="e#874#875#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/StudentDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-            <element signature="e#478#479#0" expanded="true" />
-            <element signature="e#520#521#0" expanded="true" />
-            <element signature="e#555#556#0" expanded="true" />
-            <element signature="e#586#587#0" expanded="true" />
-            <element signature="e#634#635#0" expanded="true" />
-            <element signature="e#674#675#0" expanded="true" />
-            <element signature="e#706#707#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#776#777#0" expanded="true" />
-            <element signature="e#810#811#0" expanded="true" />
-            <element signature="e#845#846#0" expanded="true" />
-            <element signature="e#876#877#0" expanded="true" />
-            <element signature="e#924#925#0" expanded="true" />
-            <element signature="e#964#965#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/backend/model/Lab.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -709,16 +651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="62" column="47" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/logo.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -727,25 +659,6 @@
         <state>
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/CourseService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#437#438#0" expanded="true" />
-            <element signature="e#484#485#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -803,16 +716,6 @@
     <entry file="file://$PROJECT_DIR$/frontend/src/Images/v.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="45" column="52" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -822,35 +725,6 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/StudentService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/LabService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/account_settings.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/Course.jsx">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/lab.jsx">
       <provider selected="true" editor-type-id="text-editor">
@@ -875,15 +749,6 @@
         <state relative-caret-position="-306">
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/App.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -919,6 +784,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Course.jsx">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/account_settings.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-408">
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/login.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -929,12 +806,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/StudentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
+        <state relative-caret-position="102">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/StudentDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#396#397#0" expanded="true" />
+            <element signature="e#428#429#0" expanded="true" />
+            <element signature="e#478#479#0" expanded="true" />
+            <element signature="e#520#521#0" expanded="true" />
+            <element signature="e#555#556#0" expanded="true" />
+            <element signature="e#586#587#0" expanded="true" />
+            <element signature="e#634#635#0" expanded="true" />
+            <element signature="e#674#675#0" expanded="true" />
+            <element signature="e#706#707#0" expanded="true" />
+            <element signature="e#734#735#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
+            <element signature="e#810#811#0" expanded="true" />
+            <element signature="e#845#846#0" expanded="true" />
+            <element signature="e#876#877#0" expanded="true" />
+            <element signature="e#924#925#0" expanded="true" />
+            <element signature="e#964#965#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/CourseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#437#438#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/LabService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/InstructorDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#399#400#0" expanded="true" />
+            <element signature="e#431#432#0" expanded="true" />
+            <element signature="e#481#482#0" expanded="true" />
+            <element signature="e#523#524#0" expanded="true" />
+            <element signature="e#558#559#0" expanded="true" />
+            <element signature="e#589#590#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+            <element signature="e#677#678#0" expanded="true" />
+            <element signature="e#709#710#0" expanded="true" />
+            <element signature="e#737#738#0" expanded="true" />
+            <element signature="e#779#780#0" expanded="true" />
+            <element signature="e#813#814#0" expanded="true" />
+            <element signature="e#848#849#0" expanded="true" />
+            <element signature="e#879#880#0" expanded="true" />
+            <element signature="e#927#928#0" expanded="true" />
+            <element signature="e#967#968#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -953,17 +901,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/demoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/InstructorRegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
+        <state relative-caret-position="17">
           <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/signup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="42" column="47" lean-forward="true" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/dto/UserDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#470#471#0" expanded="true" />
+            <element signature="e#503#504#0" expanded="true" />
+            <element signature="e#555#556#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#635#636#0" expanded="true" />
+            <element signature="e#667#668#0" expanded="true" />
+            <element signature="e#717#718#0" expanded="true" />
+            <element signature="e#759#760#0" expanded="true" />
+            <element signature="e#799#800#0" expanded="true" />
+            <element signature="e#835#836#0" expanded="true" />
+            <element signature="e#893#894#0" expanded="true" />
+            <element signature="e#943#944#0" expanded="true" />
+            <element signature="e#978#979#0" expanded="true" />
+            <element signature="e#1009#1010#0" expanded="true" />
+            <element signature="e#1057#1058#0" expanded="true" />
+            <element signature="e#1097#1098#0" expanded="true" />
+            <element signature="e#1140#1141#0" expanded="true" />
+            <element signature="e#1179#1180#0" expanded="true" />
+            <element signature="e#1243#1244#0" expanded="true" />
+            <element signature="e#1299#1300#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="52" lean-forward="true" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
+        <state relative-caret-position="357">
+          <caret line="21" column="51" lean-forward="true" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -972,20 +993,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="33" column="87" selection-start-line="33" selection-start-column="87" selection-end-line="33" selection-end-column="87" />
+        <state relative-caret-position="414">
+          <caret line="33" column="39" lean-forward="true" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/signup.jsx">
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/service/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="33" column="43" lean-forward="true" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
+        <state relative-caret-position="75">
+          <caret line="36" column="53" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/backend/LoginConfig/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

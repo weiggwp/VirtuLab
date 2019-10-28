@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .cors().and()
                 .csrf().disable()   //allow post requests
                 .authorizeRequests()
                 .antMatchers(
@@ -34,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/static/**",
                         "/images/**",
                         "/css/**",
+                        "/signup/**",
                         "/img/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()

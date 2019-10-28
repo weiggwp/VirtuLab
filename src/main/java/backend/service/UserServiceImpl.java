@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
 
     public User register(UserDTO registration) {
         User user = new User();
-        user.setFirstName(registration.getFirstName());
-        user.setLastName(registration.getLastName());
-        user.setEmail(registration.getEmail());
+        user.setFirstName(registration.getFirst_name());
+        user.setLastName(registration.getLast_name());
+        user.setEmail(registration.getEmail_address());
         user.setPassword(registration.getPassword());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));

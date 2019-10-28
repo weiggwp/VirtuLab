@@ -35,17 +35,17 @@ class signup extends Component {
             confirm_password:this.state.confirm_password,
         };
         e.preventDefault();
-        // this.props.history.push('/signup')
-
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post('localhost:8080/signup', user).then(
             (response) => {
+                console.log("Sending response")
                 console.log(response);
                 this.setState({ redirect: true });
             },
             (error) => {
+                console.log("reject logging message")
                 this.setState({
                     errors: 'Error signing up! Try a different username',
                     username: '',
