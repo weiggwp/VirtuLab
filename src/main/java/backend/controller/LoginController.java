@@ -30,17 +30,16 @@ public class LoginController {
     public ResponseEntity loginPage(@RequestBody UserDTO userDTO) {
         System.out.println(userDTO);
         System.out.println("Login Controller is called");
-
+        System.out.println(userDTO.getEmail_address());
         User existing = userService.findByEmail(userDTO.getEmail_address());
-        System.out.println(existing==null);
+        System.out.println("existing:"+existing);
 
         if (existing == null)
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        System.out.println(existing.getPassword() + "versus " +userDTO.getPassword()+";"+(existing.getPassword() == userDTO.getPassword()));
-        System.out.println(passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()));
+
         if (!passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
-
+        System.out.println("return http OK\n");
 
 
 

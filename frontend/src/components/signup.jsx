@@ -46,7 +46,6 @@ class signup extends Component {
         // 'aws_website:8080/userPost'
         axios.post('http://localhost:5000/signup', user,axiosConfig).then(
             (response) => {
-                console.log("Sending response")
                 console.log(response);
                 this.setState({ redirect: true });
             },
@@ -66,6 +65,7 @@ class signup extends Component {
             return <Redirect exact to="/login" />;
         }
         if (this.state.redirect) {
+            alert("redirecting");
             return <Redirect exact to="/login" />;
         } else {
             const errorMessage = this.state.errors;
