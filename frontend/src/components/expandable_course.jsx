@@ -19,6 +19,7 @@ class Expandable_Classes extends React.Component
             // handleExpand : this.handleExpand.bind(this,id)
             count:0,
             classes : [
+
                 {classname:"Class 1: Study of Organisms and Behaviors| Fall 2019",
                     clicked:false},
                 {classname:'Class 2: Introduction to General Chemistry| Fall 2019',

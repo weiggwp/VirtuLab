@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0dfb104-545c-497c-a9ab-28a410f3d7b4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    <list default="true" id="2e1ea669-8c10-4e91-bceb-c5658d6826a0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/modules/VirtuLab.backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/Globals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/create_course.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/instructor_labs.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/public_labs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Course.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/expandable_course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/expandable_course.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/lab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/lab.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stylesheets/student_home.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stylesheets/student_home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/signup.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,18 +38,19 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="backend" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -56,6 +62,7 @@
       </map>
     </option>
   </component>
+  <component name="ProjectId" id="1SqOPzEWVUh7AtYPskTukdt3YvM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -69,7 +76,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src/components" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -78,6 +85,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/components" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\laura\Desktop\VirtuLab\src\main\java\backend\controller" />
     </key>
@@ -143,7 +153,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a0dfb104-545c-497c-a9ab-28a410f3d7b4" name="Default Changelist" comment="" />
+      <changelist id="2e1ea669-8c10-4e91-bceb-c5658d6826a0" name="Default Changelist" comment="" />
       <created>1572131114805</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -151,22 +161,9 @@
       <workItem from="1572131118792" duration="662000" />
       <workItem from="1572132337913" duration="32656000" />
       <workItem from="1572272580295" duration="8457000" />
+      <workItem from="1572287640099" duration="19504000" />
+      <workItem from="1572318680391" duration="86000" />
     </task>
-    <task id="LOCAL-00001" summary="issue: cross origin requests still not fixed">
-      <created>1572287337924</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1572287337924</updated>
-    </task>
-    <task id="LOCAL-00002" summary="fixed: cross origins requests - good for pull now">
-      <created>1572288979368</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1572288979368</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -186,16 +183,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="issue: cross origin requests still not fixed" />
-    <MESSAGE value="fixed: cross origins requests - good for pull now" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed: cross origins requests - good for pull now" />
   </component>
   <component name="masterDetails">
     <states>
