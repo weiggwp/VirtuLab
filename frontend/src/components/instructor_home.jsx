@@ -5,6 +5,7 @@ import {Redirect, Link} from 'react-router-dom';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
+import '../stylesheets/instructor_home.css';
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, NavItem, InputGroup, Nav} from 'react-bootstrap';
 
@@ -71,9 +72,9 @@ class instructor_home extends React.Component {
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar>
-                    <Button href="instructor_home">Course</Button>
-                    <Button href="instructor_labs">Lab</Button>
+                <Navbar style={{    marginLeft:"30px"}}>
+                    <Button className="tabs" href="instructor_home">Course</Button>
+                    <Button className="tabs" href="instructor_labs">Lab</Button>
                 </Navbar>
 
                 <div>

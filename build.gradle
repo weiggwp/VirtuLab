@@ -21,8 +21,15 @@ jar {
 
 repositories {
     mavenCentral()
+    jcenter()
 
 }
+jar {
+    from('../frontend/dist') {
+        into 'static'
+    }
+}
+jar.dependsOn(':frontend:assemble')
 dependencyManagement {
 /*    imports {
         mavenBom "com.microsoft.azure:azure-spring-boot-bom:${azureVersion}"

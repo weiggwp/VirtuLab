@@ -13,6 +13,7 @@ class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            role: props.location.state.role, // assume redirected from login page
             redirect: false,
             first_name: '',
             last_name:'',
@@ -35,6 +36,7 @@ class signup extends Component {
             last_name:this.state.last_name,
             email_address:this.state.email_address,
             password: this.state.password,
+            role: this.state.register_role,
             // confirm_password:this.state.confirm_password,
         };
         e.preventDefault();
@@ -50,7 +52,6 @@ class signup extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
-                console.log("Sending response")
                 console.log(response);
                 this.setState({ redirect: true });
             },
@@ -66,10 +67,12 @@ class signup extends Component {
     };
 
     render() {
+        console.log("role: " + this.state.role);
         if (this.state.authenticated) {
             return <Redirect exact to="/login" />;
         }
         if (this.state.redirect) {
+            alert("redirecting");
             return <Redirect exact to="/login" />;
         } else {
             const errorMessage = this.state.errors;
