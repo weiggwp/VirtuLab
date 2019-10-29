@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
 
 // import axios from 'axios';
 import '../stylesheets/Login.css';
@@ -22,10 +23,18 @@ class student_home extends React.Component
         this.state = {
             redirectAcct: false,
             redirectCourse: false,
-            redirectLab :false
+            redirectLab :false,
+
+
+            collapseID: "collapse3"
+
 
         };
     }
+    toggleCollapse = collapseID => () =>
+        this.setState(prevState => ({
+            collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+        }));
     setRedirectAcct = () => {
         this.setState({
             redirectAcct: true
