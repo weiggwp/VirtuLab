@@ -9,6 +9,9 @@ import InstructorLabs from './components/instructor_labs.jsx';
 import PublicLab from './components/public_labs.jsx';
 import CreateCourse from './components/create_course.jsx';
 import DoLab from './components/student_lab.jsx';
+import CreateLab from './components/create_lab.jsx';
+import Statistics from './components/Statistics.jsx';
+
 
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -31,6 +34,8 @@ class App extends Component {
                 <Route exact path="/public_labs" component={PublicLab}/>
                 <Route exact path="/create_course" component={CreateCourse}/>
               <Route exact path="/do_lab" component={DoLab} />
+              <Route exact path="/create_lab" component={CreateLab} />
+              <Route exact path="/statistics" component={Statistics} />
 
             </Switch>
           </div>
