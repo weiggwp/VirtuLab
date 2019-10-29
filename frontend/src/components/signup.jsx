@@ -5,6 +5,9 @@ import icon from "../Images/v.jpg";
 import axios from 'axios';
 import '../stylesheets/banner.css';
 import '../stylesheets/signup.css';
+import GLOBALS from '../Globals';
+
+// const GLOBAL = require('../Globals');
 
 class signup extends Component {
     constructor(props) {
@@ -44,7 +47,8 @@ class signup extends Component {
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post('http://localhost:5000/signup', user,axiosConfig).then(
+
+        axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
                 console.log("Sending response")
                 console.log(response);

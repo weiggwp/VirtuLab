@@ -61,6 +61,32 @@ class Course extends React.Component {
                         <Lab  style={this.props.style} labname={"Lab 1: Introduction to using Beaker"}/>
 
                         <Lab  style={this.props.style} labname={"Lab 0: Introduction to VirtuLab"}/>
+                        {/*import React from 'react';*/}
+
+                        {/*class Course {*/}
+                        {/*    constructor(id, name, semester, instructor, labs, students) {*/}
+                        {/*        this.id = id;*/}
+                        {/*        this.name = name;*/}
+                        {/*        this.semester =  semester;*/}
+                        {/*        this.instructor = instructor;*/}
+                        {/*        this.labs = labs;*/}
+                        {/*        this.students = students;*/}
+
+                        {/*    }*/}
+                        {/*    add_lab(lab){*/}
+                        {/*        this.labs.append(lab);*/}
+                        {/*    }*/}
+
+                        {/*}*/}
+
+                        {/*class Course_component extends React.Component{*/}
+                        {/*    constructor(props){*/}
+                        {/*        super(props);*/}
+                        {/*        this.state = {*/}
+                        {/*            course: new Course(props.id,props.name, props.semester, props.instructor, props.labs, props.students),*/}
+                        {/*        }*/}
+                        {/*    }*/}
+                        {/*}*/}
 
 
 
