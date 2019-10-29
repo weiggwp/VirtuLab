@@ -15,7 +15,7 @@ class login extends Component {
         super(props);
         this.state = {
             redirect: false,
-            username: '',
+            email_address: '',
             password: '',
             errors: ''
         };
@@ -28,7 +28,7 @@ class login extends Component {
     handleSubmit = (e) => {
 
         const user = {
-            username: this.state.username,
+            email_address: this.state.email_address,
             password: this.state.password
         };
         console.log("sending user from frontend side")
@@ -47,9 +47,10 @@ class login extends Component {
             },
             (error) => {
                 console.log("reject logging message")
+
                 this.setState({
-                    errors: 'Error Login. Check username and password',
-                    username: '',
+                    errors: 'Error Login. Check e-mail and password',
+                    email_address: '',
                     password: ''
                 });
             }
@@ -97,13 +98,13 @@ class login extends Component {
                                         <p className={"loginP"}>
                                             Already registered? Sign in with your VirtuLab account</p>
                                         <form className="login_form " onSubmit={this.handleSubmit}>
-                                            <FormGroup controlId="formBasicText" bsSize="large">
+                                            <FormGroup controlId="email_address" bsSize="large">
                                                 <FormControl
                                                     style={{ height:60}}
                                                     autoFocus
                                                     type="text"
-                                                    placeholder="Username"
-                                                    onChange={(e) => this.handleCredentialChange(e, 'username')}
+                                                    placeholder="E-mail Address"
+                                                    onChange={(e) => this.handleCredentialChange(e, 'email_address')}
                                                     required
                                                 />
                                             </FormGroup>
