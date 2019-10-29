@@ -13,10 +13,13 @@ class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false,
+            login_success: false,
+            pathname: '',
+            to_register: false,
             email_address: '',
             password: '',
-            errors: ''
+            register_role: '',
+            errors: '',
         };
     }
 
@@ -24,6 +27,10 @@ class login extends Component {
         this.setState({[credential]: e.target.value});
     };
 
+    handleRegisterClick = (e, r) => {
+        this.setState({to_register: true, register_role: r});
+        e.preventDefault();
+    };
     handleSubmit = (e) => {
         e.preventDefault();
         const user = {
@@ -40,8 +47,8 @@ class login extends Component {
         // 'aws_website:8080/userPost'
         axios.post('http://localhost:5000/login', user, axiosConfig)
             .then((response) => {
-                console.log(response);
-                this.setState({redirect: true});
+                //TODO: ask backend to respond with user object with the role, instead of just 200
+                this.setState({login_success: true});
             })
             .catch((error) => {
                 this.setState({
@@ -55,11 +62,20 @@ class login extends Component {
     };
 
     render() {
-        if (this.state.redirect) {
-            return <Redirect exact to='/student_home'/>;
+        if (this.state.login_success) {
+            return <Redirect exact to={{
+                pathname: this.state.pathname,
+                state: {user: this.state.user},
+            }}/>;
             //student page or instructor page
         }
-        console.log("redirect is false");
+        if (this.state.to_register) {
+            return <Redirect exact to={{
+                pathname: "/signup",
+                state: {role: this.state.register_role},
+            }}/>;
+        }
+
         const errorMessage = this.state.errors;
         return (
             <div>
@@ -122,23 +138,21 @@ class login extends Component {
                                                 Sign in
                                             </Button>
                                             <h2 className="formTitle loginH2">Register</h2>
-                                            <Link to="/signup">
                                                 {/*either student signup or professor signup*/}
                                                 <Button style={{backgroundColor: "white", color: "black", height: 60}}
-                                                        block bsSize="large" type="submit">
+                                                        block bsSize="large"
+                                                        onClick={(e) => this.handleRegisterClick(e, 'student')}>
                                                     Student
                                                 </Button>
-                                            </Link>
 
                                             <div style={{paddingBottom: 20}}>
                                             </div>
-                                            <Link to="/signup">
 
                                                 <Button style={{backgroundColor: "white", color: "black", height: 60}}
-                                                        block bsSize="large" type="submit">
+                                                        block bsSize="large"
+                                                        onClick={(e) => this.handleRegisterClick(e, 'instructor')}>
                                                     Instructor
                                                 </Button>
-                                            </Link>
                                         </form>
                                     </div>
                                 </div>
