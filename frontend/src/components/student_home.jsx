@@ -22,6 +22,7 @@ class student_home extends React.Component
             redirect:false,
             collapseID: "collapse3",
             code: '',
+            user: '',
 
 
         };
