@@ -187,7 +187,7 @@ class signup extends Component {
                                         <Row style={{paddingTop:20}}>
                                             <Col md={{ span: 5, offset: 0 }}>
                                                 <Button style={{ backgroundColor: 'blue',color:"white"}} block bsSize="large" type="submit">
-                                                    Create Account
+                                                    Create Student Account
                                                 </Button>
                                             </Col>
                                         </Row>
