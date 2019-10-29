@@ -133,9 +133,9 @@ class instructor_labs extends React.Component {
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar>
-                    <Button href="instructor_home">Course</Button>
-                    <Button href="instructor_labs">Lab</Button>
+                <Navbar style={{    marginLeft:"40px"}}>
+                    <Button className="tabs" href="instructor_home">Course</Button>
+                    <Button className="tabs" href="instructor_labs">Lab</Button>
                 </Navbar>
 
                 <div>
