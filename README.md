@@ -14,6 +14,8 @@ helpful to give students a head start, a practice dry run, before they go in and
 This is very similar to how we let children play with cooking mama (simulation for actual cooking) before they
 roam freely in the kitchen. 
 
+##Diagrams
+:confetti_ball: https://drive.google.com/drive/folders/1uuK2YkMW5uabO0xwKI4Av_99tdWFfD8P?usp=sharing
 
 ## Deployment
 
