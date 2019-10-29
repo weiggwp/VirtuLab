@@ -36,17 +36,14 @@ class login extends Component {
                 "Access-Control-Allow-Origin": "*",
             }
         };
-        alert("login request from frontend side");
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post('http://localhost:5000/login', user, axiosConfig)
             .then((response) => {
-                alert("Checking response");
                 console.log(response);
                 this.setState({redirect: true});
             })
             .catch((error) => {
-                alert("reject logging message in login error catch");
                 this.setState({
                     errors: 'Error signing up! Try a different username',
                     username: '',

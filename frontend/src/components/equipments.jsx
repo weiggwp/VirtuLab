@@ -3,6 +3,7 @@ import React from 'react';
 import '../stylesheets/account_settings.css';
 import '../stylesheets/student_home.css';
 import {Button} from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
 class Equipments extends React.Component
     //equipments are draggable
