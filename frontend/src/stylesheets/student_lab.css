@@ -1,0 +1,34 @@
+.fMargin
+{
+
+    margin-left:40px;
+    margin-right:40px;
+
+
+}
+.bar
+{
+    background-color: #f4f4f4;
+}
+.backcolor
+{
+    background-color: #f4f4f4;
+    border-style:solid;
+    border-width: 1px;
+
+
+}
+.darkerBack
+{
+    background-color: #c3c3c3;
+    border-style: solid;
+    border-width:1px;
+
+}
+.contain
+{
+    margin-left:25px;
+    /*margin-right:40px;*/
+    /*width:90%;*/
+    height:90%;
+}

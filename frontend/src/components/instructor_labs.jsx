@@ -22,13 +22,17 @@ class Course_tab extends React.Component {
                     <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
                             className={"justify-content-between"}>
                         <Nav>
+                            <Link to="/create_course">
                             <Button style={{backgroundColor: "#e88f65ff"}} variant="primary">Create Course</Button>
-                        </Nav>
+                            </Link>
+                            </Nav>
 
                         <Nav>
-                            <Image onClick={this.setRedirectAcct} className={"config_image"}
+                            <Link to="/account_settings">
+                                <Image className={"config_image"}
                                    src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
-                        </Nav>
+                            </Link>
+                            </Nav>
                     </Navbar>
                 </div>
                 {<Expandable_Classes style={"settingsH3"}/>}
@@ -54,8 +58,11 @@ class Lab_tab extends React.Component {
 
                         <Nav>
                             <Button style={{backgroundColor: "#e88f65ff"}} variant="primary">View Public Labs</Button>
-                            <Image onClick={this.setRedirectAcct} className={"config_image"}
+                            <Link to="/account_settings">
+                            <Image  className={"config_image"}
                                    src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
+
+                            </Link>
                         </Nav>
                     </Navbar>
                 </div>
@@ -142,9 +149,11 @@ class instructor_labs extends React.Component {
                             <Nav>
                                 <Button style={{backgroundColor: "#e88f65ff"}} variant="primary">View Public
                                     Labs</Button>
-                                <Image onClick={this.setRedirectAcct} className={"config_image"}
+                                <Link to="/account_settings">
+                                    <Image className={"config_image"}
                                        src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
-                            </Nav>
+                                </Link>
+                                </Nav>
                         </Navbar>
                     </div>
                     {<Expandable_Classes style={"settingsH3"}/>}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect ,Link} from "react-router-dom"
 
 import { Button, FormGroup, FormControl, Row,Col,Container,Jumbotron,FormLabel, ControlLabel } from 'react-bootstrap';
 import axios from 'axios';
@@ -59,7 +59,8 @@ class login extends Component {
     };
 
     render() {
-        if (this.state.redirect) {
+        if (this.state.redirect===true) {
+            console.log("redirecting to student home");
             return <Redirect exact to='/student_home'/>;
             //student page or instructor page
         } else {

@@ -4,9 +4,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "latest",
     "mdbreact": "^4.22.0",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-dnd": "^9.4.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0"
   },

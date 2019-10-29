@@ -63,7 +63,7 @@ class public_labs extends React.Component {
                 </div>
 
                 <Navbar>
-                    <Navbar.Brand href="#student_home"> Back to Home</Navbar.Brand>
+                    {/*<Navbar.Brand href="#student_home"> Back to Home</Navbar.Brand>*/}
                     <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
@@ -78,7 +78,7 @@ class public_labs extends React.Component {
                 <div>
                     <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
                             className={"justify-content-between"}>
-                        <Navbar.Brand href="student_home"> Back to Home</Navbar.Brand>
+                        <Navbar.Brand href="instructor_home"> Back to Home</Navbar.Brand>
 
                         <Nav>
                             <Image onClick={this.setRedirectAcct} className={"config_image"}

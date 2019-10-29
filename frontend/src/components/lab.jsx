@@ -26,7 +26,6 @@ class Lab extends React.Component
         }
     }
     onClick(){
-        console.log("clicked");
         window.location.href="http://localhost:3001/do_lab";
     }
 
