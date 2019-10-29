@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
-
+import StudentHeader from './studentHeader.jsx';
 
 // import axios from 'axios';
 import '../stylesheets/Login.css';
@@ -69,11 +69,7 @@ class student_home extends React.Component
 
             <div>
                 {this.renderRedirect()}
-                <div className="banner">
-
-                    <img src={icon} alt="icon" width="30px" height="30px"/>
-                    <label >VirtuLab</label>
-                </div>
+                <StudentHeader/>
 
                 <Navbar>
                     <Navbar.Brand href="#student_home">Welcome!</Navbar.Brand>
@@ -120,7 +116,7 @@ class student_home extends React.Component
                 </div>
 
                 {<Expandable_Classes style={"settingsH3"}/>}
-
+               { <add_course />}
 
             </div>
 

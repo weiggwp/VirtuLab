@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Redirect, Link} from 'react-router-dom';
-
+import InstructorHeader from "./instructorHeader";
 // import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
@@ -14,6 +14,7 @@ import image from '../Images/lab_promo.png'
 import login from "./login";
 import {Droppable_course} from "./droppable_course";
 import {Expandable_Classes} from "./expandable_course";
+
 
 class instructor_home extends React.Component {
     constructor(props) {
@@ -59,10 +60,7 @@ class instructor_home extends React.Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <div className="banner">
-                    <img src={icon} alt="icon" width="30px" height="30px"/>
-                    <label>VirtuLab</label>
-                </div>
+                <InstructorHeader/>
                 <Navbar>
                     <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
                     <Navbar.Toggle/>
