@@ -7,8 +7,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/signup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/LoginConfig/MVCConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Course.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/expandable_course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/expandable_course.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/lab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/lab.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stylesheets/student_home.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stylesheets/student_home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/RegistrationController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,6 +44,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -63,6 +69,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -152,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572287337924</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixed: cross origins requests - good for pull now">
+      <created>1572288979368</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1572288979368</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -180,7 +194,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="issue: cross origin requests still not fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="issue: cross origin requests still not fixed" />
+    <MESSAGE value="fixed: cross origins requests - good for pull now" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed: cross origins requests - good for pull now" />
   </component>
   <component name="masterDetails">
     <states>
