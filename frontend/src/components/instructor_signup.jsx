@@ -6,7 +6,7 @@ import axios from 'axios';
 import '../stylesheets/banner.css';
 import '../stylesheets/signup.css';
 import GLOBALS from '../Globals';
-
+import instructorHeader from './instructorHeader.jsx';
 // const GLOBAL = require('../Globals');
 
 class signup extends Component {
@@ -75,11 +75,7 @@ class signup extends Component {
             const errorMessage = this.state.errors;
             return (
                 <div >
-                    <div className="banner">
-
-                        <img src={icon} alt="icon" width="30px" height="30px"/>
-                        <label >VirtuLab</label>
-                    </div>
+                    <instructorHeader/>
 
 
                     <Container className="noPadding">
