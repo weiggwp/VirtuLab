@@ -50,7 +50,6 @@ class signup extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
-                console.log("Sending response")
                 console.log(response);
                 this.setState({ redirect: true });
             },
@@ -70,6 +69,7 @@ class signup extends Component {
             return <Redirect exact to="/login" />;
         }
         if (this.state.redirect) {
+            alert("redirecting");
             return <Redirect exact to="/login" />;
         } else {
             const errorMessage = this.state.errors;

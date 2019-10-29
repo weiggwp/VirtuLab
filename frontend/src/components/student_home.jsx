@@ -43,6 +43,7 @@ class student_home extends React.Component
 
 
     render() {
+        alert("entered student page");
         return(
 
             <div>
