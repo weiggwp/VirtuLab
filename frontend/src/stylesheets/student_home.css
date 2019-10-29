@@ -5,6 +5,13 @@
     margin: 0px 0px 0px 10px;
 /*    last one is right margin*/
 }
+.save_image
+{
+    width:30px;
+    height:30px;
+    margin: 0px 0px 0px 10px;
+    /*    last one is right margin*/
+}
 
 .contain {
     display: block;

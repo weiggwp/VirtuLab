@@ -4,6 +4,7 @@ import '../stylesheets/account_settings.css';
 import '../stylesheets/student_home.css';
 import Card from "react-bootstrap/Card";
 import {Button} from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 
 class Instruction extends React.Component
 {
@@ -12,6 +13,7 @@ class Instruction extends React.Component
         super(props);
 
     }
+
 
 
     render() {

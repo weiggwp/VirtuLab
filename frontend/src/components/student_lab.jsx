@@ -24,7 +24,7 @@ class do_lab extends React.Component {
     }
     setRestart = () => {
         this.setState({
-            redirectHome: true
+            restart: true
         })
     }
     renderRedirect = () => {

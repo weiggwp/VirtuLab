@@ -20,7 +20,8 @@ class Equipment extends React.Component{
                 }}
             >
                 <Image  style={{height:"6vh",width:"6vh"}}
-                       src="https://cdn.iconscout.com/icon/premium/png-256-thumb/water-bottle-1738496-1475816.png" rounded/>
+                       src={this.props.image}
+                      rounded/>
 
             </div>
         )
