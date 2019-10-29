@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 
 import { Button, FormGroup, FormControl, Row,Col,Container,Jumbotron,FormLabel, ControlLabel } from 'react-bootstrap';
-// import axios from 'axios';
+import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import icon from '../Images/v.jpg';
@@ -26,16 +26,40 @@ class login extends Component {
     };
 
     handleSubmit = (e) => {
+
         const user = {
             username: this.state.username,
             password: this.state.password
         };
+        console.log("sending user from frontend side")
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+
+        axios.post('http://localhost:5000/login', user, axiosConfig).then(
+            (response) => {
+                console.log("the response is: " + response)
+                console.log(response);
+                this.setState({ redirect: true });
+            },
+            (error) => {
+                console.log("reject logging message")
+                this.setState({
+                    errors: 'Error Login. Check username and password',
+                    username: '',
+                    password: ''
+                });
+            }
+        );
 
     };
 
     render() {
         if (this.state.redirect) {
-            //return <Redirect exact to=  />;
+            return <Redirect exact to='/student_home'/>;
             //student page or instructor page
         } else {
             const errorMessage = this.state.errors;
