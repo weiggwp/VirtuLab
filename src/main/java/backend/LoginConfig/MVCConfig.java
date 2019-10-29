@@ -14,8 +14,8 @@ public class MVCConfig implements WebMvcConfigurer {
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/signup").allowedOrigins("http://localhost:3001");
-        registry.addMapping("/login").allowedOrigins("http://localhost:3000");
+        registry.addMapping("/signup").allowedOrigins("*");
+        registry.addMapping("/login").allowedOrigins("*");
     }
 
 //    public void addCorsMappings(CorsRegistry registry) {
