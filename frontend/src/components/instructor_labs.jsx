@@ -13,6 +13,7 @@ import image from '../Images/lab_promo.png'
 import login from "./login";
 import {Droppable_course} from "./droppable_course";
 import {Expandable_Classes} from "./expandable_course";
+import InstructorHeader from "./instructorHeader";
 
 class Course_tab extends React.Component {
     render() {
@@ -146,10 +147,7 @@ class instructor_labs extends React.Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <div className="banner">
-                    <img src={icon} alt="icon" width="30px" height="30px"/>
-                    <label>VirtuLab</label>
-                </div>
+                <InstructorHeader/>
                 <Navbar>
                     <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
                     <Navbar.Toggle/>
@@ -159,9 +157,9 @@ class instructor_labs extends React.Component {
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar>
-                    <Button href="instructor_home">Course</Button>
-                    <Button href="instructor_labs">Lab</Button>
+                <Navbar style={{    marginLeft:"40px"}}>
+                    <Button className="tabs" href="instructor_home">Course</Button>
+                    <Button className="tabs" href="instructor_labs">Lab</Button>
                 </Navbar>
 
                 <div>

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Redirect, Link} from 'react-router-dom';
-
+import InstructorHeader from "./instructorHeader";
 // import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
+import '../stylesheets/instructor_home.css';
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, NavItem, InputGroup, Nav} from 'react-bootstrap';
 
@@ -13,6 +14,7 @@ import image from '../Images/lab_promo.png'
 import login from "./login";
 import {Droppable_course} from "./droppable_course";
 import {Expandable_Classes} from "./expandable_course";
+
 
 class instructor_home extends React.Component {
     constructor(props) {
@@ -58,10 +60,7 @@ class instructor_home extends React.Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <div className="banner">
-                    <img src={icon} alt="icon" width="30px" height="30px"/>
-                    <label>VirtuLab</label>
-                </div>
+                <InstructorHeader/>
                 <Navbar>
                     <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
                     <Navbar.Toggle/>
@@ -71,9 +70,9 @@ class instructor_home extends React.Component {
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar>
-                    <Button href="instructor_home">Course</Button>
-                    <Button href="instructor_labs">Lab</Button>
+                <Navbar style={{    marginLeft:"30px"}}>
+                    <Button className="tabs" href="instructor_home">Course</Button>
+                    <Button className="tabs" href="instructor_labs">Lab</Button>
                 </Navbar>
 
                 <div>

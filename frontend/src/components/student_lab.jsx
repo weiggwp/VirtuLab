@@ -7,7 +7,7 @@ import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
-
+import StudentHeader from './studentHeader.jsx';
 class do_lab extends React.Component {
     constructor(props) {
         super(props);
@@ -46,11 +46,7 @@ class do_lab extends React.Component {
 
     banner() {
         return (
-            <div className="banner">
-
-                <img src={icon} alt="icon" width="30px" height="30px"/>
-                <label>VirtuLab</label>
-            </div>
+            <StudentHeader/>
       )
 
     }
