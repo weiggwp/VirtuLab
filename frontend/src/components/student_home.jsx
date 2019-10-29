@@ -105,7 +105,7 @@ class student_home extends React.Component
                 </div>
 
                 {<Expandable_Classes style={"settingsH3"}/>}
-
+               { <add_course />}
 
             </div>
 
