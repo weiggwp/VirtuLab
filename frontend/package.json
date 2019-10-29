@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:8080",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +12,10 @@
     "react-dom": "^16.11.0",
     "react-minimal-pie-chart": "^5.0.2",
     "react-scripts": "3.2.0"
+  },
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.15.3"
   },
   "scripts": {
     "start": "react-scripts start",
