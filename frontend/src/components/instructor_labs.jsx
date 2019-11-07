@@ -77,6 +77,17 @@ class Lab_tab extends React.Component {
     }
 }
 
+class labOjb {
+    constructor(id, name, author, keywords, description, courses) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.keywords = keywords;
+        this.description = description;
+        this.courses = courses;
+    }
+
+}
 class instructor_labs extends React.Component {
     constructor(props) {
         super(props);
@@ -84,7 +95,21 @@ class instructor_labs extends React.Component {
             inCoursePage: true,
             redirectAcct: false,
             redirectCourse: false,
-            redirectLab: false
+            redirectLab: false,
+
+            labs: [
+                new labOjb(0,
+                    "Intro to Beakers",
+                    "Noob",
+                    "Beaker, Intro, Break, Solution",
+                    "Student will learn how to use beaker in lab setting"),
+                new labOjb(1,
+                    "Dilution",
+                    "Anonymous",
+                    "Beaker, Chemicals, Solution, Reaction",
+                    "Student will learn how to use mix solution with different concentrations"),
+            ],
+
 
         };
     }
@@ -118,6 +143,7 @@ class instructor_labs extends React.Component {
     }
 
     render() {
+        let labs = this.state.labs;
         return (
             <div>
                 {this.renderRedirect()}
@@ -154,7 +180,25 @@ class instructor_labs extends React.Component {
                                 </Nav>
                         </Navbar>
                     </div>
-                    {<Expandable_Classes style={"settingsH3"}/>}
+                    <div>
+                        {labs.map(lab => (
+                            <div style={{
+                                textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
+                                borderStyle: "dashed", borderWidth: 1
+                            }}>
+                                <h4>{lab.name}</h4>
+                                {"Author: " + lab.author}
+                                <br/>
+                                {"Description: " + lab.description}
+                                <br/>
+                                {"Keywords: " + lab.keywords}
+                            </div>
+
+
+                        ))}
+
+                    </div>
+                    {/*{<Expandable_Classes style={"settingsH3"}/>}*/}
 
 
                 </div>

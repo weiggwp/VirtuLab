@@ -20,9 +20,7 @@ class PublicLab {
         this.description = description;
     }
 
-    add_lab(lab) {
-        this.labs.append(lab);
-    }
+
 }
 
 class public_labs extends React.Component {
