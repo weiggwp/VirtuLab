@@ -27,7 +27,6 @@ class instructor_home extends React.Component {
 
         };
     }
-
     setRedirectAcct = () => {
         this.setState({
             redirectAcct: true

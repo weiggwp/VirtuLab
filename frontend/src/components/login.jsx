@@ -56,7 +56,7 @@ class login extends Component {
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
                 //TODO: ask backend to respond with user object with the role, instead of just 200
-                this.setState({login_success: true});
+                this.setState({login_success: true,user_email:user.email_address});
             })
             .catch((error) => {
                 this.setState({
@@ -88,14 +88,15 @@ class login extends Component {
         const errorMessage = this.state.errors;
         return (
             <div>
+                {/*banner on top*/}
                 <div className="banner">
-
                     <img src={icon} alt="icon" width="30px" height="30px"/>
                     <label>VirtuLab</label>
                 </div>
+                {/*Pic and Login*/}
                 <div>
                     <Container fluid className="noPadding">
-                        <Row className="noMargin">
+                        <Row className="noMargin full-height">
                             <Col lg={{span: 8}} className="purple">
                                 {/*width="60%" height="100%"*/}
 
@@ -109,9 +110,10 @@ class login extends Component {
                                     </Container>
                                 </Jumbotron>
 
-                                <img className="image" src={image} alt="labImage"/>
+                                <img className="image fill" src={image} alt="labImage"/>
 
                             </Col>
+
                             <Col lg={{span: 4, offset: 0}} className={"lightpurple"}>
                                 {/*style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}*/}
                                 <div className="Login">
@@ -167,6 +169,12 @@ class login extends Component {
                                 </div>
                             </Col>
                         </Row>
+
+                        {/*<Row className="noMargin">*/}
+                        {/*    hi*/}
+                        {/*</Row>*/}
+
+
                     </Container>
                 </div>
 

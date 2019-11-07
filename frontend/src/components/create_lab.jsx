@@ -85,6 +85,15 @@ class create_lab extends React.Component {
 
     }
 
+    slides()
+    {
+        return(
+            <div>
+                <Slides/>
+            </div>
+            )
+    }
+
     options()
     {
         if(!this.ifSelectingEquipment() && !this.ifSettingup())
@@ -108,7 +117,6 @@ class create_lab extends React.Component {
             return(
                 <div>
 
-                    <Slides/>
                     <EquipmentList/>
                 </div>
 
@@ -192,14 +200,15 @@ class create_lab extends React.Component {
                 {/*<div style={{display:"flex"}}>*/}
                 {/*    {this.tab()}*/}
                 {this.toolbar()}
-                {/*</div>*/}
                 <Container fluid className={"contain"} style={{cursor: 'initial'}}>
                     <Row >
+                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh'}}  lg={{span:1}} className={"darkerBack"}>
+                            {this.slides()}
+                        </Col>
+
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh'}}  lg={{span:3}} className={"backcolor"}>
                             {/*<Instruction/>*/}
                             {this.options()}
-
-
                         </Col>
                         <Col lg={{span:8}} className="darkerBack" >
                             <Workspace empty={true}/>

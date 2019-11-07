@@ -37,27 +37,25 @@ class Slides extends React.Component {
 const ParentComponent = props => (
     //<div style={{height:"5vh",display:"inline",overflowX:"scroll"}}>
     <div>
-        <div><a href="#" onClick={props.addChild}>
-        <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
-        add new step
-
-        </a>
+        <div>
+            <a href="#" onClick={props.addChild}>
+                <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
+                add new step
+            </a>
         </div>
+
         <Container>
-            <Row style={{overflowX:"scroll",height:"7vh",marginTop:"5px"}}>
-                <div id="children-pane" style={{width:"35vh",marginTop:"5px"}}>
-                    {props.children}
-                </div>
-
-
-
-            </Row>
+            {/*<Row style={{overflowX:"scroll",height:"7vh",marginTop:"5px"}}>*/}
+            {/*    <div id="children-pane" style={{width:"35vh",marginTop:"5px"}}>*/}
+            {props.children}
+                {/*</div>*/}
+            {/*</Row>*/}
         </Container>
 
     </div>
     // </div>
 );
 
-const ChildComponent = props => <Col className={"slideCard child"}>{props.number}</Col>;
+const ChildComponent = props => <Row className={"slideCard child"}>{props.number}</Row>;
 
 export {Slides};

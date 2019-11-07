@@ -167,7 +167,7 @@ class instructor_labs extends React.Component {
                         <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
                                 className={"justify-content-between"}>
                             <Nav>
-                                <Button style={{backgroundColor: "#e88f65ff"}} variant="primary">Create Lab</Button>
+                                <Button href="create_lab" style={{backgroundColor: "#e88f65ff"}} variant="primary">Create Lab</Button>
                             </Nav>
 
                             <Nav>
