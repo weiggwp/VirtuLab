@@ -1,0 +1,28 @@
+.add
+{
+    width:20px;
+    height:20px;
+
+    margin:5px 5px 5px 20px;
+    alignment:left;
+/*last one is left,first one is top*/
+
+}
+.slideCard
+{
+    border-width:2px;
+    border-style:solid;
+    width:4vh;
+    height:7vh;
+    margin:0px 0px 0px 5px;
+
+}
+.child
+{
+    display:inline;
+    overflow:scroll;
+
+
+}
+
+

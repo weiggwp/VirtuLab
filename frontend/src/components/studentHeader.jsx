@@ -39,13 +39,13 @@ class StudentHeader extends React.Component {
                 <img src={icon} alt="icon" width="30px" height="30px"/>
                 <i >VirtuLab</i>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {this.renderRedirectCourse()}
-                <label onClick={this.setRedirectCourse} >
-                    Courses</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {this.renderRedirectLab()}
-                <label onClick={this.setRedirectLab} >
-                    Labs</label>
+                {/*{this.renderRedirectCourse()}*/}
+                {/*<label onClick={this.setRedirectCourse} >*/}
+                {/*    Courses</label>*/}
+                {/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/}
+                {/*{this.renderRedirectLab()}*/}
+                {/*<label onClick={this.setRedirectLab} >*/}
+                {/*    Labs</label>*/}
             </div>
 
         );

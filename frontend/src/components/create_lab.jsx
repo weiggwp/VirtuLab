@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import icon from "../Images/v.jpg";
+
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {Button, Col, Container, FormControl, FormGroup, Image, Jumbotron, Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Col, Container, Image,  Nav, Navbar, Row} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {Equipment} from "./Equipment";
+import {Slides} from "./Slides";
+
+import {EquipmentList} from "./EquipmentList";
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -103,38 +103,15 @@ class create_lab extends React.Component {
         }
         if(this.ifSelectingEquipment())
         {
+
+        //title="Solutions"
             return(
-                <Tabs style={{ borderStyle:"solid",borderWidth:1,marginTop:10,backgroundColor: '#96E2FA',color:"white",height:"8vh"}} defaultActiveKey="Solutions" transition={false} id="noanim-tab-example">
-                    <Tab eventKey="Solutions" title="Solutions" >
-                        <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                            <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                                <Equipment image={"https://cdn.iconscout.com/icon/premium/png-256-thumb/water-bottle-1738496-1475816.png"}/>
-                                Distilled water
+                <div>
 
-                            </Button>
+                    <Slides/>
+                    <EquipmentList/>
+                </div>
 
-
-                        </ButtonGroup>
-                    </Tab>
-                    <Tab eventKey="Glassware" title="Glassware" >
-                        <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn4.iconfinder.com/data/icons/medical-health-10/128/1-512.png"}/>
-                            Erlenmeyer flask
-
-                        </Button>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn4.iconfinder.com/data/icons/laboratory-4/58/9-512.png"}/>
-                            Beaker
-
-                        </Button>
-                        </ButtonGroup>
-
-                    </Tab>
-                    <Tab eventKey="Tools" title="Tools" >
-                        {/*<Sonnet />*/}
-                    </Tab>
-                </Tabs>
             )
 
         }
