@@ -147,20 +147,17 @@ class instructor_labs extends React.Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <InstructorHeader/>
+                <InstructorHeader currentTab="Labs"/>
                 <Navbar>
                     <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
                     <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Signed in as: SummerBagel
+                            Instructor: SummerBagel
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar style={{    marginLeft:"40px"}}>
-                    <Button className="tabs" href="instructor_home">Course</Button>
-                    <Button className="tabs" href="instructor_labs">Lab</Button>
-                </Navbar>
+
 
                 <div>
                     <div>

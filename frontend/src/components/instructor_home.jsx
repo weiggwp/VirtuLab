@@ -41,37 +41,28 @@ class instructor_home extends React.Component {
         if (this.state.redirectAcct) {
             return <Redirect to='/account_settings'/>
         }
-        // else if(this.state.redirectCourse){
-        //     return <Redirect to='/add_course' />
-        // }
-        // else
-        // {
-        //     return <Redirect to='/do_lab' />
-        // }
-    }
+
+    };
     setRedirectLab = () => {
         this.setState({
             redirectLab: true
         })
-    }
+    };
 
     render() {
         return (
             <div>
                 {this.renderRedirect()}
-                <InstructorHeader/>
+                <InstructorHeader currentTab="Courses"/>
+
                 <Navbar>
                     <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
                     <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Signed in as: SummerBagel
+                            Instructor: SummerBagel
                         </Navbar.Text>
                     </Navbar.Collapse>
-                </Navbar>
-                <Navbar style={{    marginLeft:"30px"}}>
-                    <Button className="tabs" href="instructor_home">Course</Button>
-                    <Button className="tabs" href="instructor_labs">Lab</Button>
                 </Navbar>
 
                 <div>
