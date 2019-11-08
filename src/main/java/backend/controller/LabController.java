@@ -18,9 +18,9 @@ import java.util.Map;
 
 @Controller
 @CrossOrigin(origins = "*")
-public class CourseController {
+public class LabController {
 
-    private final String ERRMSG = "fail to add course";
+    private final String ERRMSG = "fail to add lab";
     private final String SUCCESS = "success";
 
     @Autowired
@@ -30,27 +30,25 @@ public class CourseController {
     ModelMapper modelMapper;
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/add_course", method = RequestMethod.POST)
-    public Map<String, Object> addCourse(@RequestBody CourseDTO courseDTO) {
-        System.out.println("CourseController: ");
+    @RequestMapping(value = "/add_lab", method = RequestMethod.POST)
+    public Map<String, Object> addLab(@RequestBody CourseDTO courseDTO) {
+        System.out.println("LabController: ");
+        // TODO: check if lab exists, save lab otherwise
 
         Map<String, Object>  map = new HashMap<>();
         /* In DB, reject request to add course*/
-        if (courseService.courseExists(courseDTO)) {
+        if (false) {
             map.put("msg", ERRMSG);
             return map;
         }
 
         /* convert DTO to entity, add to DB */
-        Course c = modelMapper.map(courseDTO, Course.class);
-        System.out.println(c);
-        courseService.addCourse(c);
         map.put("msg", SUCCESS);
         return map;
     }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+//    @Bean
+//    public ModelMapper modelMapper() {
+//        return new ModelMapper();
+//    }
 }
