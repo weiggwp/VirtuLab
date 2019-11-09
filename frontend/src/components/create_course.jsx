@@ -24,7 +24,7 @@ export class create_course extends Component {
     };
     handleCreateCourse = (e) => {
         alert("Create Course");
-    }
+    };
 
     renderBanner() {
         return (

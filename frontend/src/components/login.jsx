@@ -22,7 +22,8 @@ class login extends Component {
         super(props);
         this.state = {
             login_success: false,
-            pathname: '/instructor_home',
+            pathnames: {instructor:'/instructor_home',
+                        student: '/student_home'},
             to_register: false,
             email_address: '',
             password: '',
@@ -51,12 +52,11 @@ class login extends Component {
                 "Access-Control-Allow-Origin": "*",
             }
         };
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
+        //axio sends post request to backend at \login to handle authentication
+        //TODO: ask backend to respond with user object including role, names, etc. instead of just 200 OK
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
-                //TODO: ask backend to respond with user object with the role, instead of just 200
-                this.setState({login_success: true,user_email:user.email_address});
+                this.setState({login_success: true,role: "instructor"});
             })
             .catch((error) => {
                 this.setState({
@@ -70,11 +70,11 @@ class login extends Component {
     };
 
     render() {
-        if (this.state.login_success) {
+        if (this.state.login_success){
             return <Redirect exact to={{
 
                 pathname: this.state.pathname,
-                state: {user: this.state.user},
+                state: {email: this.state.email_address},
             }}/>;
             //student page or instructor page
         }
