@@ -4,7 +4,7 @@ import icon from "../Images/v.jpg";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {Button, Col, Container, Image,  Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGroup,FormControl,Card} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
@@ -13,14 +13,17 @@ import {Slides} from "./Slides";
 
 import {EquipmentList} from "./EquipmentList";
 
+
+
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             redirectHome: false,
-            selectEquipment: false,
-            doSetup:false,
-            restart:false
+            // selectEquipment: false,
+            // doSetup:false,
+            restart:false,
+            instruction:""
 
         };
     }
@@ -29,40 +32,40 @@ class create_lab extends React.Component {
             redirectHome: true
         })
     }
-    clickSelectEquipment = () => {
-        this.setState({
-            selectEquipment: true
-        })
-    }
-    finishSelectEquipment = () => {
-        this.setState({
-            selectEquipment: false
-        })
-    }
-    clickSetup = () => {
-        this.setState({
-            doSetup: true
-        })
-    }
-    finishSetup = () => {
-        this.setState({
-            doSetup: false
-        })
-    }
-    ifSelectingEquipment()
-    {
-        return this.state.selectEquipment && !this.state.doSetup
-    }
-    ifSettingup()
-    {
-        return this.state.doSetup && !this.state.selectEquipment
-    }
+    // clickSelectEquipment = () => {
+    //     this.setState({
+    //         selectEquipment: true
+    //     })
+    // }
+    // finishSelectEquipment = () => {
+    //     this.setState({
+    //         selectEquipment: false
+    //     })
+    // }
+    // clickSetup = () => {
+    //     this.setState({
+    //         doSetup: true
+    //     })
+    // }
+    // finishSetup = () => {
+    //     this.setState({
+    //         doSetup: false
+    //     })
+    // }
+    // ifSelectingEquipment()
+    // {
+    //     return this.state.selectEquipment && !this.state.doSetup
+    // }
+    // ifSettingup()
+    // {
+    //     return this.state.doSetup && !this.state.selectEquipment
+    // }
 
     setRestart = () => {
         this.setState({
-            restart: true,
-            selectEquipment:false,
-            doSetup:false
+            restart: true,      //should probably just be restarting a single step
+            // selectEquipment:false,
+            // doSetup:false
         })
     }
 
@@ -93,47 +96,43 @@ class create_lab extends React.Component {
             </div>
             )
     }
+    handleFieldChange = (e, field) => {
+        this.setState({ [field]: e.target.value });
+    };
+    instructions()
+    {
+        return(
+            <div style={{padding: 10,width: '20rem',height:'30vh'}}>
+
+                <textarea
+                    style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
+                    placeholder="Input instruction for this step here"
+                    onChange={(e) => this.handleFieldChange(e, 'instruction')}
+                    value={this.state.instruction}
+                />
+
+            </div>
+
+        )
+    }
 
     options()
     {
-        if(!this.ifSelectingEquipment() && !this.ifSettingup())
-        {
-            //two buttons
-            return(
-            <div style={{ paddingTop:170,paddingLeft:3}}>
-                <Button onClick={this.clickSelectEquipment} style={{ backgroundColor: 'orange',color:"white",height:"10vh"}} block bsSize="large" >
-                    Select Equipment
-                </Button>
-                <Button onClick={this.clickSetup} style={{ backgroundColor: 'orange',color:"white",height:"10vh"}} block bsSize="large" >
-                    Finish Setup
-                </Button>
-            </div>
-            )
-        }
-        if(this.ifSelectingEquipment())
-        {
 
-        //title="Solutions"
             return(
                 <div>
 
                     <EquipmentList/>
+                    {/*<Instruction/>*/}
+                    {this.instructions()}
                 </div>
 
             )
 
-        }
-        if(this.ifSettingup())
-        {
-            return(
-                <Instruction/>
-            )
-
-        }
     }
     toolbar()
     {
-        if(this.ifSelectingEquipment())
+     //   if(this.ifSelectingEquipment())
         {
             return (
                 <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
@@ -143,7 +142,7 @@ class create_lab extends React.Component {
                         <Link to="/create_lab">
                             <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
                         </Link>
-                        <Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />
+                        {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
                         <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
 
@@ -164,7 +163,7 @@ class create_lab extends React.Component {
                 </Navbar>
             )
         }
-        else {
+        /*else {
             return (
                 <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
@@ -189,7 +188,7 @@ class create_lab extends React.Component {
 
                 </Navbar>
             )
-        }
+        }*/
     }
     render(){
 
@@ -202,11 +201,11 @@ class create_lab extends React.Component {
                 {this.toolbar()}
                 <Container fluid className={"contain"} style={{cursor: 'initial'}}>
                     <Row >
-                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh'}}  lg={{span:1}} className={"darkerBack"}>
+                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
                             {this.slides()}
                         </Col>
 
-                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh'}}  lg={{span:3}} className={"backcolor"}>
+                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
                             {/*<Instruction/>*/}
                             {this.options()}
                         </Col>
