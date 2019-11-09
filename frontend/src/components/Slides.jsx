@@ -4,6 +4,10 @@ import '../stylesheets/slides.css';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 
 class Slides extends React.Component {
@@ -36,26 +40,38 @@ class Slides extends React.Component {
 
 const ParentComponent = props => (
     //<div style={{height:"5vh",display:"inline",overflowX:"scroll"}}>
-    <div>
+    <div >
+        {/*tyle={{overflowY:"scroll"}}>*/}
         <div>
             <a href="#" onClick={props.addChild}>
                 <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
-                add new step
+                Add new
             </a>
         </div>
 
-        <Container>
+        {/*<Container style={{overflowY:"scroll",height:"100%"}}>*/}
             {/*<Row style={{overflowX:"scroll",height:"7vh",marginTop:"5px"}}>*/}
             {/*    <div id="children-pane" style={{width:"35vh",marginTop:"5px"}}>*/}
-            {props.children}
+        <div   >
+
+            {/*<ButtonToolbar>*/}
+                <ToggleButtonGroup vertical className={"Btn-Blue-BG"} type="radio" name="options" >
+                    {/*<ToggleButton value={1} className={"Btn-Blue-BG togglebutton btn-info"}>{"Step 1"}</ToggleButton>*/}
+                    {/*<ToggleButton value={2} className={"Btn-Blue-BG togglebutton btn-info"}>{"Step 2"}</ToggleButton>*/}
+
+                    {props.children}
+
+                </ToggleButtonGroup>
+            {/*</ButtonToolbar>*/}
+        </div>
                 {/*</div>*/}
             {/*</Row>*/}
-        </Container>
+        {/*</Container>*/}
 
     </div>
     // </div>
 );
 
-const ChildComponent = props => <Row className={"slideCard child"}>{props.number}</Row>;
+const ChildComponent = props => <ToggleButton value={props.number} className={"Btn-Blue-BG togglebutton "}>{"Step "+props.number}</ToggleButton>;
 
 export {Slides};

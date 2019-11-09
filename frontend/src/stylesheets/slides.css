@@ -3,7 +3,7 @@
     width:20px;
     height:20px;
 
-    margin:5px 5px 5px 20px;
+    margin:10px 5px 5px 0px;
     alignment:left;
 /*last one is left,first one is top*/
 
@@ -12,9 +12,12 @@
 {
     border-width:2px;
     border-style:solid;
-    width:4vh;
+    width:7vh;
     height:7vh;
-    margin:0px 0px 0px 5px;
+    margin:5px 0px 0px 0px;
+    text-align: center;
+    font-size:10px;
+
 
 }
 .child
@@ -23,6 +26,23 @@
     overflow:scroll;
 
 
+}
+
+.Btn-Blue-BG.focus,.Btn-Blue-BG:focus  {
+    background-color: #1e276d !important;
+}
+.Btn-Blue-BG.active, .Btn-Blue-BG:active {
+    background-color: #1e276d !important;
+}
+
+.btn-info.focus, .btn-info:focus {
+    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
+}
+
+.togglebutton
+{
+    margin-top:5px;
+    margin-bottom: 5px;
 }
 
 
