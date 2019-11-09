@@ -2,22 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff304d49-a687-408e-a42d-e85cda2dab52" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/DataNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/Beaker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/Erlenmeyer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/Flask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/Glassware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/GlucoseSolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/GraduatedCylinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/Pipette.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/Scale.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipments/WaterBottle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Substances/Glucose.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Substances/Substance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/model/Substances/Water.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/instructor_labs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/instructor_labs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/instructor_signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/instructor_signup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/student_lab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_lab.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +55,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -74,7 +82,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -172,7 +180,11 @@
       <workItem from="1572272580295" duration="8457000" />
       <workItem from="1572287640099" duration="19504000" />
       <workItem from="1572318680391" duration="86000" />
-      <workItem from="1572366420748" duration="4287000" />
+      <workItem from="1572366420748" duration="6984000" />
+      <workItem from="1572547210981" duration="39000" />
+      <workItem from="1573240763674" duration="1046000" />
+      <workItem from="1573249882854" duration="2970000" />
+      <workItem from="1573323047384" duration="3316000" />
     </task>
     <servers />
   </component>
@@ -211,7 +223,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/frontend/src/components/instructorHeader.jsx</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
