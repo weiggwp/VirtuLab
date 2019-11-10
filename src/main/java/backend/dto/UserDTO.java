@@ -17,10 +17,6 @@ public class UserDTO {
     @NotNull
     @NotEmpty
     private String password;
-//    @NotNull
-//    @NotEmpty
-//    private String confirm_password;
-
 
     public String getFirst_name() {
         return first_name;

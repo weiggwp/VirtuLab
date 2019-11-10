@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class InstructorDTO {
+
     @NotNull
     @NotEmpty
     private String firstName;

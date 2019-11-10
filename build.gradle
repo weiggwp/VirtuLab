@@ -36,6 +36,7 @@ dependencyManagement {
     }*/
 }
 dependencies {
+    implementation 'org.modelmapper:modelmapper:2.3.0'
 //   implementation 'com.microsoft.azure:azure-spring-boot-starter'
 //    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
