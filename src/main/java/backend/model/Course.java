@@ -16,6 +16,8 @@ public class Course {
     private int courseEnrollment;
     private String accessCode = generateAccessCode();
 
+    public static int instanceCnt;
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "course_lab",
@@ -38,7 +40,7 @@ public class Course {
         this.students = new ArrayList<>();
 
         this.accessCode = generateAccessCode();
-
+        instanceCnt++;
     }
 
     private String generateAccessCode(){
@@ -48,16 +50,17 @@ public class Course {
                 + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder(5);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             int index = (int)(AlphaNumericString.length() * Math.random());
             sb.append(AlphaNumericString
                     .charAt(index));
         }
-        return sb.toString();
+        return sb.toString() + instanceCnt;
     }
 
 
     public Course() {
+        instanceCnt++;
     }
 
     public long getCourseID() {

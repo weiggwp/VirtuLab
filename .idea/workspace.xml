@@ -349,7 +349,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1490" />
     <option name="width" value="1522" />
     <option name="height" value="1952" />
@@ -567,13 +567,6 @@
       <option name="MAIN_CLASS_NAME" value="backend.repository.CourseRepositoryTest" />
       <option name="METHOD_NAME" value="removeLab" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="backend.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="backend.Application" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
