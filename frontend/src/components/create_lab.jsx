@@ -4,7 +4,7 @@ import icon from "../Images/v.jpg";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGroup,FormControl,Card} from "react-bootstrap";
+import {Tab,Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGroup,FormControl,Card} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
@@ -13,17 +13,14 @@ import {Slides} from "./Slides";
 
 import {EquipmentList} from "./EquipmentList";
 
-
-
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             redirectHome: false,
-            // selectEquipment: false,
-            // doSetup:false,
             restart:false,
-            instruction:""
+            steps: [],
+            step_num: 0,
 
         };
     }
@@ -32,34 +29,6 @@ class create_lab extends React.Component {
             redirectHome: true
         })
     }
-    // clickSelectEquipment = () => {
-    //     this.setState({
-    //         selectEquipment: true
-    //     })
-    // }
-    // finishSelectEquipment = () => {
-    //     this.setState({
-    //         selectEquipment: false
-    //     })
-    // }
-    // clickSetup = () => {
-    //     this.setState({
-    //         doSetup: true
-    //     })
-    // }
-    // finishSetup = () => {
-    //     this.setState({
-    //         doSetup: false
-    //     })
-    // }
-    // ifSelectingEquipment()
-    // {
-    //     return this.state.selectEquipment && !this.state.doSetup
-    // }
-    // ifSettingup()
-    // {
-    //     return this.state.doSetup && !this.state.selectEquipment
-    // }
 
     setRestart = () => {
         this.setState({
@@ -80,26 +49,11 @@ class create_lab extends React.Component {
         )
 
     }
-    tab()
-    {
-        return(
-            <label className="tab"  >Create Lab</label>
-        )
 
-    }
-
-    slides()
-    {
-        return(
-            <div>
-                <Slides/>
-            </div>
-            )
-    }
     handleFieldChange = (e, field) => {
         this.setState({ [field]: e.target.value });
     };
-    instructions()
+    instruction0()
     {
         return(
             <div style={{padding: 10,width: '20rem',height:'30vh'}}>
@@ -116,19 +70,40 @@ class create_lab extends React.Component {
         )
     }
 
-    options()
+    instructionPane()
     {
+        const instructions = [];
+        // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
+        instructions.push(<Tab.Pane eventKey={0}> instruction for step {0} {this.instruction0()} </Tab.Pane>);
 
-            return(
-                <div>
+        for (let i = 1; i <= this.state.step_num; i += 1) {
+            // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
+            instructions.push(<Tab.Pane eventKey={i}>instruction for step {i} </Tab.Pane>);
+            }
 
-                    <EquipmentList/>
-                    {/*<Instruction/>*/}
-                    {this.instructions()}
-                </div>
+        return(
+            <Tab.Content>
+                <EquipmentList/>
+                {instructions}
+            </Tab.Content>
+        )
 
-            )
+    }
+    workspacePane(){
+        const workspaces = [];
+        // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
+        workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
 
+        for (let i = 1; i <= this.state.step_num; i += 1) {
+            // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
+            workspaces.push(<Tab.Pane eventKey={i}>workspace for step {i} </Tab.Pane>);
+        }
+
+        return(
+            <Tab.Content>
+                {workspaces}
+            </Tab.Content>
+        )
     }
     toolbar()
     {
@@ -190,6 +165,22 @@ class create_lab extends React.Component {
             )
         }*/
     }
+    handleAddChild = () => {
+        this.setState({
+            //add a new step to steps[]
+            step_num: this.state.step_num + 1
+        });
+        // alert(this.state.step_num);
+    };
+    handlInstructionUpdate = () => {
+        this.setState({
+            //add a new step to steps[]
+            step_num: this.state.step_num + 1
+        });
+        // alert(this.state.step_num);
+    };
+
+
     render(){
 
         return(
@@ -199,25 +190,42 @@ class create_lab extends React.Component {
                 {/*<div style={{display:"flex"}}>*/}
                 {/*    {this.tab()}*/}
                 {this.toolbar()}
-                <Container fluid className={"contain"} style={{cursor: 'initial'}}>
-                    <Row >
+                {/*<Container fluid className={"contain"} style={{cursor: 'initial'}}>*/}
+                {/*    <Row >*/}
+                {/*        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>*/}
+                {/*            {this.slides()}*/}
+                {/*        </Col>*/}
+
+                {/*        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >*/}
+                {/*            /!*<Instruction/>*!/*/}
+                {/*            {this.options()}*/}
+                {/*        </Col>*/}
+                {/*        <Col lg={{span:8}} className="darkerBack" >*/}
+                {/*            <Workspace empty={true}/>*/}
+
+
+
+                {/*        </Col>*/}
+
+                {/*    </Row>*/}
+                {/*</Container>*/}
+                <Tab.Container id="steps" defaultActiveKey="0">
+                    <Row>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
-                            {this.slides()}
+                            {/*{this.slides()}*/}
+                            {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
+                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild}/>
                         </Col>
-
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
-                            {/*<Instruction/>*/}
-                            {this.options()}
+                                {this.instructionPane()}
                         </Col>
-                        <Col lg={{span:8}} className="darkerBack" >
-                            <Workspace empty={true}/>
-
+                        <Col lg={{span:7}} className="darkerBack" >
+                            {this.workspacePane()}
 
 
                         </Col>
-
                     </Row>
-                </Container>
+                </Tab.Container>
             </div>
         )
     }

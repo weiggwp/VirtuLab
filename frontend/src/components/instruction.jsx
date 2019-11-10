@@ -11,6 +11,9 @@ class Instruction extends React.Component
     constructor(props)
     {
         super(props);
+        this.state = {
+            text: "Click and place the water bottle in the workspace area, then press finish.",
+        }
 
     }
 
@@ -26,7 +29,7 @@ class Instruction extends React.Component
             <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
                 {/*<Card.Title>Special title treatment</Card.Title>*/}
                 <Card.Text style={{textAlign:"left"}}>
-                    Click and place the water bottle in the workspace area, then press finish.
+                    {this.state.text}
                     <br/>Note: This is only here for demo purposes
                 </Card.Text>
             </Card.Body>
