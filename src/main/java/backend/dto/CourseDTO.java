@@ -1,12 +1,18 @@
 package backend.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CourseDTO {
 
+    @JsonProperty("course_name")
     private String courseName;
+    @JsonProperty("course_number")
+    private String courseNumber;
+    @JsonProperty("description")
     private String courseDescription;
-    private int courseNumber;
-    private int courseEnrollment;
+
+//    private int courseEnrollment;
 
     public String getCourseName() {
         return courseName;
@@ -24,20 +30,30 @@ public class CourseDTO {
         this.courseDescription = courseDescription;
     }
 
-    public int getCourseNumber() {
+    public String getCourseNumber() {
         return courseNumber;
     }
 
-    public void setCourseNumber(int courseNumber) {
+    public void setCourseNumber(String courseNumber) {
         this.courseNumber = courseNumber;
     }
 
-    public int getCourseEnrollment() {
-        return courseEnrollment;
-    }
+//    public int getCourseEnrollment() {
+//        return courseEnrollment;
+//    }
+//
+//    public void setCourseEnrollment(int courseEnrollment) {
+//        this.courseEnrollment = courseEnrollment;
+//    }
 
-    public void setCourseEnrollment(int courseEnrollment) {
-        this.courseEnrollment = courseEnrollment;
+
+    @Override
+    public String toString() {
+        return "CourseDTO{" +
+                "courseName='" + courseName + '\'' +
+                ", courseNumber=" + courseNumber +
+                ", courseDescription='" + courseDescription + '\'' +
+                '}';
     }
 }
 

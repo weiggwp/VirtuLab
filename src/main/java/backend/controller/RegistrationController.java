@@ -1,20 +1,18 @@
 package backend.controller;
 
-import javax.validation.Valid;
-
 import backend.dto.UserDTO;
 import backend.model.User;
 import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Map;
 
 
 @Controller
@@ -30,13 +28,9 @@ public class RegistrationController {
         return new UserDTO();
     }
 
-    @GetMapping
-    public String showRegistrationForm(Model model) {
-        return "register";
-    }
-
     @CrossOrigin(origins = "*")
     @PostMapping
+    @ResponseBody
     public ResponseEntity registerUserAccount(@RequestBody UserDTO userDto, BindingResult result,
                                               Model model) {
         System.out.println(userDto);
@@ -51,14 +45,8 @@ public class RegistrationController {
         else if (existing != null) {
             errorMessge = "Username occupied! Please use another username.";
         }
-        model.addAttribute("errorMessge", errorMessge);
-        if (errorMessge != null) {
-//            return "register";
-        }
 
         userService.register(userDto);
-
-//        return "redirect:/login";
         return new ResponseEntity(HttpStatus.OK);
     }
 }

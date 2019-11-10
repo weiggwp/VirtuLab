@@ -5,11 +5,15 @@ import icon from "../Images/v.jpg";
 import axios from 'axios';
 import '../stylesheets/banner.css';
 import '../stylesheets/signup.css';
+import GLOBALS from '../Globals';
+
+// const GLOBAL = require('../Globals');
 
 class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            role: props.location.state.role, // assume redirected from login page
             redirect: false,
             first_name: '',
             last_name:'',
@@ -32,8 +36,11 @@ class signup extends Component {
             last_name:this.state.last_name,
             email_address:this.state.email_address,
             password: this.state.password,
+            role: this.state.register_role,
+            is_student: this.props.location.role === "student"
             // confirm_password:this.state.confirm_password,
         };
+
         e.preventDefault();
         let axiosConfig = {
             headers: {
@@ -44,9 +51,9 @@ class signup extends Component {
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post('http://localhost:5000/signup', user,axiosConfig).then(
+
+        axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
-                console.log("Sending response")
                 console.log(response);
                 this.setState({ redirect: true });
             },
@@ -62,10 +69,12 @@ class signup extends Component {
     };
 
     render() {
+        console.log("role: " + this.state.role);
         if (this.state.authenticated) {
             return <Redirect exact to="/login" />;
         }
         if (this.state.redirect) {
+            alert("redirecting");
             return <Redirect exact to="/login" />;
         } else {
             const errorMessage = this.state.errors;
@@ -183,7 +192,7 @@ class signup extends Component {
                                         <Row style={{paddingTop:20}}>
                                             <Col md={{ span: 5, offset: 0 }}>
                                                 <Button style={{ backgroundColor: 'blue',color:"white"}} block bsSize="large" type="submit">
-                                                    Create Account
+                                                    Create Student Account
                                                 </Button>
                                             </Col>
                                         </Row>

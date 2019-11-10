@@ -9,6 +9,7 @@ import backend.model.Role;
 import backend.model.User;
 import backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -37,7 +40,12 @@ public class UserServiceImpl implements UserService {
         user.setEmail(registration.getEmail_address());
         user.setPassword(registration.getPassword());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+
+        if (registration.isStudent())
+            user.setRoles(Arrays.asList(new Role("student")));
+        else if (!registration.isStudent())
+            user.setRoles(Arrays.asList(new Role("instructor")));
+
         return userRepository.save(user);
     }
 

@@ -18,6 +18,9 @@ export class account_settings extends Component {
         //
         };
     }
+    handleFieldChange = (e, field) => {
+        this.setState({ [field]: e.target.value });
+    };
 
     // handleSubmit = (e) => {
     //     e.preventDefault();

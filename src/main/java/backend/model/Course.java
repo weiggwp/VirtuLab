@@ -1,6 +1,7 @@
 package backend.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,29 +12,48 @@ public class Course {
     private long courseID;
     private String courseName;
     private String courseDescription;
-    private int courseNumber;
+    private String courseNumber;
     private int courseEnrollment;
+    private String accessCode = generateAccessCode();
 
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "course_lab",
             joinColumns = {@JoinColumn(name = "courseID")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
-    private List<Lab> labs;
+    private List<Lab> labs = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "course_students",
         joinColumns = {@JoinColumn(name = "courseID")},
         inverseJoinColumns = {@JoinColumn(name = "id")})
-    private List<User> students;
+    private List<User> students = new ArrayList<>();
 
-    public Course(String courseName, String courseDescription, int courseNumber, int courseEnrollment, List<Lab> labs, List<User> students) {
+    public Course(String courseName, String courseDescription, String courseNumber, int courseEnrollment, List<Lab> labs, List<User> students) {
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.courseNumber = courseNumber;
         this.courseEnrollment = courseEnrollment;
-        this.labs = labs;
-        this.students = students;
+        this.labs = new ArrayList<>();
+        this.students = new ArrayList<>();
+
+        this.accessCode = generateAccessCode();
+
+    }
+
+    private String generateAccessCode(){
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder(5);
+
+        for (int i = 0; i < 5; i++) {
+            int index = (int)(AlphaNumericString.length() * Math.random());
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+        return sb.toString();
     }
 
 
@@ -64,11 +84,11 @@ public class Course {
         this.courseDescription = courseDescription;
     }
 
-    public int getCourseNumber() {
+    public String getCourseNumber() {
         return courseNumber;
     }
 
-    public void setCourseNumber(int courseNumber) {
+    public void setCourseNumber(String courseNumber) {
         this.courseNumber = courseNumber;
     }
 
@@ -102,8 +122,9 @@ public class Course {
                 "courseID=" + courseID +
                 ", courseName='" + courseName + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
-                ", courseNumber=" + courseNumber +
+                ", courseNumber='" + courseNumber + '\'' +
                 ", courseEnrollment=" + courseEnrollment +
+                ", accessCode='" + accessCode + '\'' +
                 ", labs=" + labs +
                 ", students=" + students +
                 '}';

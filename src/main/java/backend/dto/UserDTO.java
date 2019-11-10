@@ -19,7 +19,18 @@ public class UserDTO {
     private String password;
     @NotNull
     @NotEmpty
-    private String confirm_password;
+    private boolean isStudent;
+
+    public boolean isStudent() {
+        return isStudent;
+    }
+
+    public void setStudent(boolean student) {
+        isStudent = student;
+    }
+//    @NotNull
+//    @NotEmpty
+//    private String confirm_password;
 
 
     public String getFirst_name() {
@@ -54,13 +65,14 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getConfirm_password() {
-        return confirm_password;
-    }
+//    public String getConfirm_password() {
+//        return confirm_password;
+//    }
 
-    public void setConfirm_password(String confirm_password) {
-        this.confirm_password = confirm_password;
-    }
+//    public void setConfirm_password(String confirm_password) {
+//        this.confirm_password = confirm_password;
+//    }
+
 
     @Override
     public String toString() {
@@ -69,7 +81,7 @@ public class UserDTO {
                 ", last_name='" + last_name + '\'' +
                 ", email_address='" + email_address + '\'' +
                 ", password='" + password + '\'' +
-                ", confirm_password='" + confirm_password + '\'' +
+                ", isStudent=" + isStudent +
                 '}';
     }
 }

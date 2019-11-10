@@ -1,54 +1,76 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect ,Link} from "react-router-dom"
 
-import { Button, FormGroup, FormControl, Row,Col,Container,Jumbotron,FormLabel, ControlLabel } from 'react-bootstrap';
+import {
+    Button,
+    FormGroup,
+    FormControl,
+    Row,
+    Col,
+    Container,
+    Jumbotron, /*FormLabel, ControlLabel*/
+} from 'react-bootstrap';
 import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import icon from '../Images/v.jpg';
 import image from '../Images/lab_promo.png'
-
-
+import GLOBALS from '../Globals';
 
 class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false,
-            username: '',
+            login_success: false,
+            pathname: '/instructor_home',
+            to_register: false,
+            email_address: '',
             password: '',
-            errors: ''
+            register_role: '',
+            errors: '',
         };
     }
 
     handleCredentialChange = (e, credential) => {
-        this.setState({ [credential]: e.target.value });
+        this.setState({[credential]: e.target.value});
     };
 
+    handleRegisterClick = (e, r) => {
+        this.setState({to_register: true, register_role: r});
+        e.preventDefault();
+    };
     handleSubmit = (e) => {
-
+        e.preventDefault();
         const user = {
-            username: this.state.username,
+            email_address: this.state.email_address,
             password: this.state.password
         };
-        console.log("sending user from frontend side")
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
             }
         };
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
+            .then((response) => {
+                //TODO: ask backend to respond with user object with the role, instead of just 200
+                // example of return instance
+                // User{id=49, firstName='omg', lastName='omg', email='omg', password='$2a$10$vmPtFoUpX6uzrNzenM9.le/Gn0uggQK4HlKilhMjwaZGi7bpGPoE2', isStudent=false, courses=[], labs=[], roles=[Role{id=50, name='instructor'}]}
+                // for (const key in keys(response.data)) {
+                //     console.log(key, response.data[key]);
+                // }
+                console.log(response.data["msg"])
+                console.log(response.data["user"])
 
-        axios.post('http://localhost:5000/login', user, axiosConfig).then(
-            (response) => {
-                console.log("the response is: " + response)
-                console.log(response);
-                this.setState({ redirect: true });
-            },
-            (error) => {
-                console.log("reject logging message")
+
+
+                this.setState({login_success: true});
+            })
+            .catch((error) => {
                 this.setState({
-                    errors: 'Error Login. Check username and password',
+                    errors: 'Error signing up! Try a different username',
                     username: '',
                     password: ''
                 });
@@ -58,58 +80,70 @@ class login extends Component {
     };
 
     render() {
-        if (this.state.redirect) {
-            return <Redirect exact to='/student_home'/>;
+        if (this.state.login_success) {
+            return <Redirect exact to={{
+
+                pathname: this.state.pathname,
+                state: {user: this.state.user},
+            }}/>;
             //student page or instructor page
-        } else {
-            const errorMessage = this.state.errors;
-            return (
+        }
+        if (this.state.to_register) {
+            return <Redirect exact to={{
+                pathname: "/signup",
+                state: {role: this.state.register_role},
+            }}/>;
+        }
+
+        const errorMessage = this.state.errors;
+        return (
+            <div>
+                <div className="banner">
+
+                    <img src={icon} alt="icon" width="30px" height="30px"/>
+                    <label>VirtuLab</label>
+                </div>
                 <div>
-                    <div className="banner">
+                    <Container fluid className="noPadding">
+                        <Row className="noMargin">
+                            <Col lg={{span: 8}} className="purple">
+                                {/*width="60%" height="100%"*/}
 
-                        <img src={icon} alt="icon" width="30px" height="30px"/>
-                        <label >VirtuLab</label>
-                    </div>
-                    <div>
-                        <Container fluid className="noPadding">
-                            <Row className="noMargin">
-                                <Col lg={{span:8}} className="purple">
-                                    {/*width="60%" height="100%"*/}
+                                <Jumbotron className={"noPadding noMargin"}>
+                                    <Container>
+                                        <h1 className={"loginH1"}>Reach Every Student</h1>
+                                        <p className={"loginP"}>
+                                            Personalize the learning experience and improve results for each student
+                                            with VirtuLab
+                                        </p>
+                                    </Container>
+                                </Jumbotron>
 
-                                    <Jumbotron className={"noPadding noMargin"}>
-                                        <Container>
-                                            <h1 className={"loginH1"}>Reach Every Student</h1>
-                                            <p className={"loginP"}>
-                                                Personalize the learning experience and improve results for each student with VirtuLab
-                                            </p>
-                                        </Container>
-                                    </Jumbotron>
+                                <img className="image" src={image} alt="labImage"/>
 
-                                    <img className="image" src={image} alt="labImage" />
-
-                                </Col>
-                                <Col lg={{span:4, offset:0}} className={"lightpurple"}>
-                                    {/*style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}*/}
-                                    <div className="Login" >
+                            </Col>
+                            <Col lg={{span: 4, offset: 0}} className={"lightpurple"}>
+                                {/*style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}*/}
+                                <div className="Login">
                                     <div className="box-container">
                                         {/*<img style={{height: 100, width: '100%' }}src={titleTxt} />*/}
                                         <h2 className="formTitle loginH2">Sign in</h2>
                                         <p className={"loginP"}>
                                             Already registered? Sign in with your VirtuLab account</p>
                                         <form className="login_form " onSubmit={this.handleSubmit}>
-                                            <FormGroup controlId="formBasicText" bsSize="large">
+                                            <FormGroup controlId="email_address" bsSize="large">
                                                 <FormControl
-                                                    style={{ height:60}}
+                                                    style={{height: 60}}
                                                     autoFocus
                                                     type="text"
-                                                    placeholder="Username"
-                                                    onChange={(e) => this.handleCredentialChange(e, 'username')}
+                                                    placeholder="E-mail Address"
+                                                    onChange={(e) => this.handleCredentialChange(e, 'email_address')}
                                                     required
                                                 />
                                             </FormGroup>
                                             <FormGroup controlId="password" bsSize="large">
                                                 <FormControl
-                                                    style={{ height:60}}
+                                                    style={{height: 60}}
                                                     onChange={(e) => this.handleCredentialChange(e, 'password')}
                                                     type="password"
                                                     placeholder="Password"
@@ -117,37 +151,38 @@ class login extends Component {
                                                 />
 
                                             </FormGroup>
-                                            <p style={{ color: 'red' }}> {errorMessage}</p>
-                                            <Button style={{ backgroundColor: "white",color:"black",height:60}} block bsSize="large" type="submit">
+                                            <p style={{color: 'red'}}> {errorMessage}</p>
+                                            <Button style={{backgroundColor: "white", color: "black", height: 60}} block
+                                                    bsSize="large" type="submit">
                                                 Sign in
                                             </Button>
                                             <h2 className="formTitle loginH2">Register</h2>
-                                            <Link to="/signup">
                                                 {/*either student signup or professor signup*/}
-                                                <Button style={{ backgroundColor: "white",color:"black",height:60}} block bsSize="large" type="submit">
-                                                   Student
+                                                <Button style={{backgroundColor: "white", color: "black", height: 60}}
+                                                        block bsSize="large"
+                                                        onClick={(e) => this.handleRegisterClick(e, 'student')}>
+                                                    Student
                                                 </Button>
-                                            </Link>
 
-                                            <div style={{paddingBottom:20}}>
+                                            <div style={{paddingBottom: 20}}>
                                             </div>
-                                            <Link to="/signup">
 
-                                                <Button style={{ backgroundColor: "white",color:"black",height:60}} block bsSize="large" type="submit">
+                                                <Button style={{backgroundColor: "white", color: "black", height: 60}}
+                                                        block bsSize="large"
+                                                        onClick={(e) => this.handleRegisterClick(e, 'instructor')}>
                                                     Instructor
                                                 </Button>
-                                            </Link>
                                         </form>
                                     </div>
                                 </div>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </div>
-
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
-            );
-        }
+
+            </div>
+        );
+
     }
 
 }
