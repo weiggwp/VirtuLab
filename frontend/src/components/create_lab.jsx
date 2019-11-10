@@ -13,14 +13,18 @@ import {Slides} from "./Slides";
 
 import {EquipmentList} from "./EquipmentList";
 
+
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
+        this.steps = new Step();
+
         this.state = {
             redirectHome: false,
             restart:false,
             steps: [],
             step_num: 0,
+
 
         };
     }
