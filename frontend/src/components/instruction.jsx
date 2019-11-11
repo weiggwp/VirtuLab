@@ -25,12 +25,12 @@ class Instruction extends React.Component
             <div style={{ paddingTop:10,paddingLeft:3}}>
 
             <Card style={{ width: '20rem',height:'30vh'}}>
-            <Card.Header>STEP 1:</Card.Header>
+            <Card.Header>STEP {this.props.step}:</Card.Header>
             <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
                 {/*<Card.Title>Special title treatment</Card.Title>*/}
                 <Card.Text style={{textAlign:"left"}}>
-                    {this.state.text}
-                    <br/>Note: This is only here for demo purposes
+                    {this.props.text}
+                    {/*<br/>Note: This is only here for demo purposes*/}
                 </Card.Text>
             </Card.Body>
         </Card>
