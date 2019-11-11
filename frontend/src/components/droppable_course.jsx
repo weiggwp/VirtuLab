@@ -8,70 +8,20 @@ class Droppable_course extends React.Component
     constructor(props)
     {
         super(props);
-        const user = {
 
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-                'responseType': 'json'
-            }
-        };
-        var classArr=[];
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
-            .then((response) => {
-               // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].courseID);
-                console.log("resp is " +response.data[0].courseName);
-                for (let i=0; i<response.data.length; i++){
-                    classArr[i]=response.data[i]
-
-                }
-                var classArray=[];
-
-                for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false};
-                    console.log("class array[i] is " +classArray[i].classname)
-                }
-               // console.log("AAA classarray is "+classArray);
-                this.states={
-                    // handleExpand : this.handleExpand.bind(this,id)
-                    count:0,
-                    classes : classArray
-                }
-                //console.log("classes is now "+this.state.classes)
-                this.render()
-                super.render()
-                //window.location.reload();
-            })
-            .catch((error) => {
-
-
-                }
-
-            );
-
-
-        this.states={
+        this.state={
             // handleExpand : this.handleExpand.bind(this,id)
             count:0,
-            classes : [
-
-            ]
-
+            classes : props.classes,
+            loaded: false,
         }
 
 
     }
 
+
     handleDropCourse = (e) => {
-       console.log(e.id+"AAAAAA");
+        console.log(e.id+"AAAAAA");
         const course = {
             code: this.state.code,
         };
@@ -86,7 +36,7 @@ class Droppable_course extends React.Component
         axios.post(GLOBALS.BASE_URL + 'drop', course, axiosConfig)
             .then((response) => {
 
-               // window.location.reload();
+                // window.location.reload();
                 console.log("success!");
             })
             .catch((error) => {
@@ -95,8 +45,8 @@ class Droppable_course extends React.Component
                         code: '',
                     });
                     console.log("failure...");
-                //    this.render()
-                  //  window.location.reload();
+                    //    this.render()
+                    //  window.location.reload();
 
                 }
             );
@@ -108,44 +58,41 @@ class Droppable_course extends React.Component
     render()
     {
         let style = this.props.style;
-        let classes = this.states.classes;
-
+        let classes = this.props.classes;
         console.log("classes is " + JSON.stringify(classes[0]));
         console.log("classes is " +classes+",len is "+classes.length);
-        let temp =["A","B"];
-        for (let i=0; i<classes.length; i++){
-            temp[i]=classes[i].classname;
-            console.log("tempi is " +temp[i])
-        } console.log("temp is " +temp)
-        return (
+        // let temp =["A","B"];
+        // for (let i=0; i<classes.length; i++){
+        //     temp[i]=classes[i].classname;
+        //     console.log("tempi is " +temp[i])
+        // } console.log("temp is " +temp)
 
-            <div>
-                {temp.map((classItem,index) => (
+            return (
 
-
-                    <Row>
-                        <Col md={{span:5,offset:2}}>
-                            <h3 className={style}>{classItem}</h3>
-                        </Col>
-
-                        <Col md={{ span: 1, offset: 0 }}>
-                            <Form inline onSubmit={this.handleDropCourse.bind(null, { id: classItem })}>
-
-                                <Button className={"dropButton"} block bsSize="small" type="submit">
-                                    Drop Class
-                                </Button>
-                            </Form>
-
-                        </Col>
-                    </Row>
+                <div>
+                    {classes.map((classItem, index) => (
 
 
+                        <Row>
+                            <Col md={{span: 5, offset: 2}}>
+                                <h3 className={style}>{classItem.classname}</h3>
+                            </Col>
 
+                            <Col md={{span: 1, offset: 0}}>
+                                <Form inline onSubmit={this.handleDropCourse.bind(null, {id: classItem.classname})}>
 
-                ))}
+                                    <Button className={"dropButton"} block bsSize="small" type="submit">
+                                        Drop Class
+                                    </Button>
+                                </Form>
 
-            </div>
-        );
+                            </Col>
+                        </Row>
+                    ))}
+
+                </div>
+            );
+
     }
 
 

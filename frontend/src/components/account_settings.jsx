@@ -4,6 +4,8 @@ import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
 import {Droppable_course} from './droppable_course.jsx'
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 export class account_settings extends Component {
     constructor(props) {
@@ -14,6 +16,8 @@ export class account_settings extends Component {
             old_password:'',
             new_password:'',
             confirm_new_password:'',
+            loading_course:true,
+            classes:[],
         //     classes:["Class 1: Study of Organisms and Behaviors| Fall 2019",'Class 2: Introduction to General Chemistry| Fall 2019']
         //
         };
@@ -44,11 +48,63 @@ export class account_settings extends Component {
         //     });
     // };
 
+    updateClasses(){
+        const user = {
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var classArr=[];
+        var classArray=[];
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+            .then((response) => {
+                // console.log("resp is " +response.json())
+                console.log("dat is " + JSON.stringify(response));
+                console.log("resp is " +response.data[0].courseID);
+                console.log("resp is " +response.data[0].courseName);
+                for (let i=0; i<response.data.length; i++){
+                    classArr[i]=response.data[i]
+
+                }
+                var classArray=[];
+
+                for (let i=0; i<response.data.length; i++){
+                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                        clicked:false};
+                    console.log("class array[i] is " +classArray[i].classname)
+                }
+                // console.log("AAA classarray is "+classArray);
+                this.setState({classes:classArray,loading_course:false});
+            })
+            .catch((error) => {
+                }
+            );
+    }
+
 
     render() {
         if (this.state.redirect) {
             return <Redirect exact to="/account_settings" />;
-        } else {
+        }
+        else if (this.state.loading_course){
+            console.log("loading classes", this.state.classes);
+            this.updateClasses();
+            return null;
+
+
+        }
+        else
+        {
+            console.log("loaded classes", this.state.classes);
+
             return (
                 <div>
 
@@ -158,7 +214,7 @@ export class account_settings extends Component {
                             </Row>
 
 
-                            {<Droppable_course style={"accountH3"}/>}
+                            {<Droppable_course style={"accountH3"} classes={this.state.classes}/>}
 
                             <Row style={{paddingTop:20}}>
                                 <Col md={{ span: 1, offset: 2 }}>
