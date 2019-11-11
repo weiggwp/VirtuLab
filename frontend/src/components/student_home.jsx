@@ -22,8 +22,8 @@ class student_home extends React.Component
             redirect:false,
             collapseID: "collapse3",
             code: '',
-
-
+            loading_course:true,
+            classes:[],
         };
     }
     renderRedirect = () => {
@@ -32,6 +32,49 @@ class student_home extends React.Component
         }
 
     };
+
+    updateClasses(){
+        const user = {
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var classArr=[];
+        var classArray=[];
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+            .then((response) => {
+                // console.log("resp is " +response.json())
+                console.log("dat is " + JSON.stringify(response));
+                console.log("resp is " +response.data[0].courseID);
+                console.log("resp is " +response.data[0].courseName);
+                for (let i=0; i<response.data.length; i++){
+                    classArr[i]=response.data[i]
+
+                }
+                var classArray=[];
+
+                for (let i=0; i<response.data.length; i++){
+                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                        clicked:false};
+                    console.log("class array[i] is " +classArray[i].classname)
+                }
+                // console.log("AAA classarray is "+classArray);
+                this.setState({classes:classArray,loading_course:false});
+            })
+            .catch((error) => {
+                }
+            );
+    }
+
+
     handleAddCourse = (e) => {
         e.preventDefault();
         const course = {
@@ -68,8 +111,16 @@ class student_home extends React.Component
 
 
     render() {
+         if (this.state.loading_course){
+            console.log("loading classes", this.state.classes);
+            this.updateClasses();
+            return null;
 
 
+        }
+        else
+         {
+             console.log("classes is "+this.state.classes);
         return(
 
             <div>
@@ -120,7 +171,7 @@ class student_home extends React.Component
                     </Navbar>
                 </div>
 
-                {<Expandable_Classes style={"settingsH3"}/>}
+                {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
                { <add_course />}
 
             </div>
@@ -128,6 +179,6 @@ class student_home extends React.Component
 
 
         )
-    }
+    }}
 }
 export default student_home;

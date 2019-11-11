@@ -17,57 +17,13 @@ class Expandable_Classes extends React.Component
     constructor(props)
     {
         super(props);
-        const user = {
-
-        };
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-            }
-        };
-        var classArr=[];
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
-            .then((response) => {
-
-                for (let i=0; i<response.data.length; i++){
-                    classArr[i]=response.data[i];
-
-                }
-                var classArray=[];
-                for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:classArr[i],
-                        clicked:false};
-                }
-                this.states={
-                    // handleExpand : this.handleExpand.bind(this,id)
-                    count:0,
-                    classes : classArray,
-                }
-                this.render()
-                super.render()
 
 
-            })
-            .catch((error) => {
-                    this.setState({
-                        errors: 'Error! No course found with the code.',
-                        code: '',
-                    });
-
-                }
-
-            );
-
-
-        this.states={
+        this.state={
             // handleExpand : this.handleExpand.bind(this,id)
             count:0,
-            classes : [
-
-            ],
+            classes : props.classes,
+            loaded: false,
         }
 
     }
@@ -78,11 +34,11 @@ class Expandable_Classes extends React.Component
     getCount()
     {
 
-        return (this.states.count).toString();
+        return (this.state.count).toString();
     }
     addAndGetCount()
     {
-        return (this.states.count++).toString();
+        return (this.state.count++).toString();
     }
     resetCount()
     {
@@ -92,9 +48,9 @@ class Expandable_Classes extends React.Component
     render()
     {
         let style = this.props.style;
-        let classes = this.states.classes;
+        let classes = this.props.classes;
         let expand = "https://www.materialui.co/materialIcons/navigation/expand_less_black_192x192.png";
-
+        console.log(classes + " is classes " + "props is "+JSON.stringify(this.props))
 
 
             return(

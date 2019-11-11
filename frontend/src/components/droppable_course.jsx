@@ -24,6 +24,7 @@ class Droppable_course extends React.Component
         console.log(e.id+"AAAAAA");
         const course = {
             code: this.state.code,
+            course_number: e.id,
         };
         let axiosConfig = {
             headers: {
@@ -36,7 +37,8 @@ class Droppable_course extends React.Component
         axios.post(GLOBALS.BASE_URL + 'drop', course, axiosConfig)
             .then((response) => {
 
-                // window.location.reload();
+                    this.render()
+                    window.location.reload();
                 console.log("success!");
             })
             .catch((error) => {
@@ -61,11 +63,6 @@ class Droppable_course extends React.Component
         let classes = this.props.classes;
         console.log("classes is " + JSON.stringify(classes[0]));
         console.log("classes is " +classes+",len is "+classes.length);
-        // let temp =["A","B"];
-        // for (let i=0; i<classes.length; i++){
-        //     temp[i]=classes[i].classname;
-        //     console.log("tempi is " +temp[i])
-        // } console.log("temp is " +temp)
 
             return (
 
@@ -79,7 +76,7 @@ class Droppable_course extends React.Component
                             </Col>
 
                             <Col md={{span: 1, offset: 0}}>
-                                <Form inline onSubmit={this.handleDropCourse.bind(null, {id: classItem.classname})}>
+                                <Form inline onSubmit={this.handleDropCourse.bind(null, {id: classItem.classID})}>
 
                                     <Button className={"dropButton"} block bsSize="small" type="submit">
                                         Drop Class

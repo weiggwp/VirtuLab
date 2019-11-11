@@ -1,5 +1,6 @@
 package backend.controller;
 
+import backend.dto.CourseDTO;
 import backend.dto.UserDTO;
 import backend.model.Course;
 import backend.service.UserService;
@@ -36,7 +37,7 @@ public class StudentHomeController {
     @GetMapping("/student_home")
     public ResponseEntity getCourses(@RequestBody UserDTO userDto, BindingResult result,
                                      Model model) {
-        System.out.println("User is " +userDto.getFirst_name()+"result is " +result.toString() + " model is " +model.toString());
+
         if (!instantiated){
             courses = new ArrayList<>();
             Course course1 = new Course("Class 1: Study of Organisms and Behaviors| Fall 2019\n",1);
@@ -65,7 +66,7 @@ public class StudentHomeController {
 int count=4;
     @RequestMapping(value="/enroll", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity enroll(@RequestBody UserDTO userDto, BindingResult result,
+    public ResponseEntity enroll(@RequestBody UserDTO userDto,  BindingResult result,
                                      Model model) {
         String courseName="Class "+(count)+" Introduction to General Chemistry| Fall 2019";
         courses.add(new Course(courseName,count++));
@@ -75,17 +76,21 @@ int count=4;
     }
     @RequestMapping(value="/drop", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity drop(@RequestBody UserDTO userDto, BindingResult result,
-                                 Model model,int id) {
+    public ResponseEntity drop(@RequestBody CourseDTO courseDto, BindingResult result,
+                               Model model) {
 
+        System.out.println("course is is " +courseDto.toString()+"result is " +result.toString() + " model is " +model.toString());
+
+        int id=Integer.parseInt(courseDto.getCourseNumber());
         for (int i=0; i<courses.size(); i++){
             if (courses.get(i).getCourseID()==id){
                 courses.remove(i);
                 System.out.println("dropped!");
                 return new ResponseEntity(HttpStatus.OK);
             }
+            else System.out.println("doesnt match " +courses.get(i).getCourseID());
         }
-
+        System.out.println("Couldn't find id of "+id);
 //        return "redirect:/login";
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff304d49-a687-408e-a42d-e85cda2dab52" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -11,12 +12,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/StudentHomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/StudentHomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/account_settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/account_settings.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/droppable_course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/droppable_course.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/expandable_course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/expandable_course.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/StudentHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/StudentHomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +177,7 @@
       <workItem from="1573240763674" duration="1046000" />
       <workItem from="1573249882854" duration="2970000" />
       <workItem from="1573323047384" duration="7923000" />
-      <workItem from="1573415691472" duration="21791000" />
+      <workItem from="1573415691472" duration="27689000" />
     </task>
     <servers />
   </component>
