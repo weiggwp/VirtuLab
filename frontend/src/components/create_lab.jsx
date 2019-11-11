@@ -26,7 +26,8 @@ class create_lab extends React.Component {
             redirectHome: false,
             restart:false,
             // steps: [],
-            step_num: 0,
+            step_num: -1,
+            id:0
 
 
         };
@@ -56,12 +57,29 @@ class create_lab extends React.Component {
         )
 
     }
+    getStepsArray()
+    {
+        var array = [];
+        var current = this.steps;
+        while(current)
+        {
+            array.push({
+                index:current.index,
+                stepNum:current.instruction
+            })
+            current = current.next;
+        }
+        return array;
+
+
+    }
 
         handleLabSave = (e) => {
         // e.preventDefault();
         const lab = {
             name: "Untitled Lab",
-            step: this.steps,
+            id: this.state.id,
+            steps: this.getStepsArray()
         };
 
         let axiosConfig = {
@@ -74,6 +92,11 @@ class create_lab extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
                 this.setState({save_success: true});
+                console.log("id is "+response.data);
+                if(this.state.id===0)  //only if not set
+
+                    this.setState({id:response.data});
+
                 console.log("response: ", response);
             })
             .catch((error) => {

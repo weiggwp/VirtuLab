@@ -2,7 +2,9 @@ package backend.controller;
 
 
 import backend.dto.CourseDTO;
+import backend.dto.StepDTO;
 import backend.model.Course;
+import backend.model.Step;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -42,39 +47,42 @@ public class LabController {
     LabService labService;
 
     @Autowired
-    ModelMapper modelMapper;
+    UserService userService;
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
-    public Map<String, Object> addLab(@RequestBody CourseDTO courseDTO) {
-        System.out.println("LabController: ");
-        // TODO: check if lab exists, save lab otherwise
-
-        Map<String, Object>  map = new HashMap<>();
-        /* In DB, reject request to add course*/
-        if (false) {
-            map.put("msg", ERRMSG);
-            return map;
-        }
-
-        /* convert DTO to entity, add to DB */
-        map.put("msg", SUCCESS);
-        return map;
-    }
-
-//    @Bean
-//    public ModelMapper modelMapper() {
-//        return new ModelMapper();
-//    }
-
+    ModelMapper modelMapper = new ModelMapper();
 
 //    @CrossOrigin(origins = "*")
 //    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
-//    public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
+//    public Map<String, Object> addLab(@RequestBody CourseDTO courseDTO) {
+//        System.out.println("LabController: ");
+//        // TODO: check if lab exists, save lab otherwise
 //
-//        System.out.println(labDTO.getId());
-//        System.out.println("lab Controller is called");
+//        Map<String, Object>  map = new HashMap<>();
+//        /* In DB, reject request to add course*/
+//        if (false) {
+//            map.put("msg", ERRMSG);
+//            return map;
+//        }
 //
+//        /* convert DTO to entity, add to DB */
+//        map.put("msg", SUCCESS);
+//        return map;
+//    }
+
+
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
+    public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
+
+        System.out.println("lab Controller is called: save_lab");
+        System.out.println(labDTO);
+
+        // LabDTO{id=0, name='Untitled Lab', lastModified=null, instructorID=0, steps=[StepDTO{stepNum=0, instruction=
+        // 'null'}, StepDTO{stepNum=0, instruction='null'}, StepDTO{stepNum=0, instruction='null'}, StepDTO{stepNum=0,
+        // instruction='null'}]}
+
 //        Lab existing = labService.findByLabID(labDTO.getId());
 //        System.out.println("existing:"+existing);
 //        long returnid = -1;
@@ -86,8 +94,36 @@ public class LabController {
 //        else
 //            returnid = labService.createNewLab(labDTO);
 //        System.out.println("return http OK\n"+returnid);
-//
-//        return new ResponseEntity<>(returnid, HttpStatus.OK);
-//    }
+        List<StepDTO> steps = labDTO.getSteps();
+        for (StepDTO dto: steps) {
+            System.out.println(dto);
+        }
+        Lab lab = modelMapper.map(labDTO, Lab.class);
+        System.out.println(lab);
+        labService.saveLab(lab);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
+    public Map<String, Object> getLabs() {
+        System.out.println("lab Controller is called: get_labs");
+
+        Map<String, Object> map = new HashMap<>();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = "";
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails)principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+
+        User user = userService.findByEmail(email);
+        map.put("msg", SUCCESS);
+        map.put("list", user.getCourses());
+        return map;
+    }
 
 }

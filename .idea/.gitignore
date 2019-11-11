@@ -1,9 +1,0 @@
-
-# Default ignored files
-/workspace.xml
-../.gradle
-../build
-./workspace.xml
-../src/main/resources/application.properties
-# Project exclude paths
-/../
