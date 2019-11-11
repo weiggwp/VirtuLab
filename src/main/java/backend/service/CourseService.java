@@ -26,7 +26,33 @@ public class CourseService {
 
     public void deleteCourse(long id) {courseRepository.deleteById(id);}
 
+    public void findCourseById(long id) {courseRepository.findById(id);}
+
+    public void deleteCourseById(long id) {courseRepository.deleteById(id);}
+
+    public void deleteAllCourses() { courseRepository.deleteAll(); }
+
     public Optional<Course> findCourseByName(String name) { return courseRepository.findByCourseName(name); }
+
+    public Optional<Course> findCourseByNameOrCode(String input, int byName) {
+        if (byName == 1) {
+            return courseRepository.findByCourseName(input);
+        } else {
+            return courseRepository.findByAccessCode(input);
+        }
+    }
+
+    public boolean courseExists(String input, int byName) {
+        if (byName == 1) {
+            Optional<Course> optional = courseRepository.findByCourseName(input);
+            if (optional.isPresent()) return true;
+            return false;
+        } else {
+            Optional<Course> optional = courseRepository.findByAccessCode(input);
+            if (optional.isPresent()) return true;
+            return false;
+        }
+    }
 
     public boolean courseExists(CourseDTO course){
         String name = course.getCourseName();

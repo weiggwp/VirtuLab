@@ -75,9 +75,7 @@ public class CourseController {
     @RequestMapping(value = "/update_course", method = RequestMethod.POST)
     public Map<String, Object> updateCourse(@RequestBody String name) {
         System.out.println("CourseController update operation: ");
-
         return null;
-
     }
 
 

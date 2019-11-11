@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -29,20 +30,20 @@ public class User {
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "instructor_course",
+    @JoinTable(name = "user_course",
             joinColumns = {@JoinColumn(name = "id")},
             inverseJoinColumns = {@JoinColumn(name = "courseID")})
     private List<Course> courses;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<UserCourse> courses = new ArrayList<>();
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "instructor_lab",
             joinColumns = {@JoinColumn(name = "id")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs;
-
-
-
-
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

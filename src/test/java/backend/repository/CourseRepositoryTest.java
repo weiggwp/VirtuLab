@@ -2,6 +2,7 @@ package backend.repository;
 
 import backend.model.Course;
 import backend.model.Lab;
+import backend.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,61 @@ import static org.junit.jupiter.api.Assertions.*;
 class CourseRepositoryTest {
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     CourseRepository courseRepository;
     @Autowired
     LabRepository labRepository;
+
+    @Test
+    void modifyList() {
+        User user = new User();
+        user.setEmail("john");
+        User user1 = new User();
+
+        Course course = new Course();
+        Course course1= new Course();
+        Course course2= new Course();
+        course.setCourseName("CHE 129");
+        course1.setCourseName("CHE 101");
+        course2.setCourseName("CHE 222");
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(course);
+        courseList.add(course1);
+        user.setCourses(courseList);
+
+        userRepository.save(user);
+        Optional<User> dbUser = userRepository.findById(user.getId());
+        user = dbUser.get();
+        for (Course c: user.getCourses()) {
+            System.out.println(c);
+        }
+
+        System.out.println("added another course ");
+
+        courseList = user.getCourses();
+        courseList.add(course2);
+        user.setCourses(courseList);
+        userRepository.save(user);
+
+
+        dbUser = userRepository.findById(user.getId());
+        user = dbUser.get();
+        for (Course c: user.getCourses()) {
+            System.out.println(c);
+        }
+
+        courseRepository.deleteById(course.getCourseID());
+        System.out.println("deleted course");
+        courseList.remove(0);
+        dbUser = userRepository.findById(user.getId());
+        user = dbUser.get();
+        for (Course c: user.getCourses()) {
+            System.out.println(c);
+        }
+
+    }
 
     @Test
     void insert(){
@@ -68,7 +121,6 @@ class CourseRepositoryTest {
         for (Lab lab: c.getLabs()) {System.out.println(lab.getName());}
 
         System.out.println("After Deletion of a Lab");
-        labRepository.deleteById(lab1.getLabID());
         optional = courseRepository.findById(course.getCourseID());
         c = optional.get();
         for (Lab lab: c.getLabs()) {System.out.println(lab.getName());}

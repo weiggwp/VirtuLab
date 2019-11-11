@@ -31,8 +31,11 @@ public class Lab {
     public void setName(String name) {
         this.name = name;
     }
-    //    @OneToMany
-//    private List<Equipment> equipmentList;
+
+    @OneToMany
+    private List<Equipment> equipmentList;
+
+
 
 
 

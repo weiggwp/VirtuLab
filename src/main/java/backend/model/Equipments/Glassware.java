@@ -4,8 +4,10 @@ import backend.model.DataNode;
 import backend.model.Equipment;
 import backend.model.Substances.Substance;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
+@Entity
 public class Glassware extends Equipment {
     protected ArrayList<Substance> substances= new ArrayList<>();
 

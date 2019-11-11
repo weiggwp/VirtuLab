@@ -25,19 +25,20 @@ public class Course {
             inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "course_students",
-        joinColumns = {@JoinColumn(name = "courseID")},
-        inverseJoinColumns = {@JoinColumn(name = "id")})
-    private List<User> students = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(name = "user_course",
+//        joinColumns = {@JoinColumn(name = "courseID")},
+//        inverseJoinColumns = {@JoinColumn(name = "id")})
+    @ManyToMany(mappedBy = "courses")
+    private List<User> users = new ArrayList<>();
 
-    public Course(String courseName, String courseDescription, String courseNumber, int courseEnrollment, List<Lab> labs, List<User> students) {
+    public Course(String courseName, String courseDescription, String courseNumber, int courseEnrollment, List<Lab> labs, List<User> users) {
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.courseNumber = courseNumber;
         this.courseEnrollment = courseEnrollment;
         this.labs = new ArrayList<>();
-        this.students = new ArrayList<>();
+        this.users = new ArrayList<>();
 
         this.accessCode = generateAccessCode();
         instanceCnt++;
@@ -48,7 +49,7 @@ public class Course {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
-        StringBuilder sb = new StringBuilder(5);
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < 3; i++) {
             int index = (int)(AlphaNumericString.length() * Math.random());
@@ -60,7 +61,7 @@ public class Course {
 
 
     public Course() {
-        instanceCnt++;
+        instanceCnt ++;
     }
 
     public long getCourseID() {
@@ -112,11 +113,11 @@ public class Course {
     }
 
     public List<User> getStudents() {
-        return students;
+        return users;
     }
 
-    public void setStudents(List<User> students) {
-        this.students = students;
+    public void setStudents(List<User> users) {
+        this.users = users;
     }
 
     @Override
@@ -129,7 +130,7 @@ public class Course {
                 ", courseEnrollment=" + courseEnrollment +
                 ", accessCode='" + accessCode + '\'' +
                 ", labs=" + labs +
-                ", students=" + students +
+                ", students=" + users +
                 '}';
     }
 }
