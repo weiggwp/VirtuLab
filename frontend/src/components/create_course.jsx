@@ -33,6 +33,7 @@ export class create_course extends Component {
             description: this.state.description,
         };
         alert("Create Course");
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -45,6 +46,7 @@ export class create_course extends Component {
 
             })
     }
+
 
     renderBanner() {
         return (

@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
 import StudentHeader from './studentHeader.jsx';
+import {EquipmentList} from "./EquipmentList";
 class do_lab extends React.Component {
     constructor(props) {
         super(props);
@@ -72,6 +73,7 @@ class do_lab extends React.Component {
                 <Nav >
                     <Link to="/student_home">
                         <Image  onClick={this.setRedirectHome} className={"config_image"} src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png" rounded />
+
                     </Link>
                 </Nav>
 
@@ -92,6 +94,8 @@ class do_lab extends React.Component {
                 <Container fluid className={"contain"} style={{cursor: 'initial'}}>
                     <Row >
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh'}}  lg={{span:3}} className={"backcolor"}>
+
+                            <EquipmentList/>
                             <Instruction/>
 
 

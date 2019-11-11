@@ -6,3 +6,11 @@
     color:black;
 
 }
+
+.lowlight
+{
+    background-color: white;
+    /*font-weight: bold;*/
+    color: black;
+    border: none;
+}

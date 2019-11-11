@@ -1,26 +1,33 @@
 import React, {Component} from 'react';
 import icon from "../Images/v.jpg";
+
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {Button, Col, Container, FormControl, FormGroup, Image, Jumbotron, Nav, Navbar, Row} from "react-bootstrap";
+import {Tab,Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGroup,FormControl,Card} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {Equipment} from "./Equipment";
+import Step from "../Step.js";
+import {Slides} from "./Slides";
+
+import {EquipmentList} from "./EquipmentList";
+import axios from "axios";
+import GLOBALS from "../Globals";
+
 
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
+        this.steps = new Step(0);
+
         this.state = {
             redirectHome: false,
-            selectEquipment: false,
-            doSetup:false,
-            restart:false
+            restart:false,
+            // steps: [],
+            step_num: 0,
+
 
         };
     }
@@ -28,43 +35,15 @@ class create_lab extends React.Component {
         this.setState({
             redirectHome: true
         })
-    }
-    clickSelectEquipment = () => {
-        this.setState({
-            selectEquipment: true
-        })
-    }
-    finishSelectEquipment = () => {
-        this.setState({
-            selectEquipment: false
-        })
-    }
-    clickSetup = () => {
-        this.setState({
-            doSetup: true
-        })
-    }
-    finishSetup = () => {
-        this.setState({
-            doSetup: false
-        })
-    }
-    ifSelectingEquipment()
-    {
-        return this.state.selectEquipment && !this.state.doSetup
-    }
-    ifSettingup()
-    {
-        return this.state.doSetup && !this.state.selectEquipment
-    }
+    };
 
     setRestart = () => {
         this.setState({
-            restart: true,
-            selectEquipment:false,
-            doSetup:false
+            restart: true,      //should probably just be restarting a single step
+            // selectEquipment:false,
+            // doSetup:false
         })
-    }
+    };
 
 
     banner() {
@@ -77,135 +56,178 @@ class create_lab extends React.Component {
         )
 
     }
-    tab()
+
+        handleLabSave = (e) => {
+        // e.preventDefault();
+        const lab = {
+            name: "Untitled Lab",
+            step: this.steps,
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+        console.log("Sending lab to save_lab");
+        axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
+            .then((response) => {
+
+                this.setState({save_success: true});
+                console.log("response: ", response);
+            })
+            .catch((error) => {
+                    this.setState({
+                        errors: 'Saving error',
+                    });
+                }
+            );
+    };
+
+    toolbar()
+    {
+        //   if(this.ifSelectingEquipment())
+        {
+            return (
+                <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
+                        className={"justify-content-between bar"}>
+                    <Nav>
+
+                        <Link to="/create_lab">
+                            <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
+                        </Link>
+                        {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
+
+                        <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
+
+                    </Nav>
+
+                    <Nav>
+                        <Image className={"save_image"} onClick={this.handleLabSave}
+                               src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
+                               rounded/>
+
+                        <Link to="/instructor_home">
+                            <Image onClick={this.setRedirectHome} className={"config_image"}
+                                   src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
+                                   rounded/>
+                        </Link>
+                    </Nav>
+
+                </Navbar>
+            )
+        }
+
+    }
+
+    handleFieldChange = (e, field) => {
+        this.setState({ [field]: e.target.value });
+    };
+    handleInstructionChange=(e,index)=>
+    {
+        this.steps.updateInstruction(index,e.target.value);
+        console.log(this.steps);
+    };
+
+    instruction(index)
     {
         return(
-            <label className="tab"  >Create Lab</label>
+            <div style={{padding: 10,width: '20rem',height:'30vh'}}>
+
+                <textarea
+                    style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
+                    placeholder="Input instruction for this step here"
+                    onChange={(e) => this.handleInstructionChange(e, index)}
+                    // value={this.steps.getInstruction(index)}
+                />
+
+            </div>
+
+        )
+    }
+    setupInstruction(step,text)
+    {
+        return(
+            <div style={{ paddingTop:10,paddingLeft:3}}>
+
+                <Card style={{ width: '20rem',height:'30vh'}}>
+                    <Card.Header>STEP {step}:</Card.Header>
+                    <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
+                        <Card.Text style={{textAlign:"left"}}>
+                            {text}
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+                {/*<div style={{ paddingTop:20,paddingLeft:3}}>*/}
+                {/*    <Button style={{ backgroundColor: 'transparent',color:"black"}} block bsSize="large" >*/}
+                {/*        Finish*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
+            </div>
+
+        );
+    }
+
+
+    instructionPane()
+    {
+        const instructions = [];
+        // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
+        instructions.push(<Tab.Pane eventKey={0}>  {this.setupInstruction(0,"This is the setup stage. " +
+            "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
+
+        for (let i = 1; i <= this.state.step_num; i += 1) {
+            // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
+            instructions.push(<Tab.Pane eventKey={i}>instruction for step {i} {this.instruction(i)}</Tab.Pane>);
+            }
+
+        return(
+            <Tab.Content>
+                <EquipmentList/>
+                {instructions}
+            </Tab.Content>
         )
 
     }
 
-    options()
-    {
-        if(!this.ifSelectingEquipment() && !this.ifSettingup())
-        {
-            //two buttons
-            return(
-            <div style={{ paddingTop:170,paddingLeft:3}}>
-                <Button onClick={this.clickSelectEquipment} style={{ backgroundColor: 'orange',color:"white",height:"10vh"}} block bsSize="large" >
-                    Select Equipment
-                </Button>
-                <Button onClick={this.clickSetup} style={{ backgroundColor: 'orange',color:"white",height:"10vh"}} block bsSize="large" >
-                    Finish Setup
-                </Button>
-            </div>
-            )
+    workspacePane(){
+        const workspaces = [];
+        // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
+        workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
+
+        for (let i = 1; i <= this.state.step_num; i += 1) {
+            // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
+            workspaces.push(<Tab.Pane eventKey={i}>workspace for step {i} </Tab.Pane>);
         }
-        if(this.ifSelectingEquipment())
-        {
-            return(
-                <Tabs style={{ borderStyle:"solid",borderWidth:1,marginTop:10,backgroundColor: '#96E2FA',color:"white",height:"8vh"}} defaultActiveKey="Solutions" transition={false} id="noanim-tab-example">
-                    <Tab eventKey="Solutions" title="Solutions" >
-                        <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                            <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                                <Equipment image={"https://cdn.iconscout.com/icon/premium/png-256-thumb/water-bottle-1738496-1475816.png"}/>
-                                Distilled water
 
-                            </Button>
-
-
-                        </ButtonGroup>
-                    </Tab>
-                    <Tab eventKey="Glassware" title="Glassware" >
-                        <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn4.iconfinder.com/data/icons/medical-health-10/128/1-512.png"}/>
-                            Erlenmeyer flask
-
-                        </Button>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn4.iconfinder.com/data/icons/laboratory-4/58/9-512.png"}/>
-                            Beaker
-
-                        </Button>
-                        </ButtonGroup>
-
-                    </Tab>
-                    <Tab eventKey="Tools" title="Tools" >
-                        {/*<Sonnet />*/}
-                    </Tab>
-                </Tabs>
-            )
-
-        }
-        if(this.ifSettingup())
-        {
-            return(
-                <Instruction/>
-            )
-
-        }
+        return(
+            <Tab.Content>
+                {workspaces}
+            </Tab.Content>
+        )
     }
-    toolbar()
-    {
-        if(this.ifSelectingEquipment())
-        {
-            return (
-                <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
-                        className={"justify-content-between bar"}>
-                    <Nav>
 
-                        <Link to="/create_lab">
-                            <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
-                        </Link>
-                        <Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />
+    handleAddChild = () => {
+        this.steps.addNewStep();
+        this.setState({
+            //add a new step to steps[]
+            step_num: this.state.step_num + 1
 
-                        <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
-
-                        </Nav>
-
-                    <Nav>
-                        <Image className={"save_image"}
-                               src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
-                               rounded/>
-
-                        <Link to="/instructor_home">
-                            <Image onClick={this.setRedirectHome} className={"config_image"}
-                                   src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
-                                   rounded/>
-                        </Link>
-                    </Nav>
-
-                </Navbar>
-            )
         }
-        else {
-            return (
-                <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
-                        className={"justify-content-between bar"}>
-                    <Nav>
+        );
 
-                        <Link to="/create_lab">
-                            <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
-                        </Link>
-                    </Nav>
+        // alert(this.state.step_num);
+    };
+    handlInstructionUpdate = () => {
+        this.setState({
+            //add a new step to steps[]
+            step_num: this.state.step_num + 1
+        });
+        // alert(this.state.step_num);
+    };
 
-                    <Nav>
-                        <Image className={"save_image"}
-                               src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
-                               rounded/>
 
-                        <Link to="/instructor_home">
-                            <Image onClick={this.setRedirectHome} className={"config_image"}
-                                   src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
-                                   rounded/>
-                        </Link>
-                    </Nav>
-
-                </Navbar>
-            )
-        }
-    }
     render(){
 
         return(
@@ -215,24 +237,42 @@ class create_lab extends React.Component {
                 {/*<div style={{display:"flex"}}>*/}
                 {/*    {this.tab()}*/}
                 {this.toolbar()}
-                {/*</div>*/}
-                <Container fluid className={"contain"} style={{cursor: 'initial'}}>
-                    <Row >
-                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh'}}  lg={{span:3}} className={"backcolor"}>
-                            {/*<Instruction/>*/}
-                            {this.options()}
+                {/*<Container fluid className={"contain"} style={{cursor: 'initial'}}>*/}
+                {/*    <Row >*/}
+                {/*        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>*/}
+                {/*            {this.slides()}*/}
+                {/*        </Col>*/}
+
+                {/*        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >*/}
+                {/*            /!*<Instruction/>*!/*/}
+                {/*            {this.options()}*/}
+                {/*        </Col>*/}
+                {/*        <Col lg={{span:8}} className="darkerBack" >*/}
+                {/*            <Workspace empty={true}/>*/}
+
+
+
+                {/*        </Col>*/}
+
+                {/*    </Row>*/}
+                {/*</Container>*/}
+                <Tab.Container id="steps" defaultActiveKey="0">
+                    <Row>
+                        <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
+                            {/*{this.slides()}*/}
+                            {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
+                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild}/>
+                        </Col>
+                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
+                                {this.instructionPane()}
+                        </Col>
+                        <Col lg={{span:7}} className="darkerBack" >
+                            {this.workspacePane()}
 
 
                         </Col>
-                        <Col lg={{span:8}} className="darkerBack" >
-                            <Workspace empty={true}/>
-
-
-
-                        </Col>
-
                     </Row>
-                </Container>
+                </Tab.Container>
             </div>
         )
     }

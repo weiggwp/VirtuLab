@@ -22,7 +22,8 @@ class login extends Component {
         super(props);
         this.state = {
             login_success: false,
-            pathname: '/instructor_home',
+            pathnames: {instructor:'/instructor_home',
+                        student: '/student_home'},
             to_register: false,
             email_address: '',
             password: '',
@@ -51,10 +52,11 @@ class login extends Component {
                 "Access-Control-Allow-Origin": "*",
             }
         };
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
+        //axio sends post request to backend at \login to handle authentication
+        //TODO: ask backend to respond with user object including role, names, etc. instead of just 200 OK
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
+
                 //TODO: ask backend to respond with user object with the role, instead of just 200
                 // example of return instance
                 // User{id=49, firstName='omg', lastName='omg', email='omg', password='$2a$10$vmPtFoUpX6uzrNzenM9.le/Gn0uggQK4HlKilhMjwaZGi7bpGPoE2', isStudent=false, courses=[], labs=[], roles=[Role{id=50, name='instructor'}]}
@@ -67,6 +69,9 @@ class login extends Component {
 
 
                 this.setState({login_success: true});
+
+                this.setState({login_success: true,role: "instructor"});
+
             })
             .catch((error) => {
                 this.setState({
@@ -80,11 +85,11 @@ class login extends Component {
     };
 
     render() {
-        if (this.state.login_success) {
+        if (this.state.login_success){
             return <Redirect exact to={{
 
                 pathname: this.state.pathname,
-                state: {user: this.state.user},
+                state: {email: this.state.email_address},
             }}/>;
             //student page or instructor page
         }
@@ -98,14 +103,15 @@ class login extends Component {
         const errorMessage = this.state.errors;
         return (
             <div>
+                {/*banner on top*/}
                 <div className="banner">
-
                     <img src={icon} alt="icon" width="30px" height="30px"/>
                     <label>VirtuLab</label>
                 </div>
+                {/*Pic and Login*/}
                 <div>
                     <Container fluid className="noPadding">
-                        <Row className="noMargin">
+                        <Row className="noMargin full-height">
                             <Col lg={{span: 8}} className="purple">
                                 {/*width="60%" height="100%"*/}
 
@@ -119,9 +125,10 @@ class login extends Component {
                                     </Container>
                                 </Jumbotron>
 
-                                <img className="image" src={image} alt="labImage"/>
+                                <img className="image fill" src={image} alt="labImage"/>
 
                             </Col>
+
                             <Col lg={{span: 4, offset: 0}} className={"lightpurple"}>
                                 {/*style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}*/}
                                 <div className="Login">
@@ -177,6 +184,12 @@ class login extends Component {
                                 </div>
                             </Col>
                         </Row>
+
+                        {/*<Row className="noMargin">*/}
+                        {/*    hi*/}
+                        {/*</Row>*/}
+
+
                     </Container>
                 </div>
 

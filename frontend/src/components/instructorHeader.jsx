@@ -1,6 +1,7 @@
 import icon from "../Images/v.jpg";
 import React from "react";
 import Redirect from "react-router-dom/es/Redirect";
+import {Button} from "react-bootstrap";
 
 class InstructorHeader extends React.Component {
 
@@ -30,6 +31,46 @@ class InstructorHeader extends React.Component {
         }
     }
 
+    renderCourseButton =(currentTab) =>{
+        if( currentTab==="Courses") {
+            return (
+
+                <Button onClick={this.setRedirectCourse} >
+                    Courses
+                </Button>
+
+            );
+        }
+        else{
+            return (
+
+                <Button onClick={this.setRedirectCourse} className="lowlight" >
+                    Courses
+                </Button>
+                )
+        }
+    };
+
+    renderLabButton =(currentTab) =>{
+        if( currentTab ==="Labs") {
+            return (
+
+                <Button onClick={this.setRedirectLab} >
+                    Labs
+                </Button>
+
+            );
+        }
+        else{
+            return (
+
+                <Button onClick={this.setRedirectLab} className="lowlight">
+                    Labs
+                </Button>
+            )
+        }
+    };
+
     render() {
         return (
 
@@ -39,12 +80,15 @@ class InstructorHeader extends React.Component {
                 <i >VirtuLab</i>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {this.renderRedirectCourse()}
-                <label onClick={this.setRedirectCourse} >
-                    Courses</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {this.renderCourseButton(this.props.currentTab)}
+                {/*<label onClick={this.setRedirectCourse} className="highlight">*/}
+                {/*    Courses</label>*/}
+                &nbsp;&nbsp;&nbsp;
+                {/*&nbsp;&nbsp;&nbsp;&nbsp;*/}
                 {this.renderRedirectLab()}
-                <label onClick={this.setRedirectLab} >
-                    Labs</label>
+                {this.renderLabButton(this.props.currentTab)}
+                {/*<label onClick={this.setRedirectLab} >*/}
+                {/*    Labs</label>*/}
             </div>
 
         );

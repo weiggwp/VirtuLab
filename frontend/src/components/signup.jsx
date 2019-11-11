@@ -31,6 +31,7 @@ class signup extends Component {
     };
 
     handleSignUp = (e) => {
+        console.log("signup form submitted");
         const user = {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
