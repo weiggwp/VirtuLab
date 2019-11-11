@@ -15,6 +15,9 @@ public class Lab {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long labID;
     private String name;
+    private String description;
+    private boolean isPublic;
+
 
     public long getLabID() {
         return labID;
@@ -32,8 +35,6 @@ public class Lab {
         this.name = name;
     }
 
-    @OneToMany
-    private List<Equipment> equipmentList;
 
 
 

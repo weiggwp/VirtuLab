@@ -3,6 +3,8 @@ package backend.controller;
 
 import backend.dto.CourseDTO;
 import backend.model.Course;
+import backend.model.User;
+import backend.repository.UserRepository;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,6 +28,8 @@ public class CourseController {
 
     @Autowired
     CourseService courseService;
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -33,6 +38,8 @@ public class CourseController {
     @RequestMapping(value = "/create_course", method = RequestMethod.POST)
     @ResponseBody
     public Course addCourse(@RequestBody CourseDTO courseDTO) {
+        User user = userRepository.findByEmail("omg");
+
         System.out.println("CourseController create course: ");
         System.out.println(courseDTO);
         Map<String, Object>  map = new HashMap<>();
@@ -47,6 +54,9 @@ public class CourseController {
         Course c = modelMapper.map(courseDTO, Course.class);
         courseService.addCourse(c);
         System.out.println(c);
+
+        user.getCourses().add(c);
+        userRepository.save(user);
 
         return c;
     }
@@ -78,7 +88,19 @@ public class CourseController {
         return null;
     }
 
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/read_course", method = RequestMethod.POST)
+    public Map<String, Object> readCourse(@RequestBody String email) {
+        System.out.println("CourseController read operation: ");
 
+        Map<String, Object>  map = new HashMap<>();
+        User user = userRepository.findByEmail(email);
+
+        List<Course> coursesList = user.getCourses();
+        map.put("msg", SUCCESS);
+        map.put("list", coursesList);
+        return map;
+    }
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

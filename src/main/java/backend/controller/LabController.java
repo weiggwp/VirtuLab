@@ -30,7 +30,7 @@ public class LabController {
     ModelMapper modelMapper;
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/add_lab", method = RequestMethod.POST)
+    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
     public Map<String, Object> addLab(@RequestBody CourseDTO courseDTO) {
         System.out.println("LabController: ");
         // TODO: check if lab exists, save lab otherwise

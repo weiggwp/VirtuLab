@@ -73,7 +73,6 @@ class create_lab extends React.Component {
         console.log("Sending lab to save_lab");
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
-
                 this.setState({save_success: true});
                 console.log("response: ", response);
             })
