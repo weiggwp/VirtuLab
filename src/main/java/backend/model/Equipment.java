@@ -14,21 +14,25 @@ public abstract class Equipment {
 
     @ManyToOne
     protected Lab lab;
+    protected String name;
+    protected double weight;
+
+    public abstract DataNode interact(Equipment e, double capacityGiven);
+
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+
 
     public double getWeight() {
         return weight;
     }
-
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    protected double weight;
-
     public double getCapacity() {
         return capacity;
     }
-
     public void setCapacity(double capacity) {
         this.capacity = capacity;
     }
@@ -36,10 +40,10 @@ public abstract class Equipment {
     public int getState() {
         return state;
     }
-
     public void setState(int state) {
         this.state = state;
     }
+
 
     public int getCnt() {
         return cnt;
@@ -49,5 +53,5 @@ public abstract class Equipment {
         this.cnt = cnt;
     }
 
-    public abstract DataNode interact(Equipment e, double capacityGiven);
+
 }

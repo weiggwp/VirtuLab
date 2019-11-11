@@ -28,10 +28,6 @@ public class UserDTO {
     public void setStudent(boolean student) {
         isStudent = student;
     }
-//    @NotNull
-//    @NotEmpty
-//    private String confirm_password;
-
 
     public String getFirst_name() {
         return first_name;
