@@ -33,7 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and().authorizeRequests()
                 .anyRequest().permitAll()
-                .and().csrf().disable();
+                .and().csrf().disable()
+                .formLogin().loginPage("/index.html")
+                .loginProcessingUrl("/login")
+        ;
                 //.addFilterBefore(corsFilter(), SessionManagementFilter.class) //adds your custom CorsFilter
 //                .cors()
 //                .and()

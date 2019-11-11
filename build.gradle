@@ -44,6 +44,7 @@ dependencies {
     implementation 'org.springframework:spring-jdbc'
     implementation 'mysql:mysql-connector-java'
     runtimeOnly 'com.h2database:h2'
+    implementation 'io.jsonwebtoken:jjwt:0.2'
 
 
     compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'

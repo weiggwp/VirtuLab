@@ -51,5 +51,4 @@ public abstract class Equipment {
         this.cnt = cnt;
     }
 
-    public abstract DataNode interact(Equipment e, double capacityGiven);
 }

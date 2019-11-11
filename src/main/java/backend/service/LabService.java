@@ -43,7 +43,6 @@ public class LabService {
     }
 
     @Autowired
-    LabRepository labRepository;
 
     public void saveLab(Lab lab) {labRepository.save(lab);}
 

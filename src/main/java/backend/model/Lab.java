@@ -64,17 +64,6 @@ public class Lab {
     public Lab() {
     }
 
-    public void setLabID(long labID) {
-        this.labID = labID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public long getInstructorID() {
         return instructorID;
@@ -100,10 +89,6 @@ public class Lab {
         this.steps = steps;
     }
 
-    public long getLabID()
-    {
-        return this.labID;
-    }
 
 
 

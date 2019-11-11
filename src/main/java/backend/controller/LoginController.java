@@ -1,8 +1,11 @@
 package backend.controller;
 
+import backend.dto.TokenDTO;
 import backend.dto.UserDTO;
 import backend.model.User;
 import backend.service.UserService;
+import io.jsonwebtoken.*;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,68 +18,94 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import javax.xml.bind.DatatypeConverter;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.security.Key;
 
 @Controller
 @CrossOrigin(origins = "*")
 public class LoginController {
-
-    private final String ERRMSG = "fail";
-    private final String SUCCESS = "success";
+    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+    Key signingKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary("SECRET_KEY"), signatureAlgorithm.getJcaName());
 
     @Autowired
     UserService userService;
-
+    private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public HashMap<String, Object> loginPage(@RequestBody UserDTO userDTO) {
+    public ResponseEntity loginPage(@RequestBody UserDTO userDTO) {
         System.out.println(userDTO);
         System.out.println("Login Controller is called");
         System.out.println(userDTO.getEmail_address());
         User existing = userService.findByEmail(userDTO.getEmail_address());
         System.out.println("existing:"+existing);
 
+        if (existing == null)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
-        HashMap<String, Object> map = new HashMap<>();
-        if (existing == null) {
-            map.put("msg", ERRMSG);
-            return map;
-        }
-
-        map.put("msg", SUCCESS);
-        map.put("user", existing);
-        return map;
-
-//        if (!passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()))
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        System.out.println("return http OK\n");
+        if (!passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        System.out.println("return http OK\n");
+        String token =createToken(existing.getEmail(),existing.isStudent(),existing.getFirstName()+" "+existing.getLastName());
 
 
 
+        TokenDTO dto = new TokenDTO(isStudent(existing.isStudent()),token);
 
-//        String errorMessge = null;
-//        if(error != null) {
-//            errorMessge = "Username or Password is incorrect !!";
-//        }
-//        if(logout != null) {
-//            errorMessge = "You have been successfully logged out !!";
-//        }
-//        model.addAttribute("errorMessge", errorMessge);
-//        return "login";
-//        return existing;
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+    public String isStudent(boolean isStudent)
+    {
+        if(isStudent)
+            return "student";
+        return "instructor";
+
     }
 
-//    @RequestMapping(value="/logout", method = RequestMethod.POST)
-//    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth != null){
-//            new SecurityContextLogoutHandler().logout(request, response, auth);
-//        }
-//        return "redirect:/login?logout=true";
-//    }
+    public String createToken(String email,boolean student,String name)
+    {
+
+        return Jwts.builder()
+                .setIssuedAt(new Date())
+                .setSubject(email)
+                .claim("student",student)
+                .claim("name",name)
+                .signWith(signatureAlgorithm,signingKey)
+                .compact();
+
+    }
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/verify", method = RequestMethod.POST)
+    public ResponseEntity verifyToken(@RequestBody String token) {
+
+        try {
+            Jws<Claims> jws = Jwts.parser()
+                    .setSigningKey(signingKey)
+                    .parseClaimsJws(token);
+
+                return ResponseEntity.ok(jws.getBody().getSubject());
+
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+    }
+
+
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout=true";
+    }
 
 
 }

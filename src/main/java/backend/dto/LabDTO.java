@@ -1,6 +1,5 @@
 package backend.dto;
 
-import backend.model.Instructor;
 import backend.model.Step;
 
 import javax.validation.constraints.NotEmpty;
