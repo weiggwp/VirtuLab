@@ -14,7 +14,17 @@ public class Course {
     private int courseNumber;
     private int courseEnrollment;
 
+    public Course(String courseName, long courseID){
+        this.courseID=courseID;
+        this.courseName=courseName;
+    }
 
+    public long getCourseID(){
+        return courseID;
+    }
+    public String getCourseName(){
+        return this.courseName;
+    }
     @ManyToMany
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
                 inverseJoinColumns = {@JoinColumn(name = "labID")})

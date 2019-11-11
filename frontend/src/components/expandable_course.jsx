@@ -4,6 +4,8 @@ import '../stylesheets/student_home.css';
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import {Course} from './Course.jsx'
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 const expand_icons = {
     less: "https://www.materialui.co/materialIcons/navigation/expand_less_black_192x192.png",
@@ -15,15 +17,56 @@ class Expandable_Classes extends React.Component
     constructor(props)
     {
         super(props);
+        const user = {
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+        var classArr=[];
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+            .then((response) => {
+
+                for (let i=0; i<response.data.length; i++){
+                    classArr[i]=response.data[i];
+
+                }
+                var classArray=[];
+                for (let i=0; i<response.data.length; i++){
+                    classArray[i]={classname:classArr[i],
+                        clicked:false};
+                }
+                this.states={
+                    // handleExpand : this.handleExpand.bind(this,id)
+                    count:0,
+                    classes : classArray,
+                }
+                this.render()
+                super.render()
+
+
+            })
+            .catch((error) => {
+                    this.setState({
+                        errors: 'Error! No course found with the code.',
+                        code: '',
+                    });
+
+                }
+
+            );
+
+
         this.states={
             // handleExpand : this.handleExpand.bind(this,id)
             count:0,
             classes : [
 
-                {classname:"Class 1: Study of Organisms and Behaviors| Fall 2019",
-                    clicked:false},
-                {classname:'Class 2: Introduction to General Chemistry| Fall 2019',
-                    clicked:false}
             ],
         }
 

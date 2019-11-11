@@ -45,16 +45,21 @@ class student_home extends React.Component
         };
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'get_course', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'enroll', course, axiosConfig)
             .then((response) => {
-                //TODO: ask backend to respond with course object, else error
-                // this.setState({login_success: true});
+
+                window.location.reload();
+                console.log("success!");
             })
             .catch((error) => {
                     this.setState({
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
+                console.log("failure...");
+                this.render()
+                window.location.reload();
+
                 }
             );
 
