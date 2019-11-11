@@ -1,13 +1,15 @@
 package backend.model;
 
-import backend.model.Substances.Substance;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity
 public abstract class Equipment {
 
     protected String name;
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private long equipmentID;
     protected double capacity;
     protected int state;
     protected double weight;
@@ -16,6 +18,10 @@ public abstract class Equipment {
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
+    protected int cnt;
+
+    @ManyToOne
+    protected Lab lab;
 
     public double getWeight() {
         return weight;
@@ -23,7 +29,6 @@ public abstract class Equipment {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-
     public double getCapacity() {
         return capacity;
     }
@@ -38,4 +43,13 @@ public abstract class Equipment {
         this.state = state;
     }
 
+    public int getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
+    }
+
+    public abstract DataNode interact(Equipment e, double capacityGiven);
 }

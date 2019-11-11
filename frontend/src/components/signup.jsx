@@ -38,8 +38,10 @@ class signup extends Component {
             email_address:this.state.email_address,
             password: this.state.password,
             role: this.state.register_role,
+            is_student: this.props.location.role === "student"
             // confirm_password:this.state.confirm_password,
         };
+
         e.preventDefault();
         let axiosConfig = {
             headers: {

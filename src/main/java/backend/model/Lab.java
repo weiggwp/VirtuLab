@@ -3,6 +3,12 @@ package backend.model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.HashMap;
+import java.util.List;
 
 
 @Entity
@@ -25,6 +31,27 @@ public class Lab {
 //    @JoinTable(name = "lab_equipment", joinColumns = {@JoinColumn(name = "labID")},
 //            inverseJoinColumns = {@JoinColumn(name = "equipmentID")})
 //    private List<Equipment> equipments;
+
+    private String description;
+    private boolean isPublic;
+
+
+    public long getLabID() {
+        return labID;
+    }
+
+    public void setLabID(long labID) {
+        this.labID = labID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
 
     public Lab(String name, long instructorID, Date lastModified, List<Step> steps) {

@@ -56,7 +56,22 @@ class login extends Component {
         //TODO: ask backend to respond with user object including role, names, etc. instead of just 200 OK
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
+
+                //TODO: ask backend to respond with user object with the role, instead of just 200
+                // example of return instance
+                // User{id=49, firstName='omg', lastName='omg', email='omg', password='$2a$10$vmPtFoUpX6uzrNzenM9.le/Gn0uggQK4HlKilhMjwaZGi7bpGPoE2', isStudent=false, courses=[], labs=[], roles=[Role{id=50, name='instructor'}]}
+                // for (const key in keys(response.data)) {
+                //     console.log(key, response.data[key]);
+                // }
+                console.log(response.data["msg"])
+                console.log(response.data["user"])
+
+
+
+                this.setState({login_success: true});
+
                 this.setState({login_success: true,role: "instructor"});
+
             })
             .catch((error) => {
                 this.setState({

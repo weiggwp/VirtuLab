@@ -1,9 +1,20 @@
 package backend.model;
 
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
-
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@ToString
+//@Setter
+//@Getter
+//@Data
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
@@ -15,17 +26,25 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private boolean isStudent;
 
-    public User() {
-    }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_course",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "courseID")})
+    private List<Course> courses;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<UserCourse> courses = new ArrayList<>();
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "instructor_lab",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "labID")})
+    private List<Lab> labs;
+
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -35,6 +54,20 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+
+    public User(String firstName, String lastName, String email, String password, List<Course> courses, List<Lab> labs, Collection<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.courses = courses;
+        this.labs = labs;
+        this.roles = roles;
+    }
+
+    public User() {
+    }
 
     public long getId() {
         return id;
@@ -76,11 +109,51 @@ public class User {
         this.password = password;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Lab> getLabs() {
+        return labs;
+    }
+
+    public void setLabs(List<Lab> labs) {
+        this.labs = labs;
+    }
+
     public Collection<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+
+    public boolean isStudent() {
+        return isStudent;
+    }
+
+    public void setStudent(boolean student) {
+        isStudent = student;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", isStudent=" + isStudent +
+                ", courses=" + courses +
+                ", labs=" + labs +
+                ", roles=" + roles +
+                '}';
     }
 }

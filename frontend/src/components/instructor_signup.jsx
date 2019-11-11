@@ -9,7 +9,7 @@ import GLOBALS from '../Globals';
 import instructorHeader from './instructorHeader.jsx';
 // const GLOBAL = require('../Globals');
 
-class signup extends Component {
+class instructor_signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -205,4 +205,4 @@ class signup extends Component {
 
 }
 
-export default signup;
+export default instructor_signup;

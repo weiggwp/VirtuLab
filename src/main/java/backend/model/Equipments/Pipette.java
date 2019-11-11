@@ -1,7 +1,9 @@
 package backend.model.Equipments;
 
 
+import javax.persistence.Entity;
 
+@Entity
 public class Pipette extends Glassware {
 
   /*  public Pipette(double capacity){
