@@ -11,7 +11,8 @@ public class CourseDTO {
     private String courseNumber;
     @JsonProperty("description")
     private String courseDescription;
-
+    @JsonProperty("code")
+    private String code;
 //    private int courseEnrollment;
 
     public String getCourseName() {
@@ -38,7 +39,15 @@ public class CourseDTO {
         this.courseNumber = courseNumber;
     }
 
-//    public int getCourseEnrollment() {
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    //    public int getCourseEnrollment() {
 //        return courseEnrollment;
 //    }
 //
@@ -51,8 +60,9 @@ public class CourseDTO {
     public String toString() {
         return "CourseDTO{" +
                 "courseName='" + courseName + '\'' +
-                ", courseNumber=" + courseNumber +
+                ", courseNumber='" + courseNumber + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 }

@@ -37,7 +37,7 @@ class student_home extends React.Component
         }
 
     };
-    handleFieldChange = (e, field) => {
+     handleFieldChange = (e, field) => {
         this.setState({ [field]: e.target.value });
 
     };

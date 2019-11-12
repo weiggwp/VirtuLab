@@ -31,14 +31,17 @@ class signup extends Component {
     };
 
     handleSignUp = (e) => {
+        console.log("signup form submitted");
         const user = {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
             email_address:this.state.email_address,
             password: this.state.password,
             role: this.state.register_role,
+            is_student: this.props.location.role === "student"
             // confirm_password:this.state.confirm_password,
         };
+
         e.preventDefault();
         let axiosConfig = {
             headers: {

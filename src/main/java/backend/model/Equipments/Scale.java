@@ -3,6 +3,9 @@ package backend.model.Equipments;
 import backend.model.DataNode;
 import backend.model.Equipment;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Scale extends Equipment {
     @Override
     public DataNode interact(Equipment e, double capacityGiven) {

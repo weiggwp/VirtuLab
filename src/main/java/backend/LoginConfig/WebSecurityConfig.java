@@ -29,11 +29,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //.addFilterBefore(corsFilter(), SessionManagementFilter.class) //adds your custom CorsFilter
+
                 .cors()
                 .and().authorizeRequests()
                 .anyRequest().permitAll()
                 .and().csrf().disable();
+                //.addFilterBefore(corsFilter(), SessionManagementFilter.class) //adds your custom CorsFilter
+//                .cors()
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers(
+//                        "/instructor_home/**",
+//                                    "/student_home/**"
+//
+//                ).permitAll()
+//                .anyRequest().authenticated()
+//                .and().csrf().disable()
+//                .formLogin().loginPage("/login").permitAll();
 
     }
 

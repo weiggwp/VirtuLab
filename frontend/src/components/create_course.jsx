@@ -4,6 +4,8 @@ import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
 import {Droppable_course} from './droppable_course.jsx'
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 export class create_course extends Component {
     constructor(props) {
@@ -23,8 +25,28 @@ export class create_course extends Component {
         this.setState({[field]: e.target.value});
     };
     handleCreateCourse = (e) => {
+
+        const course = {
+            course_name: this.state.course_name,
+            course_number: this.state.course_number,
+            semester: this.state.semester,
+            description: this.state.description,
+        };
         alert("Create Course");
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+
+        axios.post(GLOBALS.CREATE_COURSE, course, axiosConfig)
+            .then((response) => {
+
+            })
     }
+
 
     renderBanner() {
         return (

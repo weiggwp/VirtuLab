@@ -15,11 +15,15 @@ body {
 
 .noPadding
 {
+
     padding: 10px 0px 0px 10px;
     margin:0;
 
 
 
+}
+.full-height {
+    height: 94.5vh;
 }
 .noMargin
 {
@@ -56,7 +60,7 @@ body {
 .image
 {
     float:left;
-
+    /*width: 100%;*/
 }
 
 

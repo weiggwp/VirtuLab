@@ -28,13 +28,9 @@ public class RegistrationController {
         return new UserDTO();
     }
 
-    @GetMapping
-    public String showRegistrationForm(Model model) {
-        return "register";
-    }
-
     @CrossOrigin(origins = "*")
     @PostMapping
+    @ResponseBody
     public ResponseEntity registerUserAccount(@RequestBody UserDTO userDto, BindingResult result,
                                               Model model) {
         System.out.println(userDto);
@@ -49,14 +45,8 @@ public class RegistrationController {
         else if (existing != null) {
             errorMessge = "Username occupied! Please use another username.";
         }
-        model.addAttribute("errorMessge", errorMessge);
-        if (errorMessge != null) {
-//            return "register";
-        }
 
         userService.register(userDto);
-
-//        return "redirect:/login";
         return new ResponseEntity(HttpStatus.OK);
     }
 }

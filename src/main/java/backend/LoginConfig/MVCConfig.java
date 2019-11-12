@@ -11,12 +11,14 @@ public class MVCConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/register_instructor").setViewName("register_instructor");
         registry.addViewController("/signup").setViewName("signup");
+        registry.addViewController("/create_course").setViewName("create_course");
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/signup").allowedOrigins("http://localhost:3001");
-        registry.addMapping("/login").allowedOrigins("http://localhost:3000");
+        registry.addMapping("/signup").allowedOrigins("*");
+        registry.addMapping("/login").allowedOrigins("*");
     }
+
 
 //    public void addCorsMappings(CorsRegistry registry) {
 //        registry.addMapping("/**")

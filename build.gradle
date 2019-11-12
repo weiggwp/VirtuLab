@@ -21,21 +21,15 @@ jar {
 
 repositories {
     mavenCentral()
-    jcenter()
 
 }
-jar {
-    from('../frontend/dist') {
-        into 'static'
-    }
-}
-jar.dependsOn(':frontend:assemble')
 dependencyManagement {
 /*    imports {
         mavenBom "com.microsoft.azure:azure-spring-boot-bom:${azureVersion}"
     }*/
 }
 dependencies {
+    implementation 'org.modelmapper:modelmapper:2.3.0'
 //   implementation 'com.microsoft.azure:azure-spring-boot-starter'
 //    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -50,6 +44,13 @@ dependencies {
     implementation 'org.springframework:spring-jdbc'
     implementation 'mysql:mysql-connector-java'
     runtimeOnly 'com.h2database:h2'
+
+
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
+
+    // Auto pojos
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'

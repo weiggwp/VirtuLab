@@ -11,6 +11,9 @@ class Instruction extends React.Component
     constructor(props)
     {
         super(props);
+        this.state = {
+            text: "Click and place the water bottle in the workspace area, then press finish.",
+        }
 
     }
 
@@ -19,22 +22,22 @@ class Instruction extends React.Component
     render() {
 
         return(
-            <div style={{ paddingTop:20,paddingLeft:3}}>
+            <div style={{ paddingTop:10,paddingLeft:3}}>
 
-            <Card style={{ width: '20rem',height:'20rem'}}>
-            <Card.Header>STEP 1:</Card.Header>
-            <Card.Body>
+            <Card style={{ width: '20rem',height:'30vh'}}>
+            <Card.Header>STEP {this.props.step}:</Card.Header>
+            <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
                 {/*<Card.Title>Special title treatment</Card.Title>*/}
                 <Card.Text style={{textAlign:"left"}}>
-                    Click and place the water bottle in the workspace area, then press finish.
-                    <br/>Note: This is only here for demo purposes
+                    {this.props.text}
+                    {/*<br/>Note: This is only here for demo purposes*/}
                 </Card.Text>
             </Card.Body>
         </Card>
-                <div style={{ paddingTop:170,paddingLeft:3}}>
-                <Button disabled style={{ backgroundColor: 'transparent',color:"black"}} block bsSize="large" >
-                    Next
-                </Button>
+                <div style={{ paddingTop:20,paddingLeft:3}}>
+                {/*<Button disabled style={{ backgroundColor: 'transparent',color:"black"}} block bsSize="large" >*/}
+                {/*    Next*/}
+                {/*</Button>*/}
                 <Button style={{ backgroundColor: 'transparent',color:"black"}} block bsSize="large" >
                     Finish
                 </Button>
