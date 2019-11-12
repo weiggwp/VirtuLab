@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import InstructorHeader from "./instructorHeader";
-import axios from 'axios';
+// import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
@@ -14,6 +14,8 @@ import image from '../Images/lab_promo.png'
 import login from "./login";
 import {Droppable_course} from "./droppable_course";
 import {Expandable_Classes} from "./expandable_course";
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 
 class instructor_home extends React.Component {
@@ -23,10 +25,12 @@ class instructor_home extends React.Component {
             inCoursePage: true,
             redirectAcct: false,
             redirectCourse: false,
-            redirectLab: false
-
+            redirectLab: false,
+            loading_course:true,
+            classes:[],
         };
     }
+
     setRedirectAcct = () => {
         this.setState({
             redirectAcct: true
@@ -43,19 +47,78 @@ class instructor_home extends React.Component {
         }
 
     };
+        // else if(this.state.redirectCourse){
+        //     return <Redirect to='/add_course' />
+        // }
+        // else
+        // {
+        //     return <Redirect to='/do_lab' />
+        // }
+    }
+
+    updateClasses(){
+        const user = {
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var classArr=[];
+        var classArray=[];
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+            .then((response) => {
+                // console.log("resp is " +response.json())
+                console.log("dat is " + JSON.stringify(response));
+                console.log("resp is " +response.data[0].courseID);
+                console.log("resp is " +response.data[0].courseName);
+                for (let i=0; i<response.data.length; i++){
+                    classArr[i]=response.data[i]
+
+                }
+                var classArray=[];
+
+                for (let i=0; i<response.data.length; i++){
+                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                        clicked:false};
+                    console.log("class array[i] is " +classArray[i].classname)
+                }
+                // console.log("AAA classarray is "+classArray);
+                this.setState({classes:classArray,loading_course:false});
+            })
+            .catch((error) => {
+                }
+            );
+    }
+
     setRedirectLab = () => {
         this.setState({
             redirectLab: true
         })
-
-    };
+    }
 
     render() {
+
+        if (this.state.loading_course){
+            console.log("loading classes", this.state.classes);
+            this.updateClasses();
+            return null;
+
+
+        }
+        else
+
+
         return (
             <div>
                 {this.renderRedirect()}
-                <InstructorHeader currentTab="Courses"/>
-
+                <InstructorHeader/>
                 <Navbar>
                     <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
                     <Navbar.Toggle/>
@@ -64,6 +127,10 @@ class instructor_home extends React.Component {
                             Instructor: {this.props.name}
                         </Navbar.Text>
                     </Navbar.Collapse>
+                </Navbar>
+                <Navbar style={{    marginLeft:"30px"}}>
+                    <Button className="tabs" href="instructor_home">Course</Button>
+                    <Button className="tabs" href="instructor_labs">Lab</Button>
                 </Navbar>
 
                 <div>
@@ -81,7 +148,7 @@ class instructor_home extends React.Component {
                             </Nav>
                         </Navbar>
                     </div>
-                    {<Expandable_Classes style={"settingsH3"}/>}
+                    {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
 
 
                 </div>

@@ -12,10 +12,23 @@ public class Course {
     private long courseID;
     private String courseName;
     private String courseDescription;
-    private String courseNumber;
+    private int courseNumber;
     private int courseEnrollment;
     private String accessCode = generateAccessCode();
 
+    public Course(String courseName, long courseID){
+        this.courseID=courseID;
+        this.courseName=courseName;
+        labs = new ArrayList<Lab>();
+    }
+
+    @ManyToMany
+    @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
+                inverseJoinColumns = {@JoinColumn(name = "labID")})
+    private List<Lab> labs;
+    public List<Lab> getLabs(){
+        return labs;
+    }
     public static int instanceCnt;
 
 
@@ -118,6 +131,15 @@ public class Course {
 
     public void setStudents(List<User> users) {
         this.users = users;
+    }
+    public void addLab(Lab lab){
+        labs.add(lab);
+    }
+    public long getCourseID(){
+        return courseID;
+    }
+    public String getCourseName(){
+        return this.courseName;
     }
 
     @Override

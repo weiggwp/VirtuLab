@@ -6,13 +6,16 @@ import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
+import 'react-notifications/lib/notifications.css';
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
-// import axios from "axios";
+import axios from "axios";
 import GLOBALS from "../Globals";
-
+import NotificationManager from 'react-notifications';
+import Toast from 'light-toast';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 class student_home extends React.Component
 {
@@ -23,8 +26,8 @@ class student_home extends React.Component
             collapseID: "collapse3",
             code: '',
             user: '',
-
-
+            loading_course:true,
+            classes:[],
         };
     }
     renderRedirect = () => {
@@ -33,19 +36,57 @@ class student_home extends React.Component
         }
 
     };
-
     handleFieldChange = (e, field) => {
-        this.setState({[field]: e.target.value});
+        this.setState({ [field]: e.target.value });
+
     };
+    updateClasses(){
+        const user = {
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var classArr=[];
+        var classArray=[];
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+            .then((response) => {
+                // console.log("resp is " +response.json())
+                console.log("dat is " + JSON.stringify(response));
+                console.log("resp is " +response.data[0].labs);
+                console.log("resp is " +response.data[0].courseName);
+
+
+                for (let i=0; i<response.data.length; i++){
+                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                        clicked:false,labs:response.data[i].labs};
+                    console.log("class array[i] is " +classArray[i].classname+" labs are "+classArray[i].labs)
+                }
+                // console.log("AAA classarray is "+classArray);
+                this.setState({classes:classArray,loading_course:false});
+            })
+            .catch((error) => {
+                }
+            );
+    }
+
 
     handleAddCourse = (e) => {
         e.preventDefault();
 
         const course = {
-            code: this.state.code,
+            course_number: this.state.code,
         };
-        console.log(this.state.code)
-        alert(this.state.code)
+        const user={
+
+        }
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -54,16 +95,20 @@ class student_home extends React.Component
         };
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'get_course', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'enroll',course,axiosConfig)
             .then((response) => {
-                //TODO: ask backend to respond with course object, else error
-                // this.setState({login_success: true});
+
+                window.location.reload();
+                console.log("success!");
             })
             .catch((error) => {
                     this.setState({
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
+                console.log("failure...");
+
+                ToastsStore.error("Course ID not found.")
                 }
             );
 
@@ -72,8 +117,16 @@ class student_home extends React.Component
 
 
     render() {
+         if (this.state.loading_course){
+            console.log("loading classes", this.state.classes);
+            this.updateClasses();
+            return null;
 
 
+        }
+        else
+         {
+             console.log("classes is "+this.state.classes);
         return(
 
             <div>
@@ -99,12 +152,12 @@ class student_home extends React.Component
 
                         <Nav >
                             <Form inline onSubmit={this.handleAddCourse}>
-                                <FormControl type="text" placeholder="Course Code" className="add course"
-                                             onChange={(e) => this.handleFieldChange(e, 'code')}
-                                />
-
+                                <FormControl type="text"onChange={(e) => this.handleFieldChange(e, 'code')}
+                                             placeholder="Course Code" className="add course"/>
                                 <Button type="submit" style={{backgroundColor: "#e88f65ff"}} variant="primary">Add
                                     Course</Button>
+                                <ToastsContainer store={ToastsStore}/>
+
                             </Form>
 
 
@@ -127,7 +180,7 @@ class student_home extends React.Component
                     </Navbar>
                 </div>
 
-                {<Expandable_Classes style={"settingsH3"}/>}
+                {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
                { <add_course />}
 
             </div>
@@ -135,6 +188,6 @@ class student_home extends React.Component
 
 
         )
-    }
+    }}
 }
 export default student_home;

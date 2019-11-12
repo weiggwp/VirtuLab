@@ -4,6 +4,8 @@ import '../stylesheets/student_home.css';
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import {Course} from './Course.jsx'
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 const expand_icons = {
     less: "https://www.materialui.co/materialIcons/navigation/expand_less_black_192x192.png",
@@ -15,16 +17,13 @@ class Expandable_Classes extends React.Component
     constructor(props)
     {
         super(props);
-        this.states={
+
+
+        this.state={
             // handleExpand : this.handleExpand.bind(this,id)
             count:0,
-            classes : [
-
-                {classname:"Class 1: Study of Organisms and Behaviors| Fall 2019",
-                    clicked:false},
-                {classname:'Class 2: Introduction to General Chemistry| Fall 2019',
-                    clicked:false}
-            ],
+            classes : props.classes,
+            loaded: false,
         }
 
     }
@@ -35,11 +34,11 @@ class Expandable_Classes extends React.Component
     getCount()
     {
 
-        return (this.states.count).toString();
+        return (this.state.count).toString();
     }
     addAndGetCount()
     {
-        return (this.states.count++).toString();
+        return (this.state.count++).toString();
     }
     resetCount()
     {
@@ -49,16 +48,17 @@ class Expandable_Classes extends React.Component
     render()
     {
         let style = this.props.style;
-        let classes = this.states.classes;
+        let classes = this.props.classes;
         let expand = "https://www.materialui.co/materialIcons/navigation/expand_less_black_192x192.png";
-
+        console.log(classes + " is classes " + "props is "+JSON.stringify(this.props))
 
 
             return(
                 <div>
                     <Accordion className={"box border"}>
                         {classes.map(classItem => (
-                            <Course style={this.props.style} classname={classItem.classname} icount={this.getCount()} fcount={this.addAndGetCount()}/>
+                            <Course style={this.props.style}
+                                    class={classItem} icount={this.getCount()} fcount={this.addAndGetCount()}/>
 
 
 
