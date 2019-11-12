@@ -18,7 +18,7 @@ public class LabDTO {
     private Date lastModified;
     @NotNull
     @NotEmpty
-    private long instructorID;
+    private String creator;
 //    @NotNull
 //    @NotEmpty
 //    private String password;
@@ -51,12 +51,12 @@ public class LabDTO {
         this.lastModified = lastModified;
     }
 
-    public long getInstructorID() {
-        return instructorID;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setInstructorID(long instructorID) {
-        this.instructorID = instructorID;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public List<StepDTO> getSteps() {
@@ -74,7 +74,7 @@ public class LabDTO {
 //                "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastModified=" + lastModified +
-                ", instructorID=" + instructorID +
+                ", creator=" + creator +
                 ", steps=" + steps +
                 '}';
     }

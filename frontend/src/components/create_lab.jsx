@@ -20,18 +20,54 @@ import GLOBALS from "../Globals";
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
-        this.steps = [new Step(0)];
 
 
         this.state = {
             redirectHome: false,
             restart:false,
+            steps : [new Step(0)],
             // steps: [],
             step_num: 0,
-            id:666,
+            lab_id:0,
+            lab_loaded:false
 
 
         };
+    }
+    setRedirectProps()
+    {
+
+
+    }
+    populateSteps()
+    {
+        if(this.props.location.state!==undefined)
+        {
+
+
+            var step_list = this.props.location.state.steps;
+
+            if (step_list !== undefined)//opening a previously saved lab
+            {
+                for (var i = 1; i < step_list.length; i++) {
+                    this.state.steps.push(new Step(i, step_list[i].instruction));
+
+                }
+
+            }
+            console.log(step_list);
+            alert("got here"+this.props.location.state.id);
+
+            this.setState(
+                {
+                    step_num: step_list.length - 1,
+                    lab_id: this.props.location.state.id,
+                    lab_loaded: true,
+                }, () => {
+                    alert(this.state.lab_id);
+                }
+            )
+        }
     }
     setRedirectHome = () => {
         this.setState({
@@ -61,7 +97,7 @@ class create_lab extends React.Component {
     getStepsArray()
     {
         var array = [];
-        var current = this.steps;
+        var current = this.state.steps;
         while(current)
         {
             array.push({
@@ -78,9 +114,10 @@ class create_lab extends React.Component {
     handleLabSave = (e) => {
         // e.preventDefault();
         const lab = {
+
             name: "Untitled Lab",
-            instructorID: this.state.id,
-            steps: this.steps,
+            creator: this.props.email,
+            steps: this.state.steps,
         };
 
         let axiosConfig = {
@@ -89,15 +126,14 @@ class create_lab extends React.Component {
                 "Access-Control-Allow-Origin": "*",
             }
         };
-        console.log("Sending lab to save_lab");
-        console.log(lab);
+
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
                 this.setState({save_success: true});
                 console.log("id is "+response.data);
-                if(this.state.id===0)  //only if not set
+                if(this.state.lab_id===0)  //only if not set
 
-                    this.setState({id:response.data});
+                    this.setState({lab_id:response.data});
 
                 console.log("response: ", response);
             })
@@ -150,8 +186,12 @@ class create_lab extends React.Component {
     };
     handleInstructionChange=(e,index)=>
     {
-        this.steps[index].setInstruction(e.target.value);
-        console.log(this.steps);
+        var list = this.state.steps;
+        list[index].setInstruction(e.target.value);
+        this.setState({
+            steps:list
+        })
+        console.log(this.state.steps);
     };
 
     instruction(index)
@@ -163,7 +203,7 @@ class create_lab extends React.Component {
                     style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
                     placeholder="Input instruction for this step here"
                     onChange={(e) => this.handleInstructionChange(e, index)}
-                    // value={this.steps.getInstruction(index)}
+                    value={this.state.steps[index].instruction}
                 />
 
             </div>
@@ -233,7 +273,7 @@ class create_lab extends React.Component {
     }
 
     handleAddChild = () => {
-        this.steps.push(new Step(this.steps.length));
+        this.state.steps.push(new Step(this.state.steps.length,""));
         this.setState({
             //add a new step to steps[]
             step_num: this.state.step_num + 1
@@ -252,33 +292,18 @@ class create_lab extends React.Component {
 
 
     render(){
+        if(!this.state.lab_loaded)
+        {
+            this.populateSteps();
+        }
 
         return(
             <div >
 
                 {this.banner()}
-                {/*<div style={{display:"flex"}}>*/}
-                {/*    {this.tab()}*/}
+
                 {this.toolbar()}
-                {/*<Container fluid className={"contain"} style={{cursor: 'initial'}}>*/}
-                {/*    <Row >*/}
-                {/*        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>*/}
-                {/*            {this.slides()}*/}
-                {/*        </Col>*/}
 
-                {/*        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >*/}
-                {/*            /!*<Instruction/>*!/*/}
-                {/*            {this.options()}*/}
-                {/*        </Col>*/}
-                {/*        <Col lg={{span:8}} className="darkerBack" >*/}
-                {/*            <Workspace empty={true}/>*/}
-
-
-
-                {/*        </Col>*/}
-
-                {/*    </Row>*/}
-                {/*</Container>*/}
                 <Tab.Container id="steps" defaultActiveKey="0">
                     <Row>
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>

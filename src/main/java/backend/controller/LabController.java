@@ -2,6 +2,7 @@ package backend.controller;
 
 
 import backend.dto.StepDTO;
+import backend.dto.UserDTO;
 import backend.model.Step;
 import backend.service.CourseService;
 import backend.service.StepService;
@@ -63,9 +64,6 @@ public class LabController {
     ModelMapper modelMapper = new ModelMapper();
 
 
-
-
-
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
     public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
@@ -75,6 +73,7 @@ public class LabController {
 
 
         Lab lab = modelMapper.map(labDTO, Lab.class);
+
         List<Step> steps = new ArrayList<>();
         for (StepDTO dto: labDTO.getSteps()) {
             Step step = new Step();
@@ -86,29 +85,37 @@ public class LabController {
         lab.setSteps(steps);
         System.out.println(lab);
         labService.saveLab(lab);
+        User instructor = userService.findByEmail(labDTO.getCreator());
+        instructor.getLabs().add(lab);
+        userService.save(instructor);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
-    public Map<String, Object> getLabs() {
-        System.out.println("lab Controller is called: get_labs");
+    public ResponseEntity getLabs(@RequestBody UserDTO obj) {
 
-        Map<String, Object> map = new HashMap<>();
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = "";
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails)principal).getUsername();
-        } else {
-            email = principal.toString();
+        User user = userService.findByEmail(obj.getEmail_address());
+        if(user==null)
+        {
+            System.out.println("user doesn't exist");
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        List labs = user.getLabs();
 
-        User user = userService.findByEmail(email);
-        map.put("msg", SUCCESS);
-        map.put("list", user.getCourses());
-        return map;
+
+        if(labs!=null)
+        {
+            System.out.println("labs: "+labs);
+            return new ResponseEntity<>(user.getLabs(),HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
     }
+
+
 
 }

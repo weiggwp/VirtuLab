@@ -41,7 +41,7 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "instructor_lab",
-            joinColumns = {@JoinColumn(name = "id")},
+            joinColumns = {@JoinColumn(name = "email")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs;
 
@@ -69,7 +69,7 @@ public class User {
     public User() {
     }
 
-    public long getId() {
+    public long Id() {
         return id;
     }
 
