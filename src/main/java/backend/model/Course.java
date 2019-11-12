@@ -1,6 +1,7 @@
 package backend.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,8 +18,11 @@ public class Course {
     public Course(String courseName, long courseID){
         this.courseID=courseID;
         this.courseName=courseName;
+        labs = new ArrayList<Lab>();
     }
-
+    public void addLab(Lab lab){
+        labs.add(lab);
+    }
     public long getCourseID(){
         return courseID;
     }
@@ -29,7 +33,9 @@ public class Course {
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
                 inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs;
-
+    public List<Lab> getLabs(){
+        return labs;
+    }
 
 
 
