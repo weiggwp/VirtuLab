@@ -40,7 +40,7 @@ public class CourseController {
     @RequestMapping(value = "/create_course", method = RequestMethod.POST)
     @ResponseBody
     public Course addCourse(@RequestBody CourseDTO courseDTO) {
-        User user = userRepository.findByEmail("omg");
+//        User user = userRepository.findByEmail("omg");
 
         System.out.println("CourseController create course: ");
         System.out.println(courseDTO);
@@ -57,8 +57,8 @@ public class CourseController {
         courseService.addCourse(c);
         System.out.println(c);
 
-        user.getCourses().add(c);
-        userRepository.save(user);
+//        user.getCourses().add(c);
+//        userRepository.save(user);
 
         return c;
     }
@@ -91,15 +91,32 @@ public class CourseController {
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/get_courses", method = RequestMethod.POST)
-    public Map<String, Object> getCourses() {
+    @RequestMapping(value = "/get_course", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getCourses(@RequestBody CourseDTO courseDTO) {
         System.out.println("CourseController read operation: ");
+        System.out.println(courseDTO);
         Map<String, Object> map = new HashMap<>();
 
-        User user = getLoginUser();
-        List<Course> coursesList = user.getCourses();
+//        if (courseService.findCourseByNameOrCode(get))
+//        User user = getLoginUser();
+//        List<Course> coursesList = user.getCourses();
+
+        // TODO: save this course to user later;
+
+        String code = courseDTO.getCode();
+        if (!courseService.courseExists(code, 0)) {
+            map.put("msg", ERRMSG);
+            return map;
+        }
+
+        Optional<Course> optionalCourse = courseService.findCourseByNameOrCode(code, 0);
+        Course course = optionalCourse.get();
+
+        System.out.println(course);
+
         map.put("msg", SUCCESS);
-        map.put("list", coursesList);
+        map.put("course", course);
         return map;
     }
     @Bean

@@ -20,14 +20,15 @@ import GLOBALS from "../Globals";
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
-        this.steps = new Step(0);
+        this.steps = [new Step(0)];
+
 
         this.state = {
             redirectHome: false,
             restart:false,
             // steps: [],
-            step_num: -1,
-            id:0
+            step_num: 0,
+            id:666,
 
 
         };
@@ -74,12 +75,12 @@ class create_lab extends React.Component {
 
     }
 
-        handleLabSave = (e) => {
+    handleLabSave = (e) => {
         // e.preventDefault();
         const lab = {
             name: "Untitled Lab",
-            id: this.state.id,
-            steps: this.getStepsArray()
+            instructorID: this.state.id,
+            steps: this.steps,
         };
 
         let axiosConfig = {
@@ -89,6 +90,7 @@ class create_lab extends React.Component {
             }
         };
         console.log("Sending lab to save_lab");
+        console.log(lab);
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
                 this.setState({save_success: true});
@@ -148,7 +150,7 @@ class create_lab extends React.Component {
     };
     handleInstructionChange=(e,index)=>
     {
-        this.steps.updateInstruction(index,e.target.value);
+        this.steps[index].setInstruction(e.target.value);
         console.log(this.steps);
     };
 
@@ -231,7 +233,7 @@ class create_lab extends React.Component {
     }
 
     handleAddChild = () => {
-        this.steps.addNewStep();
+        this.steps.push(new Step(this.steps.length));
         this.setState({
             //add a new step to steps[]
             step_num: this.state.step_num + 1
@@ -239,7 +241,6 @@ class create_lab extends React.Component {
         }
         );
 
-        // alert(this.state.step_num);
     };
     handlInstructionUpdate = () => {
         this.setState({

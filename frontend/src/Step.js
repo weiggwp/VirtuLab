@@ -2,88 +2,89 @@ import Workspace from "./Workspace.js";
 // Initializing a class definition
 class Step {
 
-    constructor(index)
+    constructor(stepNum)
     {
-        if(index===0) {
+
+        if(stepNum===0) {
             this.initStep()
         }
         else
         {
-            this.init(index,"",new Workspace());
+            this.init(stepNum,"fhdfhdfdfhfd",new Workspace());
 
         }
     }
-    init(index, instruction, workspace) {
-        this.index = index;
+    init(stepNum, instruction, workspace) {
+        this.stepNum = stepNum;
         this.instruction = instruction;
         // this.workspace = workspace;
-        this.next = null;
     }
 
     initStep()
     {
-        this.index = 0;
-        this.instruction = " ";
+        this.stepNum = 0;
+        this.instruction = "This is the setup stage. Click on equipments you would like to be available for the duration of the lab (click again to unselect) ";
         // this.workspace= new Workspace();
-        this.next=null;
 
     }
-
-    updateInstruction(index,value)
-    {
-        // alert("updating instruction at index"+index+" with value: "+value);
-        var i = 0;
-        var step = this;
-
-        while(i<index)
-        {
-
-            step = step.next;
-            i = i +1;
-        }
-        step.instruction = value;
-        // alert(step.instruction);
-
+    setInstruction(str){
+        this.instruction = str;
     }
-    getInstruction(index)
-    {
-        var i = 0;
-        var step = this;
+    // updateInstruction(stepNum,value)
+    // {
+    //     // alert("updating instruction at stepNum"+stepNum+" with value: "+value);
+    //     var i = 0;
+    //     var step = this;
+    //
+    //     while(i<stepNum)
+    //     {
+    //
+    //         step = step.next;
+    //         i = i +1;
+    //     }
+    //     step.instruction = value;
+    //     // alert(step.instruction);
+    //
+    // }
+    // getInstruction(stepNum)
+    // {
+    //     var i = 0;
+    //     var step = this;
+    //
+    //     while(i<stepNum)
+    //     {
+    //         step = step.next;
+    //         i = i +1;
+    //     }
+    //     return step.instruction;
+    //
+    // }
+    // addNewStep()
+    // {
+    //     var current = this;
+    //     var stepNum=1;
+    //     while(current.next)//while has next
+    //     {
+    //         current = current.next;
+    //         stepNum = stepNum+1;
+    //     }
+    //
+    //
+    //     current.next = new Step(stepNum," ",new Workspace(),null);
+    //     // alert("added new step"+stepNum);
+    //     // this.printSteps()
+    // }
 
-        while(i<index)
-        {
-            step = step.next;
-            i = i +1;
-        }
-        return step.instruction;
-
-    }
-    addNewStep()
-    {
-        var current = this;
-        var index=1;
-        while(current.next)//while has next
-        {
-            current = current.next;
-            index = index+1;
-        }
-
-
-        current.next = new Step(index," ",new Workspace(),null);
-        // alert("added new step"+index);
-        // this.printSteps()
-    }
-
-    printSteps()
-    {
-        var step = this;
-
-        while(step)
-        {
-            alert(step.index);
-            step=step.next;
-        }
-    }
+    // printSteps()
+    // {
+    //     var step = this;
+    //
+    //     while(step)
+    //     {
+    //         alert(step.stepNum);
+    //         step=step.next;
+    //     }
+    // }
 
 }
 

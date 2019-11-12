@@ -146,7 +146,7 @@ class instructor_labs extends React.Component {
                                 <ButtonGroup style={{width:"100%"}}>
 
 
-                                    <Dropdown as={ButtonGroup} style={{width:"100%"}} >
+                                    <Dropdown as={ButtonGroup} style={{width:"100%"}} class={"dropdown-menu-right dropdown-button-drop-right"}>
                                     {/*    <Button variant="info" style={{width:"90%"}} style={{textAlign:"left"}}disabled>*/}
                                     {/*        <div >*/}
                                     {/*        {lab.name}     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>*/}

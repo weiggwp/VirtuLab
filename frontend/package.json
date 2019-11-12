@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-
     "axios": "latest",
     "mdbreact": "^4.22.0",
     "rc-progress": "^2.5.2",

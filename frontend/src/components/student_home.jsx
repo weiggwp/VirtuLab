@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import StudentHeader from './studentHeader.jsx';
 
-// import axios from 'axios';
+import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
@@ -10,7 +10,7 @@ import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
-import axios from "axios";
+// import axios from "axios";
 import GLOBALS from "../Globals";
 
 
@@ -33,11 +33,19 @@ class student_home extends React.Component
         }
 
     };
+
+    handleFieldChange = (e, field) => {
+        this.setState({[field]: e.target.value});
+    };
+
     handleAddCourse = (e) => {
         e.preventDefault();
+
         const course = {
             code: this.state.code,
         };
+        console.log(this.state.code)
+        alert(this.state.code)
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -91,7 +99,10 @@ class student_home extends React.Component
 
                         <Nav >
                             <Form inline onSubmit={this.handleAddCourse}>
-                                <FormControl type="text" placeholder="Course Code" className="add course"/>
+                                <FormControl type="text" placeholder="Course Code" className="add course"
+                                             onChange={(e) => this.handleFieldChange(e, 'code')}
+                                />
+
                                 <Button type="submit" style={{backgroundColor: "#e88f65ff"}} variant="primary">Add
                                     Course</Button>
                             </Form>

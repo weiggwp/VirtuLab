@@ -7,11 +7,12 @@ public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long stepID;
+    private long stepNum;
     private String instruction;
 
-    @ManyToOne
-    @JoinColumn(name="labID")
-    private Lab lab;
+//    @ManyToOne
+//    @JoinColumn(name="labID")
+//    private Lab lab;
 
     public long getStepID() {
         return stepID;
@@ -19,6 +20,21 @@ public class Step {
 
     public void setStepID(long stepID) {
         this.stepID = stepID;
+
+    public Step() {
+    }
+
+    public Step(long stepNum, String instruction) {
+        this.stepNum = stepNum;
+        this.instruction = instruction;
+    }
+
+    public long getStepNum() {
+        return stepNum;
+    }
+
+    public void setStepNum(long stepNum) {
+        this.stepNum = stepNum;
     }
 
     public String getInstruction() {
@@ -29,11 +45,13 @@ public class Step {
         this.instruction = instruction;
     }
 
-    public Lab getLab() {
-        return lab;
+    @Override
+    public String toString() {
+        return "Step{" +
+                "stepID=" + stepID +
+                ", stepNum=" + stepNum +
+                ", instruction='" + instruction + '\'' +
+                '}';
     }
 
-    public void setLab(Lab lab) {
-        this.lab = lab;
-    }
 }
