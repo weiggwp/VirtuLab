@@ -33,7 +33,6 @@ class signup extends Component {
     handleSignUp = (e) => {
         e.preventDefault();
 
-        alert("signup form submitted "+this.state.role=="student");
         if(this.state.password!==this.state.confirm_password)
         {
             this.setState({
@@ -47,10 +46,12 @@ class signup extends Component {
             last_name:this.state.last_name,
             email_address:this.state.email_address,
             password: this.state.password,
-            role: this.state.register_role,
-            is_student: (this.state.role == "student")
+            role: this.state.role,
+            // isStudent: String(this.state.role === "student")
             // confirm_password:this.state.confirm_password,
         };
+        // alert(user.isStudent);
+        console.log(user);
 
         let axiosConfig = {
             headers: {
@@ -65,13 +66,14 @@ class signup extends Component {
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
                 // console.log(response);
-                alert(response);
+                alert("Signed up successfully");
+                console.log(response);
                 this.setState({ redirect: true });
             },
             (error) => {
-                console.log("reject logging message")
+                console.log(error);
                 this.setState({
-                    errors: 'Error signing up! Try a different username',
+                    errors: error,
                     username: '',
                     password: ''
                 });

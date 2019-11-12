@@ -17,12 +17,24 @@ public class UserDTO {
     @NotNull
     @NotEmpty
     private String password;
+
     @NotNull
     @NotEmpty
+    private String role;
+
     private boolean isStudent;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+
     public boolean isStudent() {
-        return isStudent;
+        return "student".equals(this.role);
     }
 
     public void setStudent(boolean student) {
@@ -74,6 +86,18 @@ public class UserDTO {
 //    }
 
 
+
+//    @Override
+//    public String toString() {
+//        return "UserDTO{" +
+//                "first_name='" + first_name + '\'' +
+//                ", last_name='" + last_name + '\'' +
+//                ", email_address='" + email_address + '\'' +
+//                ", password='" + password + '\'' +
+//                ", isStudent=" + isStudent +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -81,6 +105,7 @@ public class UserDTO {
                 ", last_name='" + last_name + '\'' +
                 ", email_address='" + email_address + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
                 '}';
     }

@@ -26,6 +26,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private String role;
     private boolean isStudent;
 
 
@@ -67,6 +68,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public long getId() {
@@ -135,12 +144,29 @@ public class User {
 
 
     public boolean isStudent() {
-        return isStudent;
+        System.out.println(this.role);
+        return "student".equals(this.role);
+//        return isStudent;
     }
 
     public void setStudent(boolean student) {
         isStudent = student;
     }
+
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", isStudent=" + isStudent +
+//                ", courses=" + courses +
+//                ", labs=" + labs +
+//                ", roles=" + roles +
+//                '}';
+//    }
 
     @Override
     public String toString() {
@@ -150,6 +176,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
                 ", courses=" + courses +
                 ", labs=" + labs +
