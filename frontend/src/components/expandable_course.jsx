@@ -57,7 +57,8 @@ class Expandable_Classes extends React.Component
                 <div>
                     <Accordion className={"box border"}>
                         {classes.map(classItem => (
-                            <Course style={this.props.style} classname={classItem.classname} icount={this.getCount()} fcount={this.addAndGetCount()}/>
+                            <Course style={this.props.style}
+                                    class={classItem} icount={this.getCount()} fcount={this.addAndGetCount()}/>
 
 
 

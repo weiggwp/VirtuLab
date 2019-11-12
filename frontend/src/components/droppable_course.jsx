@@ -21,7 +21,7 @@ class Droppable_course extends React.Component
 
 
     handleDropCourse = (e) => {
-        console.log(e.id+"AAAAAA");
+
         const course = {
             code: this.state.code,
             course_number: e.id,

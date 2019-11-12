@@ -3,16 +3,21 @@ import {Link, Redirect} from 'react-router-dom';
 import StudentHeader from './studentHeader.jsx';
 
 // import axios from 'axios';
+
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
+import 'react-notifications/lib/notifications.css';
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import axios from "axios";
-import GLOBALS from "../Globals";
 
+import GLOBALS from "../Globals";
+import NotificationManager from 'react-notifications';
+import Toast from 'light-toast';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 class student_home extends React.Component
 {
@@ -32,7 +37,10 @@ class student_home extends React.Component
         }
 
     };
+    handleFieldChange = (e, field) => {
+        this.setState({ [field]: e.target.value });
 
+    };
     updateClasses(){
         const user = {
 
@@ -53,18 +61,14 @@ class student_home extends React.Component
             .then((response) => {
                 // console.log("resp is " +response.json())
                 console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].courseID);
+                console.log("resp is " +response.data[0].labs);
                 console.log("resp is " +response.data[0].courseName);
-                for (let i=0; i<response.data.length; i++){
-                    classArr[i]=response.data[i]
 
-                }
-                var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false};
-                    console.log("class array[i] is " +classArray[i].classname)
+                        clicked:false,labs:response.data[i].labs};
+                    console.log("class array[i] is " +classArray[i].classname+" labs are "+classArray[i].labs)
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
@@ -77,9 +81,13 @@ class student_home extends React.Component
 
     handleAddCourse = (e) => {
         e.preventDefault();
+        console.log("e is " +e)
         const course = {
-            code: this.state.code,
+            course_number: this.state.code,
         };
+        const user={
+
+        }
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -88,7 +96,7 @@ class student_home extends React.Component
         };
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'enroll', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'enroll',course,axiosConfig)
             .then((response) => {
 
                 window.location.reload();
@@ -100,9 +108,8 @@ class student_home extends React.Component
                         code: '',
                     });
                 console.log("failure...");
-                this.render()
-                window.location.reload();
 
+                ToastsStore.error("Course ID not found.")
                 }
             );
 
@@ -146,9 +153,12 @@ class student_home extends React.Component
 
                         <Nav >
                             <Form inline onSubmit={this.handleAddCourse}>
-                                <FormControl type="text" placeholder="Course Code" className="add course"/>
+                                <FormControl type="text"onChange={(e) => this.handleFieldChange(e, 'code')}
+                                             placeholder="Course Code" className="add course"/>
                                 <Button type="submit" style={{backgroundColor: "#e88f65ff"}} variant="primary">Add
                                     Course</Button>
+                                <ToastsContainer store={ToastsStore}/>
+
                             </Form>
 
 
