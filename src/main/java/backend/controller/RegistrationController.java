@@ -40,11 +40,18 @@ public class RegistrationController {
         User existing = userService.findByEmail(userDto.getEmail_address());
         if (result.hasErrors()) {
             errorMessge =  "Username or Password is invalid !";
+
         }
 
         else if (existing != null) {
             errorMessge = "Username occupied! Please use another username.";
         }
+
+        if(errorMessge!=null)
+        {
+            return new ResponseEntity<>(errorMessge,HttpStatus.BAD_REQUEST);
+        }
+
 
         userService.register(userDto);
         return new ResponseEntity(HttpStatus.OK);

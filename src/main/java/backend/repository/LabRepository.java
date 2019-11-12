@@ -16,4 +16,7 @@ public interface LabRepository extends CrudRepository<Lab, Long> {
 
     Optional<Lab> findLabByName(String name);
 
+
+
+
 }

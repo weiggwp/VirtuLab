@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,13 +91,12 @@ public class CourseController {
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/read_course", method = RequestMethod.POST)
-    public Map<String, Object> readCourse(@RequestBody String email) {
+    @RequestMapping(value = "/get_courses", method = RequestMethod.POST)
+    public Map<String, Object> getCourses() {
         System.out.println("CourseController read operation: ");
+        Map<String, Object> map = new HashMap<>();
 
-        Map<String, Object>  map = new HashMap<>();
-        User user = userRepository.findByEmail(email);
-
+        User user = getLoginUser();
         List<Course> coursesList = user.getCourses();
         map.put("msg", SUCCESS);
         map.put("list", coursesList);
@@ -104,6 +105,20 @@ public class CourseController {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    private User getLoginUser() {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = "";
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails)principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+        User user = userRepository.findByEmail(email);
+
+        return user;
     }
 
 }

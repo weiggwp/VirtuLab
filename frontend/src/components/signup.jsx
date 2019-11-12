@@ -31,18 +31,27 @@ class signup extends Component {
     };
 
     handleSignUp = (e) => {
-        console.log("signup form submitted");
+        e.preventDefault();
+
+        alert("signup form submitted "+this.state.role=="student");
+        if(this.state.password!==this.state.confirm_password)
+        {
+            this.setState({
+                errors: 'Inconsistent passwords entered, try again',
+                username: '',
+                password: ''
+            });
+        }
         const user = {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
             email_address:this.state.email_address,
             password: this.state.password,
             role: this.state.register_role,
-            is_student: this.props.location.role === "student"
+            is_student: (this.state.role == "student")
             // confirm_password:this.state.confirm_password,
         };
 
-        e.preventDefault();
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -55,7 +64,8 @@ class signup extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
-                console.log(response);
+                // console.log(response);
+                alert(response);
                 this.setState({ redirect: true });
             },
             (error) => {
@@ -70,12 +80,11 @@ class signup extends Component {
     };
 
     render() {
-        console.log("role: " + this.state.role);
+
         if (this.state.authenticated) {
             return <Redirect exact to="/login" />;
         }
         if (this.state.redirect) {
-            alert("redirecting");
             return <Redirect exact to="/login" />;
         } else {
             const errorMessage = this.state.errors;

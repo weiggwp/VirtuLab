@@ -11,6 +11,7 @@ import CreateCourse from './components/create_course.jsx';
 import DoLab from './components/student_lab.jsx';
 import CreateLab from './components/create_lab.jsx';
 import Statistics from './components/Statistics.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 
 
 
@@ -27,15 +28,15 @@ class App extends Component {
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/account_settings" component={Account} />
-                <Route exact path="/student_home" component={StudentHome}/>
-                <Route exact path="/instructor_home" component={InstructorHome}/>
-                <Route exact path="/instructor_labs" component={InstructorLabs}/>
-                <Route exact path="/public_labs" component={PublicLab}/>
-                <Route exact path="/create_course" component={CreateCourse}/>
-              <Route exact path="/do_lab" component={DoLab} />
-              <Route exact path="/create_lab" component={CreateLab} />
-              <Route exact path="/statistics" component={Statistics} />
+              <PrivateRoute exact path="/account_settings" component={Account} />
+                <PrivateRoute exact path="/student_home" role="student" component={StudentHome}/>
+                <PrivateRoute exact path="/instructor_home" role="instructor" component={InstructorHome}/>
+                <PrivateRoute exact path="/instructor_labs" role="instructor" component={InstructorLabs}/>
+                <PrivateRoute exact path="/public_labs" role="instructor" omponent={PublicLab}/>
+                <PrivateRoute exact path="/create_course" role="instructor" component={CreateCourse}/>
+              <PrivateRoute exact path="/do_lab" role="student" component={DoLab} />
+              <PrivateRoute exact path="/create_lab" role="instructor" component={CreateLab} />
+              <PrivateRoute exact path="/statistics" role="instructor" component={Statistics} />
 
             </Switch>
           </div>

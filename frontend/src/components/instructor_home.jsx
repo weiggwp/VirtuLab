@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import InstructorHeader from "./instructorHeader";
-// import axios from 'axios';
+import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
@@ -47,6 +47,7 @@ class instructor_home extends React.Component {
         this.setState({
             redirectLab: true
         })
+
     };
 
     render() {

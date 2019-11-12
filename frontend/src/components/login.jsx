@@ -22,7 +22,8 @@ class login extends Component {
         super(props);
         this.state = {
             login_success: false,
-            pathnames: {instructor:'/instructor_home',
+            login_role:'',
+            pathname: {instructor:'/instructor_home',
                         student: '/student_home'},
             to_register: false,
             email_address: '',
@@ -37,11 +38,14 @@ class login extends Component {
     };
 
     handleRegisterClick = (e, r) => {
-        this.setState({to_register: true, register_role: r});
+        this.setState({to_register: true,
+                register_role: r});
+        //
         e.preventDefault();
     };
     handleSubmit = (e) => {
         e.preventDefault();
+        alert("logging in");
         const user = {
             email_address: this.state.email_address,
             password: this.state.password
@@ -56,24 +60,15 @@ class login extends Component {
         //TODO: ask backend to respond with user object including role, names, etc. instead of just 200 OK
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
+                localStorage.setItem('token', response.data["token"]);
+                alert(response.data["role"])
 
-                //TODO: ask backend to respond with user object with the role, instead of just 200
-                // example of return instance
-                // User{id=49, firstName='omg', lastName='omg', email='omg', password='$2a$10$vmPtFoUpX6uzrNzenM9.le/Gn0uggQK4HlKilhMjwaZGi7bpGPoE2', isStudent=false, courses=[], labs=[], roles=[Role{id=50, name='instructor'}]}
-                // for (const key in keys(response.data)) {
-                //     console.log(key, response.data[key]);
-                // }
-                console.log(response.data["msg"])
-                console.log(response.data["user"])
-
-
-
-                this.setState({login_success: true});
-
-                this.setState({login_success: true,role: "instructor"});
+                this.setState({login_success: true,login_role: response.data["role"]});
+                alert("logging in");
 
             })
             .catch((error) => {
+                alert("bad?")
                 this.setState({
                     errors: 'Error signing up! Try a different username',
                     username: '',
@@ -88,7 +83,7 @@ class login extends Component {
         if (this.state.login_success){
             return <Redirect exact to={{
 
-                pathname: this.state.pathname,
+                pathname: this.state.pathname[this.state.login_role],
                 state: {email: this.state.email_address},
             }}/>;
             //student page or instructor page

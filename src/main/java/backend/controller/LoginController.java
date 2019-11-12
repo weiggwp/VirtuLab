@@ -36,6 +36,7 @@ public class LoginController {
     @Autowired
     UserService userService;
     private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity loginPage(@RequestBody UserDTO userDTO) {
@@ -54,8 +55,7 @@ public class LoginController {
         String token =createToken(existing.getEmail(),existing.isStudent(),existing.getFirstName()+" "+existing.getLastName());
 
 
-
-        TokenDTO dto = new TokenDTO(isStudent(existing.isStudent()),token);
+        TokenDTO dto = new TokenDTO(" "," ",isStudent(existing.isStudent()),token);
 
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class LoginController {
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setSubject(email)
-                .claim("student",student)
+                .claim("student",isStudent(student))
                 .claim("name",name)
                 .signWith(signatureAlgorithm,signingKey)
                 .compact();
@@ -87,8 +87,10 @@ public class LoginController {
             Jws<Claims> jws = Jwts.parser()
                     .setSigningKey(signingKey)
                     .parseClaimsJws(token);
+            System.out.println("student is"+jws.getBody().get("student"));
+            TokenDTO dto = new TokenDTO(jws.getBody().get("name").toString(),jws.getBody().getSubject(),jws.getBody().get("student").toString()," ");
 
-                return ResponseEntity.ok(jws.getBody().getSubject());
+                return ResponseEntity.ok(dto);
 
         } catch (JwtException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -98,6 +100,7 @@ public class LoginController {
 
 
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

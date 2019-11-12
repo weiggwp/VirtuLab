@@ -11,11 +11,8 @@ public class LabDTO {
 
     @NotNull
     @NotEmpty
-    private long id;
-
-    @NotNull
-    @NotEmpty
     private String name;
+
     @NotNull
     @NotEmpty
     private Date lastModified;
@@ -28,13 +25,13 @@ public class LabDTO {
     private List<StepDTO> steps;
 
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -66,5 +63,17 @@ public class LabDTO {
 
     public void setSteps(List<StepDTO> steps) {
         this.steps = steps;
+    }
+
+
+    @Override
+    public String toString() {
+        return "LabDTO{" +
+//                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastModified=" + lastModified +
+                ", instructorID=" + instructorID +
+                ", steps=" + steps +
+                '}';
     }
 }

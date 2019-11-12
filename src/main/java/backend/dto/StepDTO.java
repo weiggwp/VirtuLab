@@ -14,4 +14,12 @@ public class StepDTO {
 
 //    private StepDTO next;
 
+
+    @Override
+    public String toString() {
+        return "StepDTO{" +
+                "stepNum=" + stepNum +
+                ", instruction='" + instruction + '\'' +
+                '}';
+    }
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 
-// import axios from 'axios';
+import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
@@ -14,6 +14,7 @@ import login from "./login";
 import {Droppable_course} from "./droppable_course";
 import {Expandable_Classes} from "./expandable_course";
 import InstructorHeader from "./instructorHeader";
+import GLOBALS from "../Globals";
 
 class labOjb {
     constructor(id, name, author, keywords, description, courses) {
@@ -86,6 +87,17 @@ class instructor_labs extends React.Component {
         this.setState({
             redirectLab: true
         })
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+        axios.post(GLOBALS.BASE_URL + 'get_labs', axiosConfig)
+            .then((response) => {
+
+
+            })
     };
 
     render() {

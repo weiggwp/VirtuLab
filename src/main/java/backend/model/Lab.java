@@ -1,13 +1,16 @@
 package backend.model;
 
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -18,23 +21,11 @@ public class Lab {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long labID;
     private String name;
-    private long instructorID;
-    private Date lastModified;
-
-    @ManyToMany
-    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "labID")},
-            inverseJoinColumns = {@JoinColumn(name = "stepID")})
-    private List<Step> steps;
-//    private Step steps;
-
-//    @ManyToMany
-//    @JoinTable(name = "lab_equipment", joinColumns = {@JoinColumn(name = "labID")},
-//            inverseJoinColumns = {@JoinColumn(name = "equipmentID")})
-//    private List<Equipment> equipments;
-
     private String description;
     private boolean isPublic;
 
+    private long instructorID;
+    private Date lastModified;
 
     public long getLabID() {
         return labID;
@@ -52,13 +43,24 @@ public class Lab {
         this.name = name;
     }
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
+    private List<Step> steps = new ArrayList<>();
+//    private Step steps;
+
+//    @ManyToMany
+//    @JoinTable(name = "lab_equipment", joinColumns = {@JoinColumn(name = "labID")},
+//            inverseJoinColumns = {@JoinColumn(name = "equipmentID")})
+//    private List<Equipment> equipments;
 
 
-    public Lab(String name, long instructorID, Date lastModified, List<Step> steps) {
+    public Lab(String name, String description, boolean isPublic, long instructorID, Date lastModified, List<Step> steps) {
         this.name = name;
+        this.description = description;
+        this.isPublic = isPublic;
         this.instructorID = instructorID;
         this.lastModified = lastModified;
-        this.steps = steps;
+        this.steps = new ArrayList<>();
     }
 
     public Lab() {
@@ -90,7 +92,32 @@ public class Lab {
     }
 
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
+    public boolean isPublic() {
+        return isPublic;
+    }
 
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    @Override
+    public String toString() {
+        return "Lab{" +
+                "labID=" + labID +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", isPublic=" + isPublic +
+                ", instructorID=" + instructorID +
+                ", lastModified=" + lastModified +
+                ", steps=" + steps +
+                '}';
+    }
 }

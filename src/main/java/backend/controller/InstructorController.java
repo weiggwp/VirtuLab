@@ -1,30 +1,32 @@
 //package backend.controller;
 //
-//import backend.dto.StudentDTO;
+//
+//import backend.dto.InstructorDTO;
+//import backend.model.Instructor;
+//import backend.service.InstructorService;
+//import org.springframework.ui.Model;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
 //import org.springframework.validation.BindingResult;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //
+//import javax.persistence.criteria.CriteriaBuilder;
 //import javax.validation.Valid;
-//
+//import java.util.ArrayList;
 //
 //@Controller
-//@RequestMapping("/register_student")
-//
-//public class StudentRegistrationController {
-//
+//@RequestMapping("/register_instructor")
+//public class InstructorController {
 //
 //    @Autowired
-//    StudentService studentService;
+//    InstructorService instructorService;
 //
-//    @ModelAttribute("student")
-//    public StudentDTO studentRegistrationDTO () {
-//        return new StudentDTO();
+//    @ModelAttribute("instructor")
+//    public InstructorDTO instructorRegistrationDTO () {
+//        return new InstructorDTO();
 //    }
 //
 //    @GetMapping
@@ -34,11 +36,11 @@
 //
 //
 //    @PostMapping
-//    public String registerstudentAccount(@ModelAttribute("student") @Valid StudentDTO studentDTO,
+//    public String registerInstructorAccount(@ModelAttribute("instructor") @Valid InstructorDTO instructorDTO,
 //                                            BindingResult result, Model model) {
 //
 //        String errorMessge = null;
-//        Student existing = studentService.isRegister(studentDTO.getEmail());
+//        Instructor existing = instructorService.isRegister(instructorDTO.getEmail());
 //        if (result.hasErrors()) {
 //            errorMessge =  "Username or Password is invalid !";
 //        }
@@ -51,13 +53,13 @@
 //            return "register";
 //        }
 //
-//        Student student = new Student();
-//        student.setFirstName(studentDTO.getFirstName());
-//        student.setLastName(studentDTO.getLastName());
-//        student.setEmail(studentDTO.getEmail());
-//        student.setPassword(studentDTO.getPassword());
-////        student.setCourseList(new ArrayList<>());
-//        studentService.register(student);
+//        Instructor instructor = new Instructor();
+//        instructor.setFirstName(instructorDTO.getFirstName());
+//        instructor.setLastName(instructorDTO.getLastName());
+//        instructor.setEmail(instructorDTO.getEmail());
+//        instructor.setPassword(instructorDTO.getPassword());
+//        instructor.setCourseList(new ArrayList<>());
+//        instructorService.register(instructor);
 //
 //        return "redirect:/login";
 //

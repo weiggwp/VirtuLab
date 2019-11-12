@@ -2,27 +2,16 @@ package backend.model;
 
 import javax.persistence.*;
 
-
-
 @Entity
 public class Step {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long stepID;
-    private int stepNum;
     private String instruction;
-//    private Step next;
 
-
-    //TODO: workspace: equipments in their states
-    public Step() {}
-
-    public Step(int stepNum, String instruction) {
-        this.stepNum = stepNum;
-        this.instruction = instruction;
-//        this.next = next;
-    }
+    @ManyToOne
+    @JoinColumn(name="labID")
+    private Lab lab;
 
     public long getStepID() {
         return stepID;
@@ -30,14 +19,6 @@ public class Step {
 
     public void setStepID(long stepID) {
         this.stepID = stepID;
-    }
-
-    public int getStepNum() {
-        return stepNum;
-    }
-
-    public void setStepNum(int stepNum) {
-        this.stepNum = stepNum;
     }
 
     public String getInstruction() {
@@ -48,11 +29,11 @@ public class Step {
         this.instruction = instruction;
     }
 
-//    public Step getNext() {
-//        return next;
-//    }
-//
-//    public void setNext(Step next) {
-//        this.next = next;
-//    }
+    public Lab getLab() {
+        return lab;
+    }
+
+    public void setLab(Lab lab) {
+        this.lab = lab;
+    }
 }
