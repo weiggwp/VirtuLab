@@ -20,6 +20,7 @@ public class Step {
 
     public void setStepID(long stepID) {
         this.stepID = stepID;
+    }
 
     public Step() {
     }

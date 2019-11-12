@@ -62,6 +62,34 @@ public class LabController {
 
     ModelMapper modelMapper = new ModelMapper();
 
+
+
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
+    public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
+
+        System.out.println("lab Controller is called: save_lab");
+        System.out.println(labDTO);
+
+
+        Lab lab = modelMapper.map(labDTO, Lab.class);
+        List<Step> steps = new ArrayList<>();
+        for (StepDTO dto: labDTO.getSteps()) {
+            Step step = new Step();
+            step.setStepNum(dto.getStepNum());
+            step.setInstruction(dto.getInstruction());
+            stepService.addStep(step);
+            steps.add(step);
+        }
+        lab.setSteps(steps);
+        System.out.println(lab);
+        labService.saveLab(lab);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
     public Map<String, Object> getLabs() {
@@ -81,57 +109,6 @@ public class LabController {
         map.put("msg", SUCCESS);
         map.put("list", user.getCourses());
         return map;
-    }
-
-
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
-    public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
-
-        System.out.println("lab Controller is called: save_lab");
-        System.out.println(labDTO);
-
-        List<StepDTO> steps = labDTO.getSteps();
-        for (StepDTO dto: steps) {
-            System.out.println(dto);
-        }
-
-        Lab lab = modelMapper.map(labDTO, Lab.class);
-        List<Step> steps = new ArrayList<>();
-        for (StepDTO dto: labDTO.getSteps()) {
-            Step step = new Step();
-            step.setStepNum(dto.getStepNum());
-            step.setInstruction(dto.getInstruction());
-            stepService.addStep(step);
-            steps.add(step);
-        }
-        lab.setSteps(steps);
-        System.out.println(lab);
-        labService.saveLab(lab);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
-    public ResponseEntity getLabs() {
-        System.out.println("lab Controller is called: get_labs");
-
-        Map<String, Object> map = new HashMap<>();
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = "";
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails)principal).getUsername();
-        } else {
-            email = principal.toString();
-        }
-
-        User user = userService.findByEmail(email);
-        map.put("msg", SUCCESS);
-        map.put("list", user.getCourses());
-        return new ResponseEntity(HttpStatus.OK);
-//        return map;
     }
 
 }
