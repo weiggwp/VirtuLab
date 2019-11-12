@@ -11,7 +11,6 @@ import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
-import axios from "axios";
 import GLOBALS from "../Globals";
 import NotificationManager from 'react-notifications';
 import Toast from 'light-toast';

@@ -35,6 +35,7 @@ class Course extends React.Component {
 
     render()
     {
+        console.log(this.props.class);
         const imageName = this.getImageName();
         return(
             <Card style={{borderWidth:2,borderColor:"black"}} >

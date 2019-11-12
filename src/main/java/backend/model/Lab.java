@@ -27,21 +27,9 @@ public class Lab {
     private long instructorID;
     private Date lastModified;
 
-    public long getLabID() {
-        return labID;
-    }
 
-    public void setLabID(long labID) {
-        this.labID = labID;
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})

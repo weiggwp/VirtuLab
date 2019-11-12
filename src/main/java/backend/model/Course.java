@@ -12,7 +12,7 @@ public class Course {
     private long courseID;
     private String courseName;
     private String courseDescription;
-    private int courseNumber;
+    private String courseNumber;
     private int courseEnrollment;
     private String accessCode = generateAccessCode();
 
@@ -26,17 +26,8 @@ public class Course {
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
                 inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs;
-    public List<Lab> getLabs(){
-        return labs;
-    }
     public static int instanceCnt;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "course_lab",
-            joinColumns = {@JoinColumn(name = "courseID")},
-            inverseJoinColumns = {@JoinColumn(name = "labID")})
-    private List<Lab> labs = new ArrayList<>();
 
 //    @ManyToMany
 //    @JoinTable(name = "user_course",
@@ -77,17 +68,11 @@ public class Course {
         instanceCnt ++;
     }
 
-    public long getCourseID() {
-        return courseID;
-    }
 
     public void setCourseID(long courseID) {
         this.courseID = courseID;
     }
 
-    public String getCourseName() {
-        return courseName;
-    }
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
