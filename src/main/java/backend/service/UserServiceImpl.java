@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(registration.getEmail_address());
         user.setPassword(registration.getPassword());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-
+        user.setRole(registration.getRole());
         if (registration.isStudent())
             user.setRoles(Arrays.asList(new Role("student")));
         else if (!registration.isStudent())

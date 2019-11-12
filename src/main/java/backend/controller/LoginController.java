@@ -52,10 +52,10 @@ public class LoginController {
         if (!passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         System.out.println("return http OK\n");
-        String token =createToken(existing.getEmail(),existing.isStudent(),existing.getFirstName()+" "+existing.getLastName());
+        String token =createToken(existing.getEmail(),existing.getRole(),existing.getFirstName()+" "+existing.getLastName());
 
 
-        TokenDTO dto = new TokenDTO(" "," ",isStudent(existing.isStudent()),token);
+        TokenDTO dto = new TokenDTO(" "," ",existing.getRole(),token);
 
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
@@ -67,13 +67,13 @@ public class LoginController {
 
     }
 
-    public String createToken(String email,boolean student,String name)
+    public String createToken(String email,String student,String name)
     {
 
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setSubject(email)
-                .claim("student",isStudent(student))
+                .claim("student",student)
                 .claim("name",name)
                 .signWith(signatureAlgorithm,signingKey)
                 .compact();

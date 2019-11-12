@@ -49,6 +49,7 @@ public class RegistrationController {
 
         if(errorMessge!=null)
         {
+            System.out.println(errorMessge);
             return new ResponseEntity<>(errorMessge,HttpStatus.BAD_REQUEST);
         }
 
