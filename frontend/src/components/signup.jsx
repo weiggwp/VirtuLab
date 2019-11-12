@@ -38,8 +38,10 @@ class signup extends Component {
             this.setState({
                 errors: 'Inconsistent passwords entered, try again',
                 username: '',
-                password: ''
+                password: '',
+                confirm_password:''
             });
+            return;
         }
         const user = {
             first_name:this.state.first_name,
@@ -207,6 +209,9 @@ class signup extends Component {
                                                     Create Student Account
                                                 </Button>
                                             </Col>
+                                        </Row>
+                                        <Row>
+                                            {errorMessage}
                                         </Row>
 
                                     </Container>
