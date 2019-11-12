@@ -45,7 +45,6 @@ class login extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        alert("logging in");
         const user = {
             email_address: this.state.email_address,
             password: this.state.password
@@ -61,14 +60,11 @@ class login extends Component {
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
                 localStorage.setItem('token', response.data["token"]);
-                alert(response.data["role"])
 
                 this.setState({login_success: true,login_role: response.data["role"]});
-                alert("logging in");
 
             })
             .catch((error) => {
-                alert("bad?")
                 this.setState({
                     errors: 'Error signing up! Try a different username',
                     username: '',

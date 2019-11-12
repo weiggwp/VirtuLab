@@ -61,7 +61,7 @@ class instructor_home extends React.Component {
                     <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Instructor: SummerBagel
+                            Instructor: {this.props.name}
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>

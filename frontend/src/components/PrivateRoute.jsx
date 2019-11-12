@@ -61,7 +61,6 @@ class PrivateRoute extends React.Component {
                     });
                 },
                 (err) => {
-                    alert("private route failed");
                     this.setState({
                         loading: false
                     });

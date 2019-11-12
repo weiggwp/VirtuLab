@@ -15,6 +15,8 @@ import {Droppable_course} from "./droppable_course";
 import {Expandable_Classes} from "./expandable_course";
 import InstructorHeader from "./instructorHeader";
 import GLOBALS from "../Globals";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
 
 class labOjb {
     constructor(id, name, author, keywords, description, courses) {
@@ -111,7 +113,7 @@ class instructor_labs extends React.Component {
                     <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Instructor: SummerBagel
+                            Instructor: {this.props.name}
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
@@ -141,12 +143,39 @@ class instructor_labs extends React.Component {
                                 textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
                                 borderStyle: "dashed", borderWidth: 1
                             }}>
-                                <h4>{lab.name}</h4>
-                                {"Author: " + lab.author}
-                                <br/>
-                                {"Description: " + lab.description}
-                                <br/>
-                                {"Keywords: " + lab.keywords}
+                                <ButtonGroup style={{width:"100%"}}>
+
+
+                                    <Dropdown as={ButtonGroup} style={{width:"100%"}} >
+                                    {/*    <Button variant="info" style={{width:"90%"}} style={{textAlign:"left"}}disabled>*/}
+                                    {/*        <div >*/}
+                                    {/*        {lab.name}     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>*/}
+                                    {/*        /!*{"Author: " + lab.author}*!/*/}
+                                    {/*        /!*<br/>*!/*/}
+                                    {/*        /!*{"Description: " + lab.description}*!/*/}
+                                    {/*        /!*<br/>*!/*/}
+                                    {/*        /!*{"Keywords: " + lab.keywords}*!/*/}
+                                    {/*        </div>*/}
+                                    {/*    </Button>*/}
+
+                                        <Dropdown.Toggle  style={{textAlign:"left",}} variant="info" >
+                                            {lab.name}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu class="dropdown-menu">
+                                            <Dropdown.Item class={"dropdown-item"} eventKey="1">View</Dropdown.Item>
+                                            <Dropdown.Item class={"dropdown-item"} eventKey="2">Edit</Dropdown.Item>
+                                            <Dropdown.Item class={"dropdown-item"} eventKey="3">Publish</Dropdown.Item>
+                                            <Dropdown.Item class={"dropdown-item"} eventKey="4" >Delete</Dropdown.Item>
+                                            {/*<Dropdown.Divider />*/}
+
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+
+
+
+                                </ButtonGroup>
+
+
                             </div>
 
 
