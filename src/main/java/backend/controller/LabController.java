@@ -2,7 +2,9 @@ package backend.controller;
 
 
 import backend.dto.StepDTO;
+import backend.model.Step;
 import backend.service.CourseService;
+import backend.service.StepService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,9 @@ public class LabController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    StepService stepService;
 
     ModelMapper modelMapper = new ModelMapper();
 
@@ -92,10 +98,18 @@ public class LabController {
 //        for (StepDTO dto: steps) {
 //            System.out.println(dto);
 //        }
-//        Lab lab = modelMapper.map(labDTO, Lab.class);
-//        System.out.println(lab);
-//        labService.saveLab(lab);
-
+        Lab lab = modelMapper.map(labDTO, Lab.class);
+        List<Step> steps = new ArrayList<>();
+        for (StepDTO dto: labDTO.getSteps()) {
+            Step step = new Step();
+            step.setStepNum(dto.getStepNum());
+            step.setInstruction(dto.getInstruction());
+            stepService.addStep(step);
+            steps.add(step);
+        }
+        lab.setSteps(steps);
+        System.out.println(lab);
+        labService.saveLab(lab);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
