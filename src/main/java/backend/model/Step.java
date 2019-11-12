@@ -7,6 +7,7 @@ public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long stepID;
+    private long stepNum;
     private String instruction;
 
     @ManyToOne

@@ -1,22 +1,16 @@
 package backend.controller;
 
 
-import backend.dto.CourseDTO;
 import backend.dto.StepDTO;
-import backend.model.Course;
-import backend.model.Step;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 import backend.dto.LabDTO;
-import backend.dto.UserDTO;
 import backend.model.Lab;
 import backend.model.User;
 import backend.service.LabService;
 import backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,9 +73,9 @@ public class LabController {
         System.out.println("lab Controller is called: save_lab");
         System.out.println(labDTO);
 
-        // LabDTO{id=0, name='Untitled Lab', lastModified=null, instructorID=0, steps=[StepDTO{stepNum=0, instruction=
-        // 'null'}, StepDTO{stepNum=0, instruction='null'}, StepDTO{stepNum=0, instruction='null'}, StepDTO{stepNum=0,
-        // instruction='null'}]}
+//       Should prints:
+//       LabDTO{, name='Untitled Lab', lastModified=null, instructorID=666, steps=[StepDTO{stepNum=0, instruction='This is the setup stage. Click on equipments you would like to be available for the duration of the lab (click again to unselect) '}, StepDTO{stepNum=1, instruction='fhdfhdfdfhfd'}]}
+
 
 //        Lab existing = labService.findByLabID(labDTO.getId());
 //        System.out.println("existing:"+existing);
@@ -94,20 +88,20 @@ public class LabController {
 //        else
 //            returnid = labService.createNewLab(labDTO);
 //        System.out.println("return http OK\n"+returnid);
-        List<StepDTO> steps = labDTO.getSteps();
-        for (StepDTO dto: steps) {
-            System.out.println(dto);
-        }
-        Lab lab = modelMapper.map(labDTO, Lab.class);
-        System.out.println(lab);
-        labService.saveLab(lab);
+//        List<StepDTO> steps = labDTO.getSteps();
+//        for (StepDTO dto: steps) {
+//            System.out.println(dto);
+//        }
+//        Lab lab = modelMapper.map(labDTO, Lab.class);
+//        System.out.println(lab);
+//        labService.saveLab(lab);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
-    public Map<String, Object> getLabs() {
+    public ResponseEntity getLabs() {
         System.out.println("lab Controller is called: get_labs");
 
         Map<String, Object> map = new HashMap<>();
@@ -123,7 +117,8 @@ public class LabController {
         User user = userService.findByEmail(email);
         map.put("msg", SUCCESS);
         map.put("list", user.getCourses());
-        return map;
+        return new ResponseEntity(HttpStatus.OK);
+//        return map;
     }
 
 }

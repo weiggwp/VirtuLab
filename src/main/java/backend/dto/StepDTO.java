@@ -12,8 +12,28 @@ public class StepDTO {
     @NotEmpty
     private String instruction;
 
-//    private StepDTO next;
+    public StepDTO(){}
 
+    public int getStepNum() {
+        return stepNum;
+    }
+
+    public void setStepNum(int stepNum) {
+        this.stepNum = stepNum;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+
+    public StepDTO(@NotNull @NotEmpty int stepNum, @NotNull @NotEmpty String instruction) {
+        this.stepNum = stepNum;
+        this.instruction = instruction;
+    }
 
     @Override
     public String toString() {

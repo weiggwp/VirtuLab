@@ -12,6 +12,8 @@ public class LabDTO {
     @NotNull
     @NotEmpty
     private String name;
+
+
     @NotNull
     @NotEmpty
     private Date lastModified;
@@ -21,6 +23,8 @@ public class LabDTO {
 //    @NotNull
 //    @NotEmpty
 //    private String password;
+    @NotNull
+    @NotEmpty
     private List<StepDTO> steps;
 
 
