@@ -11,7 +11,7 @@ import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
 import Step from "../Step.js";
 import {Slides} from "./Slides";
-
+import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
 import axios from "axios";
 import GLOBALS from "../Globals";
@@ -29,7 +29,8 @@ class create_lab extends React.Component {
             // steps: [],
             step_num: 0,
             lab_id:0,
-            lab_loaded:false
+            lab_loaded:false,
+            lab_title:"Untitled Lab"
 
 
         };
@@ -43,6 +44,7 @@ class create_lab extends React.Component {
     {
         if(this.props.location.state!==undefined)
         {
+            alert(this.props.location.state);
 
 
             var step_list = this.props.location.state.steps;
@@ -115,7 +117,7 @@ class create_lab extends React.Component {
         // e.preventDefault();
         const lab = {
 
-            name: "Untitled Lab",
+            name: this.state.lab_title,
             creator: this.props.email,
             steps: this.state.steps,
         };
@@ -153,20 +155,28 @@ class create_lab extends React.Component {
                 <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
                     <Nav>
+                        <EditableLabel labelClass="lab_title_label" inputClass="lab_title_input"
+                                       initialValue={this.state.lab_title}
+                                       save={value => {
+                                           this.setState({lab_title:value});
+                                       }}
+                        />
 
+
+                    </Nav>
+
+                    <Nav>
                         <Link to="/create_lab">
                             <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
                         </Link>
                         {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
                         <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
-
-                    </Nav>
-
-                    <Nav>
                         <Image className={"save_image"} onClick={this.handleLabSave}
                                src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
                                rounded/>
+
+
 
                         <Link to="/instructor_home">
                             <Image onClick={this.setRedirectHome} className={"config_image"}

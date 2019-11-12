@@ -106,7 +106,6 @@ class instructor_labs extends React.Component {
         else if (this.state.redirectLabCreation){
             return <Redirect exact to={{
                 pathname: '/create_lab',
-                state: {user: this.state.user},
             }}/>;
         }
     };
