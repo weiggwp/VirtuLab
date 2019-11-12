@@ -40,7 +40,7 @@ public class CourseController {
     @RequestMapping(value = "/create_course", method = RequestMethod.POST)
     @ResponseBody
     public Course addCourse(@RequestBody CourseDTO courseDTO) {
-        User user = userRepository.findByEmail("omg");
+//        User user = userRepository.findByEmail("omg");
 
         System.out.println("CourseController create course: ");
         System.out.println(courseDTO);
@@ -57,8 +57,8 @@ public class CourseController {
         courseService.addCourse(c);
         System.out.println(c);
 
-        user.getCourses().add(c);
-        userRepository.save(user);
+//        user.getCourses().add(c);
+//        userRepository.save(user);
 
         return c;
     }
@@ -92,6 +92,7 @@ public class CourseController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_course", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> getCourses(@RequestBody CourseDTO courseDTO) {
         System.out.println("CourseController read operation: ");
         System.out.println(courseDTO);
@@ -111,6 +112,8 @@ public class CourseController {
 
         Optional<Course> optionalCourse = courseService.findCourseByNameOrCode(code, 0);
         Course course = optionalCourse.get();
+
+        System.out.println(course);
 
         map.put("msg", SUCCESS);
         map.put("course", course);
