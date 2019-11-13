@@ -35,6 +35,7 @@ class Course extends React.Component {
 
     render()
     {
+        console.log(this.props.class);
         const imageName = this.getImageName();
         return(
             <Card style={{borderWidth:2,borderColor:"black"}} >
@@ -43,7 +44,7 @@ class Course extends React.Component {
                         <Nav >
 
 
-                            <h3 className={this.props.style}>{this.props.classname}</h3>
+                            <h3 className={this.props.style}>{this.props.class.classname}</h3>
 
                         </Nav>
 
@@ -57,10 +58,16 @@ class Course extends React.Component {
                 </Accordion.Toggle>
                 <Accordion.Collapse style={{backgroundColor:"lightblue",borderWidth:2}} eventKey={this.props.fcount}>
                     <Card.Body >
+                        {this.props.class.labs.map(classItem => (
+                            <Lab  style={this.props.style} labname={classItem.name}/>
 
-                        <Lab  style={this.props.style} labname={"Lab 1: Introduction to using Beaker"}/>
 
-                        <Lab  style={this.props.style} labname={"Lab 0: Introduction to VirtuLab"}/>
+
+
+                        ))}
+
+
+
                         {/*import React from 'react';*/}
 
                         {/*class Course {*/}

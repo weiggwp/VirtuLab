@@ -26,6 +26,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private String role;
     private boolean isStudent;
 
 
@@ -69,7 +70,15 @@ public class User {
     public User() {
     }
 
-    public long Id() {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -135,7 +144,9 @@ public class User {
 
 
     public boolean isStudent() {
-        return isStudent;
+        System.out.println(this.role);
+        return "student".equals(this.role);
+//        return isStudent;
     }
 
     public void setStudent(boolean student) {
@@ -150,6 +161,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
                 ", courses=" + courses +
                 ", labs=" + labs +

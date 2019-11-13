@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/VirtuLab.iml" filepath="$PROJECT_DIR$/.idea/VirtuLab.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/VirtuLabcw.iml" filepath="$PROJECT_DIR$/.idea/VirtuLabcw.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend.iml" filepath="$PROJECT_DIR$/.idea/modules/backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/backend.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/backend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test/backend.test.iml" />
     </modules>
   </component>

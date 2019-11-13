@@ -20,6 +20,7 @@ import GLOBALS from "../Globals";
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
+        this.steps = [new Step(0)];
 
 
         this.state = {
@@ -35,11 +36,7 @@ class create_lab extends React.Component {
 
         };
     }
-    setRedirectProps()
-    {
 
-
-    }
     populateSteps()
     {
         if(this.props.location.state!==undefined)
