@@ -44,7 +44,7 @@ class create_lab extends React.Component {
     {
         if(this.props.location.state!==undefined)
         {
-            alert(this.props.location.state);
+            // alert(this.props.location.state);
 
 
             var step_list = this.props.location.state.steps;
@@ -58,7 +58,7 @@ class create_lab extends React.Component {
 
             }
             console.log(step_list);
-            alert("got here"+this.props.location.state.id);
+            // alert("got here"+this.props.location.state.id);
 
             this.setState(
                 {
@@ -66,7 +66,7 @@ class create_lab extends React.Component {
                     lab_id: this.props.location.state.id,
                     lab_loaded: true,
                 }, () => {
-                    alert(this.state.lab_id);
+                    console.log(this.state.lab_id);
                 }
             )
         }
