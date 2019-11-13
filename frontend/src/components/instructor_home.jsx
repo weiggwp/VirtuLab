@@ -51,7 +51,7 @@ class instructor_home extends React.Component {
 
     updateClasses(){
         const user = {
-
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {
@@ -65,9 +65,11 @@ class instructor_home extends React.Component {
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
-                // console.log("resp is " +response.json())
+
+
+                console.log("resp is " +response.json())
                 console.log("dat is " + JSON.stringify(response));
                 console.log("resp is " +response.data[0].courseID);
                 console.log("resp is " +response.data[0].courseName);

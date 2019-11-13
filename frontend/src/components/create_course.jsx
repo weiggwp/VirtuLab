@@ -27,6 +27,7 @@ export class create_course extends Component {
     handleCreateCourse = (e) => {
 
         const course = {
+            email: this.props.email,
             course_name: this.state.course_name,
             course_number: this.state.course_number,
             semester: this.state.semester,
