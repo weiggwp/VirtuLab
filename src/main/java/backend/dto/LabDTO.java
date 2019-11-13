@@ -9,6 +9,16 @@ import java.util.List;
 
 public class LabDTO {
 
+    private long labID;
+
+    public long getLabID() {
+        return labID;
+    }
+
+    public void setLabID(long labID) {
+        this.labID = labID;
+    }
+
     @NotNull
     @NotEmpty
     private String name;
@@ -71,7 +81,7 @@ public class LabDTO {
     @Override
     public String toString() {
         return "LabDTO{" +
-//                "id=" + id +
+                "id=" + labID +
                 ", name='" + name + '\'' +
                 ", lastModified=" + lastModified +
                 ", creator=" + creator +

@@ -35,19 +35,11 @@ public class LabService {
         return labRepository.findByLabID(id);
     }
 
-//    public long createNewLab(LabDTO labDTO){
-//        Lab lab = new Lab();
-//        if( labDTO != null){
-//            modelMapper.map(labDTO,lab);
-//        }
-////        if(!labRepository.existsById(lab.getLabID())
-////        {
-////            save(lab);
-////        }
-//        return labRepository.save(lab).getLabID();
-//
-//
-//    }
+    public long createNewLab(Lab lab){
+        return labRepository.save(lab).getLabID();
+
+
+    }
 
     public void save( LabDTO labDTO) {
         Lab lab = new Lab();

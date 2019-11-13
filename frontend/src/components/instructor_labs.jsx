@@ -87,6 +87,7 @@ class instructor_labs extends React.Component {
 
 
         }
+        // alert("lab id"+this.redirectEdit.id+" name: "+this.redirectEdit.name+" ");
 
         this.setState({
             edit_lab:true
@@ -142,6 +143,7 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_labs', {email_address:this.props.email}
         )
             .then((response) => {
+                console.log(response.data);
                 for (let i=0; i<response.data.length; i++){
                     labs[i]=response.data[i]
 

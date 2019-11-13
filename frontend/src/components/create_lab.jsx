@@ -54,16 +54,30 @@ class create_lab extends React.Component {
                 }
 
             }
-            console.log(step_list);
             // alert("got here"+this.props.location.state.id);
 
             this.setState(
                 {
                     step_num: step_list.length - 1,
                     lab_id: this.props.location.state.id,
+                    lab_title:this.props.location.state.name,
                     lab_loaded: true,
                 }, () => {
                     console.log(this.state.lab_id);
+                    console.log(this.state.lab_title);
+                    console.log(this.state.steps);
+                }
+            )
+
+        }
+        else
+        {
+            this.setState(
+                {
+
+                    lab_loaded: true,
+                }, () => {
+
                 }
             )
         }
@@ -113,6 +127,8 @@ class create_lab extends React.Component {
     handleLabSave = (e) => {
         // e.preventDefault();
         const lab = {
+            labID: this.state.lab_id,
+            //if zero, it's not a valid labID
 
             name: this.state.lab_title,
             creator: this.props.email,
@@ -131,8 +147,8 @@ class create_lab extends React.Component {
                 this.setState({save_success: true});
                 console.log("id is "+response.data);
                 if(this.state.lab_id===0)  //only if not set
-
                     this.setState({lab_id:response.data});
+
 
                 console.log("response: ", response);
             })
@@ -156,7 +172,9 @@ class create_lab extends React.Component {
                                        initialValue={this.state.lab_title}
                                        save={value => {
                                            this.setState({lab_title:value});
-                                       }}
+                                       }
+
+                                       }
                         />
 
 
@@ -302,8 +320,8 @@ class create_lab extends React.Component {
         if(!this.state.lab_loaded)
         {
             this.populateSteps();
+            return null;
         }
-
         return(
             <div >
 

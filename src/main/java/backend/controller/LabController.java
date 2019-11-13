@@ -33,10 +33,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,9 +67,8 @@ public class LabController {
 
         System.out.println("lab Controller is called: save_lab");
         System.out.println(labDTO);
+        Lab existing = labService.findByLabID(labDTO.getLabID());
 
-
-        Lab lab = modelMapper.map(labDTO, Lab.class);
 
         List<Step> steps = new ArrayList<>();
         for (StepDTO dto: labDTO.getSteps()) {
@@ -82,14 +78,34 @@ public class LabController {
             stepService.addStep(step);
             steps.add(step);
         }
-        lab.setSteps(steps);
-        System.out.println(lab);
-        labService.saveLab(lab);
-        User instructor = userService.findByEmail(labDTO.getCreator());
-        instructor.getLabs().add(lab);
-        userService.save(instructor);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+
+        long returnid = -1;
+        if (existing != null)
+        {
+            existing.setName(labDTO.getName());
+            existing.setLastModified(labDTO.getLastModified());
+            existing.setSteps(steps);
+            labService.saveLab(existing);
+
+        }
+        else {
+            System.out.println("lab does not exist, creating new lab");
+            Lab lab = modelMapper.map(labDTO, Lab.class);
+            lab.setSteps(steps);
+
+            returnid = labService.createNewLab(lab);
+
+            User instructor = userService.findByEmail(labDTO.getCreator());
+            instructor.getLabs().add(lab);
+            userService.save(instructor);
+        }
+
+
+        return new ResponseEntity<>(returnid, HttpStatus.OK);
     }
+
+
 
 
     @CrossOrigin(origins = "*")
@@ -104,12 +120,32 @@ public class LabController {
 
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List labs = user.getLabs();
+        List<Lab> labs = user.getLabs();
+
+
 
 
         if(labs!=null)
         {
-            System.out.println("labs: "+labs);
+            for (Lab lab : labs)
+            {
+                Collections.sort(lab.getSteps(), new Comparator<Step>() {
+                    @Override
+                    public int compare(Step o1, Step o2) {
+                        long first = o1.getStepNum();
+                        long second = o2.getStepNum();
+                        if(first>second)
+                            return 1;
+                        else {
+                            if (first == second)
+                                return 0;
+                            return -1;
+                        }
+                    }
+
+                });
+            }
+
             return new ResponseEntity<>(user.getLabs(),HttpStatus.OK);
         }
         else
