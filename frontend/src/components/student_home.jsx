@@ -43,7 +43,11 @@ class student_home extends React.Component
     };
     updateClasses(){
         const user = {
+<<<<<<< HEAD
 
+=======
+            email_address:this.props.email
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
         };
         let axiosConfig = {
             headers: {

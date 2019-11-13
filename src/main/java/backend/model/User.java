@@ -142,6 +142,21 @@ public class User {
         isStudent = student;
     }
 
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", isStudent=" + isStudent +
+//                ", courses=" + courses +
+//                ", labs=" + labs +
+//                ", roles=" + roles +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "User{" +

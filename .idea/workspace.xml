@@ -1,15 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="c2af1113-ab67-47b1-a879-069b387891ff" name="Default Changelist" comment="">
+=======
+    <list default="true" id="253ef95c-43d6-40ab-83b1-60ac92cdf2ed" name="Default Changelist" comment="implemented saving labs partially - entities not right">
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/MVCConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/MVCConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/WebSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/WebSecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/RegistrationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/RegistrationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/StudentRegistrationController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/CourseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/CourseDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/InstructorDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/InstructorDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Beaker.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Beaker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Erlenmeyer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Erlenmeyer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Flask.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Flask.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Glassware.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Glassware.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GlucoseSolution.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GlucoseSolution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GraduatedCylinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GraduatedCylinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Pipette.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Pipette.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Scale.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Scale.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/WaterBottle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/WaterBottle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Instructor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Lab.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Lab.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/CourseRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/CourseRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/InstructorRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/LabRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/LabRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/StudentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/CourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/CourseService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/InstructorService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/StudentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +66,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_DATA_SOURCES" value="true" />
@@ -31,6 +81,8 @@
     <expand />
     <select />
   </component>
+=======
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -51,6 +103,9 @@
       </state>
     </system>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="backend" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -61,6 +116,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+<<<<<<< HEAD
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -68,6 +124,18 @@
     </option>
   </component>
   <component name="ProjectId" id="1SqOPzEWVUh7AtYPskTukdt3YvM" />
+=======
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1TU8LioHaQL9ykFv7k6Yg7MWb90" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -81,7 +149,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Royal_blue_hw1" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AETest" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -110,6 +184,7 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="VirtuLab [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -131,12 +206,17 @@
       <method v="2" />
     </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+=======
+  <component name="RunManager">
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
       <module name="backend.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="backend.Application" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/frontend/package.json" />
       <command value="run" />
@@ -156,6 +236,11 @@
       <list>
         <item itemvalue="npm.start" />
         <item itemvalue="Gradle.VirtuLab [dependencies]" />
+=======
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Application" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
       </list>
     </recent_temporary>
   </component>
@@ -174,6 +259,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="ff304d49-a687-408e-a42d-e85cda2dab52" name="Default Changelist" comment="" />
       <created>1572131114805</created>
       <option name="number" value="Default" />
@@ -192,6 +278,16 @@
       <workItem from="1573415691472" duration="28313000" />
       <workItem from="1573496228548" duration="6448000" />
       <workItem from="1573518853060" duration="3786000" />
+=======
+      <changelist id="253ef95c-43d6-40ab-83b1-60ac92cdf2ed" name="Default Changelist" comment="" />
+      <created>1573438758179</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1573438758179</updated>
+      <workItem from="1573438760835" duration="15791000" />
+      <workItem from="1573503263125" duration="13586000" />
+      <workItem from="1573575629726" duration="5019000" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     </task>
     <servers />
   </component>
@@ -235,6 +331,7 @@
       </breakpoints>
     </breakpoint-manager>
   </component>
+<<<<<<< HEAD
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
@@ -262,4 +359,6 @@
       </state>
     </states>
   </component>
+=======
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
 </project>

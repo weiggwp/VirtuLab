@@ -83,8 +83,14 @@ class instructor_home extends React.Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
+<<<<<<< HEAD
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].accessCode,
                         clicked:false,labs:response.data[i].labs};
+=======
+                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                        clicked:false,labs:response.data[i].labs};
+
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
                     console.log("class array[i] is " +classArray[i].classname)
                 }
                 // console.log("AAA classarray is "+classArray);

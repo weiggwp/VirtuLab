@@ -131,8 +131,12 @@ public class LabController {
         User user = userService.findByEmail(email);
         map.put("msg", SUCCESS);
         map.put("list", user.getCourses());
+<<<<<<< HEAD
         return new ResponseEntity(HttpStatus.OK);
 //        return map;
+=======
+        return map;
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     }
 
 }

@@ -2,11 +2,15 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
+<<<<<<< HEAD:.idea/modules/backend.iml
     <content url="file://$MODULE_DIR$/../..">
       <excludeFolder url="file://$MODULE_DIR$/../../.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../build" />
       <excludeFolder url="file://$MODULE_DIR$/../../out" />
     </content>
+=======
+    <content url="file://$MODULE_DIR$" />
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.:.idea/VirtuLab.iml
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

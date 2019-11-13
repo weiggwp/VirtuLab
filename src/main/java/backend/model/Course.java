@@ -16,6 +16,19 @@ public class Course {
     private int courseEnrollment;
     private String accessCode = generateAccessCode();
 
+<<<<<<< HEAD
+=======
+    public Course(String courseName, long courseID){
+        this.courseID=courseID;
+        this.courseName=courseName;
+        labs = new ArrayList<Lab>();
+    }
+
+    @ManyToMany
+    @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
+                inverseJoinColumns = {@JoinColumn(name = "labID")})
+    private List<Lab> labs;
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     public static int instanceCnt;
 
 
@@ -123,6 +136,19 @@ public class Course {
 
     public List<User> getStudents() {
         return users;
+<<<<<<< HEAD
+=======
+    }
+
+    public void setStudents(List<User> users) {
+        this.users = users;
+    }
+    public void addLab(Lab lab){
+        labs.add(lab);
+    }
+    public long getCourseID(){
+        return courseID;
+>>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     }
 
     public void setStudents(List<User> users) {
