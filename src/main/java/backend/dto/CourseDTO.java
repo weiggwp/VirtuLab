@@ -14,6 +14,16 @@ public class CourseDTO {
     @JsonProperty("code")
     private String code;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @JsonProperty("email")
+    private String email;
 //    private int courseEnrollment;
 
     public String getCourseName() {
