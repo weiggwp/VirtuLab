@@ -95,20 +95,21 @@ public class LabController {
     public Map<String, Object> getLabs() {
         System.out.println("lab Controller is called: get_labs");
 
-        Map<String, Object> map = new HashMap<>();
+//        Map<String, Object> map = new HashMap<>();
+//
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String email = "";
+//        if (principal instanceof UserDetails) {
+//            email = ((UserDetails)principal).getUsername();
+//        } else {
+//            email = principal.toString();
+//        }
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = "";
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails)principal).getUsername();
-        } else {
-            email = principal.toString();
-        }
-
-        User user = userService.findByEmail(email);
-        map.put("msg", SUCCESS);
-        map.put("list", user.getCourses());
-        return map;
+//        User user = userService.findByEmail(email);
+//        map.put("msg", SUCCESS);
+//        map.put("list", user.getCourses());
+//        return map;
+        return null;
     }
 
 }

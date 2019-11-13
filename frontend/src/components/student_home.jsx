@@ -41,7 +41,7 @@ class student_home extends React.Component
     };
     updateClasses(){
         const user = {
-            email_address:this.props.email
+            email:this.props.email
         };
         let axiosConfig = {
             headers: {
@@ -52,16 +52,15 @@ class student_home extends React.Component
         };
         var classArr=[];
         var classArray=[];
-
+        console.log("sending email of "+user.email)
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
                 console.log("email is " +this.props.email)
                 // console.log("resp is " +response.json())
                 console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].labs);
-                console.log("resp is " +response.data[0].courseName);
+
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -71,6 +70,7 @@ class student_home extends React.Component
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
+                this.render()
             })
             .catch((error) => {
                 }
@@ -83,6 +83,7 @@ class student_home extends React.Component
 
         const course = {
             course_number: this.state.code,
+            email   :this.props.email
         };
         const user={
 

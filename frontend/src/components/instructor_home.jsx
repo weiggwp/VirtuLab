@@ -51,13 +51,13 @@ class instructor_home extends React.Component {
 
     updateClasses(){
         const user = {
-
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
-                'responseType': 'json'
+
             }
         };
         var classArr=[];
@@ -65,12 +65,12 @@ class instructor_home extends React.Component {
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
-                // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].courseID);
-                console.log("resp is " +response.data[0].courseName);
+
+
+
+
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
 
@@ -79,13 +79,14 @@ class instructor_home extends React.Component {
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false,labs:response.data[i].labs};
+                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
 
-                    console.log("class array[i] is " +classArray[i].classname)
+                    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }
                 this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
+                console.log("doot" + error)
                 }
             );
     }

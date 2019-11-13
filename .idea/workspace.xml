@@ -1,59 +1,256 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="253ef95c-43d6-40ab-83b1-60ac92cdf2ed" name="Default Changelist" comment="implemented saving labs partially - entities not right">
+    <list default="true" id="c2af1113-ab67-47b1-a879-069b387891ff" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/VirtuLab.backend.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/VirtuLab.backend.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/laura.Desktop.VirtuLab.backend.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/test/Desktop.VirtuLab.backend.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/test/backend.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/UserCourse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/UserCourseRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/backend/service/UserCourseService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/VirtuLab.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/VirtuLab.backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__antlr_antlr_2_7_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_classic_1_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_core_1_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_classmate_1_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_9_9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_9_9_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_9_9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_9_9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_module_jackson_module_parameter_names_2_9_9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_h2database_h2_1_4_199.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jayway_jsonpath_json_path_2_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_zaxxer_HikariCP_3_2_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_activation_javax_activation_api_1_2_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_annotation_javax_annotation_api_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_persistence_javax_persistence_api_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_transaction_javax_transaction_api_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_validation_validation_api_2_0_1_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_xml_bind_jaxb_api_2_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__mysql_mysql_connector_java_8_0_17.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_bytebuddy_byte_buddy_1_9_16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_bytebuddy_byte_buddy_agent_1_9_16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_accessors_smart_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_json_smart_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_api_2_11_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_to_slf4j_2_11_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_core_9_0_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_el_9_0_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_aspectj_aspectjweaver_1_9_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_assertj_assertj_core_3_11_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_dom4j_dom4j_2_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_common_hibernate_commons_annotations_5_0_4_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_hibernate_core_5_3_11_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hibernate_validator_hibernate_validator_6_0_17_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_javassist_javassist_3_23_2_GA.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jboss_jandex_2_0_5_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jboss_logging_jboss_logging_3_3_3_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_core_2_23_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_modelmapper_modelmapper_0_7_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_modelmapper_modelmapper_2_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_objenesis_objenesis_2_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_5_0_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_projectlombok_lombok_1_18_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_skyscreamer_jsonassert_1_5_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_jul_to_slf4j_1_7_28.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_slf4j_api_1_7_28.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_autoconfigure_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_aop_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_data_jpa_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_jdbc_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_json_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_logging_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_security_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_test_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_tomcat_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_web_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_autoconfigure_2_1_8_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_data_spring_data_commons_2_1_10_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_data_spring_data_jpa_2_1_10_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_config_5_1_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_core_5_1_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_security_spring_security_web_5_1_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aop_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aspects_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_beans_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_core_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_expression_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_jcl_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_jdbc_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_orm_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_test_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_tx_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_web_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_webmvc_5_1_9_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_xmlunit_xmlunit_core_2_6_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_yaml_snakeyaml_1_23.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/backend.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/backend.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/CorsFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/CorsFilter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/MVCConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/MVCConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/WebSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/LoginConfig/WebSecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LoginController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/RegistrationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/RegistrationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/StudentRegistrationController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/StudentHomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/StudentHomeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/demoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/demoController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/CourseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/CourseDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/InstructorDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/InstructorDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/LabDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/LabDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/StepDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/StepDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/StudentDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/StudentDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/TokenDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/TokenDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/DataNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/DataNode.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Beaker.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Beaker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Erlenmeyer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Erlenmeyer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Flask.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Flask.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Glassware.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Glassware.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GlucoseSolution.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GlucoseSolution.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GraduatedCylinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/GraduatedCylinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Pipette.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Pipette.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Scale.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/Scale.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/WaterBottle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Equipments/WaterBottle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Instructor.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Lab.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Lab.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Role.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Step.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Step.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/CourseRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/CourseRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/InstructorRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/EquipmentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/EquipmentRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/LabRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/LabRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/StudentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/UserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/CourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/CourseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/InstructorService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/EquipmentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/EquipmentService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/StudentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/StepService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/StepService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Course.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/create_course.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/create_course.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/instructor_home.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/student_home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/META-INF/backend.main.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/Application.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/CorsFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/MVCConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/LoginConfig/WebSecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/CourseController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/LabController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/RegistrationController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/StudentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/StudentHomeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/controller/demoController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/CourseDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/EquipmentDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/InstructorDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/LabDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/StepDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/StudentDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/dto/UserDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Course.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/DataNode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/Beaker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/Erlenmeyer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/Flask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/Glassware.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/GlucoseSolution.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/GraduatedCylinder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/Pipette.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/Scale.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Equipments/WaterBottle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Instructor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Lab.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Step.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Substances/Glucose.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Substances/Substance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/Substances/Water.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/model/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/CourseRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/EquipmentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/InstructorRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/LabRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/StepRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/StudentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/repository/UserRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/CourseService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/EquipmentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/InstructorService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/LabService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/StepService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/StudentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/backend/service/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/META-INF/backend.main.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/backend/repository/CourseRepositoryTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/LabController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/LabController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/StudentHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/StudentHomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/UserCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/UserCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/repository/UserCourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/repository/UserCourseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/repository/UserRepository.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -72,9 +269,6 @@
       </state>
     </system>
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="backend" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -83,8 +277,8 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -92,6 +286,11 @@
         <option value="$PROJECT_DIR$/.idea" />
       </set>
     </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1106" />
+    <option name="width" value="1906" />
+    <option name="height" value="1952" />
   </component>
   <component name="ProjectId" id="1TU8LioHaQL9ykFv7k6Yg7MWb90" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -103,7 +302,6 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AETest" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -126,7 +324,54 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="C:/Users/laura/Desktop/VirtuLab/build.gradle (2)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="C:/Users/laura/Desktop/VirtuLab/build.gradle (3)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Application (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="VirtuLab.backend.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="backend.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="backend.main" />
       <extension name="coverage">
@@ -140,9 +385,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.C:/Users/laura/Desktop/VirtuLab/build.gradle (2)" />
+      <item itemvalue="Gradle.C:/Users/laura/Desktop/VirtuLab/build.gradle (3)" />
+      <item itemvalue="npm.start" />
+      <item itemvalue="Spring Boot.Application" />
+      <item itemvalue="Spring Boot.Application (1)" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Application" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="Gradle.C:/Users/laura/Desktop/VirtuLab/build.gradle (3)" />
+        <item itemvalue="Spring Boot.Application (1)" />
+        <item itemvalue="Gradle.C:/Users/laura/Desktop/VirtuLab/build.gradle (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -151,14 +417,20 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="253ef95c-43d6-40ab-83b1-60ac92cdf2ed" name="Default Changelist" comment="" />
+      <changelist id="c2af1113-ab67-47b1-a879-069b387891ff" name="Default Changelist" comment="" />
       <created>1573438758179</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1573438758179</updated>
       <workItem from="1573438760835" duration="15791000" />
       <workItem from="1573503263125" duration="13586000" />
-      <workItem from="1573575629726" duration="5019000" />
+      <workItem from="1573613471693" duration="371000" />
+      <workItem from="1573613863205" duration="117000" />
+      <workItem from="1573614071197" duration="3494000" />
+      <workItem from="1573621426460" duration="158000" />
+      <workItem from="1573621644453" duration="2625000" />
+      <workItem from="1573624391822" duration="8609000" />
+      <workItem from="1573673679694" duration="5080000" />
     </task>
     <servers />
   </component>
@@ -227,11 +499,28 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implemented saving labs partiall - entities not quite right yet" />
     <MESSAGE value="implemented saving labs partially - entities not right" />
     <MESSAGE value="Added jwt tokens for authentication and verification purposes" />
     <option name="LAST_COMMIT_MESSAGE" value="Added jwt tokens for authentication and verification purposes" />
+  </component>
+  <component name="gradleExecuteTaskHistory">
+    <option value="" />
   </component>
 </project>
