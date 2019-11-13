@@ -43,7 +43,9 @@ public class Course {
         this.accessCode = generateAccessCode();
         instanceCnt++;
     }
-
+    public String getAccessCode(){
+        return accessCode;
+    }
     public Course(String courseName, long courseID) {
         this.courseName=courseName;
         this.courseID=courseID;
