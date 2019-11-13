@@ -75,7 +75,7 @@ class signup extends Component {
             (error) => {
                 console.log(error);
                 this.setState({
-                    errors: error,
+                    errors: "Email already registered!",
                     username: '',
                     password: ''
                 });

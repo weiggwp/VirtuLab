@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import backend.dto.UserDTO;
+import backend.model.Lab;
 import backend.model.Role;
 import backend.model.User;
 import backend.repository.UserRepository;
@@ -47,6 +48,14 @@ public class UserServiceImpl implements UserService {
             user.setRoles(Arrays.asList(new Role("instructor")));
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public void save(User user) {
+
+
+        userRepository.save(user);
+
     }
 
     @Override

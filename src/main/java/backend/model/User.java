@@ -43,7 +43,7 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "instructor_lab",
-            joinColumns = {@JoinColumn(name = "id")},
+            joinColumns = {@JoinColumn(name = "email")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs = new ArrayList<>();
 

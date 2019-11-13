@@ -122,10 +122,10 @@ class instructor_home extends React.Component {
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar style={{    marginLeft:"30px"}}>
-                    <Button className="tabs" href="instructor_home">Course</Button>
-                    <Button className="tabs" href="instructor_labs">Lab</Button>
-                </Navbar>
+                {/*<Navbar style={{    marginLeft:"30px"}}>*/}
+                {/*    <Button className="tabs" href="instructor_home">Course</Button>*/}
+                {/*    <Button className="tabs" href="instructor_labs">Lab</Button>*/}
+                {/*</Navbar>*/}
 
                 <div>
                     <div>

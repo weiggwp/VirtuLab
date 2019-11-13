@@ -9,6 +9,16 @@ import java.util.List;
 
 public class LabDTO {
 
+    private long labID;
+
+    public long getLabID() {
+        return labID;
+    }
+
+    public void setLabID(long labID) {
+        this.labID = labID;
+    }
+
     @NotNull
     @NotEmpty
     private String name;
@@ -18,7 +28,7 @@ public class LabDTO {
     private Date lastModified;
     @NotNull
     @NotEmpty
-    private long instructorID;
+    private String creator;
 //    @NotNull
 //    @NotEmpty
 //    private String password;
@@ -51,12 +61,12 @@ public class LabDTO {
         this.lastModified = lastModified;
     }
 
-    public long getInstructorID() {
-        return instructorID;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setInstructorID(long instructorID) {
-        this.instructorID = instructorID;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public List<StepDTO> getSteps() {
@@ -71,10 +81,10 @@ public class LabDTO {
     @Override
     public String toString() {
         return "LabDTO{" +
-//                "id=" + id +
+                "id=" + labID +
                 ", name='" + name + '\'' +
                 ", lastModified=" + lastModified +
-                ", instructorID=" + instructorID +
+                ", creator=" + creator +
                 ", steps=" + steps +
                 '}';
     }

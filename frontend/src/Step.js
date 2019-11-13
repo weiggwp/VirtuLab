@@ -2,7 +2,7 @@ import Workspace from "./Workspace.js";
 // Initializing a class definition
 class Step {
 
-    constructor(stepNum)
+    constructor(stepNum,instruction)
     {
 
         if(stepNum===0) {
@@ -10,7 +10,7 @@ class Step {
         }
         else
         {
-            this.init(stepNum,"fhdfhdfdfhfd",new Workspace());
+            this.init(stepNum,instruction,new Workspace());
 
         }
     }

@@ -24,7 +24,7 @@ public class Lab {
     private String description;
     private boolean isPublic;
 
-    private long instructorID;
+    private String creator;
     private Date lastModified;
 
 
@@ -42,11 +42,11 @@ public class Lab {
 //    private List<Equipment> equipments;
 
 
-    public Lab(String name, String description, boolean isPublic, long instructorID, Date lastModified, List<Step> steps) {
+    public Lab(String name, String description, boolean isPublic, String creator, Date lastModified, List<Step> steps) {
         this.name = name;
         this.description = description;
         this.isPublic = isPublic;
-        this.instructorID = instructorID;
+        this.creator = creator;
         this.lastModified = lastModified;
         this.steps = new ArrayList<>();
     }
@@ -54,13 +54,12 @@ public class Lab {
     public Lab() {
     }
 
-
-    public long getInstructorID() {
-        return instructorID;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setInstructorID(long instructorID) {
-        this.instructorID = instructorID;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public Date getLastModified() {
@@ -123,7 +122,7 @@ public class Lab {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", isPublic=" + isPublic +
-                ", instructorID=" + instructorID +
+                ", creator=" + creator +
                 ", lastModified=" + lastModified +
                 ", steps=" + steps +
                 '}';
