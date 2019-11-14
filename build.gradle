@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'VirtuLab'
-version = '0.0.1-SNAPSHOT'
+version = 'VirtuLab-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 jar {

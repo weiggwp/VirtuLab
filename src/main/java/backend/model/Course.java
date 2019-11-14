@@ -16,6 +16,9 @@ public class Course {
     private int courseEnrollment;
     private String accessCode = generateAccessCode();
 
+
+
+
     public Course(String courseName, long courseID){
         this.courseID=courseID;
         this.courseName=courseName;
@@ -33,8 +36,34 @@ public class Course {
 //    @JoinTable(name = "user_course",
 //        joinColumns = {@JoinColumn(name = "courseID")},
 //        inverseJoinColumns = {@JoinColumn(name = "id")})
-    @ManyToMany(mappedBy = "courses")
-    private List<User> users = new ArrayList<>();
+//    private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<UserCourse> userCourseList = new ArrayList<>();
+
+    public String getAccessCode() {
+        return accessCode;
+    }
+
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
+    }
+
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
+
+    public List<UserCourse> getUserCourseList() {
+        return userCourseList;
+    }
+
+    public void setUserCourseList(List<UserCourse> userCourseList) {
+        this.userCourseList = userCourseList;
+    }
 
     public Course(String courseName, String courseDescription, String courseNumber, int courseEnrollment, List<Lab> labs, List<User> users) {
         this.courseName = courseName;
@@ -42,7 +71,7 @@ public class Course {
         this.courseNumber = courseNumber;
         this.courseEnrollment = courseEnrollment;
         this.labs = new ArrayList<>();
-        this.users = new ArrayList<>();
+//        this.users = new ArrayList<>();
 
         this.accessCode = generateAccessCode();
         instanceCnt++;
@@ -109,14 +138,14 @@ public class Course {
     public void setLabs(List<Lab> labs) {
         this.labs = labs;
     }
-
-    public List<User> getStudents() {
-        return users;
-    }
-
-    public void setStudents(List<User> users) {
-        this.users = users;
-    }
+//
+//    public List<User> getStudents() {
+//        return users;
+//    }
+//
+//    public void setStudents(List<User> users) {
+//        this.users = users;
+//    }
     public void addLab(Lab lab){
         labs.add(lab);
     }
@@ -137,7 +166,7 @@ public class Course {
                 ", courseEnrollment=" + courseEnrollment +
                 ", accessCode='" + accessCode + '\'' +
                 ", labs=" + labs +
-                ", students=" + users +
+                ", userCourseList=" + userCourseList +
                 '}';
     }
 }
