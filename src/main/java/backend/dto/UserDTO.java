@@ -1,5 +1,7 @@
 package backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,13 +15,16 @@ public class UserDTO {
     private String last_name;
     @NotNull
     @NotEmpty
+    @JsonProperty("email")
     private String email_address;
     @NotNull
     @NotEmpty
+    @JsonProperty("password")
     private String password;
 
     @NotNull
     @NotEmpty
+    @JsonProperty("role")
     private String role;
 
     private boolean isStudent;

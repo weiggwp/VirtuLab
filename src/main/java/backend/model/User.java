@@ -30,21 +30,22 @@ public class User {
     private boolean isStudent;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_course",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "courseID")})
-    private List<Course> courses;
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "user_course",
+//            joinColumns = {@JoinColumn(name = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "courseID")})
+//    private List<Course> courses = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user")
-//    private List<UserCourse> courses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserCourse> userCourseList = new ArrayList<>();
 
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "instructor_lab",
             joinColumns = {@JoinColumn(name = "email")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
-    private List<Lab> labs;
+    private List<Lab> labs = new ArrayList<>();
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -62,8 +63,8 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.courses = courses;
-        this.labs = labs;
+//        this.courses = new ArrayList<>();
+        this.labs = new ArrayList<>();
         this.roles = roles;
     }
 
@@ -118,13 +119,13 @@ public class User {
         this.password = password;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
+//    public List<Course> getCourses() {
+//        return courses;
+//    }
+//
+//    public void setCourses(List<Course> courses) {
+//        this.courses = courses;
+//    }
 
     public List<Lab> getLabs() {
         return labs;
@@ -142,6 +143,13 @@ public class User {
         this.roles = roles;
     }
 
+    public List<UserCourse> getUserCourseList() {
+        return userCourseList;
+    }
+
+    public void setUserCourseList(List<UserCourse> userCourseList) {
+        this.userCourseList = userCourseList;
+    }
 
     public boolean isStudent() {
         System.out.println(this.role);
@@ -178,7 +186,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
-                ", courses=" + courses +
+                ", userCourseList=" + userCourseList +
                 ", labs=" + labs +
                 ", roles=" + roles +
                 '}';

@@ -128,7 +128,7 @@ class instructor_labs extends React.Component {
     };
     updateLabs(){
         const user = {
-
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {

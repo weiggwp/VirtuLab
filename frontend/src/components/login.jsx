@@ -46,7 +46,7 @@ class login extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const user = {
-            email_address: this.state.email_address,
+            email: this.state.email_address,
             password: this.state.password
         };
         let axiosConfig = {
@@ -56,7 +56,7 @@ class login extends Component {
             }
         };
         //axio sends post request to backend at \login to handle authentication
-        //TODO: ask backend to respond with user object including role, names, etc. instead of just 200 OK
+
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
                 localStorage.setItem('token', response.data["token"]);

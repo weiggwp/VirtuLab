@@ -6,13 +6,12 @@ import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
-// import 'react-notifications/lib/notifications.css';
+import {add_course} from './add_course.jsx'
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import GLOBALS from "../Globals";
-// import NotificationManager from 'react-notifications';
 import Toast from 'light-toast';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 
@@ -55,7 +54,7 @@ class student_home extends React.Component
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
 

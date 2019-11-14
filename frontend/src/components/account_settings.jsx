@@ -6,6 +6,7 @@ import '../stylesheets/account_settings.css';
 import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";
+import InstructorHeader from "./instructorHeader";
 
 export class account_settings extends Component {
     constructor(props) {
@@ -26,22 +27,73 @@ export class account_settings extends Component {
         this.setState({ [field]: e.target.value });
     };
 
-    handleSaved = () => {
+    handleSubmit = (e) => {
 
-        this.setState(
-            {
-                redirect:true
+        e.preventDefault();
+
+
+        if(this.state.new_password!==this.state.confirm_new_password)
+        {
+            this.setState({
+                errors: 'Error: Passwords do not match.',
+
+            });
+            return;
+        }
+        if(this.state.new_password.length<=3)
+        {
+            //console.log("pass is "+this.state.password)
+            this.setState({
+                errors: 'Error: Password must be at least 4 characters.',
+
+            });
+            return;
+        }
+        console.log("emails "+this.props.email)
+        const user = {
+            email: this.props.email,
+            password: this.state.old_password,
+            role:this.state.new_password
+        };
+        console.log("emails "+user.email)
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
             }
-        )
-    }
+        };
+        //axio sends post request to backend at \login to handle authentication
 
+        axios.post(GLOBALS.BASE_URL + 'change_password', user, axiosConfig)
+            .then((response) => {
+                localStorage.setItem('token', response.data["token"]);
+                // alert(response.data["role"])
+
+                this.setState({
+                    errors: 'Password Successfully changed!',
+
+                });
+                // alert("logging in");
+
+            })
+            .catch((error) => {
+                    // alert("bad?")
+                    this.setState({
+                        errors: 'Invalid Password entered for old password.',
+
+                    });
+                }
+            );
+
+    };
 
 
 
 
     updateClasses(){
         const user = {
-
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {
@@ -55,9 +107,13 @@ export class account_settings extends Component {
 
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
+
+                // console.log("dat is " + JSON.stringify(response));
+                // console.log("resp is " +response.data[0].courseID);
+                // console.log("resp is " +response.data[0].courseName);
 
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
@@ -74,6 +130,7 @@ export class account_settings extends Component {
                 this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
+                    console.log("error is "+error)
                 }
             );
     }
@@ -87,24 +144,21 @@ export class account_settings extends Component {
                 return <Redirect exact to="/instructor_home" />
         }
         else if (this.state.loading_course){
-            console.log("loading classes", this.state.classes);
+            // console.log("loading classes", this.state.classes);
             this.updateClasses();
             return null;
 
 
         }
+
         else
-        {
-            console.log("loaded classes", this.state.classes);
+        {const errorMessage = this.state.errors;
+            // console.log("loaded classes", this.state.classes);
 
             return (
                 <div>
+                    <InstructorHeader currentTab="Account"/>
 
-                    <div className="banner">
-
-                        <img src={icon} alt="icon" width="30px" height="30px"/>
-                        <label >VirtuLab</label>
-                    </div>
                     <div className={"lightblue centered"}>
 
                     <Container fluid className="noPadding">
@@ -124,7 +178,7 @@ export class account_settings extends Component {
 
 
                                 <div className="Account" >
-                                    <form onSubmit={this.handleSignUp}>
+                                    <form onSubmit={this.handleSubmit}>
 
 
                                             <Row className={"noMargin"}>
@@ -182,9 +236,21 @@ export class account_settings extends Component {
                                                     </FormGroup>
 
                                                 </Col>
+
                                             </Row>
-
-
+                                            <Row style={{paddingTop:20}}>
+                                                <Col md={{ span: 1, offset: 2 }}>
+                                                    <Button onSubmit={this.handleSubmit}
+                                                            style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit">
+                                                        Save
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        <Row>
+                                            <Col >
+                                                <b>{errorMessage}</b>
+                                          </Col>
+                                        </Row>
                                         {/*</Container>*/}
                                     </form>
 
@@ -192,11 +258,14 @@ export class account_settings extends Component {
                                 </div>
                             {/*</Col>*/}
                         {/*</Row>*/}
+
                     </Container>
 
 
 
                         <Container fluid style={{paddingTop:20}}>
+
+
                             <Row className="noMargin" >
 
                                 <Col lg={{span:6, offset:2}} >
@@ -208,13 +277,6 @@ export class account_settings extends Component {
 
                             {<Droppable_course style={"accountH3"} classes={this.state.classes}/>}
 
-                            <Row style={{paddingTop:20}}>
-                                <Col md={{ span: 1, offset: 2 }}>
-                                    <Button onClick={this.handleSaved} style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit">
-                                        Save
-                                    </Button>
-                                </Col>
-                            </Row>
 
 
 

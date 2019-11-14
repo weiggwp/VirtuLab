@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CourseDTO {
 
+    @JsonProperty("email")
+    private String email;
     @JsonProperty("course_name")
     private String courseName;
     @JsonProperty("course_number")
@@ -14,7 +16,18 @@ public class CourseDTO {
     @JsonProperty("code")
     private String code;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
 //    private int courseEnrollment;
+
+
 
     public String getCourseName() {
         return courseName;
@@ -60,10 +73,12 @@ public class CourseDTO {
     @Override
     public String toString() {
         return "CourseDTO{" +
-                "courseName='" + courseName + '\'' +
+                "email='" + email + '\'' +
+                ", courseName='" + courseName + '\'' +
                 ", courseNumber='" + courseNumber + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
                 ", code='" + code + '\'' +
+
                 '}';
     }
 }
