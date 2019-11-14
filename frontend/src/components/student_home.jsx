@@ -65,7 +65,7 @@ class student_home extends React.Component
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false,labs:response.data[i].labs};
+                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
                     console.log("class array[i] is " +classArray[i].classname+" labs are "+classArray[i].labs)
                 }
                 // console.log("AAA classarray is "+classArray);
@@ -73,6 +73,7 @@ class student_home extends React.Component
                 this.render()
             })
             .catch((error) => {
+                //console.log(error)
                 }
             );
     }
@@ -107,9 +108,9 @@ class student_home extends React.Component
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
-                console.log("failure...");
+                console.log(error.toString());
 
-                ToastsStore.error("Course ID not found.")
+                ToastsStore.error("Course ID not found, or you\n are already enrolled in course.")
                 }
             );
 

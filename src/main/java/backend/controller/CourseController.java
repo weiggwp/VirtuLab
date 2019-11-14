@@ -148,7 +148,11 @@ public class CourseController {
             Course course = getCourses(courseDto);
             String email = courseDto.getEmail();
             User user = userRepository.findByEmail(email);
-
+            System.out.println("user is " + user);
+            for (int i=0; i<user.getUserCourseList().size(); i++)
+            if (user.getUserCourseList().get(i).getCourse().equals(course)){
+                return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
+            }
             Lab lab = new Lab(6 ,labName);
             course.addLab(lab);
             UserCourse usercourse = new UserCourse(user.getId(),user,course);
@@ -158,8 +162,8 @@ public class CourseController {
             return new ResponseEntity(courseName, HttpStatus.OK);
         }
         catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+           // e.printStackTrace();
+            return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
         }
     }
 
