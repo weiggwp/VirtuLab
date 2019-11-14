@@ -6,13 +6,13 @@ import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
-import 'react-notifications/lib/notifications.css';
+// import 'react-notifications/lib/notifications.css';
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import GLOBALS from "../Globals";
-import NotificationManager from 'react-notifications';
+// import NotificationManager from 'react-notifications';
 import Toast from 'light-toast';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 

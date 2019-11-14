@@ -26,27 +26,14 @@ export class account_settings extends Component {
         this.setState({ [field]: e.target.value });
     };
 
-    // handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const customer = {
-    //         credentials: this.buildCredentials(),
-    //         address: this.buildAddress()
-    //     };
-        // fetch('http://localhost:8000/customers/' + this.state.customer.credentials.username + '/', {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Authorization: 'jwt ' + localStorage.getItem('token')
-        //     },
-        //     body: JSON.stringify(customer)
-        // })
-        //     .then((res) => res.json())
-        //     .then((json) => {
-        //         console.log(json);
-        //         this.setState({ redirect: true });
-        //         this.props.update({ alreadyLoaded: false });
-        //     });
-    // };
+    handleSaved = () => {
+
+        this.setState(
+            {
+                redirect:true
+            }
+        )
+    }
 
 
 
@@ -96,7 +83,10 @@ export class account_settings extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect exact to="/account_settings" />;
+            if(this.props.role==="student")
+                return <Redirect exact to="/student_home" />;
+            else
+                return <Redirect exact to="/instructor_home" />
         }
         else if (this.state.loading_course){
             console.log("loading classes", this.state.classes);
@@ -222,7 +212,7 @@ export class account_settings extends Component {
 
                             <Row style={{paddingTop:20}}>
                                 <Col md={{ span: 1, offset: 2 }}>
-                                    <Button style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit">
+                                    <Button onClick={this.handleSaved} style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit">
                                         Save
                                     </Button>
                                 </Col>

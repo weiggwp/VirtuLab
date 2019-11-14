@@ -68,7 +68,7 @@ class signup extends Component {
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
                 // console.log(response);
-                alert("Signed up successfully");
+                // alert("Signed up successfully");
                 console.log(response);
                 this.setState({ redirect: true });
             },
