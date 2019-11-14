@@ -193,7 +193,7 @@ class create_lab extends React.Component {
 
 
 
-                        <Link to="/instructor_home">
+                        <Link to="/instructor_lab">
                             <Image onClick={this.setRedirectHome} className={"config_image"}
                                    src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
                                    rounded/>

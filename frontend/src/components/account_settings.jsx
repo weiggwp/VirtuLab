@@ -58,9 +58,9 @@ export class account_settings extends Component {
         axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].courseID);
-                console.log("resp is " +response.data[0].courseName);
+                // console.log("dat is " + JSON.stringify(response));
+                // console.log("resp is " +response.data[0].courseID);
+                // console.log("resp is " +response.data[0].courseName);
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
 
@@ -70,7 +70,7 @@ export class account_settings extends Component {
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
                         clicked:false};
-                    console.log("class array[i] is " +classArray[i].classname)
+                    // console.log("class array[i] is " +classArray[i].classname)
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
@@ -89,7 +89,7 @@ export class account_settings extends Component {
                 return <Redirect exact to="/instructor_home" />
         }
         else if (this.state.loading_course){
-            console.log("loading classes", this.state.classes);
+            // console.log("loading classes", this.state.classes);
             this.updateClasses();
             return null;
 
@@ -97,7 +97,7 @@ export class account_settings extends Component {
         }
         else
         {
-            console.log("loaded classes", this.state.classes);
+            // console.log("loaded classes", this.state.classes);
 
             return (
                 <div>
