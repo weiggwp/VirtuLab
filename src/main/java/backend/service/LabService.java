@@ -1,8 +1,11 @@
 package backend.service;
 
+import backend.dto.LabDTO;
 
 import backend.model.Lab;
 import backend.repository.LabRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import backend.dto.LabDTO;
 import backend.model.Lab;
 import backend.repository.LabRepository;
@@ -32,19 +35,11 @@ public class LabService {
         return labRepository.findByLabID(id);
     }
 
-//    public long createNewLab(LabDTO labDTO){
-//        Lab lab = new Lab();
-//        if( labDTO != null){
-//            modelMapper.map(labDTO,lab);
-//        }
-////        if(!labRepository.existsById(lab.getLabID())
-////        {
-////            save(lab);
-////        }
-//        return labRepository.save(lab).getLabID();
-//
-//
-//    }
+    public long createNewLab(Lab lab){
+        return labRepository.save(lab).getLabID();
+
+
+    }
 
     public void save( LabDTO labDTO) {
         Lab lab = new Lab();
@@ -53,5 +48,7 @@ public class LabService {
         }
         labRepository.save(lab);
     }
+
+
 
 }

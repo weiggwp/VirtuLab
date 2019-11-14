@@ -6,6 +6,8 @@ import javax.persistence.*;
 @Entity
 public abstract class Equipment {
 
+    protected String name;
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long equipmentID;
     protected double capacity;
@@ -14,7 +16,6 @@ public abstract class Equipment {
 
     @ManyToOne
     protected Lab lab;
-    protected String name;
     protected double weight;
 
     public abstract DataNode interact(Equipment e, double capacityGiven);
@@ -29,7 +30,6 @@ public abstract class Equipment {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-
     public double getCapacity() {
         return capacity;
     }

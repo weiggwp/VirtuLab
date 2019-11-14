@@ -26,27 +26,14 @@ export class account_settings extends Component {
         this.setState({ [field]: e.target.value });
     };
 
-    // handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const customer = {
-    //         credentials: this.buildCredentials(),
-    //         address: this.buildAddress()
-    //     };
-        // fetch('http://localhost:8000/customers/' + this.state.customer.credentials.username + '/', {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Authorization: 'jwt ' + localStorage.getItem('token')
-        //     },
-        //     body: JSON.stringify(customer)
-        // })
-        //     .then((res) => res.json())
-        //     .then((json) => {
-        //         console.log(json);
-        //         this.setState({ redirect: true });
-        //         this.props.update({ alreadyLoaded: false });
-        //     });
-    // };
+    handleSaved = () => {
+
+        this.setState(
+            {
+                redirect:true
+            }
+        )
+    }
 
 
 
@@ -71,9 +58,7 @@ export class account_settings extends Component {
         axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].courseID);
-                console.log("resp is " +response.data[0].courseName);
+
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
 
@@ -83,7 +68,7 @@ export class account_settings extends Component {
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
                         clicked:false};
-                    console.log("class array[i] is " +classArray[i].classname)
+
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
@@ -96,7 +81,10 @@ export class account_settings extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect exact to="/account_settings" />;
+            if(this.props.role==="student")
+                return <Redirect exact to="/student_home" />;
+            else
+                return <Redirect exact to="/instructor_home" />
         }
         else if (this.state.loading_course){
             console.log("loading classes", this.state.classes);
@@ -222,7 +210,7 @@ export class account_settings extends Component {
 
                             <Row style={{paddingTop:20}}>
                                 <Col md={{ span: 1, offset: 2 }}>
-                                    <Button style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit">
+                                    <Button onClick={this.handleSaved} style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit">
                                         Save
                                     </Button>
                                 </Col>

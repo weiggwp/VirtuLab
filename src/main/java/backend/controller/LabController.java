@@ -2,6 +2,7 @@ package backend.controller;
 
 
 import backend.dto.StepDTO;
+import backend.dto.UserDTO;
 import backend.model.Step;
 import backend.service.CourseService;
 import backend.service.StepService;
@@ -17,17 +18,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+
+import backend.dto.CourseDTO;
+import backend.model.Course;
+import backend.service.CourseService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @CrossOrigin(origins = "*")
@@ -51,26 +60,6 @@ public class LabController {
 
     ModelMapper modelMapper = new ModelMapper();
 
-//    @CrossOrigin(origins = "*")
-//    @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
-//    public Map<String, Object> addLab(@RequestBody CourseDTO courseDTO) {
-//        System.out.println("LabController: ");
-//        // TODO: check if lab exists, save lab otherwise
-//
-//        Map<String, Object>  map = new HashMap<>();
-//        /* In DB, reject request to add course*/
-//        if (false) {
-//            map.put("msg", ERRMSG);
-//            return map;
-//        }
-//
-//        /* convert DTO to entity, add to DB */
-//        map.put("msg", SUCCESS);
-//        return map;
-//    }
-
-
-
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
@@ -78,27 +67,9 @@ public class LabController {
 
         System.out.println("lab Controller is called: save_lab");
         System.out.println(labDTO);
-
-//       Should prints:
-//       LabDTO{, name='Untitled Lab', lastModified=null, instructorID=666, steps=[StepDTO{stepNum=0, instruction='This is the setup stage. Click on equipments you would like to be available for the duration of the lab (click again to unselect) '}, StepDTO{stepNum=1, instruction='fhdfhdfdfhfd'}]}
+        Lab existing = labService.findByLabID(labDTO.getLabID());
 
 
-//        Lab existing = labService.findByLabID(labDTO.getId());
-//        System.out.println("existing:"+existing);
-//        long returnid = -1;
-//        if (existing != null) {
-//            System.out.println(existing);
-//            System.out.println(existing.getSteps());
-//            labService.save(labDTO);
-//        }
-//        else
-//            returnid = labService.createNewLab(labDTO);
-//        System.out.println("return http OK\n"+returnid);
-//        List<StepDTO> steps = labDTO.getSteps();
-//        for (StepDTO dto: steps) {
-//            System.out.println(dto);
-//        }
-        Lab lab = modelMapper.map(labDTO, Lab.class);
         List<Step> steps = new ArrayList<>();
         for (StepDTO dto: labDTO.getSteps()) {
             Step step = new Step();
@@ -107,36 +78,80 @@ public class LabController {
             stepService.addStep(step);
             steps.add(step);
         }
-        lab.setSteps(steps);
-        System.out.println(lab);
-        labService.saveLab(lab);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+
+        long returnid = -1;
+        if (existing != null)
+        {
+            existing.setName(labDTO.getName());
+            existing.setLastModified(labDTO.getLastModified());
+            existing.setSteps(steps);
+            labService.saveLab(existing);
+
+        }
+        else {
+            System.out.println("lab does not exist, creating new lab");
+            Lab lab = modelMapper.map(labDTO, Lab.class);
+            lab.setSteps(steps);
+
+            returnid = labService.createNewLab(lab);
+
+            User instructor = userService.findByEmail(labDTO.getCreator());
+            instructor.getLabs().add(lab);
+            userService.save(instructor);
+        }
+
+
+        return new ResponseEntity<>(returnid, HttpStatus.OK);
     }
+
+
+
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
-    public ResponseEntity getLabs() {
-        System.out.println("lab Controller is called: get_labs");
+    public ResponseEntity getLabs(@RequestBody UserDTO obj) {
 
-        Map<String, Object> map = new HashMap<>();
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = "";
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails)principal).getUsername();
-        } else {
-            email = principal.toString();
+        User user = userService.findByEmail(obj.getEmail_address());
+        if(user==null)
+        {
+            System.out.println("user doesn't exist");
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        List<Lab> labs = user.getLabs();
 
-        User user = userService.findByEmail(email);
-        map.put("msg", SUCCESS);
-        map.put("list", user.getCourses());
-<<<<<<< HEAD
-        return new ResponseEntity(HttpStatus.OK);
-//        return map;
-=======
-        return map;
->>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
+
+
+
+        if(labs!=null)
+        {
+            for (Lab lab : labs)
+            {
+                Collections.sort(lab.getSteps(), new Comparator<Step>() {
+                    @Override
+                    public int compare(Step o1, Step o2) {
+                        long first = o1.getStepNum();
+                        long second = o2.getStepNum();
+                        if(first>second)
+                            return 1;
+                        else {
+                            if (first == second)
+                                return 0;
+                            return -1;
+                        }
+                    }
+
+                });
+            }
+
+            return new ResponseEntity<>(user.getLabs(),HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
     }
+
+
 
 }

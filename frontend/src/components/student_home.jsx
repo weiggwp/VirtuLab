@@ -2,20 +2,17 @@ import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import StudentHeader from './studentHeader.jsx';
 
-// import axios from 'axios';
-
+import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
-import 'react-notifications/lib/notifications.css';
+// import 'react-notifications/lib/notifications.css';
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
-import axios from "axios";
-
 import GLOBALS from "../Globals";
-import NotificationManager from 'react-notifications';
+// import NotificationManager from 'react-notifications';
 import Toast from 'light-toast';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 
@@ -27,6 +24,7 @@ class student_home extends React.Component
             redirect:false,
             collapseID: "collapse3",
             code: '',
+            user: '',
             loading_course:true,
             classes:[],
         };
@@ -37,17 +35,13 @@ class student_home extends React.Component
         }
 
     };
-     handleFieldChange = (e, field) => {
+    handleFieldChange = (e, field) => {
         this.setState({ [field]: e.target.value });
 
     };
     updateClasses(){
         const user = {
-<<<<<<< HEAD
 
-=======
-            email_address:this.props.email
->>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
         };
         let axiosConfig = {
             headers: {
@@ -64,15 +58,13 @@ class student_home extends React.Component
         axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].labs);
-                console.log("resp is " +response.data[0].courseName);
+
 
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
                         clicked:false,labs:response.data[i].labs};
-                    console.log("class array[i] is " +classArray[i].classname+" labs are "+classArray[i].labs)
+
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
@@ -85,7 +77,7 @@ class student_home extends React.Component
 
     handleAddCourse = (e) => {
         e.preventDefault();
-        console.log("e is " +e)
+
         const course = {
             course_number: this.state.code,
         };

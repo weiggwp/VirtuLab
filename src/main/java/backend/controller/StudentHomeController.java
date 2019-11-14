@@ -32,7 +32,7 @@ public class StudentHomeController {
     private boolean instantiated=false;
     private ArrayList<Course> courses;
 
-
+/*
     @CrossOrigin(origins = "*")
     @PostMapping
     @GetMapping("/student_home")
@@ -119,7 +119,7 @@ int count=4;
         System.out.println("Couldn't find id of "+id);
 //        return "redirect:/login";
         return new ResponseEntity(HttpStatus.NOT_FOUND);
-    }
+    }*/
 
 
 }

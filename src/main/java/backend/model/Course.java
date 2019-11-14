@@ -16,8 +16,6 @@ public class Course {
     private int courseEnrollment;
     private String accessCode = generateAccessCode();
 
-<<<<<<< HEAD
-=======
     public Course(String courseName, long courseID){
         this.courseID=courseID;
         this.courseName=courseName;
@@ -28,15 +26,8 @@ public class Course {
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
                 inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs;
->>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     public static int instanceCnt;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "course_lab",
-            joinColumns = {@JoinColumn(name = "courseID")},
-            inverseJoinColumns = {@JoinColumn(name = "labID")})
-    private List<Lab> labs = new ArrayList<>();
 
 //    @ManyToMany
 //    @JoinTable(name = "user_course",
@@ -56,16 +47,7 @@ public class Course {
         this.accessCode = generateAccessCode();
         instanceCnt++;
     }
-    public String getAccessCode(){
-        return accessCode;
-    }
-    public Course(String courseName, long courseID) {
-        this.courseName=courseName;
-        this.courseID=courseID;
-    }
-    public void addLab(Lab lab){
-        labs.add(lab);
-    }
+
     private String generateAccessCode(){
         // chose a Character random from this String
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -86,17 +68,11 @@ public class Course {
         instanceCnt ++;
     }
 
-    public long getCourseID() {
-        return courseID;
-    }
 
     public void setCourseID(long courseID) {
         this.courseID = courseID;
     }
 
-    public String getCourseName() {
-        return courseName;
-    }
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
@@ -136,8 +112,6 @@ public class Course {
 
     public List<User> getStudents() {
         return users;
-<<<<<<< HEAD
-=======
     }
 
     public void setStudents(List<User> users) {
@@ -148,11 +122,9 @@ public class Course {
     }
     public long getCourseID(){
         return courseID;
->>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
     }
-
-    public void setStudents(List<User> users) {
-        this.users = users;
+    public String getCourseName(){
+        return this.courseName;
     }
 
     @Override

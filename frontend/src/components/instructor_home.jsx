@@ -45,14 +45,9 @@ class instructor_home extends React.Component {
         if (this.state.redirectAcct) {
             return <Redirect to='/account_settings'/>
         }
-        // else if(this.state.redirectCourse){
-        //     return <Redirect to='/add_course' />
-        // }
-        // else
-        // {
-        //     return <Redirect to='/do_lab' />
-        // }
-    }
+
+    };
+
 
     updateClasses(){
         const user = {
@@ -73,9 +68,7 @@ class instructor_home extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'student_home', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
-                console.log("resp is " +response.data[0].courseID);
-                console.log("resp is " +response.data[0].courseName);
+
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
 
@@ -83,20 +76,15 @@ class instructor_home extends React.Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-<<<<<<< HEAD
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].accessCode,
-                        clicked:false,labs:response.data[i].labs};
-=======
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
                         clicked:false,labs:response.data[i].labs};
 
->>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
-                    console.log("class array[i] is " +classArray[i].classname)
+
                 }
-                // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
+                console.log("ERORR"+error)
                 }
             );
     }
@@ -128,14 +116,14 @@ class instructor_home extends React.Component {
                     <Navbar.Toggle/>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Signed in as: SummerBagel
+                            Instructor: {this.props.name}
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
-                <Navbar style={{    marginLeft:"30px"}}>
-                    <Button className="tabs" href="instructor_home">Course</Button>
-                    <Button className="tabs" href="instructor_labs">Lab</Button>
-                </Navbar>
+                {/*<Navbar style={{    marginLeft:"30px"}}>*/}
+                {/*    <Button className="tabs" href="instructor_home">Course</Button>*/}
+                {/*    <Button className="tabs" href="instructor_labs">Lab</Button>*/}
+                {/*</Navbar>*/}
 
                 <div>
                     <div>

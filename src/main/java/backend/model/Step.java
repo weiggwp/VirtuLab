@@ -14,6 +14,13 @@ public class Step {
 //    @JoinColumn(name="labID")
 //    private Lab lab;
 
+    public long getStepID() {
+        return stepID;
+    }
+
+    public void setStepID(long stepID) {
+        this.stepID = stepID;
+    }
 
     public Step() {
     }

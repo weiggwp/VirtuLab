@@ -1,12 +1,14 @@
 import icon from "../Images/v.jpg";
 import React from "react";
 import Redirect from "react-router-dom/es/Redirect";
+import {Button} from "react-bootstrap";
 
 class StudentHeader extends React.Component {
 
     state = {
         redirectLab: false,
-        redirectCourse:false
+        redirectCourse:false,
+        loggedOut: false
     }
     setRedirectLab = () => {
         this.setState({
@@ -29,7 +31,32 @@ class StudentHeader extends React.Component {
             return <Redirect to='/student_home' />
         }
     }
+    handleLogout = (e) => {
+        this.setState({
+            loggedOut:true
+        });
+        localStorage.clear();//clear tokens
+
+
+    };
+
+
+    renderLogoutButton()
+    {
+        return(
+
+            <Button style={{backgroundColor: "white", color: "black", float:"right"}}
+                    onClick={this.handleLogout}>
+                Logout
+            </Button>
+        );
+    }
+
     render() {
+        if(this.state.loggedOut)
+        {
+            return <Redirect to='/login'/>
+        }
         return (
 
 
@@ -39,13 +66,7 @@ class StudentHeader extends React.Component {
                 <img src={icon} alt="icon" width="30px" height="30px"/>
                 <i >VirtuLab</i>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {/*{this.renderRedirectCourse()}*/}
-                {/*<label onClick={this.setRedirectCourse} >*/}
-                {/*    Courses</label>*/}
-                {/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/}
-                {/*{this.renderRedirectLab()}*/}
-                {/*<label onClick={this.setRedirectLab} >*/}
-                {/*    Labs</label>*/}
+                {this.renderLogoutButton()}
             </div>
 
         );

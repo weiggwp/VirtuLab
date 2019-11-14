@@ -15,3 +15,19 @@
     margin: 0px 0px 0px 0px;
     padding-left:0;
 }
+
+.lab_title_label
+{
+    font-size: 25px;
+    color: gray;
+    font-weight: bold;
+    position: relative;
+    /*border-bottom: 1px dotted black;*/
+    /*border: 1px dotted blue;*/
+}
+
+.lab_title_label:hover  {
+    visibility: visible;
+    color: blue;
+
+}

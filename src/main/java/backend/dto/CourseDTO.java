@@ -13,20 +13,7 @@ public class CourseDTO {
     private String courseDescription;
     @JsonProperty("code")
     private String code;
-<<<<<<< HEAD
-=======
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @JsonProperty("email")
-    private String email;
->>>>>>> parent of 2bc7503... Students are now able to enroll in classes their instructor create by inputting the correct course code.
 //    private int courseEnrollment;
 
     public String getCourseName() {

@@ -1,6 +1,9 @@
 package backend.model;
 
 
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -21,8 +24,12 @@ public class Lab {
     private String description;
     private boolean isPublic;
 
-    private long instructorID;
+    private String creator;
     private Date lastModified;
+
+
+
+
 
     @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
@@ -34,15 +41,12 @@ public class Lab {
 //            inverseJoinColumns = {@JoinColumn(name = "equipmentID")})
 //    private List<Equipment> equipments;
 
-    public Lab(long labID, String name){
-        this.name=name;
-        this.labID=labID;
-    }
-    public Lab(String name, String description, boolean isPublic, long instructorID, Date lastModified, List<Step> steps) {
+
+    public Lab(String name, String description, boolean isPublic, String creator, Date lastModified, List<Step> steps) {
         this.name = name;
         this.description = description;
         this.isPublic = isPublic;
-        this.instructorID = instructorID;
+        this.creator = creator;
         this.lastModified = lastModified;
         this.steps = new ArrayList<>();
     }
@@ -50,24 +54,12 @@ public class Lab {
     public Lab() {
     }
 
-    public void setLabID(long labID) {
-        this.labID = labID;
+    public String getCreator() {
+        return creator;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getInstructorID() {
-        return instructorID;
-    }
-
-    public void setInstructorID(long instructorID) {
-        this.instructorID = instructorID;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public Date getLastModified() {
@@ -86,9 +78,25 @@ public class Lab {
         this.steps = steps;
     }
 
-    public long getLabID()
-    {
-        return this.labID;
+    public long getLabID() {
+        return labID;
+    }
+
+    public void setLabID(long labID) {
+        this.labID = labID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Lab(long labID, String name){
+        this.name=name;
+        this.labID=labID;
     }
 
     public String getDescription() {
@@ -114,7 +122,7 @@ public class Lab {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", isPublic=" + isPublic +
-                ", instructorID=" + instructorID +
+                ", creator=" + creator +
                 ", lastModified=" + lastModified +
                 ", steps=" + steps +
                 '}';

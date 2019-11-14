@@ -26,6 +26,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private String role;
     private boolean isStudent;
 
 
@@ -41,7 +42,7 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "instructor_lab",
-            joinColumns = {@JoinColumn(name = "id")},
+            joinColumns = {@JoinColumn(name = "email")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
     private List<Lab> labs;
 
@@ -67,6 +68,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public long getId() {
@@ -135,7 +144,9 @@ public class User {
 
 
     public boolean isStudent() {
-        return isStudent;
+        System.out.println(this.role);
+        return "student".equals(this.role);
+//        return isStudent;
     }
 
     public void setStudent(boolean student) {
@@ -165,6 +176,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
                 ", courses=" + courses +
                 ", labs=" + labs +
