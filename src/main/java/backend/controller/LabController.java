@@ -84,6 +84,7 @@ public class LabController {
         if (existing != null)
         {
             existing.setName(labDTO.getName());
+
             existing.setLastModified(labDTO.getLastModified());
             existing.setSteps(steps);
             labService.saveLab(existing);
@@ -172,6 +173,9 @@ public class LabController {
             System.out.println("lab is "+labDTO);
             Lab lab = labService.findByLabID(labDTO.getLabID());
             lab.setPublic(true);
+            User user = userService.findByEmail(labDTO.getCreator());
+            System.out.println("user is " +user.getFirstName()+user.getLastName());
+            lab.setCreator(user.getFirstName()+user.getLastName());
             labService.saveLab(lab);
             return new ResponseEntity(HttpStatus.OK);
         }

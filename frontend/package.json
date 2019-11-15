@@ -12,6 +12,7 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dnd": "^9.4.0",
     "react-dom": "^16.11.0",
+    "react-editable-label": "^1.0.1",
     "react-minimal-pie-chart": "^5.0.2",
     "react-notifications": "^1.4.3",
     "react-notifications-component": "^2.2.3",

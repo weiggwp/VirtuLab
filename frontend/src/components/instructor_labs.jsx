@@ -56,10 +56,10 @@ class instructor_labs extends React.Component {
         };
     }
     handlePublishLab(lab){
-        console.log("lab is " +JSON.stringify(lab) + " id is "+ lab.labID)
+        console.log("lab is " +JSON.stringify(lab) + " id is "+ this.props.first_name+this.props.last_name)
         const labpub= {
             lab_id:lab.labID,
-
+            author: this.props.email,
         };
         let axiosConfig = {
             headers: {

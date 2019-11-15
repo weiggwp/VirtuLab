@@ -100,12 +100,12 @@ class public_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_public_labs',  axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-
+                console.log("data is "+JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
-                    console.log("data is "+JSON.stringify(response.data[i]))
-                    labArray[i]={name:response.data[i].name,author:response.data[i].author,
+
+                    labArray[i]={name:response.data[i].name,author:response.data[i].creator,
                         keywords:"Keywords.",description:"Description."};
 
                 }

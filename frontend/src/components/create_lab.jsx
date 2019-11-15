@@ -132,6 +132,7 @@ class create_lab extends React.Component {
 
             lab_name: this.state.lab_title,
             author: this.props.email,
+
             steps: this.state.steps,
         };
 
