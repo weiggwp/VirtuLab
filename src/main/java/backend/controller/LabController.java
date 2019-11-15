@@ -114,6 +114,7 @@ public class LabController {
 
 
         User user = userService.findByEmail(obj.getEmail_address());
+        System.out.println("getting lab for user : "+user);
         if(user==null)
         {
             System.out.println("user doesn't exist");
@@ -151,7 +152,58 @@ public class LabController {
         else
             return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
     }
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/get_public_labs", method = RequestMethod.POST)
+    public ResponseEntity getPublicLabs() {
+        List<Lab> labs = labService.getAllLabs();
+        List<Lab> ret = new ArrayList<>();
+        for (int i=0; i<labs.size(); i++){
+            if (labs.get(i).isPublic()){
+                ret.add(labs.get(i));
+            }
+            System.out.println("Lab: "+labs.get(i));
+        }
+        return new ResponseEntity(ret,HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/publish_lab", method = RequestMethod.POST)
+    public ResponseEntity publishLab(@RequestBody LabDTO labDTO){
+        try {
+            System.out.println("lab is "+labDTO);
+            Lab lab = labService.findByLabID(labDTO.getLabID());
+            lab.setPublic(true);
+            labService.saveLab(lab);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/add_lab_class", method = RequestMethod.POST)
+    public ResponseEntity addLabToClass(@RequestBody CourseDTO courseDTO) {
+        try {
+            System.out.println("course dto is "+courseDTO);
 
 
+            Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
+            Course course = optcourse.get();
+            System.out.println("course found was "+course);
+            Lab lab = courseDTO.getLabs().get(0);
+            if (course.getLabs().contains(lab)){
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+            course.addLab(lab);
+            courseService.addCourse(course);
+            System.out.println("course dto is "+courseDTO+ " lab is " + lab);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
+    }
 }

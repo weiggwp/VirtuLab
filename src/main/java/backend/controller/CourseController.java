@@ -68,9 +68,11 @@ public class CourseController {
         userCourse.setUser(user);
 
         c.getUserCourseList().add(userCourse);
-        System.out.println(user.getUserCourseList());
-        user.getUserCourseList().add(userCourse);
 
+        user.getUserCourseList().add(userCourse);
+        System.out.println("current list");
+        for (int i=0; i<user.getUserCourseList().size();i++)
+            System.out.println(user.getUserCourseList().get(i).getCourse().getCourseName());
 //        userCourseService.saveUserCourse(userCourse);
         courseService.addCourse(c);
         userRepository.save(user);
@@ -120,7 +122,7 @@ public class CourseController {
         System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
-
+        System.out.println("user is "+user);
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {

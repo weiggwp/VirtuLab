@@ -57,7 +57,7 @@ class signup extends Component {
         const user = {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
-            email_address:this.state.email_address,
+            email:this.state.email_address,
             password: this.state.password,
             role: this.state.role,
             // isStudent: String(this.state.role === "student")
@@ -86,7 +86,7 @@ class signup extends Component {
             (error) => {
                 console.log(error);
                 this.setState({
-                    errors: "There is already an account registered with that e-mail addrx`ess.",
+                    errors: "There is already an account registered with that e-mail address.",
                     username: '',
                     password: ''
                 });

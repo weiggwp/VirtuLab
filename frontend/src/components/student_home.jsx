@@ -40,7 +40,7 @@ class student_home extends React.Component
     };
     updateClasses(){
         const user = {
-
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {
@@ -79,10 +79,10 @@ class student_home extends React.Component
 
         const course = {
             course_number: this.state.code,
+            email: this.props.email
         };
-        const user={
 
-        }
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -127,7 +127,7 @@ class student_home extends React.Component
 
             <div>
                 {this.renderRedirect()}
-                <StudentHeader/>
+                <StudentHeader currentTab="Courses"/>
 
                 <Navbar>
                     <Navbar.Brand href="#student_home">Welcome!</Navbar.Brand>

@@ -1,6 +1,7 @@
 package backend.dto;
 
 import backend.model.Step;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class LabDTO {
-
+    @JsonProperty("lab_id")
     private long labID;
 
     public long getLabID() {
@@ -21,6 +22,7 @@ public class LabDTO {
 
     @NotNull
     @NotEmpty
+    @JsonProperty("lab_name")
     private String name;
 
     @NotNull
@@ -28,6 +30,7 @@ public class LabDTO {
     private Date lastModified;
     @NotNull
     @NotEmpty
+    @JsonProperty("author")
     private String creator;
 //    @NotNull
 //    @NotEmpty
@@ -35,15 +38,10 @@ public class LabDTO {
     @NotNull
     @NotEmpty
     private List<StepDTO> steps;
+    @JsonProperty("is_public")
+    private boolean isPublic;
 
 
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
 
     public String getName() {
         return name;

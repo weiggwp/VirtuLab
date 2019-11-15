@@ -193,7 +193,7 @@ export class account_settings extends Component {
                                                     <FormGroup controlId="formBasicText" bsSize="large">
                                                         <FormControl
                                                             autoFocus
-                                                            type="text"
+                                                            type="password"
                                                             placeholder="Old Password"
                                                             onChange={(e) => this.handleFieldChange(e, 'old_password')}
                                                             required

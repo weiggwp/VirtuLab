@@ -31,6 +31,7 @@ export class create_course extends Component {
             course_number: this.state.course_number,
             semester: this.state.semester,
             description: this.state.description,
+            email: this.props.email
         };
         alert("Create Course");
 

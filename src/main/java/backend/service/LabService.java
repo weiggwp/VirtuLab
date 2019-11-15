@@ -14,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LabService {
 
@@ -40,7 +42,9 @@ public class LabService {
 
 
     }
-
+    public List<Lab> getAllLabs(){
+        return labRepository.findAll();
+    }
     public void save( LabDTO labDTO) {
         Lab lab = new Lab();
         if( labDTO != null){
