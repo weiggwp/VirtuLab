@@ -96,7 +96,7 @@ public class LabController {
             lab.setSteps(steps);
 
             returnid = labService.createNewLab(lab);
-
+            //System.out.println("return id is "+returnid);
             User instructor = userService.findByEmail(labDTO.getCreator());
             instructor.getLabs().add(lab);
             userService.save(instructor);
@@ -172,10 +172,13 @@ public class LabController {
         try {
             System.out.println("lab is "+labDTO);
             Lab lab = labService.findByLabID(labDTO.getLabID());
-            lab.setPublic(true);
+
+            lab.setPublic(!lab.isPublic());
             User user = userService.findByEmail(labDTO.getCreator());
             System.out.println("user is " +user.getFirstName()+user.getLastName());
             lab.setCreator(user.getFirstName()+user.getLastName());
+            lab.setDescription(labDTO.getDescription());
+            lab.setTags(labDTO.getTags());
             labService.saveLab(lab);
             return new ResponseEntity(HttpStatus.OK);
         }

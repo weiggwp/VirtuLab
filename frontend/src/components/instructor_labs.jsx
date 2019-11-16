@@ -45,42 +45,24 @@ class instructor_labs extends React.Component {
             redirectAcct: false,
             redirectCourse: false,
             redirectLab: false,
-
+            redirectPublish:false,
             classes:[],
             labs:[],
             loading_labs:true,
-            edit_lab:false
+            edit_lab:false,
+            publish_lab:false,
 
 
 
         };
     }
-    handlePublishLab(lab){
-        console.log("lab is " +JSON.stringify(lab) + " id is "+ this.props.first_name+this.props.last_name)
-        const labpub= {
-            lab_id:lab.labID,
-            author: this.props.email,
-        };
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
 
-            }
-        };
+    publishMessage(lab){
 
-
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'publish_lab', labpub, axiosConfig)
-            .then((response) => {
-                console.log("success!")
-
-            })
-            .catch((error) => {
-                    console.log("doot" + error)
-                }
-            );
+        if (lab.public ){
+            return "Un-publish";
+        }
+        return "Publish";
     }
 
     handleAddClass(classcode,lab){
@@ -202,7 +184,44 @@ class instructor_labs extends React.Component {
             edit_lab:true
         })
     }
+    handlePublishLab(lab) {
+        if (lab.public) {
+            const labpub = {
+                labID: lab.labID
 
+            };
+
+            let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*",
+
+                }
+            };
+
+
+            //axio sends message to backend to handle authentication
+            // 'aws_website:8080/userPost'
+            axios.post(GLOBALS.BASE_URL + 'publish_lab', labpub, axiosConfig)
+                .then((response) => {
+                  //  console.log("success!")
+                    this.render()
+                    window.location.reload()
+                })
+                .catch((error) => {
+                      //  console.log("doot" + error)
+                    }
+                );
+        } else {
+            this.redirectPublish = {
+                id: lab.labID,
+
+            }
+            this.setState({
+                publish_lab: true
+            })
+        }
+    }
 
     setRedirectCourse = () => {
         this.setState({
@@ -221,6 +240,11 @@ class instructor_labs extends React.Component {
         else if (this.state.redirectLabPublic){
             return <Redirect exact to={{
                 pathname: '/public_labs',
+            }}/>;
+        }
+        else if (this.state.redirectPublish){
+            return <Redirect exact to={{
+                pathname: '/publish_lab',
             }}/>;
         }
     };
@@ -260,7 +284,7 @@ class instructor_labs extends React.Component {
                 console.log(response.data);
                 for (let i=0; i<response.data.length; i++){
                     labs[i]=response.data[i]
-
+                    console.log("lab " + i + " is " +JSON.stringify(labs[i]))
                 }
 
                 this.setState({labs:labs,loading_labs:false});
@@ -294,7 +318,18 @@ class instructor_labs extends React.Component {
 
 
         }
+        if (this.state.publish_lab){
+            return <Redirect exact to={{
+                pathname: "/publish_lab",
+                state: {
+                    id:this.redirectPublish.id,
+
+                },
+            }}/>;
+
+        }
         else {
+            console.log("redpubl is " +this.state.redirectPublish)
             return (
                 <div>
                     {this.renderRedirect()}
@@ -336,7 +371,7 @@ class instructor_labs extends React.Component {
                                     textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
                                     borderStyle: "dashed", borderWidth: 1
                                 }}>
-                                    <ButtonGroup style={{width: "100%"}}>
+                                    <ButtonGroup style={{width: "100%",color:"red"}}>
 
 
                                         <Dropdown as={ButtonGroup} style={{width: "100%"}}
@@ -364,7 +399,7 @@ class instructor_labs extends React.Component {
 
                                                 <Dropdown.Item onClick=
                                                                    {() => this.handlePublishLab(lab)}class={"dropdown-item"}
-                                                               eventKey="3">Publish</Dropdown.Item>
+                                                               eventKey="3">{this.publishMessage(lab)}</Dropdown.Item>
                                                 <Dropdown.Item class={"dropdown-item"}
                                                                eventKey="4">Delete</Dropdown.Item>
                                                 <Dropdown class={"dropdown-item"}

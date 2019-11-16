@@ -5,11 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class LabDTO {
-    @JsonProperty("lab_id")
+    @JsonProperty("labID")
     private long labID;
 
     public long getLabID() {
@@ -24,7 +25,35 @@ public class LabDTO {
     @NotEmpty
     @JsonProperty("lab_name")
     private String name;
+    @JsonProperty("description")
+    private String description;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    @JsonProperty("tags")
+    private ArrayList<String> tags;
     @NotNull
     @NotEmpty
     private Date lastModified;
@@ -75,15 +104,27 @@ public class LabDTO {
         this.steps = steps;
     }
 
-
+    private String tagString(){
+        if (tags==null){
+            return "None";
+        }
+        String s ="";
+        for (int i=0; i<tags.size();i++){
+            s+=tags.get(i);
+        }
+        return s;
+    }
     @Override
     public String toString() {
-        return "LabDTO{" +
-                "id=" + labID +
+        return "Lab{" +
+                "labID=" + labID +
                 ", name='" + name + '\'' +
-                ", lastModified=" + lastModified +
+                ", description='" + description + '\'' +
+                ", isPublic=" + isPublic +
                 ", creator=" + creator +
+                ", lastModified=" + lastModified +
                 ", steps=" + steps +
+                ", tags=" + tagString() +
                 '}';
     }
 }

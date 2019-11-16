@@ -106,7 +106,7 @@ class public_labs extends React.Component {
                 for (let i=0; i<response.data.length; i++){
 
                     labArray[i]={name:response.data[i].name,author:response.data[i].creator,
-                        keywords:"Keywords.",description:"Description."};
+                        keywords:response.data[i].tags,description:response.data[i].description};
 
                 }
                 // console.log("AAA classarray is "+classArray);
