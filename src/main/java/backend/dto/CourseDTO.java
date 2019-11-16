@@ -9,6 +9,8 @@ import java.util.List;
 
 public class CourseDTO {
 
+    @JsonProperty("course_id")
+    private long courseID;
     @JsonProperty("email")
     private String email;
     @JsonProperty("course_name")
@@ -70,6 +72,15 @@ public class CourseDTO {
         this.code = code;
     }
 
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+    }
+
+
     //    public int getCourseEnrollment() {
 //        return courseEnrollment;
 //    }
@@ -82,12 +93,13 @@ public class CourseDTO {
     @Override
     public String toString() {
         return "CourseDTO{" +
-                "email='" + email + '\'' +
+                "courseID=" + courseID +
+                ", email='" + email + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", courseNumber='" + courseNumber + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
                 ", code='" + code + '\'' +
-
+                ", labs=" + labs +
                 '}';
     }
 }

@@ -122,7 +122,7 @@ public class CourseController {
         System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
-        System.out.println("user is "+user);
+        System.out.println("user is "+ user);
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {
@@ -173,12 +173,65 @@ public class CourseController {
         }
     }
 
+
+//    private List<UserCourse> removeUserCourse(long userID, long courseID, List<UserCourse> list) {
+//
+//
+//        for (UserCourse userCourse: list) {
+//            if (userCourse.getUser().getId() == userID &&
+//                    userCourse.getCourse().getCourseID() == courseID) {
+//                list.remove(userCourse);
+//            }
+//        }
+//        return list;
+//    }
+
     @RequestMapping(value = "/drop", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity drop(@RequestBody CourseDTO courseDto) {
-        System.out.println("course is is " +courseDto.toString());
+        System.out.println("Course Controller Drop operation: ");
+        System.out.println("course to dropped " +courseDto);
 
-       return new ResponseEntity(HttpStatus.OK);
+        long courseID = courseDto.getCourseID();
+        String email = courseDto.getEmail();
+        User user = userRepository.findByEmail(email);
+        System.out.println(user);
+        Optional<Course> optional = courseService.findCourseById(courseID);
+        Course course = optional.get();
+
+//        UserCourse del = new UserCourse(user, course);
+        /* student dropping a course */
+        if (user.getRole().equals("student")) {
+
+            for (Iterator<UserCourse> it = user.getUserCourseList().iterator(); it.hasNext();) {
+                UserCourse userCourse = it.next();
+                if (userCourse.getUser().getId() == user.getId() &&
+                    userCourse.getCourse().getCourseID() == courseID){
+                    it.remove();
+                }
+
+            }
+//            course.getUserCourseList().remove(del);
+            userRepository.save(user);
+
+        }
+        /* instructor dropping a course*/
+        if (user.getRole().equals("instructor")) {
+            System.out.print("instructor doing delete");
+            course.getUserCourseList().clear();
+            courseService.addCourse(course);
+
+
+//            for (UserCourse userCourse: course.getUserCourseList()) {
+//                User u = userCourse.getUser();
+////                u.getUserCourseList().remove(del);
+//                removeUserCourse(u.getId(), course.getCourseID(), u.getUserCourseList());
+//                userRepository.save(u);
+//            }
+
+//            courseService.deleteCourseById(courseID);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

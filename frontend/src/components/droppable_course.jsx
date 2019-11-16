@@ -8,12 +8,12 @@ class Droppable_course extends React.Component
     constructor(props)
     {
         super(props);
-
         this.state={
             // handleExpand : this.handleExpand.bind(this,id)
             count:0,
             classes : props.classes,
             loaded: false,
+            email: props.email
         }
 
 
@@ -21,10 +21,12 @@ class Droppable_course extends React.Component
 
 
     handleDropCourse = (e) => {
+        alert(this.props.email)
 
         const course = {
             code: this.state.code,
-            course_number: e.id,
+            course_id: e.id,
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {

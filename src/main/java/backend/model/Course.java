@@ -38,7 +38,7 @@ public class Course {
 //        inverseJoinColumns = {@JoinColumn(name = "id")})
 //    private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<UserCourse> userCourseList = new ArrayList<>();
 
     public String getAccessCode() {

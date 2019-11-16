@@ -275,7 +275,7 @@ export class account_settings extends Component {
                             </Row>
 
 
-                            {<Droppable_course style={"accountH3"} classes={this.state.classes}/>}
+                            {<Droppable_course style={"accountH3"} classes={this.state.classes} email={this.props.email}/>}
 
 
 
