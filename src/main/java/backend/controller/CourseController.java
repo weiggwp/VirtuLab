@@ -68,8 +68,11 @@ public class CourseController {
         userCourse.setUser(user);
 
         c.getUserCourseList().add(userCourse);
-        user.getUserCourseList().add(userCourse);
 
+        user.getUserCourseList().add(userCourse);
+        System.out.println("current list");
+        for (int i=0; i<user.getUserCourseList().size();i++)
+            System.out.println(user.getUserCourseList().get(i).getCourse().getCourseName());
 //        userCourseService.saveUserCourse(userCourse);
         courseService.addCourse(c);
         userRepository.save(user);
@@ -108,6 +111,8 @@ public class CourseController {
         return null;
     }
 
+
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_courses", method = RequestMethod.POST)
     @ResponseBody
@@ -117,8 +122,7 @@ public class CourseController {
         System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
-        System.out.println(user);
-
+        System.out.println("user is "+user);
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {
@@ -134,6 +138,8 @@ public class CourseController {
 //        return map;
 
     }
+
+
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity enroll(@RequestBody CourseDTO courseDto) {
@@ -172,7 +178,7 @@ public class CourseController {
     public ResponseEntity drop(@RequestBody CourseDTO courseDto) {
         System.out.println("course is is " +courseDto.toString());
 
-       return null;
+       return new ResponseEntity(HttpStatus.OK);
     }
 
 

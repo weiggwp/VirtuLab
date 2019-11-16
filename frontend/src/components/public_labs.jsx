@@ -10,6 +10,9 @@ import {Button, Image, Navbar, NavItem, InputGroup, Nav, NavDropdown, Row, Col} 
 
 import {Expandable_Classes} from "./expandable_course";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
+import GLOBALS from "../Globals";
+import InstructorHeader from "./instructorHeader";
 
 class PublicLab {
     constructor(id, name, author, keywords, description) {
@@ -27,9 +30,11 @@ class public_labs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: this.props.user,
             redirectAcct: false,
             redirectCourse: false,
             redirectLab: false,
+            loading_labs:true,
             labs: [
                 new PublicLab(0,
                     "Intro to Beakers",
@@ -76,17 +81,55 @@ class public_labs extends React.Component {
     }
 
 
+    updateLabs(){
+        const user = {
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+
+        var labArray=[];
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'get_public_labs',  axiosConfig)
+            .then((response) => {
+                // console.log("resp is " +response.json())
+                console.log("data is "+JSON.stringify(response))
+
+
+                for (let i=0; i<response.data.length; i++){
+
+                    labArray[i]={name:response.data[i].name,author:response.data[i].creator,
+                        keywords:response.data[i].tags,description:response.data[i].description};
+
+                }
+                // console.log("AAA classarray is "+classArray);
+                this.setState({labs:labArray,loading_labs:false});
+            })
+            .catch((error) => {
+                console.log(error +" is the error")
+                }
+            );
+    }
+
+
     render() {
+        if (this.state.loading_labs){
+            this.updateLabs();
+            return null;
+        }
         let labs = this.state.labs;
         return (
 
             <div>
                 {this.renderRedirect()}
-                <div className="banner">
-
-                    <img src={icon} alt="icon" width="30px" height="30px"/>
-                    <label>VirtuLab</label>
-                </div>
+                <InstructorHeader currentTab="Labs"/>
 
                 <Navbar>
                     {/*<Navbar.Brand href="#student_home"> Back to Home</Navbar.Brand>*/}
@@ -104,7 +147,7 @@ class public_labs extends React.Component {
                 <div>
                     <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
                             className={"justify-content-between"}>
-                        <Navbar.Brand href="instructor_home"> Back to Home</Navbar.Brand>
+                        <Navbar.Brand href="instructor_home"> </Navbar.Brand>
 
                         <Nav>
                             <Image onClick={this.setRedirectAcct} className={"config_image"}

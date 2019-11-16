@@ -109,6 +109,18 @@ public class LoginController {
         }
         return "redirect:/login?logout=true";
     }
-
+    @RequestMapping(value = "/change_password", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity changePassword(@RequestBody UserDTO userDTO) {
+        System.out.println("user is " +userDTO);
+        String pass = userDTO.getPassword();
+        User existing = userService.findByEmail(userDTO.getEmail_address());
+        if (!passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        existing.setPassword(passwordEncoder.encode(userDTO.getRole()));
+        userService.save(existing);
+        System.out.println("pass set to "+ existing.getPassword() + " aka "+userDTO.getRole());
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 }

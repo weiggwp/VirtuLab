@@ -52,6 +52,7 @@ class PrivateRoute extends React.Component {
                 (res) => {
                     // alert("in private route"+res.data["role"]+" "+res.data["email"]);
                     //role=false
+                    //console.log("data is "+JSON.stringify(res.data))
                     this.setState({
                         loading: false,
                         isAuthenticated: true,

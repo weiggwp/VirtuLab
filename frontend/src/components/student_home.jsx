@@ -6,13 +6,12 @@ import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
-// import 'react-notifications/lib/notifications.css'; // FIXME: DELETE
+import {add_course} from './add_course.jsx'
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import GLOBALS from "../Globals";
-// import NotificationManager from 'react-notifications'; // FIXME: DELETE
 import Toast from 'light-toast';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 
@@ -41,7 +40,7 @@ class student_home extends React.Component
     };
     updateClasses(){
         const user = {
-            email:this.props.email
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {
@@ -52,28 +51,24 @@ class student_home extends React.Component
         };
         var classArr=[];
         var classArray=[];
-        console.log("sending email of "+user.email)
+
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
-                console.log("email is " +this.props.email)
                 // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
 
 
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
-                    console.log("class array[i] is " +classArray[i].classname+" labs are "+classArray[i].labs)
+                        clicked:false,labs:response.data[i].labs};
+
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
-                this.render()
             })
             .catch((error) => {
-                //console.log(error)
                 }
             );
     }
@@ -84,11 +79,10 @@ class student_home extends React.Component
 
         const course = {
             course_number: this.state.code,
-            email   :this.props.email
+            email: this.props.email
         };
-        const user={
 
-        }
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -108,9 +102,9 @@ class student_home extends React.Component
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
-                console.log(error.toString());
+                console.log("failure...");
 
-                ToastsStore.error("Course ID not found, or you\n are already enrolled in course.")
+                ToastsStore.error("Course ID not found.")
                 }
             );
 
@@ -133,7 +127,7 @@ class student_home extends React.Component
 
             <div>
                 {this.renderRedirect()}
-                <StudentHeader/>
+                <StudentHeader currentTab="Courses"/>
 
                 <Navbar>
                     <Navbar.Brand href="#student_home">Welcome!</Navbar.Brand>

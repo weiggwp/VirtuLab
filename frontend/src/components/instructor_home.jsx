@@ -68,7 +68,7 @@ class instructor_home extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
 
-
+                console.log(JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -78,15 +78,15 @@ class instructor_home extends React.Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                    classArray[i]={classname:response.data[i].courseName,classID:0,
                         clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
 
-                    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
+                //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }
                 this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
-                console.log("doot" + error)
+                    console.log("doot" + error)
                 }
             );
     }
@@ -109,47 +109,47 @@ class instructor_home extends React.Component {
         else
 
 
-        return (
-            <div>
-                {this.renderRedirect()}
-                <InstructorHeader/>
-                <Navbar>
-                    <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
-                    <Navbar.Toggle/>
-                    <Navbar.Collapse className="justify-content-end">
-                        <Navbar.Text>
-                            Instructor: {this.props.name}
-                        </Navbar.Text>
-                    </Navbar.Collapse>
-                </Navbar>
-                {/*<Navbar style={{    marginLeft:"30px"}}>*/}
-                {/*    <Button className="tabs" href="instructor_home">Course</Button>*/}
-                {/*    <Button className="tabs" href="instructor_labs">Lab</Button>*/}
-                {/*</Navbar>*/}
-
+            return (
                 <div>
+                    {this.renderRedirect()}
+                    <InstructorHeader/>
+                    <Navbar>
+                        <Navbar.Brand href="#instructor_home">Welcome!</Navbar.Brand>
+                        <Navbar.Toggle/>
+                        <Navbar.Collapse className="justify-content-end">
+                            <Navbar.Text>
+                                Instructor: {this.props.name}
+                            </Navbar.Text>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    {/*<Navbar style={{    marginLeft:"30px"}}>*/}
+                    {/*    <Button className="tabs" href="instructor_home">Course</Button>*/}
+                    {/*    <Button className="tabs" href="instructor_labs">Lab</Button>*/}
+                    {/*</Navbar>*/}
+
                     <div>
-                        <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
-                                className={"justify-content-between"}>
-                            <Nav>
-                                <Button href="create_course" style={{backgroundColor: "#e88f65ff"}} variant="primary">Create
-                                    Course</Button>
-                            </Nav>
+                        <div>
 
-                            <Nav>
-                                <Image onClick={this.setRedirectAcct} className={"config_image"}
-                                       src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
-                            </Nav>
-                        </Navbar>
+                            <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
+                                    className={"justify-content-between"}>
+                                <Nav>
+                                    <Button href="create_course" style={{backgroundColor: "#e88f65ff"}} variant="primary">Create
+                                        Course</Button>
+                                </Nav>
+                                <Nav>
+                                    <Image onClick={this.setRedirectAcct} className={"config_image"}
+                                           src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
+                                </Nav>
+                            </Navbar>
+                        </div>
+                        {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
+
+
                     </div>
-                    {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
-
-
                 </div>
-            </div>
 
 
-        )
+            )
     }
 }
 

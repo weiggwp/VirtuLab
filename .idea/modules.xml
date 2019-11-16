@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/VirtuLab.iml" filepath="$PROJECT_DIR$/.idea/VirtuLab.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/VirtuLabcw.iml" filepath="$PROJECT_DIR$/.idea/VirtuLabcw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend.iml" filepath="$PROJECT_DIR$/.idea/modules/backend.iml" />
     </modules>
   </component>
 </project>

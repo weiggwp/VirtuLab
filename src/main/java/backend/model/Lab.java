@@ -23,6 +23,15 @@ public class Lab {
     private String name;
     private String description;
     private boolean isPublic;
+    private ArrayList<String> tags=new ArrayList<>();
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
 
     private String creator;
     private Date lastModified;
@@ -49,6 +58,7 @@ public class Lab {
         this.creator = creator;
         this.lastModified = lastModified;
         this.steps = new ArrayList<>();
+        this.tags=new ArrayList<>();
     }
 
     public Lab() {
@@ -114,7 +124,16 @@ public class Lab {
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
     }
-
+    private String tagString(){
+        if (tags==null){
+            return "None";
+        }
+        String s ="";
+        for (int i=0; i<tags.size();i++){
+            s+=tags.get(i);
+        }
+        return s;
+    }
     @Override
     public String toString() {
         return "Lab{" +
@@ -125,6 +144,7 @@ public class Lab {
                 ", creator=" + creator +
                 ", lastModified=" + lastModified +
                 ", steps=" + steps +
+                ", tags=" + tagString() +
                 '}';
     }
 }
