@@ -88,22 +88,7 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
             .then((response) => {
 
-                console.log(JSON.stringify(response))
 
-
-                for (let i=0; i<response.data.length; i++){
-                    classArr[i]=response.data[i]
-
-                }
-                var classArray=[];
-
-                for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:0,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
-
-                    //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
-                }
-                this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
                     console.log("doot" + error)

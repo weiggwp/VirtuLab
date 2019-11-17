@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
+import '../stylesheets/reactTags.css';
 import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";

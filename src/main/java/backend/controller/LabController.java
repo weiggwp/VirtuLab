@@ -176,7 +176,7 @@ public class LabController {
             lab.setPublic(!lab.isPublic());
             User user = userService.findByEmail(labDTO.getCreator());
             System.out.println("user is " +user.getFirstName()+user.getLastName());
-            lab.setCreator(user.getFirstName()+user.getLastName());
+            lab.setCreator(user.getFirstName()+" "+user.getLastName());
             lab.setDescription(labDTO.getDescription());
             lab.setTags(labDTO.getTags());
             labService.saveLab(lab);
@@ -199,9 +199,11 @@ public class LabController {
             Course course = optcourse.get();
             System.out.println("course found was "+course);
             Lab lab = courseDTO.getLabs().get(0);
-            if (course.getLabs().contains(lab)){
+
+            for (int i=0; i<course.getLabs().size(); i++)
+                if (course.getLabs().get(i).getLabID()==lab.getLabID())
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
-            }
+
             course.addLab(lab);
             courseService.addCourse(course);
             System.out.println("course dto is "+courseDTO+ " lab is " + lab);
