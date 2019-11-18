@@ -217,9 +217,23 @@ public class CourseController {
         }
         /* instructor dropping a course*/
         if (user.getRole().equals("instructor")) {
-            System.out.print("instructor doing delete");
+            System.out.println("instructor doing delete");
+
+            /* delete in the user side */
             course.getUserCourseList().clear();
-            courseService.addCourse(course);
+            for (Iterator<UserCourse> it = user.getUserCourseList().iterator(); it.hasNext();) {
+                UserCourse userCourse = it.next();
+                if (userCourse.getUser().getId() == user.getId() &&
+                        userCourse.getCourse().getCourseID() == courseID) {
+                    it.remove();
+                }
+            }
+
+            //  remove all the lab in the association
+            course.getLabs().clear();
+//            courseService.addCourse(course);
+            courseService.deleteCourseById(course.getCourseID());
+
 
 
 //            for (UserCourse userCourse: course.getUserCourseList()) {
