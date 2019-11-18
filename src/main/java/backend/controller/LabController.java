@@ -7,6 +7,7 @@ import backend.model.Step;
 import backend.service.CourseService;
 import backend.service.StepService;
 import org.modelmapper.ModelMapper;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import backend.dto.LabDTO;
@@ -92,10 +93,12 @@ public class LabController {
         }
         else {
             System.out.println("lab does not exist, creating new lab");
+            System.out.println("lab is "+labDTO);
             Lab lab = modelMapper.map(labDTO, Lab.class);
             lab.setSteps(steps);
 
             returnid = labService.createNewLab(lab);
+            System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
             //System.out.println("return id is "+returnid);
             User instructor = userService.findByEmail(labDTO.getCreator());
             instructor.getLabs().add(lab);
@@ -176,7 +179,7 @@ public class LabController {
             lab.setPublic(!lab.isPublic());
             User user = userService.findByEmail(labDTO.getCreator());
             System.out.println("user is " +user.getFirstName()+user.getLastName());
-            lab.setCreator(user.getFirstName()+" "+user.getLastName());
+          //  lab.setCreator(user.getFirstName()+" "+user.getLastName());
             lab.setDescription(labDTO.getDescription());
             lab.setTags(labDTO.getTags());
             labService.saveLab(lab);
@@ -215,4 +218,36 @@ public class LabController {
         }
 
     }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/clone_lab", method = RequestMethod.POST)
+    public ResponseEntity cloneLab(@RequestBody LabDTO labDTO) {
+        try {
+            System.out.println("received lab was "+labDTO);
+            Lab realLab = labService.findByLabID(labDTO.getLabID());
+            System.out.println("Mapped lab to "+realLab);
+            List<Step> steps = realLab.getSteps();
+            List<Step> listClone = new ArrayList<>();
+            for (Step step: steps) {
+                Step clone = step.clone();
+                stepService.addStep(clone);
+                listClone.add(clone);
+            }
+            Lab labClone = realLab.clone(listClone);
+            System.out.println("clone is " +labClone+ " lab is "+realLab);
+            long returnid = labService.createNewLab(labClone);
+            User instructor = userService.findByEmail(realLab.getCreator());
+            instructor.getLabs().add(labClone);
+            userService.save(instructor);
+            System.out.println("saved "+labService.findByLabID(returnid)+
+                    " user is "+userService.findByEmail(realLab.getCreator()));
+            return new ResponseEntity(returnid,HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 }

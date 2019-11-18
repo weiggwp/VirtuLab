@@ -23,26 +23,22 @@ public class Lab {
     private String name;
     private String description;
     private boolean isPublic;
-    private ArrayList<String> tags=new ArrayList<>();
-
-    public ArrayList<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
     private String creator;
     private Date lastModified;
-
-
-
-
-
+    private ArrayList<String> tags=new ArrayList<>();
     @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
     private List<Step> steps = new ArrayList<>();
+
+
+
+
+    public Lab clone(List<Step> lis){
+        return new Lab(name+" (CLONE)",description,creator,lastModified,lis, new ArrayList<String>());
+    }
+
+
+
 //    private Step steps;
 
 //    @ManyToMany
@@ -61,7 +57,27 @@ public class Lab {
         this.tags=new ArrayList<>();
     }
 
+    public Lab(String name, String description,  String creator, Date lastModified, List<Step> steps,
+               ArrayList<String> tags) {
+        this.name = name;
+        this.description = description;
+        this.isPublic = false;
+        this.creator = creator;
+        this.lastModified = lastModified;
+        this.steps = steps;
+        this.tags=tags;
+    }
+
+
+
     public Lab() {
+    }
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
     }
 
     public String getCreator() {

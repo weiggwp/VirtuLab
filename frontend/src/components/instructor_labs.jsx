@@ -65,6 +65,34 @@ class instructor_labs extends React.Component {
         return "Publish";
     }
 
+    handleCloneLab(lab){
+
+        console.log(" lab is " +JSON.stringify(lab))
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+
+        lab.creator=this.props.email;
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'clone_lab', lab, axiosConfig)
+            .then((response) => {
+                this.render();
+                window.location.reload()
+
+            })
+            .catch((error) => {
+                    console.log("doot" + error)
+                }
+            );
+    }
+
+
     handleAddClass(classcode,lab){
         var lablist = [];
         lablist[0]=lab;
@@ -383,12 +411,15 @@ class instructor_labs extends React.Component {
 
 
                                                 <Dropdown.Item onClick=
+                                                                   {() => this.handleCloneLab(lab)} class={"dropdown-item"} eventKey="3">Clone</Dropdown.Item>
+
+                                                <Dropdown.Item onClick=
                                                                    {() => this.handlePublishLab(lab)}class={"dropdown-item"}
-                                                               eventKey="3">{this.publishMessage(lab)}</Dropdown.Item>
+                                                               eventKey="4">{this.publishMessage(lab)}</Dropdown.Item>
                                                 <Dropdown.Item class={"dropdown-item"}
-                                                               eventKey="4">Delete</Dropdown.Item>
+                                                               eventKey="5">Delete</Dropdown.Item>
                                                 <Dropdown class={"dropdown-item"}
-                                                               eventKey="4">Assign {classes.map(classItem => (
+                                                               eventKey="5">Assign {classes.map(classItem => (
 
                                                     <Dropdown.Item class={"dropdown-item"} onClick=
                                                         {() => this.handleAddClass(classItem.accessCode,lab)} eventKey="8">{classItem.classname}</Dropdown.Item>
