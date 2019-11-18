@@ -4,6 +4,8 @@ package backend.model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -36,8 +38,9 @@ public class Lab {
     private String creator;
     private Date lastModified;
 
-
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "labs")
+    private List<Course> courses;
 
 
     @OneToMany(cascade = CascadeType.PERSIST)
@@ -104,6 +107,14 @@ public class Lab {
         this.name = name;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     public Lab(long labID, String name){
         this.name=name;
         this.labID=labID;
@@ -124,6 +135,17 @@ public class Lab {
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
     }
+
+
+
+    @PreRemove
+    public void removeLab(){
+        for (Course c: courses) {
+            c.getLabs().remove(this);
+        }
+        this.getCourses().clear();
+    }
+
     private String tagString(){
         if (tags==null){
             return "None";
@@ -134,6 +156,8 @@ public class Lab {
         }
         return s;
     }
+
+
     @Override
     public String toString() {
         return "Lab{" +

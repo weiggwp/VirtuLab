@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LabService {
@@ -29,14 +30,13 @@ public class LabService {
 
     public void deleteById(long id) {labRepository.deleteById(id);}
 
-
     private ModelMapper modelMapper = new ModelMapper();
-
 
     public Lab findByLabID(long id){
         return labRepository.findByLabID(id);
     }
 
+    public Optional<Lab> findLabByLabID(long id) { return labRepository.findLabByLabID(id); }
     public long createNewLab(Lab lab){
         return labRepository.save(lab).getLabID();
 

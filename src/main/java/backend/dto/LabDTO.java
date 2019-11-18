@@ -10,23 +10,19 @@ import java.util.Date;
 import java.util.List;
 
 public class LabDTO {
+
+
+
     @JsonProperty("labID")
     private long labID;
-
-    public long getLabID() {
-        return labID;
-    }
-
-    public void setLabID(long labID) {
-        this.labID = labID;
-    }
-
     @NotNull
     @NotEmpty
     @JsonProperty("lab_name")
     private String name;
     @JsonProperty("description")
     private String description;
+    @JsonProperty("email")
+    private String email;
 
     public String getDescription() {
         return description;
@@ -52,6 +48,15 @@ public class LabDTO {
         isPublic = aPublic;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
     @JsonProperty("tags")
     private ArrayList<String> tags;
     @NotNull
@@ -71,6 +76,13 @@ public class LabDTO {
     private boolean isPublic;
 
 
+    public long getLabID() {
+        return labID;
+    }
+
+    public void setLabID(long labID) {
+        this.labID = labID;
+    }
 
     public String getName() {
         return name;
@@ -114,17 +126,19 @@ public class LabDTO {
         }
         return s;
     }
+
     @Override
     public String toString() {
-        return "Lab{" +
+        return "LabDTO{" +
                 "labID=" + labID +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", isPublic=" + isPublic +
-                ", creator=" + creator +
+                ", email='" + email + '\'' +
+                ", tags=" + tags +
                 ", lastModified=" + lastModified +
+                ", creator='" + creator + '\'' +
                 ", steps=" + steps +
-                ", tags=" + tagString() +
+                ", isPublic=" + isPublic +
                 '}';
     }
 }

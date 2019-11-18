@@ -138,6 +138,8 @@ public class Course {
     public void setLabs(List<Lab> labs) {
         this.labs = labs;
     }
+
+
 //
 //    public List<User> getStudents() {
 //        return users;

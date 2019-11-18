@@ -3,15 +3,13 @@ package backend.controller;
 
 import backend.dto.StepDTO;
 import backend.dto.UserDTO;
-import backend.model.Step;
+import backend.model.*;
 import backend.service.CourseService;
 import backend.service.StepService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import backend.dto.LabDTO;
-import backend.model.Lab;
-import backend.model.User;
 import backend.service.LabService;
 import backend.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -22,19 +20,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import backend.dto.CourseDTO;
-import backend.model.Course;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,6 +52,9 @@ public class LabController {
 
     @Autowired
     StepService stepService;
+
+    @Autowired
+    EntityManager em;
 
     ModelMapper modelMapper = new ModelMapper();
 
@@ -213,4 +211,44 @@ public class LabController {
         }
 
     }
+
+
+    @RequestMapping(value = "/del_lab", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity drop(@RequestBody LabDTO labDTO) {
+        System.out.println("Lab Controller del operation: ");
+        System.out.println("lab to del: " + labDTO);
+
+        long labID = labDTO.getLabID();
+        String email = labDTO.getEmail();
+
+        User user = userService.findByEmail(email);
+        System.out.println(user);
+
+        Optional<Lab> optional = labService.findLabByLabID(labID);
+        if (optional.isPresent()) {
+            System.out.println("take out lab");
+            Lab lab = optional.get();
+            lab.removeLab(); // remove the rows in association table
+//            System.out.println(lab.getCourses());
+//            lab.getCourses().clear();
+//            labService.saveLab(lab);
+//            em.getTransaction().begin();
+//            em.remove(lab);
+//            em.getTransaction().commit();
+
+            user.getLabs().remove(lab);
+        }
+
+
+        labService.deleteById(labID);
+
+
+
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
 }

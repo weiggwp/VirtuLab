@@ -162,6 +162,36 @@ class instructor_labs extends React.Component {
             redirectLabPublic: true
         })
     }
+
+    handleDeleteLab(lab) {
+
+        let labToDel = {
+            email: this.props.email,
+            labID: lab.labID
+        }
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'del_lab', labToDel, axiosConfig)
+            .then((response) => {
+                //  console.log("success!")
+                this.render()
+                window.location.reload()
+            })
+            .catch((error) => {
+                    //  console.log("doot" + error)
+                }
+            );
+    }
+
     handleCreateLab = () => {
         this.setState({
             redirectLabCreation: true
@@ -400,7 +430,9 @@ class instructor_labs extends React.Component {
                                                 <Dropdown.Item onClick=
                                                                    {() => this.handlePublishLab(lab)}class={"dropdown-item"}
                                                                eventKey="3">{this.publishMessage(lab)}</Dropdown.Item>
-                                                <Dropdown.Item class={"dropdown-item"}
+                                                <Dropdown.Item
+                                                    onClick = {() => this.handleDeleteLab(lab)}
+                                                    class={"dropdown-item"}
                                                                eventKey="4">Delete</Dropdown.Item>
                                                 <Dropdown class={"dropdown-item"}
                                                                eventKey="4">Assign {classes.map(classItem => (
