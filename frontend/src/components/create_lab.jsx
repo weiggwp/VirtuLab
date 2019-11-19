@@ -125,7 +125,7 @@ class create_lab extends React.Component {
     }
 
     handleLabSave = (e) => {
-      alert("saving " +this.state.lab_id)
+     // alert("saving " +this.state.lab_id)
         const lab = {
             labID: this.state.lab_id,
             //if zero, it's not a valid labID

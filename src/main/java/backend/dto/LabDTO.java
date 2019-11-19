@@ -122,7 +122,7 @@ public class LabDTO {
         }
         String s ="";
         for (int i=0; i<tags.size();i++){
-            s+=tags.get(i);
+            s+=tags.get(i)+", ";
         }
         return s;
     }
