@@ -57,7 +57,7 @@ public class CourseController {
             map.put("msg", ERRMSG);
             return null;
         }
-        System.out.println("Store to DB");
+       // System.out.println("Store to DB");
 
         /* convert DTO to entity, add to DB */
         Course c = modelMapper.map(courseDTO, Course.class);
@@ -70,9 +70,9 @@ public class CourseController {
         c.getUserCourseList().add(userCourse);
 
         user.getUserCourseList().add(userCourse);
-        System.out.println("current list");
-        for (int i=0; i<user.getUserCourseList().size();i++)
-            System.out.println(user.getUserCourseList().get(i).getCourse().getCourseName());
+     //   System.out.println("current list");
+       // for (int i=0; i<user.getUserCourseList().size();i++)
+       //     System.out.println(user.getUserCourseList().get(i).getCourse().getCourseName());
 //        userCourseService.saveUserCourse(userCourse);
         courseService.addCourse(c);
         userRepository.save(user);
@@ -119,18 +119,18 @@ public class CourseController {
     public ResponseEntity<List<Course>> getAllCourse(@RequestBody CourseDTO courseDTO) {
         System.out.println("Course Controller called: get_courses");
         Map<String, Object> map = new HashMap<>();
-        System.out.println(courseDTO);
+     //   System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
-        System.out.println("user is "+user);
+       // System.out.println("user is "+user);
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {
             Course course = userCourse.getCourse();
-            System.out.println(course);
+       //     System.out.println(course);
             list.add(course);
         }
-        System.out.println("returning ok");
+      //  System.out.println("returning ok");
 
         return new ResponseEntity(list, HttpStatus.OK);
 //        map.put("msg", SUCCESS);
@@ -143,7 +143,7 @@ public class CourseController {
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity enroll(@RequestBody CourseDTO courseDto) {
-        System.out.println("course is is " +courseDto.toString());
+    //    System.out.println("course is is " +courseDto.toString());
 
         String courseName="";
         String  labName="";

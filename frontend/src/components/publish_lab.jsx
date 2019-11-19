@@ -89,12 +89,12 @@ export class publish_lab extends Component {
 
         e.preventDefault();
 
-      //  alert("tags is "+this.state.tags)
+       // alert("tags is "+this.state.tags)
         let tags = [];
         for (let i=0; i<this.state.tags.length; i++){
             tags[i]=this.state.tags[i].text;
         }
-      //  alert("labs are "+JSON.stringify(tags))
+   //    alert("labs are "+JSON.stringify(tags))
         const labpub= {
             labID: this.state.lab_id,
             author: this.props.email,
@@ -216,7 +216,7 @@ setRedirectAcct = (e)=>{
                                                handleAddition={this.handleAddition}
                                                handleDrag={this.handleDrag}
                                               />
-                                    /
+
                                 </FormGroup>
 
                                 <Button style={{backgroundColor: 'orange', color: "white"}} block bsSize="large"
