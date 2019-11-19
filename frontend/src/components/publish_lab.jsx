@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import icon from "../Images/v.jpg";
-import {Button, Col, Container, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
 import '../stylesheets/reactTags.css';
 import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";
 import Step from "../Step";
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 import { WithContext as ReactTags } from 'react-tag-input';
 export class publish_lab extends Component {
     constructor(props) {
@@ -39,9 +40,15 @@ export class publish_lab extends Component {
         });
     }
     handleAddition(tag) {
-        this.setState(state => ({ tags: [...state.tags, tag] }));
+        //console.log("tag is "+JSON.stringify(tag))
+        if (tag.text.length>40){
+            ToastsStore.error("Tag is too long.")
+        }
+        else
+            this.setState(state => ({ tags: [...state.tags, tag] }));
     }
     handleFieldChange = (e, field) => {
+
         this.setState({[field]: e.target.value});
     };
 
@@ -86,13 +93,19 @@ export class publish_lab extends Component {
         }
     }
     handlePublishLabPage= (e) =>{
+        if (this.state.description.length>50){
 
+            ToastsStore.error("Description is too long.")
+
+        }
         e.preventDefault();
 
        // alert("tags is "+this.state.tags)
         let tags = [];
         for (let i=0; i<this.state.tags.length; i++){
-            tags[i]=this.state.tags[i].text;
+            if (this.state.tags[i].text.length>40)
+                tags[i]=this.state.tags[i].text.substring(0,40);
+            else tags[i]=this.state.tags[i].text;
         }
    //    alert("labs are "+JSON.stringify(tags))
         const labpub= {
@@ -206,7 +219,7 @@ setRedirectAcct = (e)=>{
                                         required
                                     />
                                 </FormGroup>
-
+                                <ToastsContainer store={ToastsStore}/>
                                 <h3 className="accountH3">Tags</h3>
                                 <FormGroup controlId="formBasicText" bsSize="large">
 

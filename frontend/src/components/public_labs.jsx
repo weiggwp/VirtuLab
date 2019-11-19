@@ -331,9 +331,10 @@ handleDrag(tag, currPos, newPos) {
                             {"Description: " + lab.description}
                             <br/>
                             {"Keywords: " + lab.keywords}
+                            <br/>
                             <Button  onClick=
                                          {() => this.handleCloneLab(lab)} style={{backgroundColor: "#e88f65ff"}}
-                                    variant="primary">Clone Lab</Button>
+                                     variant="primary">Clone Lab</Button>
                         </div>
 
 
