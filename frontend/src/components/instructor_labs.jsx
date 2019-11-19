@@ -6,7 +6,7 @@ import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav} from 'react-bootstrap';
+import {Button, Image, Navbar, NavItem, InputGroup, Nav, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 
 import image from '../Images/lab_promo.png'
@@ -400,11 +400,20 @@ class instructor_labs extends React.Component {
                                 <Nav>
                                     <Button onClick={this.handlePublic} style={{backgroundColor: "#e88f65ff"}}
                                             variant="primary">View Public Labs</Button>
-                                    <Link to="/account_settings">
-                                        <Image className={"config_image"}
-                                               src="https://icon-library.net/images/config-icon/config-icon-21.jpg"
-                                               rounded/>
-                                    </Link>
+                                    <OverlayTrigger
+                                        overlay={
+                                            <Tooltip>
+                                                Account Setting
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <Link to="/account_settings">
+                                            <Image className={"config_image"}
+                                                   src="https://icon-library.net/images/config-icon/config-icon-21.jpg"
+                                                   rounded/>
+                                        </Link>
+
+                                    </OverlayTrigger>
                                 </Nav>
                             </Navbar>
                         </div>

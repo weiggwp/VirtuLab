@@ -7,7 +7,7 @@ import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import '../stylesheets/instructor_home.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav} from 'react-bootstrap';
+import {Button, Image, Navbar, NavItem, InputGroup, Nav, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 
 import image from '../Images/lab_promo.png'
@@ -137,8 +137,17 @@ class instructor_home extends React.Component {
                                         Course</Button>
                                 </Nav>
                                 <Nav>
-                                    <Image onClick={this.setRedirectAcct} className={"config_image"}
-                                           src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
+                                    <OverlayTrigger
+                                        overlay={
+                                            <Tooltip>
+                                                Account Setting
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <Image onClick={this.setRedirectAcct} className={"config_image"}
+                                               src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
+                                    </OverlayTrigger>
+
                                 </Nav>
                             </Navbar>
                         </div>
