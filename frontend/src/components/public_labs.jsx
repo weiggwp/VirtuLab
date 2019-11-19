@@ -14,6 +14,7 @@ import axios from "axios";
 import GLOBALS from "../Globals";
 import InstructorHeader from "./instructorHeader";
 import {WithContext as ReactTags} from "react-tag-input";
+import Dropdown from "react-bootstrap/Dropdown";
 
 class PublicLab {
     constructor(id, name, author, keywords, description) {
@@ -111,7 +112,7 @@ handleFieldChange = (e, field) => {
             this.state.notFound="";
             for (let i=0; i<response.data.length; i++){
 
-                labArray[i]={name:response.data[i].name,author:response.data[i].creator,
+                labArray[i]={lab_id:response.data[i].labID,name:response.data[i].name,author:response.data[i].creator,
                     keywords:response.data[i].tags,description:response.data[i].description};
 
             }
@@ -123,6 +124,42 @@ handleFieldChange = (e, field) => {
             }
         );
 }
+
+
+
+    handleCloneLab(lab){
+
+        console.log(" lab is " +JSON.stringify(lab))
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        const labpub= {
+            labID: lab.lab_id,
+            author: this.props.email,
+            description:lab.description,
+            tags:lab.tags,
+        };
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'clone_lab', labpub, axiosConfig)
+            .then((response) => {
+                this.render();
+                window.location.reload()
+
+            })
+            .catch((error) => {
+                    console.log("doot" + error)
+                }
+            );
+    }
+
+
 handleDrag(tag, currPos, newPos) {
     const tags = [...this.state.tags];
     const newTags = tags.slice();
@@ -187,7 +224,7 @@ handleDrag(tag, currPos, newPos) {
 
                 for (let i=0; i<response.data.length; i++){
 
-                    labArray[i]={name:response.data[i].name,author:response.data[i].creator,
+                    labArray[i]={lab_id:response.data[i].labID,name:response.data[i].name,author:response.data[i].creator,
                         keywords:response.data[i].tags,description:response.data[i].description};
 
                 }
@@ -294,6 +331,9 @@ handleDrag(tag, currPos, newPos) {
                             {"Description: " + lab.description}
                             <br/>
                             {"Keywords: " + lab.keywords}
+                            <Button  onClick=
+                                         {() => this.handleCloneLab(lab)} style={{backgroundColor: "#e88f65ff"}}
+                                    variant="primary">Clone Lab</Button>
                         </div>
 
 

@@ -311,9 +311,12 @@ public class LabController {
                 listClone.add(clone);
             }
             Lab labClone = realLab.clone(listClone);
+            if (labDTO.getCreator()!=null){
+                labClone.setCreator(labDTO.getCreator());
+            }
             System.out.println("clone is " +labClone+ " lab is "+realLab);
             long returnid = labService.createNewLab(labClone);
-            User instructor = userService.findByEmail(realLab.getCreator());
+            User instructor = userService.findByEmail(labClone.getCreator());
             instructor.getLabs().add(labClone);
             userService.save(instructor);
             System.out.println("saved "+labService.findByLabID(returnid)+
