@@ -17,6 +17,7 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import publish_lab from "./components/publish_lab";
+import forgot_password from "./components/forgot_password";
 
 
 
@@ -29,6 +30,7 @@ class App extends Component {
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/forgot_password" component={forgot_password} />
               <PrivateRoute exact path="/account_settings" component={Account} />
                 <PrivateRoute exact path="/student_home" role="student" component={StudentHome}/>
                 <PrivateRoute exact path="/instructor_home" role="instructor" component={InstructorHome}/>

@@ -26,6 +26,7 @@ class login extends Component {
             pathname: {instructor:'/instructor_home',
                         student: '/student_home'},
             to_register: false,
+            to_forgotPass:false,
             email_address: '',
             password: '',
             register_role: '',
@@ -43,6 +44,12 @@ class login extends Component {
         //
         e.preventDefault();
     };
+    handleForgotPassClick=(e)=>{
+        this.setState({to_forgotPass: true,
+           });
+        //
+        e.preventDefault();
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         const user = {
@@ -94,7 +101,12 @@ class login extends Component {
                 state: {role: this.state.register_role},
             }}/>;
         }
-
+        if (this.state.to_forgotPass) {
+            return <Redirect exact to={{
+                pathname: "/forgot_password",
+                state: {role: this.state.register_role},
+            }}/>;
+        }
         const errorMessage = this.state.errors;
         return (
             <div>
@@ -155,8 +167,17 @@ class login extends Component {
                                             </FormGroup>
                                             <p style={{color: 'black'}}> {errorMessage}</p>
                                             <Button style={{backgroundColor: "white", color: "black", height: 60}} block
-                                                    bsSize="large" type="submit">
-                                                Sign in
+                                                              bsSize="large" type="submit">
+                                            Sign in
+
+
+
+                                        </Button> <div style={{paddingBottom: 20}}>
+                                        </div>
+                                            <Button style={{backgroundColor: "white", color: "black", height: 60}}
+                                                    block bsSize="large"
+                                                    onClick={(e) => this.handleForgotPassClick(e)}>
+                                                Forgot Password
                                             </Button>
                                             <h2 className="formTitle loginH2">Register</h2>
                                                 {/*either student signup or professor signup*/}
