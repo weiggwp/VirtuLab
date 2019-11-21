@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 
+
 // import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav, NavDropdown, Row, Col, FormGroup} from 'react-bootstrap';
+import {Button, Image, Navbar, NavItem, InputGroup, Nav, NavDropdown, Row, Col, FormGroup, PageItem, Pagination} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import Card from "react-bootstrap/Card";
@@ -38,6 +39,9 @@ class public_labs extends React.Component {
             redirectLab: false,
             loading_labs:true,
             tags: [],
+            totalPages: 1,
+            currentPage: 1,
+            perPage: 2,
 
             notFound:"",
             suggestions: [
@@ -61,7 +65,54 @@ class public_labs extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
+
+        this.handlePage = this.handlePage.bind(this);
     }
+
+
+
+handleSelect(page) {
+        alert(page)
+}
+
+handlePage(event) {
+    this.setState({
+        currentPage: Number(event.target.id)
+    })
+    alert(event.target.id)
+    let pageNum = event.target.id
+    let pagingReq = {
+        pageNum: pageNum,
+        perPage: 3,
+    }
+
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            'responseType': 'json'
+        }
+    };
+
+    axios.post(GLOBALS.BASE_URL + 'page_lab', pagingReq, axiosConfig)
+        .then((response) => {
+            // alert(response)
+            let numPages = response.data["totalPages"]
+            console.log(response.data['totalPages']) // number of pages needed
+            console.log(response.data['labs']['content']) //this is the list
+
+            this.setState({
+                totalPages: numPages
+            })
+
+            this.setState({
+                labs: response.data['labs']['content']
+            })
+
+        })
+}
+
+
 
 handleDelete(i) {
     const { tags } = this.state;
@@ -265,12 +316,36 @@ handleDrag(tag, currPos, newPos) {
     }
 
 
+
+
     render() {
+
+        const numberPages = Math.floor(this.state.totalResults / 5)
         if (this.state.loading_labs){
             this.updateLabs();
             return null;
         }
         let labs = this.state.labs;
+
+        let active = this.state.currentPage
+        let items = [];
+        for (let number = 1; number <= this.state.totalPages; number++) {
+            items.push(
+                <Pagination.Item id={number} key={number} active={number === active}>
+                    {number}
+                </Pagination.Item>,
+            );
+
+
+        }
+
+        const paginationBasic = (
+            <div>
+                <Pagination>{items}</Pagination>
+                <br />
+            </div>
+        );
+
         return (
 
             <div>
@@ -340,9 +415,27 @@ handleDrag(tag, currPos, newPos) {
 
                     ))}
 
+
+
                 </div>
 
+                <div>
+                    <Pagination onClick={this.handlePage}>{items}
+
+                        <Pagination.Next/>
+                    </Pagination>
+
+                </div>
+
+
+
+
+
             </div>
+
+
+
+
 
 
         )

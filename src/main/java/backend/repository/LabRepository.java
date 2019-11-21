@@ -1,9 +1,14 @@
 package backend.repository;
 
 import backend.model.Lab;
+
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -12,10 +17,9 @@ import java.util.Optional;
 
 @Transactional
 @Repository
-public interface LabRepository extends CrudRepository<Lab, Long> {
+public interface LabRepository extends PagingAndSortingRepository<Lab, Long> {
 
     Lab findByLabID(long id);
-
 
     Optional<Lab> findLabByLabID(long id);
 
@@ -23,6 +27,8 @@ public interface LabRepository extends CrudRepository<Lab, Long> {
 
     List<Lab> findAll();
 
+    @Override
+    Page<Lab> findAll(Pageable pageable);
 
-
+    Page<Lab> findAllByOpen(int isOpen, Pageable pageable);
 }

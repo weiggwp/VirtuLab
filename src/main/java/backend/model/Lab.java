@@ -24,7 +24,7 @@ public class Lab {
     private long labID;
     private String name;
     private String description;
-    private boolean isPublic;
+    private int open;
     private String creator;
     private Date lastModified;
     private ArrayList<String> tags=new ArrayList<>();
@@ -55,10 +55,10 @@ public class Lab {
 //    private List<Equipment> equipments;
 
 
-    public Lab(String name, String description, boolean isPublic, String creator, Date lastModified, List<Step> steps) {
+    public Lab(String name, String description, int open, String creator, Date lastModified, List<Step> steps) {
         this.name = name;
         this.description = description;
-        this.isPublic = isPublic;
+        this.open = open;
         this.creator = creator;
         this.lastModified = lastModified;
         this.steps = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Lab {
                ArrayList<String> tags) {
         this.name = name;
         this.description = description;
-        this.isPublic = false;
+        this.open = 0;
         this.creator = creator;
         this.lastModified = lastModified;
         this.steps = steps;
@@ -149,15 +149,13 @@ public class Lab {
         this.description = description;
     }
 
-    public boolean isPublic() {
-        return isPublic;
+    public int getOpen() {
+        return open;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setOpen(int open) {
+        this.open = open;
     }
-
-
 
     @PreRemove
     public void removeLab(){
@@ -185,7 +183,7 @@ public class Lab {
                 "labID=" + labID +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", isPublic=" + isPublic +
+                ", isPublic=" + open +
                 ", creator=" + creator +
                 ", lastModified=" + lastModified +
                 ", steps=" + steps +

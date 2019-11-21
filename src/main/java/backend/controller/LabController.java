@@ -1,8 +1,7 @@
 package backend.controller;
 
 
-import backend.dto.StepDTO;
-import backend.dto.UserDTO;
+import backend.dto.*;
 import backend.model.*;
 import backend.service.CourseService;
 import backend.service.StepService;
@@ -10,9 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import backend.dto.LabDTO;
 import backend.service.LabService;
 import backend.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
-import backend.dto.CourseDTO;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +159,7 @@ public class LabController {
         List<Lab> labs = labService.getAllLabs();
         List<Lab> ret = new ArrayList<>();
         for (int i=0; i<labs.size(); i++){
-            if (labs.get(i).isPublic()){
+            if (labs.get(i).getOpen() > 0){
                 ret.add(labs.get(i));
             }
           //  System.out.println("Lab: "+labs.get(i));
@@ -180,7 +179,7 @@ public class LabController {
         List<Lab> labs = labService.getAllLabs();
         List<Lab> ret = new ArrayList<>();
         for (int i=0; i<labs.size(); i++){
-            if (labs.get(i).isPublic()&&labs.get(i).getTags()!=null){
+            if (labs.get(i).getOpen() > 0&&labs.get(i).getTags()!=null){
                 for (int j=0; j<labDTO.getTags().size(); j++){
                     if (labs.get(i).getTags().contains(labDTO.getTags().get(j))){
                         ret.add(labs.get(i));
@@ -203,7 +202,7 @@ public class LabController {
             System.out.println("lab is "+labDTO);
             Lab lab = labService.findByLabID(labDTO.getLabID());
 
-            lab.setPublic(!lab.isPublic());
+            lab.setOpen(1);
             User user = userService.findByEmail(labDTO.getCreator());
             System.out.println("user is " +user.getFirstName()+user.getLastName());
           //  lab.setCreator(user.getFirstName()+" "+user.getLastName());
@@ -224,7 +223,7 @@ public class LabController {
         List<Lab> ret = new ArrayList<>();
         HashMap<String,Integer> map = new HashMap<>();
         for (int i=0; i<labs.size(); i++){
-            if (labs.get(i).isPublic()&&labs.get(i).getTags()!=null){
+            if (labs.get(i).getOpen()>0&&labs.get(i).getTags()!=null){
                 List<String> tags = labs.get(i).getTags();
                 for (int j=0; j<tags.size(); j++){
                     if (map.containsKey(tags.get(j))){
@@ -367,6 +366,43 @@ public class LabController {
         }
 
     }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/page_lab", method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String, Object> getPageLab(@RequestBody PageRequestDTO pageRequestDTO) {
+        try {
+            System.out.println("pageDTO: "+ pageRequestDTO);
+            int page = pageRequestDTO.getPageNum() - 1;
+            int size = pageRequestDTO.getPerPage();
+            Page<Lab> pageLab= labService.pageAllPublicLabs(page, size);
+            pageLab.forEach(lab -> System.out.println(lab));
+            int totalPages = pageLab.getTotalPages();
+            long totalElements = pageLab.getTotalElements();
+
+            System.out.println("totalPages: " + totalPages);
+            System.out.println("totalElements: " + totalElements);
+
+
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("labs", pageLab);
+            map.put("totalPages", totalPages);
+
+            return map;
+
+//            return new ResponseEntity(HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+
+
+
+
 
 
 }
