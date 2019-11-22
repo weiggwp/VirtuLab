@@ -15,6 +15,11 @@ import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
 import axios from "axios";
 import GLOBALS from "../Globals";
+import Draggable from 'react-draggable';
+import {Equipment} from "./Equipment";
+import {Draggable_equipment} from "./Draggable_equipment";
+import {test_draggable} from "./test_draggable";
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
 class create_lab extends React.Component {
@@ -31,10 +36,12 @@ class create_lab extends React.Component {
             step_num: 0,
             lab_id:0,
             lab_loaded:false,
-            lab_title:"Untitled Lab"
+            lab_title:"Untitled Lab",
+            equipments:{0:[]}
 
 
         };
+        this.handleAddEquipment = this.handleAddEquipment.bind(this);
     }
 
     populateSteps()
@@ -89,8 +96,10 @@ class create_lab extends React.Component {
     };
 
     setRestart = () => {
+
         this.setState({
             restart: true,      //should probably just be restarting a single step
+            equipments:{}
             // selectEquipment:false,
             // doSetup:false
         })
@@ -192,8 +201,7 @@ class create_lab extends React.Component {
                                rounded/>
 
 
-
-                        <Link to="/instructor_lab">
+                        <Link to="/instructor_labs">
                             <Image onClick={this.setRedirectHome} className={"config_image"}
                                    src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
                                    rounded/>
@@ -263,35 +271,67 @@ class create_lab extends React.Component {
     {
         const instructions = [];
         // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
-        instructions.push(<Tab.Pane eventKey={0}>  {this.setupInstruction(0,"This is the setup stage. " +
+        //the zeroth get a different handler - enable disable
+        //TODO: initial step equipment setup for future equipment set
+        instructions.push(<Tab.Pane eventKey={0}>
+            <EquipmentList handleAddEquipment={this.handleAddEquipment}/>
+
+            {this.setupInstruction(0,"This is the setup stage. " +
             "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
 
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
-            instructions.push(<Tab.Pane eventKey={i}>instruction for step {i} {this.instruction(i)}</Tab.Pane>);
+            instructions.push(<Tab.Pane eventKey={i}>
+                <EquipmentList step={i} handleAddEquipment={this.handleAddEquipment}/>
+
+                instruction for step {i} {this.instruction(i)}</Tab.Pane>);
             }
+
 
         return(
             <Tab.Content>
-                <EquipmentList/>
+
                 {instructions}
             </Tab.Content>
         )
 
     }
+    onDragOver=()=>{
+        alert("dragging over")
+    }
+
 
     workspacePane(){
         const workspaces = [];
+
+
+
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
 
         for (let i = 1; i <= this.state.step_num; i += 1) {
+            const equipments = this.state.equipments[i];
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
-            workspaces.push(<Tab.Pane eventKey={i}>workspace for step {i} </Tab.Pane>);
+            workspaces.push(<Tab.Pane eventKey={i} style={{height:"100%"}}>
+                workspace for step {i}
+                <div style={{height:"100%"}}>
+
+                    {equipments.map((equipment,index) => (
+
+                        <Draggable_equipment image ={equipment} x={index*100} y={index*100} width={200} height={200}/>
+                        // <Draggable_equipment x={500} y={100} width={100} height={100}/>
+                        // <Draggable_equipment x={400} y={100} width={200} height={200}/>
+
+                    ))
+                    }
+
+                    <ToastsContainer store={ToastsStore}/>
+                </div>
+            </Tab.Pane>);
         }
 
         return(
-            <Tab.Content>
+            <Tab.Content style={{height:"100%"}}>
                 {workspaces}
             </Tab.Content>
         )
@@ -299,9 +339,13 @@ class create_lab extends React.Component {
 
     handleAddChild = () => {
         this.state.steps.push(new Step(this.state.steps.length,""));
+        var temp = this.state.equipments;
+        temp[this.state.step_num+1]=temp[this.state.step_num].slice();
         this.setState({
             //add a new step to steps[]
-            step_num: this.state.step_num + 1
+            step_num: this.state.step_num + 1,
+            equipments:temp
+
 
         }
         );
@@ -314,9 +358,37 @@ class create_lab extends React.Component {
         });
         // alert(this.state.step_num);
     };
+    handleAddEquipment= (step,image) =>
+    {
+
+        const current = this.state.equipments;
+        if(current[step].length>=10)
+        {
+            ToastsStore.error("Workspace full! Only ten equipments allowed")
+        }
+        else
+        {
+            current[step].push(image);
+            //            <Draggable_equipment image={image} x={500} y={100} width={this.state.equipments.length*100} height={this.state.equipments.length*100}/>
+
+
+
+            this.setState(
+                {
+                    equipments:current
+                }, () => {
+                    console.log(this.state.equipments)
+                }
+            )
+        }
+
+
+
+    }
 
 
     render(){
+
         if(!this.state.lab_loaded)
         {
             this.populateSteps();
@@ -339,11 +411,13 @@ class create_lab extends React.Component {
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
                                 {this.instructionPane()}
                         </Col>
-                        <Col lg={{span:7}} className="darkerBack" >
+
+                        <Col lg={{span:7}} className="darkerBack"  >
                             {this.workspacePane()}
 
 
                         </Col>
+
                     </Row>
                 </Tab.Container>
             </div>
