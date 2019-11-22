@@ -31,3 +31,13 @@
     color: blue;
 
 }
+
+.equips
+{
+    display:inline-block;
+}
+.pop
+{
+    z-index: 1;
+    cursor:copy;
+}
