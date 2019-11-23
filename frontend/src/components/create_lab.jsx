@@ -318,7 +318,7 @@ class create_lab extends React.Component {
 
                     {equipments.map((equipment,index) => (
 
-                        <Draggable_equipment image ={equipment} x={index*100} y={index*100} width={200} height={200}/>
+                        <Draggable_equipment id={index} image ={equipment} x={index*100} y={index*100} width={200} height={200}/>
                         // <Draggable_equipment x={500} y={100} width={100} height={100}/>
                         // <Draggable_equipment x={400} y={100} width={200} height={200}/>
 
