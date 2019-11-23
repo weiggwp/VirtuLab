@@ -42,6 +42,7 @@ class create_lab extends React.Component {
 
         };
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
+        this.interation_handler = this.interation_handler.bind(this);
     }
 
     populateSteps()
@@ -300,7 +301,13 @@ class create_lab extends React.Component {
         alert("dragging over")
     }
 
-
+    interation_handler(workspace_id1,eq_id1,workspace_id2,eq_id2){
+        const eq1 = this.state.equipments[workspace_id1][eq_id1];
+        const eq2 = this.state.equipments[workspace_id2][eq_id2];
+        console.log("eq1:",eq1);
+        console.log("eq2:",eq2);
+        alert(workspace_id1+" "+eq_id1+" "+workspace_id2+" "+eq_id2);
+    }
     workspacePane(){
         const workspaces = [];
 
@@ -318,7 +325,9 @@ class create_lab extends React.Component {
 
                     {equipments.map((equipment,index) => (
 
-                        <Draggable_equipment id={index} image ={equipment} x={index*100} y={index*100} width={200} height={200}/>
+                        <Draggable_equipment wkspace_id={i} equip_id={index}
+                                             interation_handler = {this.interation_handler}
+                                             image ={equipment} x={index*100} y={index*100} width={200} height={200}/>
                         // <Draggable_equipment x={500} y={100} width={100} height={100}/>
                         // <Draggable_equipment x={400} y={100} width={200} height={200}/>
 

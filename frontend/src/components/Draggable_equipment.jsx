@@ -4,6 +4,7 @@ import {Equipment} from "./Equipment";
 import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
 
+var dragSrcEl = null;
 class Draggable_equipment extends React.Component{
     constructor(props) {
         super(props);
@@ -13,7 +14,7 @@ class Draggable_equipment extends React.Component{
 
         }
 
-        this.dragstart_handler = this.dragstart_handler.bind(this);
+        this.dragStart_handler = this.dragStart_handler.bind(this);
         this.dragEnter_handler = this.dragEnter_handler.bind(this);
         this.dragover_handler = this.dragover_handler.bind(this);
         this.dragLeave_handler = this.dragLeave_handler.bind(this);
@@ -23,8 +24,6 @@ class Draggable_equipment extends React.Component{
     onStop = (event) => {
         event.preventDefault()
         // event.state.target.style.opacity="0.6";
-        console.log("stopping")
-        console.log(event.state.target===this.state.object);
         this.state.object.style.opacity="1";
         this.state.object.style.border="0px";
         this.state.object.style.cursor="default";
@@ -76,7 +75,7 @@ class Draggable_equipment extends React.Component{
 
     };
     onDrag=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
 
         // console.log(this.state.object===event.state.target);
 
@@ -93,7 +92,7 @@ class Draggable_equipment extends React.Component{
             // console.log(event.state.target.classList)
 
             event.state.target.style.border = "3px dotted red";
-            event.state.target.style.opacity ="0.5"
+            event.state.target.style.opacity ="0.5";
 
 
             this.state.target = event.state.target;
@@ -108,7 +107,6 @@ class Draggable_equipment extends React.Component{
         }
         else
         {
-
         }
 
 
@@ -159,67 +157,68 @@ class Draggable_equipment extends React.Component{
     //     // ev.target.appendChild(document.getElementById(data));
     // }
 
-     dragstart_handler=(ev)=> {
+     dragStart_handler=(ev)=> {
         // Add the target element's id to the data transfer object
-        ev.dataTransfer.setData("text", ev.target.id);
-         this.setState({object:ev.target.id});
-         // this.state.object.style.zIndex=2;
-        ev.dataTransfer.dropEffect = "move";
-         console.log("drag start:");
-         console.log(this.state.object);
+         ev.dataTransfer.setData("text/workspace_id", this.props.wkspace_id);
+         ev.dataTransfer.setData("text/equip_id", this.props.equip_id);
+        ev.target.style.opacity = '0.4';
+        dragSrcEl = this;
+        this.html = ev.target;
+
+        ev.dataTransfer.effectAllowed = 'move';
     }
     dragEnter_handler=(ev)=>{
-        ev.preventDefault();
-        // console.log(ev.dataTransfer.getData("text"));
-        console.log("drag enter check obj",this.state.object);
-        console.log("drag enter check target",ev.target.id);
+        ev.target.style.border = "3px dotted red";
+    };
 
-        if(ev.target.id!==this.state.object){
-
-            ev.target.style.border = "3px dotted red";
-            this.setState({target:ev.target.id});
-        }
-        // alert("dragging over")
-
-    }
     dragLeave_handler(ev){
-        ev.preventDefault();
+        // ev.preventDefault();
         ev.target.style.border="";
-        console.log("drag leave true");
-        this.setState({target:null});
 
     }
      dragover_handler(ev) {
-        ev.preventDefault();
-        ev.dataTransfer.dropEffect = "move";
-        // if ((this.state))
-         // console.log(this.state);
+         if (ev.preventDefault) {
+             ev.preventDefault(); // Necessary. Allows us to drop.
+         }
+         ev.dataTransfer.dropEffect = "move";
+         return false;
 
      }
     dragExit_handler(ev) {
         ev.preventDefault();
-        // ev.target.style.border="";
-        //done reset obj and target
-        // this.setState({object:null,target:null});
-
 
     }
      drop_handler(ev) {
-        ev.preventDefault();
-        // Get the id of the target and add the moved element to the target's DOM
-        var data = ev.dataTransfer.getData("application/my-app");
-        // ev.target.appendChild(document.getElementById(data));
+        // ev.preventDefault();
+
+         if (ev.stopPropagation) {
+             ev.stopPropagation(); // Stops some browsers from redirecting.
+         }
+         // Don't do anything if dropping the same column we're dragging.
+         if (dragSrcEl !== this) {
+             // Set the source column's HTML to the HTML of the column we dropped on.
+             dragSrcEl.innerHTML = this.innerHTML;
+             const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+             const equip_id = ev.dataTransfer.getData('text/equip_id');
+             this.props.interation_handler(
+                 workspace_id, equip_id,
+                 this.props.wkspace_id,this.props.equip_id,
+                 );
+             // alert("droppppp dat shirttttt");
+         }
+
          ev.target.style.border="";
-         console.log("in drop handler");
-         console.log(this.state.object);
-         console.log(this.state.target);
-
-
-         //done reset obj and target
-         this.setState({object:null,target:null});
-
-
+         ev.target.style.opacity = '1.0';
+         return false;
      }
+     handleDragEnd(e) {
+        // this/e.target is the source node.
+
+        // [].forEach.call(cols, function (col) {
+        //     col.classList.remove('over');
+        // });
+
+    }
 
 
 //                defaultPosition={{x:this.props.x,y:this.props.y}}>
@@ -234,9 +233,9 @@ class Draggable_equipment extends React.Component{
             // </div>
 
 
-            <img id={"equip"+this.props.id}
+            <img id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
                  draggable="true"
-                 onDragStart={this.dragstart_handler}
+                 onDragStart={this.dragStart_handler}
                  onDrop={this.drop_handler}
                  onDragOver={this.dragover_handler}
                  onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
