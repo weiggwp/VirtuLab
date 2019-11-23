@@ -46,6 +46,7 @@ class instructor_labs extends React.Component {
             redirectCourse: false,
             redirectLab: false,
             redirectPublish:false,
+            redirectAssign:false,
             classes:[],
             labs:[],
             loading_labs:true,
@@ -93,36 +94,6 @@ class instructor_labs extends React.Component {
     }
 
 
-    handleAddClass(classcode,lab){
-        var lablist = [];
-        lablist[0]=lab;
-        console.log("classcode is "+classcode+" lab is " +lab)
-        const course= {
-            course_number: classcode,
-            labs: lablist
-        };
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-
-            }
-        };
-        var classArr=[];
-        var classArray=[];
-
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
-            .then((response) => {
-
-
-            })
-            .catch((error) => {
-                    console.log("doot" + error)
-                }
-            );
-}
     updateClasses(){
         const user = {
             email: this.props.email
@@ -174,6 +145,9 @@ class instructor_labs extends React.Component {
         this.setState({
             redirectLabPublic: true
         })
+    }
+    handleAssignLab=()=>{
+        this.setState({redirectAssign:true});
     }
     handleCreateLab = () => {
         this.setState({
@@ -244,6 +218,11 @@ class instructor_labs extends React.Component {
     renderRedirect = () => {
         if (this.state.redirectAcct) {
             return <Redirect to='/account_settings'/>
+        }
+        else if (this.state.redirectAssign){
+            return <Redirect exact to={{
+                pathname: '/assign_lab',
+            }}/>;
         }
         else if (this.state.redirectLabCreation){
             return <Redirect exact to={{
@@ -418,17 +397,9 @@ class instructor_labs extends React.Component {
                                                                eventKey="4">{this.publishMessage(lab)}</Dropdown.Item>
                                                 <Dropdown.Item class={"dropdown-item"}
                                                                eventKey="5">Delete</Dropdown.Item>
-                                                <Dropdown class={"dropdown-item"}
-                                                               eventKey="5">Assign {classes.map(classItem => (
-
-                                                    <Dropdown.Item class={"dropdown-item"} onClick=
-                                                        {() => this.handleAddClass(classItem.accessCode,lab)} eventKey="8">{classItem.classname}</Dropdown.Item>
-
-
-
-                                                ))}
-
-                                                </Dropdown>
+                                                <Dropdown.Item onClick=
+                                                                   {() => this.handleAssignLab(lab)}class={"dropdown-item"}
+                                                               eventKey="6">Assign</Dropdown.Item>
                                                 {/*<Dropdown.Divider />*/}
 
                                             </Dropdown.Menu>

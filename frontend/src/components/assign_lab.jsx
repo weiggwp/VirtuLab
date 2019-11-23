@@ -7,15 +7,14 @@ import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";
 
-export class create_course extends Component {
+export class assign_lab extends Component {
     constructor(props) {
         super(props);
         this.state = {
             instructor: props.instructor,
-            course_name: '',
-            course_number: '',
-            semester: '',
-            description: '',
+            due_date: '',
+            classcode: '',
+            selected_lab_id:' ',
             redirect: false,
             errors: '',
         };
@@ -24,9 +23,9 @@ export class create_course extends Component {
     handleFieldChange = (e, field) => {
         this.setState({[field]: e.target.value});
     };
-
-
-    handleAddClass(classcode,lab){
+    handleAddClass(){
+        let classcode = this.state.classcode;
+        let lab = this.state.select;
         var lablist = [];
         lablist[0]=lab;
         console.log("classcode is "+classcode+" lab is " +lab)
@@ -99,9 +98,9 @@ export class create_course extends Component {
                          style={{display: 'flex', justifyContent: 'center', alignItems: 'top', height: '100vh'}}>
                         <br/>
                         <div className="box-container" style={{width: '50vh'}}>
-                            <form onSubmit={this.handleCreateCourse}>
-                                <h1 className={"accountH1"}>Course Creation</h1>
-                                <h3 className="accountH3">Course Name</h3>
+                            <form onSubmit={this.handleAddClass}>
+                                <h1 className={"accountH1"}>Add Lab to Class</h1>
+                                <h3 className="accountH3">Course</h3>
 
                                 <FormGroup controlId="formBasicText" bsSize="large">
                                     <FormControl
@@ -114,25 +113,13 @@ export class create_course extends Component {
                                 </FormGroup>
 
 
-                                <h3 className="accountH3">Course Number</h3>
-
-                                <FormGroup controlId="formBasicText" bsSize="large">
-                                    <FormControl
-                                        autoFocus
-                                        type="text"
-                                        placeholder="e.g. CSE308"
-                                        onChange={(e) => this.handleFieldChange(e, 'course_number')}
-                                        required
-                                    />
-                                </FormGroup>
-
-                                <h3 className="accountH3">Course Term</h3>
+                                <h3 className="accountH3">Due Date</h3>
                                 <FormGroup controlId="formBasicText" bsSize="large">
                                     <FormControl
                                         autoFocus
                                         type="text"
                                         placeholder="e.g. Fall 2019"
-                                        onChange={(e) => this.handleFieldChange(e, 'semester')}
+                                        onChange={(e) => this.handleFieldChange(e, 'due_date')}
                                         required
                                     />
                                 </FormGroup>
@@ -157,4 +144,4 @@ export class create_course extends Component {
     }
 }
 
-export default create_course;
+export default assign_lab;
