@@ -1,6 +1,7 @@
 package backend.dto;
 
 
+import backend.model.AssignedLab;
 import backend.model.Lab;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,7 +21,7 @@ public class CourseDTO {
     @JsonProperty("code")
     private String code;
     @JsonProperty("labs")
-    private List<Lab> labs = new ArrayList<Lab>();
+    private List<AssignedLab> labs = new ArrayList<>();
     public String getEmail() {
         return email;
     }
@@ -31,10 +32,10 @@ public class CourseDTO {
 
 
 //    private int courseEnrollment;
-    public List<Lab> getLabs(){
+    public List<AssignedLab> getLabs(){
         return labs;
     }
-    public void addLab(Lab lab){
+    public void addLab(AssignedLab lab){
         labs.add(lab);
     }
 

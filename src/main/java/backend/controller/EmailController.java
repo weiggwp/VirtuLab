@@ -116,18 +116,17 @@ public class EmailController {
     public String resetCustomerPassword(String email) throws Exception {
         User user = userService.findByEmail(email);
 
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
-        StringBuilder buffer = new StringBuilder(targetStringLength);
-        for (int i = 0; i < targetStringLength; i++) {
-            int randomLimitedInt = leftLimit + (int)
-                    (random.nextFloat() * (rightLimit - leftLimit + 1));
-            buffer.append((char) randomLimitedInt);
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 9; i++) {
+            int index = (int)(AlphaNumericString.length() * Math.random());
+            sb.append(AlphaNumericString
+                    .charAt(index));
         }
-        String generatedString = buffer.toString();
-        String randomPassword = generatedString;
+        String randomPassword = sb.toString();
         System.out.println("pass is "+randomPassword);
         user.setPassword(passwordEncoder.encode(randomPassword));
         userService.save(user);

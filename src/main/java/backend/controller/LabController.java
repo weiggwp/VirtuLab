@@ -3,7 +3,7 @@ package backend.controller;
 
 import backend.dto.StepDTO;
 import backend.dto.UserDTO;
-import backend.model.Step;
+import backend.model.*;
 import backend.service.CourseService;
 import backend.service.StepService;
 import org.modelmapper.ModelMapper;
@@ -11,8 +11,6 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import backend.dto.LabDTO;
-import backend.model.Lab;
-import backend.model.User;
 import backend.service.LabService;
 import backend.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import backend.dto.CourseDTO;
-import backend.model.Course;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -278,15 +275,16 @@ public class LabController {
             Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
             Course course = optcourse.get();
             System.out.println("course found was "+course);
-            Lab lab = courseDTO.getLabs().get(0);
-
+            //Lab lab = labService.findByLabID(courseDTO.getLabs().get(0).getLabID());
+            AssignedLab assignedLab =
+                    new AssignedLab(courseDTO.getLabs().get(0).getLab(),courseDTO.getLabs().get(0).getDueDate(),course.getCourseID());
             for (int i=0; i<course.getLabs().size(); i++)
-                if (course.getLabs().get(i).getLabID()==lab.getLabID())
+                if (course.getLabs().get(i).getLab().getLabID()==assignedLab.getLab().getLabID())
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-            course.addLab(lab);
+            course.addLab(assignedLab);
             courseService.addCourse(course);
-            System.out.println("course dto is "+courseDTO+ " lab is " + lab);
+        //    System.out.println("course dto is "+courseDTO+ " lab is " + lab);
             return new ResponseEntity(HttpStatus.OK);
         }
         catch (Exception e){

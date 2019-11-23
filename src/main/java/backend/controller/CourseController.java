@@ -159,8 +159,7 @@ public class CourseController {
             if (user.getUserCourseList().get(i).getCourse().equals(course)){
                 return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
             }
-            Lab lab = new Lab(6 ,labName);
-            course.addLab(lab);
+
             UserCourse usercourse = new UserCourse(user.getId(),user,course);
             userCourseService.saveUserCourse(usercourse);
             System.out.println("enrolling!");

@@ -22,13 +22,13 @@ public class Course {
     public Course(String courseName, long courseID){
         this.courseID=courseID;
         this.courseName=courseName;
-        labs = new ArrayList<Lab>();
+        labs = new ArrayList<AssignedLab>();
     }
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
                 inverseJoinColumns = {@JoinColumn(name = "labID")})
-    private List<Lab> labs;
+    private List<AssignedLab> labs;
     public static int instanceCnt;
 
 
@@ -131,11 +131,11 @@ public class Course {
         this.courseEnrollment = courseEnrollment;
     }
 
-    public List<Lab> getLabs() {
+    public List<AssignedLab> getLabs() {
         return labs;
     }
 
-    public void setLabs(List<Lab> labs) {
+    public void setLabs(List<AssignedLab> labs) {
         this.labs = labs;
     }
 //
@@ -146,7 +146,7 @@ public class Course {
 //    public void setStudents(List<User> users) {
 //        this.users = users;
 //    }
-    public void addLab(Lab lab){
+    public void addLab(AssignedLab lab){
         labs.add(lab);
     }
     public long getCourseID(){
