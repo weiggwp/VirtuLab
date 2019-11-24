@@ -112,3 +112,21 @@
 {
     border: 2px solid #000000;
 }
+
+.column1 {
+    float: left;
+    width: 90%;
+}
+
+.column2 {
+    float: right;
+    width: 10%;
+
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

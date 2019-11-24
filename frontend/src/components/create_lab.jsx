@@ -372,6 +372,7 @@ class create_lab extends React.Component {
     handleAddEquipment= (step,image) =>
     {
 
+
         const current = this.state.equipments;
         if(current[step].length>=10)
         {
