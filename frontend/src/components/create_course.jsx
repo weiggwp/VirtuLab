@@ -26,13 +26,12 @@ export class create_course extends Component {
     };
 
 
-    handleAddClass(classcode,lab){
-        var lablist = [];
-        lablist[0]=lab;
-        console.log("classcode is "+classcode+" lab is " +lab)
+    handleCreateCourse  = (e) => {
+        e.preventDefault()
         const course= {
-            course_number: classcode,
-            labs: lablist
+            email:this.props.email,
+            course_number: this.state.course_number,
+            course_name:this.state.course_name
         };
         let axiosConfig = {
             headers: {
@@ -43,10 +42,10 @@ export class create_course extends Component {
         };
         var classArr=[];
         var classArray=[];
-
+        alert("sending back "+course);
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'create_course', course, axiosConfig)
             .then((response) => {
 
 

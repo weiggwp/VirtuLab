@@ -53,8 +53,10 @@ public class CourseController {
         User user = userRepository.findByEmail(email);
         Map<String, Object>  map = new HashMap<>();
         /* In DB, reject request to add course*/
-        if (courseService.courseExists(courseDTO)) {
+        for (int i=0; i<user.getUserCourseList().size(); i++)
+       if (user.getUserCourseList().get(i).getCourse().getCourseName().equals(courseDTO.getCourseName())) {
             map.put("msg", ERRMSG);
+            System.out.println("Instructors must have unique coursenames");
             return null;
         }
        // System.out.println("Store to DB");
@@ -62,7 +64,7 @@ public class CourseController {
         /* convert DTO to entity, add to DB */
         Course c = modelMapper.map(courseDTO, Course.class);
         System.out.println(c);
-
+        System.out.println("Dootw");
         UserCourse userCourse = new UserCourse();
         userCourse.setCourse(c);
         userCourse.setUser(user);
@@ -74,7 +76,9 @@ public class CourseController {
        // for (int i=0; i<user.getUserCourseList().size();i++)
        //     System.out.println(user.getUserCourseList().get(i).getCourse().getCourseName());
 //        userCourseService.saveUserCourse(userCourse);
+        System.out.println( "Adding " +c + " to courseService");
         courseService.addCourse(c);
+        System.out.println("we found: " +courseService.findCourseByNameOrCode(c.getAccessCode(),0));
         userRepository.save(user);
 
 
@@ -110,7 +114,22 @@ public class CourseController {
         System.out.println("CourseController update operation: ");
         return null;
     }
-
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/get_students", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> getStudents(@RequestBody CourseDTO courseDTO) {
+        System.out.println("course is "+courseDTO);
+        List<UserCourse> userCourses = userCourseService.getAllUserCourses();
+        List<User> students = new LinkedList<>();
+        for (UserCourse userCourse: userCourses){
+              //  System.out.println("coursecode is " +userCourse.getCourse().getAccessCode());
+            if (userCourse.getCourse().getAccessCode().equals(courseDTO.getCourseNumber())){
+             //   System.out.println("adding " +userCourse.getUser());
+                if (userCourse.getUser().getRole().toLowerCase().equals("student"))
+                    students.add(userCourse.getUser());
+            }
+        }
+        return new ResponseEntity(students, HttpStatus.OK);
+    }
 
 
     @CrossOrigin(origins = "*")
@@ -159,7 +178,8 @@ public class CourseController {
             if (user.getUserCourseList().get(i).getCourse().equals(course)){
                 return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
             }
-
+            Lab lab = new Lab(6 ,labName);
+            course.addLab(lab);
             UserCourse usercourse = new UserCourse(user.getId(),user,course);
             userCourseService.saveUserCourse(usercourse);
             System.out.println("enrolling!");

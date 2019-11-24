@@ -271,20 +271,22 @@ public class LabController {
         try {
             System.out.println("course dto is "+courseDTO);
 
-
+            User user = userService.findByEmail(courseDTO.getEmail());
+            for (UserCourse course: user.getUserCourseList()){
+                System.out.println("course is " +course.getCourse());
+            }
             Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
             Course course = optcourse.get();
             System.out.println("course found was "+course);
-            //Lab lab = labService.findByLabID(courseDTO.getLabs().get(0).getLabID());
-            AssignedLab assignedLab =
-                    new AssignedLab(courseDTO.getLabs().get(0).getLab(),courseDTO.getLabs().get(0).getDueDate(),course.getCourseID());
+            Lab lab = courseDTO.getLabs().get(0);
+
             for (int i=0; i<course.getLabs().size(); i++)
-                if (course.getLabs().get(i).getLab().getLabID()==assignedLab.getLab().getLabID())
+                if (course.getLabs().get(i).getLabID()==lab.getLabID())
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-            course.addLab(assignedLab);
+            course.addLab(lab);
             courseService.addCourse(course);
-        //    System.out.println("course dto is "+courseDTO+ " lab is " + lab);
+            System.out.println("course dto is "+courseDTO+ " lab is " + lab);
             return new ResponseEntity(HttpStatus.OK);
         }
         catch (Exception e){

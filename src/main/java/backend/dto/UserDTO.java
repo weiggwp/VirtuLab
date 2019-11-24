@@ -9,9 +9,11 @@ public class UserDTO {
 
     @NotNull
     @NotEmpty
+    @JsonProperty("first_name")
     private String first_name;
     @NotNull
     @NotEmpty
+    @JsonProperty("last_name")
     private String last_name;
     @NotNull
     @NotEmpty

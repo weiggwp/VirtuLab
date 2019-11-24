@@ -146,8 +146,12 @@ class instructor_labs extends React.Component {
             redirectLabPublic: true
         })
     }
-    handleAssignLab=()=>{
+    handleAssignLab(lab){
         this.setState({redirectAssign:true});
+        this.redirectPublish = {
+            id: lab.labID,
+
+        }
     }
     handleCreateLab = () => {
         this.setState({
@@ -222,6 +226,10 @@ class instructor_labs extends React.Component {
         else if (this.state.redirectAssign){
             return <Redirect exact to={{
                 pathname: '/assign_lab',
+                state: {
+                    id:this.redirectPublish.id,
+                    courses:this.state.classes
+                },
             }}/>;
         }
         else if (this.state.redirectLabCreation){
@@ -239,6 +247,7 @@ class instructor_labs extends React.Component {
                 pathname: '/publish_lab',
             }}/>;
         }
+
     };
     setRedirectLab = () => {
         this.setState({

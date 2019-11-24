@@ -19,6 +19,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import publish_lab from "./components/publish_lab";
 import forgot_password from "./components/forgot_password";
 import {assign_lab} from "./components/assign_lab";
+import {view_lab_course} from "./components/view_lab_course";
 
 
 
@@ -43,6 +44,7 @@ class App extends Component {
               <PrivateRoute exact path="/statistics" role="instructor" component={Statistics} />
               <PrivateRoute exact path="/publish_lab" role="instructor" component={publish_lab} />
               <PrivateRoute exact path="/assign_lab" role="instructor" component={assign_lab} />
+              <PrivateRoute exact path="/view_lab_course" role="instructor" component={view_lab_course} />
             </Switch>
           </div>
         </Router>

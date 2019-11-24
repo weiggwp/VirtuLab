@@ -1,7 +1,6 @@
 package backend.service;
 
 import backend.dto.CourseDTO;
-import backend.model.AssignedLab;
 import backend.model.Course;
 import backend.model.Lab;
 import backend.repository.CourseRepository;
@@ -69,9 +68,9 @@ public class CourseService {
     }
 
     public boolean labAlreadyInCourse(Course course, long labID) {
-        List<AssignedLab> labs = course.getLabs();
-        for (AssignedLab lab: labs) {
-            if (lab.getLab().getLabID() == labID) {
+        List<Lab> labs = course.getLabs();
+        for (Lab lab: labs) {
+            if (lab.getLabID() == labID) {
                 return true;
             }
         }
