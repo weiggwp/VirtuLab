@@ -22,6 +22,14 @@ import {test_draggable} from "./test_draggable";
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
+export function move_element(ev){
+    const offset = ev.dataTransfer.getData("text/offset").split(',');
+    const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+    dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
+    dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
+    // console.log(dm.style);
+}
+
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
@@ -308,6 +316,29 @@ class create_lab extends React.Component {
         console.log("eq2:",eq2);
         alert(workspace_id1+" "+eq_id1+" "+workspace_id2+" "+eq_id2);
     }
+
+
+
+    drop_handler(ev) {
+        // ev.preventDefault();
+        if (ev.stopPropagation) {
+            ev.stopPropagation(); // Stops some browsers from redirecting.
+        }
+        move_element(ev);
+
+        // ev.target.style.border="";
+        // ev.target.style.opacity = '1.0';
+        return false;
+    }
+    dragover_handler(ev) {
+        if (ev.preventDefault) {
+            ev.preventDefault(); // Necessary. Allows us to drop.
+        }
+        ev.dataTransfer.dropEffect = "move";
+        return false;
+
+    }
+
     workspacePane(){
         const workspaces = [];
 
@@ -319,7 +350,11 @@ class create_lab extends React.Component {
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
-            workspaces.push(<Tab.Pane eventKey={i} style={{height:"100%"}}>
+            workspaces.push(
+                <Tab.Pane
+                    eventKey={i}
+                    onDrop={this.drop_handler} onDragOver={this.dragover_handler}
+                    style={{height:"100%"}}>
                 workspace for step {i}
                 <div style={{height:"100%"}}>
 
@@ -327,9 +362,7 @@ class create_lab extends React.Component {
 
                         <Draggable_equipment wkspace_id={i} equip_id={index}
                                              interation_handler = {this.interation_handler}
-                                             image ={equipment} x={index*100} y={index*100} width={200} height={200}/>
-                        // <Draggable_equipment x={500} y={100} width={100} height={100}/>
-                        // <Draggable_equipment x={400} y={100} width={200} height={200}/>
+                                             image ={equipment} left={index*50} top={10} width={200} height={200}/>
 
                     ))
                     }
