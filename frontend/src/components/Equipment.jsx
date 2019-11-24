@@ -31,9 +31,10 @@ class Equipment extends React.Component{
                     cursor: 'move',
                 }}
             >
-                <Image  style={{height:"4vh",width:"5vh"}}
+                <Image  style={{height:"7vh",width:"6vh",display:"inline-block"}}
                        src={this.props.image}
                       rounded/>
+                {this.props.description}
 
             </div>
         )

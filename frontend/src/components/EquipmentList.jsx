@@ -8,8 +8,13 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import {Equipment} from "./Equipment";
+import water from "../Images/water.svg";
+import flask from "../Images/250mLFlask.svg";
+import beaker from "../Images/250mLBeaker.svg";
+import cylinder from "../Images/10mLGraduatedCylinder.svg";
 
 class EquipmentList extends React.Component
+
     //equipments are draggable
 {
     constructor(props)
@@ -20,6 +25,11 @@ class EquipmentList extends React.Component
 
 
     render() {
+        // const beaker ="https://cdn4.iconfinder.com/data/icons/laboratory-4/58/9-512.png";
+        // const water ="./Images/water.svg";
+        // const flask ="https://cdn4.iconfinder.com/data/icons/medical-health-10/128/1-512.png";
+
+        // const cylinder="https://static.thenounproject.com/png/161931-200.png";
 
         return(
 
@@ -33,11 +43,12 @@ class EquipmentList extends React.Component
 
                         <div style={{ overflowY: "scroll",height:"30vh"}} >
                              <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                                 <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn.iconscout.com/icon/premium/png-256-thumb/water-bottle-1738496-1475816.png"}/>
-                            Distilled water
+                                 <Button  onClick={() => this.props.handleAddEquipment(this.props.step,water)} style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
+                                <Equipment image={water} description={"3.0L Distilled Water"}/>
 
-                        </Button>
+                                {/*<span>Distilled water</span>*/}
+
+                                </Button>
 
 
 
@@ -48,19 +59,16 @@ class EquipmentList extends React.Component
                     <div style={{height:"5vh",width:"8vh"}}> Glassware </div>} >
                     <div style={{ overflowY: "scroll",height:"30vh"}} >
                     <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn4.iconfinder.com/data/icons/medical-health-10/128/1-512.png"}/>
-                            Erlenmeyer flask
+                        <Button onClick={() => this.props.handleAddEquipment(this.props.step,flask)} style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
+                            <Equipment  image={flask} description={"250mL Flask"}/>
 
                         </Button>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://cdn4.iconfinder.com/data/icons/laboratory-4/58/9-512.png"}/>
-                            Beaker
+                        <Button onClick={() => this.props.handleAddEquipment(this.props.step,beaker)} style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
+                            <Equipment  image={beaker} description={"250mL Beaker"}/>
 
                         </Button>
-                        <Button style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                            <Equipment image={"https://static.thenounproject.com/png/161931-200.png"}/>
-                            Graduated Cylinder
+                        <Button onClick={() => this.props.handleAddEquipment(this.props.step,cylinder)}  style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
+                            <Equipment image={cylinder} description={"10mL Graduated Cylinder"}/>
 
                         </Button>
                     </ButtonGroup>
