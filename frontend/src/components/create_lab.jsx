@@ -8,7 +8,7 @@ import {Tab,Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGrou
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
-import {Workspace} from "./Droppable_space";
+// import {Workspace} from "./Droppable_space";
 import Step from "../Step.js";
 import {Slides} from "./Slides";
 import EditableLabel from 'react-editable-label';
@@ -18,17 +18,9 @@ import GLOBALS from "../Globals";
 import Draggable from 'react-draggable';
 import {Equipment} from "./Equipment";
 import {Draggable_equipment} from "./Draggable_equipment";
-import {test_draggable} from "./test_draggable";
 import {ToastsContainer, ToastsStore} from 'react-toasts';
+import Workspace from "../Workspace"
 
-
-export function move_element(ev){
-    const offset = ev.dataTransfer.getData("text/offset").split(',');
-    const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
-    dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
-    dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-    // console.log(dm.style);
-}
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -40,7 +32,6 @@ class create_lab extends React.Component {
             redirectHome: false,
             restart:false,
             steps : [new Step(0)],
-            // steps: [],
             step_num: 0,
             lab_id:0,
             lab_loaded:false,
@@ -55,22 +46,23 @@ class create_lab extends React.Component {
 
     populateSteps()
     {
-        if(this.props.location.state!==undefined)
-        {
-            // alert(this.props.location.state);
+        //if not new lab, load old lab
+        if(this.props.location.state!==undefined){
 
-
+            //get steps from prop
             var step_list = this.props.location.state.steps;
 
-            if (step_list !== undefined)//opening a previously saved lab
+            //opening a previously saved lab
+            if (step_list !== undefined)
             {
-                for (var i = 1; i < step_list.length; i++) {
-                    this.state.steps.push(new Step(i, step_list[i].instruction));
-
+                for (let i = 1; i < step_list.length; i++) {
+                    this.state.steps.push(new Step(i, step_list[i].instruction,step_list[i].workspace));
                 }
 
             }
-            // alert("got here"+this.props.location.state.id);
+            else{
+                return "Step list is not loaded"
+            }
 
             this.setState(
                 {
@@ -79,9 +71,9 @@ class create_lab extends React.Component {
                     lab_title:this.props.location.state.name,
                     lab_loaded: true,
                 }, () => {
-                    console.log(this.state.lab_id);
-                    console.log(this.state.lab_title);
-                    console.log(this.state.steps);
+                    // console.log(this.state.lab_id);
+                    // console.log(this.state.lab_title);
+                    // console.log(this.state.steps);
                 }
             )
 
@@ -90,7 +82,6 @@ class create_lab extends React.Component {
         {
             this.setState(
                 {
-
                     lab_loaded: true,
                 }, () => {
 
@@ -98,20 +89,22 @@ class create_lab extends React.Component {
             )
         }
     }
+
     setRedirectHome = () => {
         this.setState({
             redirectHome: true
         })
     };
 
-    setRestart = () => {
+    setRestart = (step_id) => {
 
         this.setState({
             restart: true,      //should probably just be restarting a single step
-            equipments:{}
-            // selectEquipment:false,
-            // doSetup:false
-        })
+            equipments:{},
+
+        });
+
+        this.state.steps[step_id].workspace= new Workspace();
     };
 
 
@@ -125,22 +118,6 @@ class create_lab extends React.Component {
         )
 
     }
-    getStepsArray()
-    {
-        var array = [];
-        var current = this.state.steps;
-        while(current)
-        {
-            array.push({
-                index:current.index,
-                stepNum:current.instruction
-            })
-            current = current.next;
-        }
-        return array;
-
-
-    }
 
     handleLabSave = (e) => {
         // e.preventDefault();
@@ -151,7 +128,10 @@ class create_lab extends React.Component {
             name: this.state.lab_title,
             creator: this.props.email,
             steps: this.state.steps,
+            lastModified: new Date(),
         };
+
+        console.log("lab.lastModified", lab.lastModified);
 
         let axiosConfig = {
             headers: {
@@ -163,12 +143,12 @@ class create_lab extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
                 this.setState({save_success: true});
-                console.log("id is "+response.data);
+                // console.log("id is "+response.data);
                 if(this.state.lab_id===0)  //only if not set
                     this.setState({lab_id:response.data});
 
 
-                console.log("response: ", response);
+                // console.log("response: ", response);
             })
             .catch((error) => {
                     this.setState({
@@ -180,7 +160,6 @@ class create_lab extends React.Component {
 
     toolbar()
     {
-        //   if(this.ifSelectingEquipment())
         {
             return (
                 <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
@@ -189,20 +168,15 @@ class create_lab extends React.Component {
                         <EditableLabel labelClass="lab_title_label" inputClass="lab_title_input"
                                        initialValue={this.state.lab_title}
                                        save={value => {
-                                           this.setState({lab_title:value});
-                                       }
-
+                                           this.setState({lab_title:value});}
                                        }
                         />
-
-
                     </Nav>
 
                     <Nav>
                         <Link to="/create_lab">
                             <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
                         </Link>
-                        {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
                         <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
                         <Image className={"save_image"} onClick={this.handleLabSave}
@@ -223,9 +197,6 @@ class create_lab extends React.Component {
 
     }
 
-    handleFieldChange = (e, field) => {
-        this.setState({ [field]: e.target.value });
-    };
     handleInstructionChange=(e,index)=>
     {
         var list = this.state.steps;
@@ -233,7 +204,6 @@ class create_lab extends React.Component {
         this.setState({
             steps:list
         })
-        console.log(this.state.steps);
     };
 
     instruction(index)
@@ -252,11 +222,11 @@ class create_lab extends React.Component {
 
         )
     }
+
     setupInstruction(step,text)
     {
         return(
             <div style={{ paddingTop:10,paddingLeft:3}}>
-
                 <Card style={{ width: '20rem',height:'30vh'}}>
                     <Card.Header>STEP {step}:</Card.Header>
                     <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
@@ -265,7 +235,6 @@ class create_lab extends React.Component {
                         </Card.Text>
                     </Card.Body>
                 </Card>
-                {/*<div style={{ paddingTop:20,paddingLeft:3}}>*/}
                 {/*    <Button style={{ backgroundColor: 'transparent',color:"black"}} block bsSize="large" >*/}
                 {/*        Finish*/}
                 {/*    </Button>*/}
@@ -426,7 +395,7 @@ class create_lab extends React.Component {
 
 
 
-    }
+    };
 
 
     render(){
@@ -467,6 +436,13 @@ class create_lab extends React.Component {
     }
 
 
+}
+export function move_element(ev){
+    const offset = ev.dataTransfer.getData("text/offset").split(',');
+    const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+    dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
+    dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
+    // console.log(dm.style);
 }
 
 
