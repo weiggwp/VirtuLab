@@ -1,5 +1,5 @@
 import InstructorHeader from "./instructorHeader";
-import {Button, Col, Container, Image, Nav, Navbar,Row} from "react-bootstrap";
+import {Button, Col, Container, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -7,6 +7,8 @@ import React from "react";
 import axios from "axios";
 import GLOBALS from "../Globals";
 import {ToastsStore} from "react-toasts";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 class view_lab_course extends React.Component
 {
 
@@ -21,7 +23,20 @@ class view_lab_course extends React.Component
             classes : props.classes,
             loaded: false,
             students:[],
+            due_date: new Date(),
         }
+
+    }
+    handleDateChange = date => {
+       // console.log("doot" + date)
+        this.setState({
+            due_date: date
+
+        });
+    };
+    handleChangeDueDate = (e)=>{
+        e.preventDefault();
+        console.log(this.state.due_date)
 
     }
     getStudents(){
@@ -100,7 +115,22 @@ render() {
 
                 <div>
                     <div>
+                        <form onSubmit={this.handleChangeDueDate}>
+                        <FormGroup controlId="formBasicText" bsSize="large">
+
+                        <DatePicker
+                            selected={this.state.due_date}
+
+                            onChange={(e) => this.handleDateChange(e)}
+                        />&nbsp;
+                        <Button style={{backgroundColor: 'orange', color: "white"}}
+                                type="submit">
+                            Update Due Date
+                        </Button>
+                    </FormGroup>
+                        </form>
                         <Container fluid className="noPadding">
+
                         <Row className="noMargin">
                         <Col md={{span:3,offset:2}} >
                             <h3 className="accountH3">Name</h3>
@@ -120,6 +150,9 @@ render() {
                         </Row>
 
                         </Container>
+
+
+
                         {this.state.students.map(student=> (
                             <div style={{
                                 textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
