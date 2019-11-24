@@ -9,6 +9,7 @@
     "rc-progress": "^2.5.2",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-collapsible": "^2.6.0",
     "react-dnd": "^9.4.0",
     "react-dom": "^16.11.0",
     "react-draggable": "^4.1.0",
