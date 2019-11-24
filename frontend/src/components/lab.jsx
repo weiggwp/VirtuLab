@@ -46,7 +46,7 @@ class Lab extends React.Component
 
         }
         else if (this.state.renderInstructor){
-            alert("classes are " +this.props.courseID)
+          //  alert("classes are " +this.props.courseID)
                 return <Redirect exact to={{
                     pathname: '/view_lab_course',
                     state: {
