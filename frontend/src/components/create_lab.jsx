@@ -373,6 +373,8 @@ class create_lab extends React.Component {
                         placement="bottom"
                         container={this.ref.current}
                         containerPadding={20}
+                        rootClose={true}
+                        onHide={() => this.setState({ showPopover: false })}
                     >
                         <Popover id="popover-contained">
                             <Popover.Title as="h3">Interaction</Popover.Title>
