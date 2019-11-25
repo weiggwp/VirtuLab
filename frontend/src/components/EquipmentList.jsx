@@ -8,30 +8,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import {Equipment} from "./Equipment";
-import water from "../Images/water.svg";
 
-import small_flask from "../Images/250mLFlask.svg";
-import medium_flask from "../Images/500mLFlask.svg";
-import large_flask from "../Images/1000mLFlask.svg";
-
-import small_beaker from "../Images/250mLBeaker.svg";
-import medium_beaker from "../Images/600mLBeaker.svg";
-import large_beaker from "../Images/1000mLBeaker.svg";
-
-import small_cylinder from "../Images/10mLGraduatedCylinder.svg";
-import medium_cylinder from "../Images/25mLGraduatedCylinder.svg";
-import large_cylinder from "../Images/50mLGraduatedCylinder.svg";
-
-import small_pipette from "../Images/5mLPipette.svg";
-import medium_pipette from "../Images/10mLPipette.svg";
-import large_pipette from "../Images/25mLPipette.svg";
-
-import small_volFlask from "../Images/100mLVolumetricFlask.svg";
-import medium_volFlask from "../Images/250mLVolumetricFlask.svg";
-import large_volFlask from "../Images/1000mLVolumetricFlask.svg";
-
-import bunsun_burner from "../Images/bunsenBurner.svg";
-import scale from "../Images/scale.svg";
 
 import more from "../Images/more.jpg";
 
@@ -47,6 +24,26 @@ class EquipmentList extends React.Component
     {
         super(props);
 
+
+    }
+
+    handleOnClick=(e,equipment)=>
+    {
+        e.persist()
+        console.log(e)
+        console.log(equipment)
+        if(this.props.step===0)
+        {
+            console.log("step 0")
+            equipment.disabled = !equipment.disabled;
+
+            e.target.style.opacity=e.target.style.opacity==0.3?1:0.3;
+
+        }
+
+            this.props.handleAddEquipment(this.props.step,equipment)
+
+
     }
 
     createCollapsible(eventIndex,type,equipments)
@@ -56,11 +53,11 @@ class EquipmentList extends React.Component
 
             <div style={{width:"100%"}}>
 
-                <Accordion.Toggle className={"row"} style={{width:"100%",backgroundColor:"#50b0b5",fontWeight:"bold"}} as={Card.Header} eventKey={eventIndex}>
+                <Accordion.Toggle className={"row1"} style={{marginRight:0,width:"100%",backgroundColor:"#50b0b5",fontWeight:"bold"}} as={Card.Header} eventKey={eventIndex}>
 
 
-                    <div className={"column1"}>{type}</div>
-                        <img  className={"column2"} src={more} align="right" />
+                        <div className={"column1"}>{type}</div>
+                        <img  className={"column2"} src={more} />
 
                 </Accordion.Toggle>
 
@@ -69,13 +66,8 @@ class EquipmentList extends React.Component
                     {equipments.map((equipment) => (
 
                         //,marginBottom:5 took out
-                    <Button   onClick={() => this.props.handleAddEquipment(this.props.step,equipment.image)}
 
-                              style={{width:"100%",color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5}}>
-
-                        <Equipment image={equipment.image} description={equipment.toString()}/>
-
-                    </Button>
+                            this.renderButton(equipment)
 
                     ))}
                     </div>
@@ -85,38 +77,57 @@ class EquipmentList extends React.Component
 
         )
     }
-    createFlasks()
+    renderButton(equipment)
     {
-        return [new Glassware("Flask",small_flask,250,0,0),
-            new Glassware("Flask",medium_flask,500,0,0),
-            new Glassware("Flask",large_flask,1000,0,0),]
+        console.log("at step "+this.props.step+" and "+equipment.name+" is disabled "+equipment.disabled)
+
+        if(!equipment.disabled || this.props.step===0)
+        {
+            return(
+                <Button   onClick={(e) => this.handleOnClick(e, equipment)}
+
+                          style={{width:"100%",color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5}}>
+
+                    <Equipment image={equipment.image} description={equipment.toString()}/>
+
+                </Button>
+            )
+        }
     }
-    createCylinders()
+    renderArray(elementType)
     {
-        return [new Glassware("Graduated Cylinder",small_cylinder,10,0,0),
-            new Glassware("Graduated Cylinder",medium_cylinder,25,0,0),
-            new Glassware("Graduated Cylinder",large_cylinder,50,0,0),]
+        var solutions = this.props.set[elementType];//gives the list of solutions
+
+        return(
+            solutions.map((solution) => (
+                this.renderButton(solution)
+
+            ))
+
+        )
+
     }
-    createBeakers()
+    renderGlassware()
     {
-        return [new Glassware("Beaker",small_beaker,250,0,0),
-            new Glassware("Beaker",medium_beaker,600,0,0),
-            new Glassware("Beaker",large_beaker,1000,0,0),]
-    }
-    createVolumetricFlasks()
-    {
-        return [new Glassware("Volumetric Flask",small_volFlask,100,0,0),
-            new Glassware("Volumetric Flask",medium_volFlask,250,0,0),
-            new Glassware("Volumetric Flask",large_volFlask,1000,0,0),]
-    }
-    createPipettes()
-    {
-        return [new Glassware("Pipettes",small_pipette,5,0,0),
-            new Glassware("Pipettes",medium_pipette,10,0,0),
-            new Glassware("Pipettes",large_pipette,25,0,0),]
-    }
+        var glassware = this.props.set['Glassware'];
+        // for (var i in a_hashmap)
+        //     (
+        //         this.createCollapsible(index,glass,glassware[glass])
+        //     )
+
+        return(
+            Object.keys(glassware).map((elements,index)=>
+                (
+                    this.createCollapsible(index,elements,glassware[elements])
+                )
 
 
+            )
+            )
+
+
+
+    }
 
 
 
@@ -141,12 +152,8 @@ class EquipmentList extends React.Component
 
                         <div style={{ overflowY: "scroll",height:"35vh"}} >
                              <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                                 <Button  onClick={() => this.props.handleAddEquipment(this.props.step,water)} style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                                <Equipment image={water} description={"3.0L Distilled Water"}/>
 
-                                {/*<span>Distilled water</span>*/}
-
-                                </Button>
+                                 {this.renderArray('Solution')}
 
 
 
@@ -159,11 +166,7 @@ class EquipmentList extends React.Component
                     <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
 
                         <Accordion style={{width:"100%"}} defaultActiveKey="0">
-                            {this.createCollapsible(0,"Erlenmeyers",this.createFlasks())}
-                            {this.createCollapsible(1,"Graduated Cylinders",this.createCylinders())}
-                            {this.createCollapsible(2,"Pipettes",this.createPipettes())}
-                            {this.createCollapsible(3,"Beakers",this.createBeakers())}
-                            {this.createCollapsible(4,"Volumetric Flasks",this.createVolumetricFlasks())}
+                            {this.renderGlassware()}
 
 
 
@@ -182,16 +185,7 @@ class EquipmentList extends React.Component
 
                     <div style={{ overflowY: "scroll",height:"35vh"}} >
                         <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-                            <Button  onClick={() => this.props.handleAddEquipment(this.props.step,bunsun_burner)} style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                                <Equipment image={bunsun_burner} description={"Bunsun Burner"}/>
-
-
-                            </Button>
-                            <Button  onClick={() => this.props.handleAddEquipment(this.props.step,scale)} style={{color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5,marginBottom:5}}>
-                                <Equipment image={scale} description={"Scale"}/>
-
-
-                            </Button>
+                            {this.renderArray('Tools')}
 
 
 

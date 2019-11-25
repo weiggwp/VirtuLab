@@ -13,6 +13,8 @@ import Step from "../Step.js";
 import {Slides} from "./Slides";
 import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
+import EquipmentSet from "../EquipmentSet.js";
+
 import axios from "axios";
 import GLOBALS from "../Globals";
 import Draggable from 'react-draggable';
@@ -26,6 +28,7 @@ class create_lab extends React.Component {
     constructor(props) {
         super(props);
         this.steps = [new Step(0)];
+        this.equipmentSet = new EquipmentSet();
 
 
         this.state = {
@@ -229,8 +232,9 @@ class create_lab extends React.Component {
 
     instruction(index)
     {
+        //,width: '20rem' for div
         return(
-            <div style={{padding: 10,width: '20rem',height:'30vh'}}>
+            <div style={{padding: 10,height:'30vh'}}>
 
                 <textarea
                     style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
@@ -248,7 +252,7 @@ class create_lab extends React.Component {
         return(
             <div style={{ paddingTop:10,paddingLeft:3}}>
 
-                <Card style={{ width: '20rem',height:'30vh'}}>
+                <Card style={{ height:'30vh'}}>
                     <Card.Header>STEP {step}:</Card.Header>
                     <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
                         <Card.Text style={{textAlign:"left"}}>
@@ -274,7 +278,7 @@ class create_lab extends React.Component {
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
-            <EquipmentList handleAddEquipment={this.handleAddEquipment}/>
+            <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
             "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
@@ -282,7 +286,7 @@ class create_lab extends React.Component {
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList step={i} handleAddEquipment={this.handleAddEquipment}/>
+                <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
                 instruction for step {i} {this.instruction(i)}</Tab.Pane>);
             }
@@ -340,6 +344,8 @@ class create_lab extends React.Component {
     handleAddChild = () => {
         this.state.steps.push(new Step(this.state.steps.length,""));
         var temp = this.state.equipments;
+
+        //right now temp is filled with image sources of equipments
         temp[this.state.step_num+1]=temp[this.state.step_num].slice();
         this.setState({
             //add a new step to steps[]
@@ -358,9 +364,22 @@ class create_lab extends React.Component {
         });
         // alert(this.state.step_num);
     };
-    handleAddEquipment= (step,image) =>
+    handleSelectEquipment=(equipment)=>
     {
+        equipment.disabled = !equipment.disabled;
+        alert(equipment.name+" "+equipment.disabled)
 
+
+    }
+    handleAddEquipment= (step,equipment) =>
+    {
+        if(step===0)
+        {
+            this.forceUpdate()
+            return
+        }
+
+        var image = equipment.image;
 
         const current = this.state.equipments;
         if(current[step].length>=10)

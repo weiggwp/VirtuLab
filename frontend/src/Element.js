@@ -2,10 +2,12 @@ import Equipment from "./Equipment";
 
 
 export default class Element extends Equipment{
-    constructor(name, amount, weight, state=1)
+    constructor(name, image ,capacity, weight, state=1)
     {
         super(name,weight);
-        this.amount=amount;
+        this.amount=capacity;
+        this.capacity=capacity;
+        this.image=image;
         this.state=state;
         this.state_names= ["solid", "liquid", "gas"];
 
@@ -22,5 +24,9 @@ export default class Element extends Equipment{
         out.amount=amount;
         this._amount-=amount;
         return out;
+    }
+    toString()
+    {
+        return this._capacity+" mL "+this._name;
     }
 }

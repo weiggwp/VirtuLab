@@ -3,9 +3,17 @@
 
 
 export default class Equipment {
+    get disabled() {
+        return this._disabled;
+    }
+
+    set disabled(value) {
+        this._disabled = value;
+    }
 
     constructor(name,image,weight, state=0,)
     {
+
 
         this._name = name;
         this.weight = weight;
@@ -15,6 +23,7 @@ export default class Equipment {
         this._state=state;
         this._image=image;
         this._items=[];
+        this._disabled = false;
     }
 
 
@@ -102,7 +111,7 @@ export default class Equipment {
 
     toString()
     {
-        return this._capacity+" ml "+this._name;
+        return this._name;
     }
 
 }
