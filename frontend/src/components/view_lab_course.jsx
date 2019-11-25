@@ -39,6 +39,43 @@ class view_lab_course extends React.Component
         console.log(this.state.due_date)
 
     }
+    handleChangeDate= (e) =>{
+        e.preventDefault();
+        let labs =[];
+        const lab = {
+            labID:this.props.location.state.labID
+        }
+        labs[0]=lab
+        const course= {
+            email:this.props.email,
+            course_number: this.props.location.state.courseID,
+            labs: labs
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
+            .then((response) => {
+                this.setState({
+                    redirect: true
+                })
+
+                this.render()
+
+            })
+            .catch((error) => {
+                    ToastsStore.error("That course already has this lab assigned to it.")
+                }
+            );
+    }
+
+
+
+
     getStudents(){
         let labs =[];
         const lab = {

@@ -3,10 +3,7 @@ package backend.controller;
 
 import backend.dto.CourseDTO;
 import backend.dto.UserDTO;
-import backend.model.Course;
-import backend.model.Lab;
-import backend.model.User;
-import backend.model.UserCourse;
+import backend.model.*;
 import backend.repository.UserRepository;
 import backend.service.CourseService;
 import backend.service.UserCourseService;
@@ -141,17 +138,35 @@ public class CourseController {
      //   System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
+
+        System.out.println("user is "+ user);
+
        // System.out.println("user is "+user);
+
+        List<CourseDTO> courseDTOList = new ArrayList<>();
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {
+            CourseDTO dto = new CourseDTO();
             Course course = userCourse.getCourse();
+            dto.setCode(course.getAccessCode());
+            dto.setCourseName(course.getCourseName());
+            dto.setCourseID(course.getCourseID());
+            dto.setCourseNumber(course.getCourseNumber());
+            dto.setCourseDescription(course.getCourseDescription());
        //     System.out.println(course);
             list.add(course);
+
+            List<Lab> labs = new ArrayList<>();
+            for (CourseLab courseLab: course.getCourseLabList()) {
+                labs.add(courseLab.getLab());
+            }
+            dto.setLabs(labs);
+            courseDTOList.add(dto);
         }
       //  System.out.println("returning ok");
 
-        return new ResponseEntity(list, HttpStatus.OK);
+        return new ResponseEntity(courseDTOList, HttpStatus.OK);
 //        map.put("msg", SUCCESS);
 //        map.put("list", list);
 //        return map;
@@ -192,12 +207,79 @@ public class CourseController {
         }
     }
 
+
+//    private List<UserCourse> removeUserCourse(long userID, long courseID, List<UserCourse> list) {
+//
+//
+//        for (UserCourse userCourse: list) {
+//            if (userCourse.getUser().getId() == userID &&
+//                    userCourse.getCourse().getCourseID() == courseID) {
+//                list.remove(userCourse);
+//            }
+//        }
+//        return list;
+//    }
+
     @RequestMapping(value = "/drop", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity drop(@RequestBody CourseDTO courseDto) {
-        System.out.println("course is is " +courseDto.toString());
+        System.out.println("Course Controller Drop operation: ");
+        System.out.println("course to dropped " +courseDto);
 
-       return new ResponseEntity(HttpStatus.OK);
+        long courseID = courseDto.getCourseID();
+        String email = courseDto.getEmail();
+        User user = userRepository.findByEmail(email);
+        System.out.println(user);
+        Optional<Course> optional = courseService.findCourseById(courseID);
+        Course course = optional.get();
+
+//        UserCourse del = new UserCourse(user, course);
+        /* student dropping a course */
+        if (user.getRole().equals("student")) {
+
+            for (Iterator<UserCourse> it = user.getUserCourseList().iterator(); it.hasNext();) {
+                UserCourse userCourse = it.next();
+                if (userCourse.getUser().getId() == user.getId() &&
+                    userCourse.getCourse().getCourseID() == courseID){
+                    it.remove();
+                }
+
+            }
+//            course.getUserCourseList().remove(del);
+            userRepository.save(user);
+
+        }
+        /* instructor dropping a course*/
+        if (user.getRole().equals("instructor")) {
+            System.out.println("instructor doing delete");
+
+            /* delete in the user side */
+            course.getUserCourseList().clear();
+            for (Iterator<UserCourse> it = user.getUserCourseList().iterator(); it.hasNext();) {
+                UserCourse userCourse = it.next();
+                if (userCourse.getUser().getId() == user.getId() &&
+                        userCourse.getCourse().getCourseID() == courseID) {
+                    it.remove();
+                }
+            }
+
+            //  remove all the lab in the association
+            course.getLabs().clear();
+//            courseService.addCourse(course);
+            courseService.deleteCourseById(course.getCourseID());
+
+
+
+//            for (UserCourse userCourse: course.getUserCourseList()) {
+//                User u = userCourse.getUser();
+////                u.getUserCourseList().remove(del);
+//                removeUserCourse(u.getId(), course.getCourseID(), u.getUserCourseList());
+//                userRepository.save(u);
+//            }
+
+//            courseService.deleteCourseById(courseID);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 
@@ -230,6 +312,33 @@ public class CourseController {
 
         return course;
     }
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/set_date", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity setDate(@RequestBody CourseDTO courseDTO) {
+        System.out.println("CourseController set date for a lab: ");
+        // send the lab you want to send the date in a list
+        long labID = courseDTO.getLabs().get(0).getLabID();
+
+        long courseID = courseDTO.getCourseID();
+        Optional<Course> optional = courseService.findCourseById(courseID);
+        if (optional.isPresent()) {
+
+            Course course = optional.get();
+            for (CourseLab courseLab: course.getCourseLabList()) {
+                if (courseLab.getLab().getLabID() == labID)
+                    courseLab.setDate(courseDTO.getDate());
+            }
+
+            courseService.addCourse(course);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

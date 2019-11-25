@@ -7,7 +7,7 @@ import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import '../stylesheets/instructor_home.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav} from 'react-bootstrap';
+import {Button, Image, Navbar, NavItem, InputGroup, Nav, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 
 import image from '../Images/lab_promo.png'
@@ -69,6 +69,7 @@ class instructor_home extends React.Component {
             .then((response) => {
 
                 console.log(JSON.stringify(response))
+                console.log(response)
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -78,8 +79,8 @@ class instructor_home extends React.Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:0,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
+                    classArray[i]={classname:response.data[i].course_name, classID:0,
+                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].code};
 
                 //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }
@@ -139,8 +140,17 @@ class instructor_home extends React.Component {
                                         Course</Button>
                                 </Nav>
                                 <Nav>
-                                    <Image onClick={this.setRedirectAcct} className={"config_image"}
-                                           src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
+                                    <OverlayTrigger
+                                        overlay={
+                                            <Tooltip>
+                                                Account Setting
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <Image onClick={this.setRedirectAcct} className={"config_image"}
+                                               src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
+                                    </OverlayTrigger>
+
                                 </Nav>
                             </Navbar>
                         </div>

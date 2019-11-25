@@ -24,6 +24,7 @@ class Lab extends React.Component
             due : Date,
             isInstructor:false,
             gottenRole:false,
+            renderLab:true,
             renderStudent:false,
             renderInstructor:false,
         }
@@ -40,9 +41,16 @@ class Lab extends React.Component
         }
         //window.location.href="http://localhost:3001/do_lab";
     }
+    getDueDate(){
 
+    }
     render() {
-        if (this.state.renderStudent){
+        if (this.state.renderLab){
+            this.getDueDate();
+            this.setState({renderLab:false})
+            return null;
+        }
+        else if (this.state.renderStudent){
 
         }
         else if (this.state.renderInstructor){
@@ -70,7 +78,7 @@ class Lab extends React.Component
 
 
                     <Nav className={"ml-auto"}>
-                        <label className={this.props.style} style={{color:"red",marginBottom:0}}>Due: Nov. 15,2019</label>
+                        <label className={this.props.style} style={{color:"red",marginBottom:0}}>Due: {this.state.due}</label>
 
                         <Image  className={"config_image"}  src={check['incomplete']} rounded />
 

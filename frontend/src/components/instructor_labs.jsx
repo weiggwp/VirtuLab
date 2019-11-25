@@ -6,7 +6,7 @@ import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav} from 'react-bootstrap';
+import {Button, Image, Navbar, NavItem, InputGroup, Nav, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 
 import image from '../Images/lab_promo.png'
@@ -146,6 +146,7 @@ class instructor_labs extends React.Component {
             redirectLabPublic: true
         })
     }
+<<<<<<< HEAD
     handleAssignLab(lab){
         this.setState({redirectAssign:true});
         this.redirectPublish = {
@@ -153,6 +154,38 @@ class instructor_labs extends React.Component {
 
         }
     }
+=======
+
+    handleDeleteLab(lab) {
+
+        let labToDel = {
+            email: this.props.email,
+            labID: lab.labID
+        }
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'del_lab', labToDel, axiosConfig)
+            .then((response) => {
+                //  console.log("success!")
+                this.render()
+                window.location.reload()
+            })
+            .catch((error) => {
+                    //  console.log("doot" + error)
+                }
+            );
+    }
+
+>>>>>>> b478ca7bd78682c74176e18a064a171b836da924
     handleCreateLab = () => {
         this.setState({
             redirectLabCreation: true
@@ -358,11 +391,20 @@ class instructor_labs extends React.Component {
                                 <Nav>
                                     <Button onClick={this.handlePublic} style={{backgroundColor: "#e88f65ff"}}
                                             variant="primary">View Public Labs</Button>
-                                    <Link to="/account_settings">
-                                        <Image className={"config_image"}
-                                               src="https://icon-library.net/images/config-icon/config-icon-21.jpg"
-                                               rounded/>
-                                    </Link>
+                                    <OverlayTrigger
+                                        overlay={
+                                            <Tooltip>
+                                                Account Setting
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <Link to="/account_settings">
+                                            <Image className={"config_image"}
+                                                   src="https://icon-library.net/images/config-icon/config-icon-21.jpg"
+                                                   rounded/>
+                                        </Link>
+
+                                    </OverlayTrigger>
                                 </Nav>
                             </Navbar>
                         </div>
@@ -403,12 +445,29 @@ class instructor_labs extends React.Component {
 
                                                 <Dropdown.Item onClick=
                                                                    {() => this.handlePublishLab(lab)}class={"dropdown-item"}
+
                                                                eventKey="4">{this.publishMessage(lab)}</Dropdown.Item>
                                                 <Dropdown.Item class={"dropdown-item"}
+                                                               onClick = {() => this.handleDeleteLab(lab)}
                                                                eventKey="5">Delete</Dropdown.Item>
+<<<<<<< HEAD
                                                 <Dropdown.Item onClick=
                                                                    {() => this.handleAssignLab(lab)}class={"dropdown-item"}
                                                                eventKey="6">Assign</Dropdown.Item>
+=======
+
+                                                <Dropdown class={"dropdown-item"}
+                                                               eventKey="5">Assign {classes.map(classItem => (
+
+                                                    <Dropdown.Item class={"dropdown-item"} onClick=
+                                                        {() => this.handleAddClass(classItem.accessCode,lab)} eventKey="8">{classItem.classname}</Dropdown.Item>
+
+
+
+                                                ))}
+
+                                                </Dropdown>
+>>>>>>> b478ca7bd78682c74176e18a064a171b836da924
                                                 {/*<Dropdown.Divider />*/}
 
                                             </Dropdown.Menu>

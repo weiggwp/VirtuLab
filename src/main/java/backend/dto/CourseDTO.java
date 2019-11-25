@@ -5,10 +5,13 @@ import backend.model.Lab;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CourseDTO {
 
+    @JsonProperty("course_id")
+    private long courseID;
     @JsonProperty("email")
     private String email;
     @JsonProperty("course_name")
@@ -21,6 +24,8 @@ public class CourseDTO {
     private String code;
     @JsonProperty("labs")
     private List<Lab> labs = new ArrayList<Lab>();
+    @JsonProperty("date")
+    private Date date;
     public String getEmail() {
         return email;
     }
@@ -29,8 +34,15 @@ public class CourseDTO {
         this.email = email;
     }
 
+    public Date getDate() {
+        return date;
+    }
 
-//    private int courseEnrollment;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    //    private int courseEnrollment;
     public List<Lab> getLabs(){
         return labs;
     }
@@ -70,6 +82,18 @@ public class CourseDTO {
         this.code = code;
     }
 
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+    }
+
+    public void setLabs(List<Lab> labs) {
+        this.labs = labs;
+    }
+
     //    public int getCourseEnrollment() {
 //        return courseEnrollment;
 //    }
@@ -82,12 +106,13 @@ public class CourseDTO {
     @Override
     public String toString() {
         return "CourseDTO{" +
-                "email='" + email + '\'' +
+                "courseID=" + courseID +
+                ", email='" + email + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", courseNumber='" + courseNumber + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
                 ", code='" + code + '\'' +
-
+                ", labs=" + labs +
                 '}';
     }
 }

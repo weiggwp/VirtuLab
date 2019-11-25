@@ -26,7 +26,7 @@ public class CourseService {
 
     public void deleteCourse(long id) {courseRepository.deleteById(id);}
 
-    public void findCourseById(long id) {courseRepository.findById(id);}
+    public Optional<Course> findCourseById(long id) {return courseRepository.findById(id);}
 
     public void deleteCourseById(long id) {courseRepository.deleteById(id);}
 

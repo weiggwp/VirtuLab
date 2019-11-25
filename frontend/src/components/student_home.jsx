@@ -8,7 +8,7 @@ import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import {add_course} from './add_course.jsx'
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
+import {Button, Image, Navbar, Nav, Form, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import GLOBALS from "../Globals";
@@ -168,9 +168,17 @@ class student_home extends React.Component
 
                                     </span>
                             </label>
-                            <Link to="/account_settings">
-                                <Image  className={"config_image"} src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded />
-                            </Link>
+                            <OverlayTrigger
+                                overlay={
+                                    <Tooltip>
+                                        Account Setting
+                                    </Tooltip>
+                                }
+                            >
+                                <Link to="/account_settings">
+                                    <Image  className={"config_image"} src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded />
+                                </Link>
+                            </OverlayTrigger>
                         </Nav>
 
                     </Navbar>
