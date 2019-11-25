@@ -4,7 +4,21 @@ import icon from "../Images/v.jpg";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {Tab,Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGroup,FormControl,Card} from "react-bootstrap";
+import {
+    Tab,
+    Button,
+    Col,
+    Container,
+    FormGroup,
+    Image,
+    Nav,
+    Navbar,
+    Row,
+    InputGroup,
+    FormControl,
+    Card,
+    Overlay, Popover
+} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
@@ -25,10 +39,12 @@ import Workspace from "../Workspace"
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
+
         this.steps = [new Step(0)];
-
-
+        this.target = null;
+        this.ref = React.createRef();
         this.state = {
+            showPopover: false,
             redirectHome: false,
             restart:false,
             steps : [new Step(0)],
@@ -36,12 +52,13 @@ class create_lab extends React.Component {
             lab_id:0,
             lab_loaded:false,
             lab_title:"Untitled Lab",
-            equipments:{0:[]}
+            equipments:[[]],
 
 
         };
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
         this.interation_handler = this.interation_handler.bind(this);
+        this.handle_equip_delete = this.handle_equip_delete.bind(this);
     }
 
     populateSteps()
@@ -274,16 +291,31 @@ class create_lab extends React.Component {
         )
 
     }
-    onDragOver=()=>{
-        alert("dragging over")
-    }
 
-    interation_handler(workspace_id1,eq_id1,workspace_id2,eq_id2){
+    interation_handler(target, workspace_id1,eq_id1,workspace_id2,eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
-        console.log("eq1:",eq1);
-        console.log("eq2:",eq2);
-        alert(workspace_id1+" "+eq_id1+" "+workspace_id2+" "+eq_id2);
+        this.eq1 = eq1;
+        this.target = target;
+        this.setState({showPopover:!this.state.showPopover});
+    }
+
+    handle_equip_delete(e,data){
+
+        const workspace_id = data.workspace_id;
+        const eq_id = parseInt(data.equip_id);
+
+        console.log(data);
+        let temp = this.state.equipments;
+        // delete temp[workspace_id][eq_id];
+        console.log(temp[workspace_id][1]);
+        // console.log(temp);
+
+        const removed = temp[workspace_id].splice(eq_id,1);
+
+        this.setState({equipments: temp});
+        console.log(removed);
+        console.log(temp);
     }
 
 
@@ -311,8 +343,6 @@ class create_lab extends React.Component {
     workspacePane(){
         const workspaces = [];
 
-
-
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
 
@@ -330,11 +360,27 @@ class create_lab extends React.Component {
                     {equipments.map((equipment,index) => (
 
                         <Draggable_equipment wkspace_id={i} equip_id={index}
-                                             interation_handler = {this.interation_handler}
-                                             image ={equipment} left={index*50} top={10} width={200} height={200}/>
+                                             interation_handler= {this.interation_handler}
+                                             handle_equip_delete={this.handle_equip_delete}
+                                             image={equipment}
+                                             left={50} top={10} width={200} height={200}/>
 
                     ))
                     }
+                    <Overlay
+                        show={this.state.showPopover}
+                        target={this.target}
+                        placement="bottom"
+                        container={this.ref.current}
+                        containerPadding={20}
+                    >
+                        <Popover id="popover-contained">
+                            <Popover.Title as="h3">Interaction</Popover.Title>
+                            <Popover.Content>
+                                input: {this.eq1}
+                            </Popover.Content>
+                        </Popover>
+                    </Overlay>
 
                     <ToastsContainer store={ToastsStore}/>
                 </div>

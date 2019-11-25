@@ -4,6 +4,7 @@ import {Equipment} from "./Equipment";
 import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
 import {move_element} from "./create_lab"
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 let dragSrcEl = null;
 
@@ -45,7 +46,9 @@ class Draggable_equipment extends React.Component{
         ev.dataTransfer.effectAllowed = 'move';
     };
     dragEnter_handler=(ev)=>{
-        ev.target.style.border = "3px dotted red";
+        if (dragSrcEl !== this) {
+            ev.target.style.border = "3px dotted red";
+        }
         // ev.target.style.cursor="copy";
 
     };
@@ -78,43 +81,60 @@ class Draggable_equipment extends React.Component{
 
              move_element(ev);
 
-             // Set the source column's HTML to the HTML of the column we dropped on.
              const workspace_id = ev.dataTransfer.getData('text/workspace_id');
              const equip_id = ev.dataTransfer.getData('text/equip_id');
              this.props.interation_handler(
+                 ev.target,
                  workspace_id, equip_id,
                  this.props.wkspace_id,this.props.equip_id,
                  );
-             // alert("droppppp dat shirttttt");
          }
 
          ev.target.style.border="";
          ev.target.style.opacity = '1.0';
          return false;
      }
-     handleDragEnd(e) {
-        // this/e.target is the source node.
-        //
-        // [].forEach.call(cols, function (col) {
-        //     col.classList.remove('over');
-        // });
+     handleDragEnd(ev) {
+        // e.target is the source node.
+         ev.target.style.border="";
+         ev.target.style.opacity = '1.0';
 
     }
 
+
     render() {
         return (
+            <div>
 
-
+            <ContextMenuTrigger id={"trigger"+this.props.wkspace_id+","+this.props.equip_id}
+                                holdToDisplay={-1}>
+                {/*<div className="well">Right click to see the menu</div>*/}
             <img id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
                  draggable="true"
                  onDragStart={this.dragStart_handler}
                  onDrop={this.drop_handler}
                  onDragOver={this.dragover_handler}
                  onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
-                 onDragExit={this.dragExit_handler}
+                 onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
                  src={this.props.image}
                  style={{position:"absolute",left:this.props.left,top:this.props.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}
                  alt={"Not Found"}/>
+            </ContextMenuTrigger>
+
+            <ContextMenu id={"trigger"+this.props.wkspace_id+","+this.props.equip_id}>
+                <MenuItem data={{workspace_id:this.props.wkspace_id,equip_id:this.props.equip_id}} onClick={this.props.handle_equip_delete}>
+                    Delete
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                    Remove Containing Elements
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                    View Info
+                </MenuItem>
+            </ContextMenu>
+
+            </div>
 
             // <Draggable
             //     onDragEnter={this.dragEnter}

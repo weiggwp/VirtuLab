@@ -8,7 +8,7 @@ export default class Equipment {
     {
 
         this._name = name;
-        this.weight = weight;
+        this._weight = weight;
         this._amount=0;
         this.unit="";
         this._capacity=0;
