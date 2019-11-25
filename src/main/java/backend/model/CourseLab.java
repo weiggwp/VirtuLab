@@ -69,7 +69,7 @@ public class CourseLab {
     public String toString() {
         return "CourseLab{" +
                 "courseLabID=" + courseLabID +
-                ", course=" + course +
+                ", courseID=" + course.getCourseID() +
                 ", lab=" + lab +
                 ", date=" + date +
                 '}';

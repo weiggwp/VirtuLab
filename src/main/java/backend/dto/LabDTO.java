@@ -1,6 +1,5 @@
 package backend.dto;
 
-import backend.model.Step;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +23,8 @@ public class LabDTO {
     @JsonProperty("email")
     private String email;
 
+    private Date date;
+
     public String getDescription() {
         return description;
     }
@@ -40,13 +41,7 @@ public class LabDTO {
         this.tags = tags;
     }
 
-    public boolean isPublic() {
-        return isPublic;
-    }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
-    }
 
     public String getEmail() {
         return email;
@@ -56,6 +51,13 @@ public class LabDTO {
         this.email = email;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     @JsonProperty("tags")
     private ArrayList<String> tags;
@@ -72,9 +74,16 @@ public class LabDTO {
     @NotNull
     @NotEmpty
     private List<StepDTO> steps;
-    @JsonProperty("is_public")
-    private boolean isPublic;
+    @JsonProperty("open")
+    private int open;
 
+    public int getOpen() {
+        return open;
+    }
+
+    public void setOpen(int open) {
+        this.open = open;
+    }
 
     public long getLabID() {
         return labID;
@@ -138,7 +147,7 @@ public class LabDTO {
                 ", lastModified=" + lastModified +
                 ", creator='" + creator + '\'' +
                 ", steps=" + steps +
-                ", isPublic=" + isPublic +
+                ", isPublic=" + open +
                 '}';
     }
 }

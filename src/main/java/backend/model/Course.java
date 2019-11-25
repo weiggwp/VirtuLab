@@ -175,7 +175,7 @@ public class Course {
                 ", courseNumber='" + courseNumber + '\'' +
                 ", courseEnrollment=" + courseEnrollment +
                 ", accessCode='" + accessCode + '\'' +
-                ", courseLabList=" + courseLabList +
+            //    ", courseLabList=" + courseLabList +
                 ", labs=" + labs +
                 ", userCourseList=" + userCourseList +
                 '}';

@@ -22,10 +22,12 @@ public class CourseDTO {
     private String courseDescription;
     @JsonProperty("code")
     private String code;
-    @JsonProperty("labs")
+
     private List<Lab> labs = new ArrayList<Lab>();
     @JsonProperty("date")
     private Date date;
+    @JsonProperty("labDTOS")
+    private List<LabDTO> labDTOS = new ArrayList<>();
     public String getEmail() {
         return email;
     }
@@ -42,7 +44,7 @@ public class CourseDTO {
         this.date = date;
     }
 
-    //    private int courseEnrollment;
+//    private int courseEnrollment;
     public List<Lab> getLabs(){
         return labs;
     }
@@ -94,6 +96,14 @@ public class CourseDTO {
         this.labs = labs;
     }
 
+    public List<LabDTO> getLabDTOS() {
+        return labDTOS;
+    }
+
+    public void setLabDTOS(List<LabDTO> labDTOS) {
+        this.labDTOS = labDTOS;
+    }
+
     //    public int getCourseEnrollment() {
 //        return courseEnrollment;
 //    }
@@ -113,6 +123,7 @@ public class CourseDTO {
                 ", courseDescription='" + courseDescription + '\'' +
                 ", code='" + code + '\'' +
                 ", labs=" + labs +
+                ", date=" +date.toString() +
                 '}';
     }
 }

@@ -80,7 +80,7 @@ class instructor_home extends React.Component {
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].course_name, classID:0,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].code};
+                        clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
 
                 //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }

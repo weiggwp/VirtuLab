@@ -146,7 +146,7 @@ class instructor_labs extends React.Component {
             redirectLabPublic: true
         })
     }
-<<<<<<< HEAD
+
     handleAssignLab(lab){
         this.setState({redirectAssign:true});
         this.redirectPublish = {
@@ -154,7 +154,7 @@ class instructor_labs extends React.Component {
 
         }
     }
-=======
+
 
     handleDeleteLab(lab) {
 
@@ -185,7 +185,17 @@ class instructor_labs extends React.Component {
             );
     }
 
->>>>>>> b478ca7bd78682c74176e18a064a171b836da924
+
+
+    handleAssignLab(lab){
+        this.setState({redirectAssign:true});
+        this.redirectPublish = {
+            id: lab.labID,
+
+        }
+    }
+
+
     handleCreateLab = () => {
         this.setState({
             redirectLabCreation: true
@@ -450,11 +460,8 @@ class instructor_labs extends React.Component {
                                                 <Dropdown.Item class={"dropdown-item"}
                                                                onClick = {() => this.handleDeleteLab(lab)}
                                                                eventKey="5">Delete</Dropdown.Item>
-<<<<<<< HEAD
-                                                <Dropdown.Item onClick=
-                                                                   {() => this.handleAssignLab(lab)}class={"dropdown-item"}
-                                                               eventKey="6">Assign</Dropdown.Item>
-=======
+
+
 
                                                 <Dropdown class={"dropdown-item"}
                                                                eventKey="5">Assign {classes.map(classItem => (
@@ -467,7 +474,14 @@ class instructor_labs extends React.Component {
                                                 ))}
 
                                                 </Dropdown>
->>>>>>> b478ca7bd78682c74176e18a064a171b836da924
+
+
+
+                                                <Dropdown.Item onClick=
+                                                                   {() => this.handleAssignLab(lab)}class={"dropdown-item"}
+                                                               eventKey="6">Assign</Dropdown.Item>
+
+
                                                 {/*<Dropdown.Divider />*/}
 
                                             </Dropdown.Menu>

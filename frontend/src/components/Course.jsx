@@ -37,6 +37,7 @@ class Course extends React.Component {
     render()
     {
         console.log(this.props.class);
+        console.log("props is "+JSON.stringify(this.props.class))
         const imageName = this.getImageName();
         return(
             <Card style={{borderWidth:2,borderColor:"black"}} >
@@ -63,7 +64,8 @@ class Course extends React.Component {
                     <Card.Body >
                         {this.props.class.labs.map(classItem => (
                             <Lab role={this.props.role}courseID={this.props.courseID}
-                                 labID={classItem.labID}style={this.props.style} labname={classItem.name}
+                                 labID={classItem.labID}style={this.props.style} lab_name={classItem.lab_name}
+                                 due_date={classItem.date}
                                     />
 
 

@@ -2,6 +2,7 @@ package backend.controller;
 
 
 import backend.dto.CourseDTO;
+import backend.dto.LabDTO;
 import backend.dto.UserDTO;
 import backend.model.*;
 import backend.repository.UserRepository;
@@ -147,8 +148,10 @@ public class CourseController {
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {
+
             CourseDTO dto = new CourseDTO();
             Course course = userCourse.getCourse();
+            System.out.println("this course is "+course);
             dto.setCode(course.getAccessCode());
             dto.setCourseName(course.getCourseName());
             dto.setCourseID(course.getCourseID());
@@ -157,15 +160,25 @@ public class CourseController {
        //     System.out.println(course);
             list.add(course);
 
-            List<Lab> labs = new ArrayList<>();
+            List<LabDTO> labs = new ArrayList<>();
             for (CourseLab courseLab: course.getCourseLabList()) {
-                labs.add(courseLab.getLab());
+
+                Lab lab = courseLab.getLab();
+                System.out.println(lab);
+                LabDTO labDTO = new LabDTO();
+                labDTO.setDate(courseLab.getDate());
+                labDTO.setName(lab.getName());
+                labDTO.setCreator(lab.getCreator());
+                labDTO.setDescription(lab.getDescription());
+                labDTO.setLabID(lab.getLabID());
+                labs.add(labDTO);
             }
-            dto.setLabs(labs);
+
+            dto.setLabDTOS(labs);
             courseDTOList.add(dto);
         }
       //  System.out.println("returning ok");
-
+        System.out.println("LEAVING GET COURSES");
         return new ResponseEntity(courseDTOList, HttpStatus.OK);
 //        map.put("msg", SUCCESS);
 //        map.put("list", list);
@@ -320,10 +333,10 @@ public class CourseController {
     public ResponseEntity setDate(@RequestBody CourseDTO courseDTO) {
         System.out.println("CourseController set date for a lab: ");
         // send the lab you want to send the date in a list
-        long labID = courseDTO.getLabs().get(0).getLabID();
-
+        long labID = courseDTO.getLabDTOS().get(0).getLabID();
+        System.out.println("course dto is "+courseDTO + " date is " +courseDTO.getDate().toString());
         long courseID = courseDTO.getCourseID();
-        Optional<Course> optional = courseService.findCourseById(courseID);
+        Optional<Course> optional = courseService.findCourseByNameOrCode(courseDTO.getCode(),0);
         if (optional.isPresent()) {
 
             Course course = optional.get();

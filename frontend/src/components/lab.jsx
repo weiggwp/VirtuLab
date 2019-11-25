@@ -45,42 +45,49 @@ class Lab extends React.Component
 
     }
     render() {
-        if (this.state.renderLab){
+        console.log("props LAB is " + JSON.stringify(this.props))
+        if (this.state.renderLab) {
             this.getDueDate();
-            this.setState({renderLab:false})
+            this.setState({renderLab: false})
             return null;
+        } else if (this.state.renderStudent) {
+
+        } else if (this.state.renderInstructor) {
+            //  alert("classes are " +this.props.courseID)
+            return <Redirect exact to={{
+                pathname: '/view_lab_course',
+                state: {
+                    labID: this.props.labID,
+                    courseID: this.props.courseID,
+                },
+            }}/>;
+
+        } else {
         }
-        else if (this.state.renderStudent){
+        let date ="";
+        if (this.props.due_date==null||this.props.due_date==undefined) {
 
         }
-        else if (this.state.renderInstructor){
-          //  alert("classes are " +this.props.courseID)
-                return <Redirect exact to={{
-                    pathname: '/view_lab_course',
-                    state: {
-                        labID:this.props.labID,
-                        courseID:this.props.courseID,
-                    },
-                }}/>;
-
+        else {
+            console.log("date is " +this.props.due_date)
+            date =   this.props.due_date.substring(0,10)
         }
-        else
-        return(
+        return (
 
-            <div onClick={this.onClick} style={{ border: '5px solid gray', borderBottomColor: 'black' }}>
-                <Navbar  className={"justify-content-between"}>
-                    <Nav >
+            <div onClick={this.onClick} style={{border: '5px solid gray', borderBottomColor: 'black'}}>
+                <Navbar className={"justify-content-between"}>
+                    <Nav>
 
 
-                        <label className={this.props.style}>{this.props.labname}</label>
+                        <label className={this.props.style}>{this.props.lab_name}</label>
 
                     </Nav>
 
 
                     <Nav className={"ml-auto"}>
-                        <label className={this.props.style} style={{color:"red",marginBottom:0}}>Due: {this.state.due}</label>
+                        <label className={this.props.style} style={{marginBottom: 0}}>Due: {date}</label>
 
-                        <Image  className={"config_image"}  src={check['incomplete']} rounded />
+                        <Image className={"config_image"} src={check['incomplete']} rounded/>
 
                     </Nav>
 
@@ -88,6 +95,7 @@ class Lab extends React.Component
             </div>
         );
     }
+
 }
 
 export {Lab};

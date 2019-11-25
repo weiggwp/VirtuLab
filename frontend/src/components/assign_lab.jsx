@@ -56,8 +56,8 @@ export class assign_lab extends Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
+                    classArray[i]={classname:response.data[i].course_name,classID:response.data[i].course_id,
+                        clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
 
                        console.log("response is " +JSON.stringify(response.data[i]))
                 }
@@ -127,7 +127,8 @@ export class assign_lab extends Component {
         const course= {
             email:this.props.email,
             course_number: this.state.course_code,
-            labs: labs
+            labs: labs,
+            date:this.state.due_date,
         };
        let axiosConfig = {
             headers: {

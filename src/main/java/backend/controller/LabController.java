@@ -92,7 +92,7 @@ public class LabController {
           //  System.out.println("lab is "+labDTO);
             Lab lab = modelMapper.map(labDTO, Lab.class);
             lab.setSteps(steps);
-
+            lab.setOpen(0);
             returnid = labService.createNewLab(lab);
           //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
             //System.out.println("return id is "+returnid);
@@ -268,8 +268,9 @@ public class LabController {
     @RequestMapping(value = "/add_lab_class", method = RequestMethod.POST)
     public ResponseEntity addLabToClass(@RequestBody CourseDTO courseDTO) {
         try {
+            System.out.println("CALLING ADD LAB CLASS");
             System.out.println("course dto is "+courseDTO);
-
+            courseDTO.setCode(courseDTO.getCourseNumber());
 
 //            Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
 //            Course course = optcourse.get();
@@ -294,18 +295,25 @@ public class LabController {
                 Lab lab = courseDTO.getLabs().get(0);
 
                 // Todo: check if lab is already in the course
-
+                for (CourseLab courseLab: course.getCourseLabList()) {
+                    if (courseLab.getLab().getLabID() == lab.getLabID()) {
+                        return new ResponseEntity(HttpStatus.NOT_FOUND);
+                    }
+                }
                 CourseLab courseLab = new CourseLab();
                 courseLab.setCourse(course);
                 courseLab.setLab(lab);
+                courseLab.setDate(courseDTO.getDate());
                 System.out.println(courseLab);
                 course.getCourseLabList().add(courseLab);
                 lab.getCourseLabList().add(courseLab);
 //                courseLabService.saveOrUpdate(courseLab);
                 courseService.addCourse(course);
+                System.out.println("LEAVING ADD LAB CLASS");
                 return new ResponseEntity(HttpStatus.OK);
-            }
 
+            }
+            System.out.println("LEAVING ADD LAB CLASS");
             return new ResponseEntity(HttpStatus.OK);
 
         }

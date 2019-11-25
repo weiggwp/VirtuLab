@@ -38,8 +38,10 @@ class view_lab_course extends React.Component
         e.preventDefault();
         console.log(this.state.due_date)
 
+
     }
     handleChangeDate= (e) =>{
+        alert("date is "+this.state.due_date)
         e.preventDefault();
         let labs =[];
         const lab = {
@@ -47,9 +49,10 @@ class view_lab_course extends React.Component
         }
         labs[0]=lab
         const course= {
-            email:this.props.email,
-            course_number: this.props.location.state.courseID,
-            labs: labs
+
+            code: this.props.location.state.courseID,
+            labDTOS:labs,
+            date:this.state.due_date,
         };
         let axiosConfig = {
             headers: {
@@ -58,7 +61,7 @@ class view_lab_course extends React.Component
 
             }
         };
-        axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'set_date', course, axiosConfig)
             .then((response) => {
                 this.setState({
                     redirect: true
@@ -152,7 +155,7 @@ render() {
 
                 <div>
                     <div>
-                        <form onSubmit={this.handleChangeDueDate}>
+                        <form onSubmit={this.handleChangeDate}>
                         <FormGroup controlId="formBasicText" bsSize="large">
 
                         <DatePicker
