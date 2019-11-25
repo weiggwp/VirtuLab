@@ -23,7 +23,7 @@ class view_lab_course extends React.Component
             classes : props.classes,
             loaded: false,
             students:[],
-            due_date: new Date(),
+            due_date: "",
         }
 
     }
@@ -80,6 +80,7 @@ class view_lab_course extends React.Component
 
 
     getStudents(){
+        console.log()
         let labs =[];
         const lab = {
             labID:this.props.location.state.labID
@@ -99,7 +100,7 @@ class view_lab_course extends React.Component
         };
 
         var studentList=[];
-
+        console.log("state is "+JSON.stringify(this.props.location.state))
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_students', course, axiosConfig)
@@ -109,9 +110,15 @@ class view_lab_course extends React.Component
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
                     completed:"N/A"};
                 }
+                let date =new Date(this.props.location.state.due_date);
+                console.log("date is " +date)
+
+             //   date.setDate(date.getDate()-1);
+                console.log("date is " +date)
                 this.setState({
                    loaded: true,
-                    students:studentList
+                    students:studentList,
+                    due_date: date,
                 })
 
                 this.render()

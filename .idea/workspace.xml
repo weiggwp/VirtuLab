@@ -27,7 +27,6 @@
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/CourseDTO.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -229,7 +228,7 @@
       <workItem from="1573624391822" duration="8609000" />
       <workItem from="1573673679694" duration="5361000" />
       <workItem from="1573869121635" duration="521000" />
-      <workItem from="1574644853039" duration="8109000" />
+      <workItem from="1574644853039" duration="9021000" />
     </task>
     <servers />
   </component>

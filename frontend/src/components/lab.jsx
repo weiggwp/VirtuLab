@@ -58,6 +58,7 @@ class Lab extends React.Component
                 pathname: '/view_lab_course',
                 state: {
                     labID: this.props.labID,
+                    due_date:this.props.due_date,
                     courseID: this.props.courseID,
                 },
             }}/>;
