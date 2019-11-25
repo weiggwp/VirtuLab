@@ -111,7 +111,7 @@ export class account_settings extends Component {
             .then((response) => {
                 // console.log("resp is " +response.json())
 
-                // console.log("dat is " + JSON.stringify(response));
+                 console.log("dat is " + JSON.stringify(response));
                 // console.log("resp is " +response.data[0].courseID);
                 // console.log("resp is " +response.data[0].courseName);
 
@@ -122,7 +122,7 @@ export class account_settings extends Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
+                    classArray[i]={classname:response.data[i].course_name,classID:response.data[i].course_id,
                         clicked:false};
 
                 }

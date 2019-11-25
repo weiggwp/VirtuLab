@@ -21,13 +21,15 @@ class Droppable_course extends React.Component
 
 
     handleDropCourse = (e) => {
-        alert(this.props.email)
+
 
         const course = {
             code: this.state.code,
             course_id: e.id,
             email: this.props.email
         };
+        console.log("course is "+ JSON.stringify(course))
+        alert(this.props.email)
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -63,7 +65,7 @@ class Droppable_course extends React.Component
     {
         let style = this.props.style;
         let classes = this.props.classes;
-        console.log("classes is " + JSON.stringify(classes[0]));
+        console.log("classes is " + JSON.stringify(classes));
         console.log("classes is " +classes+",len is "+classes.length);
 
             return (
