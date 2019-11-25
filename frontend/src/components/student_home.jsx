@@ -57,11 +57,11 @@ class student_home extends React.Component
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-
+                console.log("resp is "+JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                    classArray[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
                         clicked:false,labs:response.data[i].labs};
 
                 }

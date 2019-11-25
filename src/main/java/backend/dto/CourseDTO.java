@@ -123,7 +123,7 @@ public class CourseDTO {
                 ", courseDescription='" + courseDescription + '\'' +
                 ", code='" + code + '\'' +
                 ", labs=" + labs +
-                ", date=" +date.toString() +
+                ", date=" +(date==null?"N/A":date.toString()) +
                 '}';
     }
 }
