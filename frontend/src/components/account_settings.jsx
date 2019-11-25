@@ -122,7 +122,7 @@ export class account_settings extends Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
+                    classArray[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
                         clicked:false};
 
                 }
