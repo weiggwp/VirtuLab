@@ -62,7 +62,7 @@ class Course extends React.Component {
                 <Accordion.Collapse style={{backgroundColor:"lightblue",borderWidth:2}} eventKey={this.props.fcount}>
                     <Card.Body >
                         {this.props.class.labs.map(classItem => (
-                            <Lab  style={this.props.style} labname={classItem.name}/>
+                            <Lab role={this.props.role}courseID={this.props.courseID} labID={classItem.labID}style={this.props.style} labname={classItem.name}/>
 
 
 

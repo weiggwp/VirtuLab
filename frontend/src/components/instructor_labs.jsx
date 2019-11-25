@@ -46,6 +46,7 @@ class instructor_labs extends React.Component {
             redirectCourse: false,
             redirectLab: false,
             redirectPublish:false,
+            redirectAssign:false,
             classes:[],
             labs:[],
             loading_labs:true,
@@ -93,36 +94,6 @@ class instructor_labs extends React.Component {
     }
 
 
-    handleAddClass(classcode,lab){
-        var lablist = [];
-        lablist[0]=lab;
-        console.log("classcode is "+classcode+" lab is " +lab)
-        const course= {
-            course_number: classcode,
-            labs: lablist
-        };
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-
-            }
-        };
-        var classArr=[];
-        var classArray=[];
-
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
-            .then((response) => {
-
-
-            })
-            .catch((error) => {
-                    console.log("doot" + error)
-                }
-            );
-}
     updateClasses(){
         const user = {
             email: this.props.email
@@ -176,6 +147,7 @@ class instructor_labs extends React.Component {
         })
     }
 
+
     handleDeleteLab(lab) {
 
         let labToDel = {
@@ -203,6 +175,15 @@ class instructor_labs extends React.Component {
                     //  console.log("doot" + error)
                 }
             );
+    }
+
+
+    handleAssignLab(lab){
+        this.setState({redirectAssign:true});
+        this.redirectPublish = {
+            id: lab.labID,
+
+        }
     }
 
     handleCreateLab = () => {
@@ -275,6 +256,15 @@ class instructor_labs extends React.Component {
         if (this.state.redirectAcct) {
             return <Redirect to='/account_settings'/>
         }
+        else if (this.state.redirectAssign){
+            return <Redirect exact to={{
+                pathname: '/assign_lab',
+                state: {
+                    id:this.redirectPublish.id,
+                    courses:this.state.classes
+                },
+            }}/>;
+        }
         else if (this.state.redirectLabCreation){
             return <Redirect exact to={{
                 pathname: '/create_lab',
@@ -290,6 +280,7 @@ class instructor_labs extends React.Component {
                 pathname: '/publish_lab',
             }}/>;
         }
+
     };
     setRedirectLab = () => {
         this.setState({
@@ -460,6 +451,7 @@ class instructor_labs extends React.Component {
                                                                onClick = {() => this.handleDeleteLab(lab)}
                                                                eventKey="5">Delete</Dropdown.Item>
 
+
                                                 <Dropdown class={"dropdown-item"}
                                                                eventKey="5">Assign {classes.map(classItem => (
 
@@ -471,6 +463,11 @@ class instructor_labs extends React.Component {
                                                 ))}
 
                                                 </Dropdown>
+
+                                                <Dropdown.Item onClick=
+                                                                   {() => this.handleAssignLab(lab)}class={"dropdown-item"}
+                                                               eventKey="6">Assign</Dropdown.Item>
+
                                                 {/*<Dropdown.Divider />*/}
 
                                             </Dropdown.Menu>

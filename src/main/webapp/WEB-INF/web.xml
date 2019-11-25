@@ -1,0 +1,23 @@
+<web-app><context-param>
+    <param-name>host</param-name>
+    <param-value>smtp.gmail.com</param-value>
+</context-param>
+
+<context-param>
+    <param-name>port</param-name>
+    <param-value>587</param-value>
+</context-param>
+
+<context-param>
+    <param-name>email</param-name>
+    <param-value>virtulabsbu@gmail.com</param-value>
+</context-param>
+<context-param>
+    <param-name>name</param-name>
+    <param-value>Evan Rubinovitz</param-value>
+</context-param>
+<context-param>
+    <param-name>pass</param-name>
+    <param-value>Phantom41!</param-value>
+</context-param>
+</web-app>

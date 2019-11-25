@@ -23,6 +23,7 @@ public class CourseDTO {
     private String code;
     @JsonProperty("labs")
     private List<Lab> labs = new ArrayList<Lab>();
+    private List<LabDTO> labDTOS = new ArrayList<>();
     public String getEmail() {
         return email;
     }
@@ -82,6 +83,14 @@ public class CourseDTO {
 
     public void setLabs(List<Lab> labs) {
         this.labs = labs;
+    }
+
+    public List<LabDTO> getLabDTOS() {
+        return labDTOS;
+    }
+
+    public void setLabDTOS(List<LabDTO> labDTOS) {
+        this.labDTOS = labDTOS;
     }
 
     //    public int getCourseEnrollment() {

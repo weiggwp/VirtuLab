@@ -24,6 +24,8 @@ public class LabDTO {
     @JsonProperty("email")
     private String email;
 
+    private Date date;
+
     public String getDescription() {
         return description;
     }
@@ -56,6 +58,13 @@ public class LabDTO {
         this.email = email;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     @JsonProperty("tags")
     private ArrayList<String> tags;

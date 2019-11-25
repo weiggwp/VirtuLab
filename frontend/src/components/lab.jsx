@@ -22,15 +22,41 @@ class Lab extends React.Component
             labNum :0,
             name : '',
             due : Date,
-
+            isInstructor:false,
+            gottenRole:false,
+            renderStudent:false,
+            renderInstructor:false,
         }
     }
-    onClick(){
-        window.location.href="http://localhost:3001/do_lab";
+    onClick =()=>{
+        console.log(this.props.role +" and "+this.props.labID +" and course is " +this.props.courseID)
+        if (this.props.role=='instructor'){
+            this.setState({renderInstructor:true});
+            this.render()
+        }
+        else{
+            this.setState({renderStudent:true});
+            this.render()
+        }
+        //window.location.href="http://localhost:3001/do_lab";
     }
 
     render() {
+        if (this.state.renderStudent){
 
+        }
+        else if (this.state.renderInstructor){
+          //  alert("classes are " +this.props.courseID)
+                return <Redirect exact to={{
+                    pathname: '/view_lab_course',
+                    state: {
+                        labID:this.props.labID,
+                        courseID:this.props.courseID,
+                    },
+                }}/>;
+
+        }
+        else
         return(
 
             <div onClick={this.onClick} style={{ border: '5px solid gray', borderBottomColor: 'black' }}>

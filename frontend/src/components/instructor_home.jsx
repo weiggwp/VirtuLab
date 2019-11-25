@@ -85,6 +85,7 @@ class instructor_home extends React.Component {
                 //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }
                 this.setState({classes:classArray,loading_course:false});
+                console.log("classes is "+JSON.stringify(this.state.classes))
             })
             .catch((error) => {
                     console.log("doot" + error)
@@ -102,6 +103,7 @@ class instructor_home extends React.Component {
 
         if (this.state.loading_course){
             console.log("loading classes", this.state.classes);
+            console.log("role ios " +this.props.role)
             this.updateClasses();
             return null;
 
@@ -152,7 +154,7 @@ class instructor_home extends React.Component {
                                 </Nav>
                             </Navbar>
                         </div>
-                        {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
+                        {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}role={this.props.role}/>}
 
 
                     </div>
