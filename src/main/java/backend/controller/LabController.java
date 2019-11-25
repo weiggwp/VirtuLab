@@ -200,7 +200,14 @@ public class LabController {
         try {
             System.out.println("lab is "+labDTO);
             Lab lab = labService.findByLabID(labDTO.getLabID());
-
+            System.out.println("lab is "+lab);
+            if (lab.getOpen()==1){
+                lab.setOpen(0);
+                lab.setDescription("");
+                lab.setTags(null);
+                labService.saveLab(lab);
+                return new ResponseEntity(HttpStatus.OK);
+            }
             lab.setOpen(1);
             User user = userService.findByEmail(labDTO.getCreator());
             System.out.println("user is " +user.getFirstName()+user.getLastName());

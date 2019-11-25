@@ -60,7 +60,7 @@ class instructor_labs extends React.Component {
 
     publishMessage(lab){
 
-        if (lab.public ){
+        if (lab.open==1 ){
             return "Un-publish";
         }
         return "Publish";
@@ -219,10 +219,10 @@ class instructor_labs extends React.Component {
         })
     }
     handlePublishLab(lab) {
-        if (lab.public) {
+        if (lab.open==1) {
             const labpub = {
-                labID: lab.labID
-
+                labID: lab.labID,
+                author:this.props.email
             };
 
             let axiosConfig = {
