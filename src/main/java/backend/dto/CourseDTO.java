@@ -80,6 +80,9 @@ public class CourseDTO {
         this.courseID = courseID;
     }
 
+    public void setLabs(List<Lab> labs) {
+        this.labs = labs;
+    }
 
     //    public int getCourseEnrollment() {
 //        return courseEnrollment;

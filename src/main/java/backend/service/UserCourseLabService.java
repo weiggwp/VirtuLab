@@ -20,7 +20,7 @@ public class UserCourseLabService {
     public Optional<UserCourseLab> findAssociation(User user, Course course, Lab lab){
         Optional<UserCourseLab> optional =
                 userCourseLabRepository.
-                        findUserCourseLabByUserAAndCourseAndLab(user, course, lab);
+                        findUserCourseLabByUserAndCourseAndLab(user, course, lab);
         return optional;
     }
 }

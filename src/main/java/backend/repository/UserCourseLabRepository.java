@@ -13,6 +13,5 @@ import java.util.Optional;
 @Repository
 public interface UserCourseLabRepository extends CrudRepository<UserCourseLab, Long> {
 
-
-    Optional<UserCourseLab> findUserCourseLabByUserAAndCourseAndLab(User user, Course course, Lab lab);
+    Optional<UserCourseLab> findUserCourseLabByUserAndCourseAndLab(User user, Course course, Lab lab);
 }

@@ -17,13 +17,14 @@ public class Course {
     private String accessCode = generateAccessCode();
 
 
-
-
     public Course(String courseName, long courseID){
         this.courseID=courseID;
         this.courseName=courseName;
         labs = new ArrayList<Lab>();
     }
+
+    @OneToMany(mappedBy = "course", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<CourseLab> courseLabList = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
@@ -139,8 +140,15 @@ public class Course {
         this.labs = labs;
     }
 
+    public List<CourseLab> getCourseLabList() {
+        return courseLabList;
+    }
 
-//
+    public void setCourseLabList(List<CourseLab> courseLabList) {
+        this.courseLabList = courseLabList;
+    }
+
+    //
 //    public List<User> getStudents() {
 //        return users;
 //    }
@@ -167,6 +175,7 @@ public class Course {
                 ", courseNumber='" + courseNumber + '\'' +
                 ", courseEnrollment=" + courseEnrollment +
                 ", accessCode='" + accessCode + '\'' +
+                ", courseLabList=" + courseLabList +
                 ", labs=" + labs +
                 ", userCourseList=" + userCourseList +
                 '}';

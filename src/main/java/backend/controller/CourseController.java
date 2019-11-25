@@ -3,10 +3,7 @@ package backend.controller;
 
 import backend.dto.CourseDTO;
 import backend.dto.UserDTO;
-import backend.model.Course;
-import backend.model.Lab;
-import backend.model.User;
-import backend.model.UserCourse;
+import backend.model.*;
 import backend.repository.UserRepository;
 import backend.service.CourseService;
 import backend.service.UserCourseService;
@@ -127,16 +124,30 @@ public class CourseController {
 
        // System.out.println("user is "+user);
 
+        List<CourseDTO> courseDTOList = new ArrayList<>();
         List<Course> list = new ArrayList<>();
         if(user.getUserCourseList()!=null)
         for (UserCourse userCourse: user.getUserCourseList()) {
+            CourseDTO dto = new CourseDTO();
             Course course = userCourse.getCourse();
+            dto.setCode(course.getAccessCode());
+            dto.setCourseName(course.getCourseName());
+            dto.setCourseID(course.getCourseID());
+            dto.setCourseNumber(course.getCourseNumber());
+            dto.setCourseDescription(course.getCourseDescription());
        //     System.out.println(course);
             list.add(course);
+
+            List<Lab> labs = new ArrayList<>();
+            for (CourseLab courseLab: course.getCourseLabList()) {
+                labs.add(courseLab.getLab());
+            }
+            dto.setLabs(labs);
+            courseDTOList.add(dto);
         }
       //  System.out.println("returning ok");
 
-        return new ResponseEntity(list, HttpStatus.OK);
+        return new ResponseEntity(courseDTOList, HttpStatus.OK);
 //        map.put("msg", SUCCESS);
 //        map.put("list", list);
 //        return map;
@@ -282,6 +293,33 @@ public class CourseController {
 
         return course;
     }
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/set_date", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity setDate(@RequestBody CourseDTO courseDTO) {
+        System.out.println("CourseController set date for a lab: ");
+        // send the lab you want to send the date in a list
+        long labID = courseDTO.getLabs().get(0).getLabID();
+
+        long courseID = courseDTO.getCourseID();
+        Optional<Course> optional = courseService.findCourseById(courseID);
+        if (optional.isPresent()) {
+
+            Course course = optional.get();
+            for (CourseLab courseLab: course.getCourseLabList()) {
+                if (courseLab.getLab().getLabID() == labID)
+//                    courseLab.setDate(new Date());
+            }
+
+            courseService.addCourse(course);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

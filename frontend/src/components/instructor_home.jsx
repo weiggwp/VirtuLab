@@ -69,6 +69,7 @@ class instructor_home extends React.Component {
             .then((response) => {
 
                 console.log(JSON.stringify(response))
+                console.log(response)
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -78,8 +79,8 @@ class instructor_home extends React.Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:0,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
+                    classArray[i]={classname:response.data[i].course_name, classID:0,
+                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].code};
 
                 //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }

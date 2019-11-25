@@ -9,32 +9,29 @@ public class UserCourseLab {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userCourseLabID;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "courseID")
     private Course course;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "labID")
     private Lab lab;
 
     private int grade;
-    private boolean isComplete;
+    private boolean complete;
     private Date date;
 
 
-    public UserCourseLab(User user, Course course, Lab lab, int grade, boolean isComplete, Date date) {
+    public UserCourseLab(User user, Course course, Lab lab, int grade, boolean complete, Date date) {
         this.user = user;
         this.course = course;
         this.lab = lab;
         this.grade = grade;
-        this.isComplete = isComplete;
+        this.complete = complete;
         this.date = date;
     }
 
@@ -71,11 +68,11 @@ public class UserCourseLab {
     }
 
     public boolean isComplete() {
-        return isComplete;
+        return complete;
     }
 
     public void setComplete(boolean complete) {
-        isComplete = complete;
+        complete = complete;
     }
 
     public Date getDate() {

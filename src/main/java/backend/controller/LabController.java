@@ -3,14 +3,11 @@ package backend.controller;
 
 import backend.dto.*;
 import backend.model.*;
-import backend.service.CourseService;
-import backend.service.StepService;
+import backend.service.*;
 import org.modelmapper.ModelMapper;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import backend.service.LabService;
-import backend.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -40,6 +37,9 @@ public class LabController {
 
     private final String ERRMSG = "fail to add lab";
     private final String SUCCESS = "success";
+
+    @Autowired
+    CourseLabService courseLabService;
 
     @Autowired
     CourseService courseService;
@@ -269,22 +269,47 @@ public class LabController {
     @RequestMapping(value = "/add_lab_class", method = RequestMethod.POST)
     public ResponseEntity addLabToClass(@RequestBody CourseDTO courseDTO) {
         try {
+            System.out.println("LabController: adding a lab to a course");
             System.out.println("course dto is "+courseDTO);
 
 
-            Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
-            Course course = optcourse.get();
-            System.out.println("course found was "+course);
-            Lab lab = courseDTO.getLabs().get(0);
+//            Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
+//            Course course = optcourse.get();
+//            System.out.println("course found was "+course);
+//            Lab lab = courseDTO.getLabs().get(0);
+//
+//            for (int i=0; i<course.getLabs().size(); i++)
+//                if (course.getLabs().get(i).getLabID()==lab.getLabID())
+//                return new ResponseEntity(HttpStatus.NOT_FOUND);
+//
+//            course.addLab(lab);
+//            courseService.addCourse(course);
+//            System.out.println("course dto is "+courseDTO+ " lab is " + lab);
+//            return new ResponseEntity(HttpStatus.OK);
 
-            for (int i=0; i<course.getLabs().size(); i++)
-                if (course.getLabs().get(i).getLabID()==lab.getLabID())
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            long courseID = courseDTO.getCourseID();
+            Optional<Course> optionalCourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
+            if (optionalCourse.isPresent()) {
 
-            course.addLab(lab);
-            courseService.addCourse(course);
-            System.out.println("course dto is "+courseDTO+ " lab is " + lab);
+                Course course = optionalCourse.get();
+                System.out.println(course);
+                Lab lab = courseDTO.getLabs().get(0);
+
+                // Todo: check if lab is already in the course
+
+                CourseLab courseLab = new CourseLab();
+                courseLab.setCourse(course);
+                courseLab.setLab(lab);
+                System.out.println(courseLab);
+                course.getCourseLabList().add(courseLab);
+                lab.getCourseLabList().add(courseLab);
+//                courseLabService.saveOrUpdate(courseLab);
+                courseService.addCourse(course);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+
             return new ResponseEntity(HttpStatus.OK);
+
         }
         catch (Exception e){
             e.printStackTrace();

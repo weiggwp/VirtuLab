@@ -33,6 +33,8 @@ public class Lab {
     private List<Step> steps = new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<CourseLab> courseLabList = new ArrayList<>();
 
 
     @JsonIgnore
@@ -147,6 +149,14 @@ public class Lab {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<CourseLab> getCourseLabList() {
+        return courseLabList;
+    }
+
+    public void setCourseLabList(List<CourseLab> courseLabList) {
+        this.courseLabList = courseLabList;
     }
 
     public int getOpen() {
