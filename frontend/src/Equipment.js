@@ -21,6 +21,8 @@ export default class Equipment {
         this.image=image;
         this.items=[];
         this.disabled = false;
+        this.left = 0;
+        this.top = 0;
     }
 
     setDisabled(j)

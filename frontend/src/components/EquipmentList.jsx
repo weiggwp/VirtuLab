@@ -82,7 +82,6 @@ class EquipmentList extends React.Component
         const opacity= equipment.disabled?"0.3":"1";
         const borderColor= equipment.disabled?"#C5C5C5":"blue";
 
-
         if(!equipment.disabled || this.props.step===0)
         {
             return(

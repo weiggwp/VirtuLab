@@ -57,41 +57,41 @@ export default class EquipmentSet{
     }
     createFlasks()
     {
-        return [new Glassware("Flask",small_flask,250,0,0),
-            new Glassware("Flask",medium_flask,500,0,0),
-            new Glassware("Flask",large_flask,1000,0,0),]
+        return [new Glassware("Titration Flask",small_flask,250,100,0),
+            new Glassware("Titration Flask",medium_flask,500,200,0),
+            new Glassware("Titration Flask",large_flask,1000,400,0),]
     }
     createCylinders()
     {
-        return [new Glassware("Graduated Cylinder",small_cylinder,10,0,0),
-            new Glassware("Graduated Cylinder",medium_cylinder,25,0,0),
-            new Glassware("Graduated Cylinder",large_cylinder,50,0,0),]
+        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0),
+            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0),
+            new Glassware("Graduated Cylinder",large_cylinder,50,130,0),]
     }
     createBeakers()
     {
-        return [new Glassware("Beaker",small_beaker,250,0,0),
-            new Glassware("Beaker",medium_beaker,600,0,0),
-            new Glassware("Beaker",large_beaker,1000,0,0),]
+        return [new Glassware("Beaker",small_beaker,250,100,0),
+            new Glassware("Beaker",medium_beaker,600,200,0),
+            new Glassware("Beaker",large_beaker,1000,400,0),]
     }
     createVolumetricFlasks()
     {
-        return [new Glassware("Volumetric Flask",small_volFlask,100,0,0),
-            new Glassware("Volumetric Flask",medium_volFlask,250,0,0),
-            new Glassware("Volumetric Flask",large_volFlask,1000,0,0),]
+        return [new Glassware("Volumetric Flask",small_volFlask,100,50,0),
+            new Glassware("Volumetric Flask",medium_volFlask,250,125,0),
+            new Glassware("Volumetric Flask",large_volFlask,1000,600,0),]
     }
     createPipettes()
     {
-        return [new Glassware("Pipette",small_pipette,5,0,0),
-            new Glassware("Pipette",medium_pipette,10,0,0),
-            new Glassware("Pipette",large_pipette,25,0,0),]
+        return [new Glassware("Pipette",small_pipette,5,5,0),
+            new Glassware("Pipette",medium_pipette,10,10,0),
+            new Glassware("Pipette",large_pipette,25,25,0),]
     }
 
 
     populateList() {
-        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 0, 1)];
+        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1)];
 
         this.equipmentList['Glassware'] = {
-            'Erlenmeyers': this.createFlasks(),
+            'Titration Flask': this.createFlasks(),
             'Graduated Cylinders': this.createCylinders(),
             'Pipettes': this.createPipettes(),
             'Beakers': this.createBeakers(),

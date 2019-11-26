@@ -8,6 +8,25 @@ export default class Glassware extends Equipment{
         this.capacity=capacity;
         this.state_names= ["empty", "filled", "full"];
 
+
+    }
+    getWeight(){
+        let total = this.weight;
+        for (const [key, item] of Object.entries(this.items)) {
+            // out[key] = obj.output(obj.amount*percentage);
+            console.log("item",item);
+            alert(item);
+            total+=item.getWeight();
+        }
+        // this.items.(function (item) {
+        //     console.log(item.toString());
+        //     alert(item);
+        //     total+=item.getWeight();
+        // });
+        // for(const item in this.items){
+        //     total+=item.getWeight()
+        // }
+        return  total;
     }
     setType(type)
     {
@@ -22,16 +41,16 @@ export default class Glassware extends Equipment{
             itemfound.amount +=item.amount;
         }
         else{
-            // console.log("not exist");
-            // console.log(item);
-            // console.log(this.items);
+            console.log("not exist");
+            console.log(item);
+            console.log(this.items);
 
-            this._items.push(item);
+            this.items.push(item);
         }
     }
     add_items(items){
-        for(var item in items)
-            this.add_item(items);
+        for(const item in items)
+            this.add_item(item);
     }
 
     output(amount){
@@ -70,12 +89,12 @@ export default class Glassware extends Equipment{
     canInteract(target)
     {
         var noHeatTypes=['Volumetric Flask','Pipette','Graduated Cylinder'];
-        if(target instanceof Glassware)
+        if(Glassware.prototype.isPrototypeOf(target) )
         {
             return target.name !== 'Pipette';
         }
         if(target.name==="Scale")
-            return true
+            return true;
         if(target.name==="Bunsun Burner")
         {
             return !(this.name in noHeatTypes);
@@ -88,13 +107,14 @@ export default class Glassware extends Equipment{
     getActions(target)
     {
         var actions = [];
-        if(target instanceof Glassware)
+        if(Glassware.prototype.isPrototypeOf(target) )
         {
             if(this.name==='Pipette')
             {
-                actions.push('withdraw',this.withdraw)
+                actions.push(this.withdraw.name)
             }
-            actions.push('pour',this.pour)
+            actions.push(this.pour.name);
+            return actions;
         }
 
         return null;
@@ -104,13 +124,15 @@ export default class Glassware extends Equipment{
         if(amount+target.amount>=target.capacity)
         {
             //cannot pour anymore
-            console.log("pouring more than enough")
+            console.log("pouring more than enough");
         }
         else
         {
-            target.add_items(this.output(amount))
+            target.add_items(this.output(amount));
             target.amount+=amount;
             //also need to account for total volume
+            alert("Poured "+amount+" ml from "+this.name + " into " + target.name);
+
         }
 
     }
@@ -118,13 +140,16 @@ export default class Glassware extends Equipment{
     withdraw(target,amount)
     {
         target.pour(this,amount);
+        alert("withdrew "+amount+" ml from "+target.name + " into " + this.name);
+
 
     }
     interact(target)
     {
         if(target.name==="Scale")
         {
-            target.value=this.weight;
+            target.value=this.getWeight();
+            alert(this.name +" is "+ target.value +"g.");
         }
         else
         {
