@@ -10,7 +10,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" afterDir="false" />
@@ -27,7 +26,6 @@
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/LabController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/LabController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -229,7 +227,7 @@
       <workItem from="1573624391822" duration="8609000" />
       <workItem from="1573673679694" duration="5361000" />
       <workItem from="1573869121635" duration="521000" />
-      <workItem from="1574644853039" duration="12510000" />
+      <workItem from="1574644853039" duration="13123000" />
     </task>
     <servers />
   </component>
