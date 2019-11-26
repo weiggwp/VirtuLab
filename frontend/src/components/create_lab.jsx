@@ -27,6 +27,8 @@ import Step from "../Step.js";
 import {Slides} from "./Slides";
 import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
+import EquipmentSet from "../EquipmentSet.js";
+
 import axios from "axios";
 import GLOBALS from "../Globals";
 import Draggable from 'react-draggable';
@@ -39,10 +41,11 @@ import Workspace from "../Workspace"
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
-
         this.steps = [new Step(0)];
+        this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
+
         this.state = {
             showPopover: false,
             redirectHome: false,
@@ -115,13 +118,14 @@ class create_lab extends React.Component {
 
     setRestart = (step_id) => {
 
+        const temp = this.state.steps;
+        temp[step_id].workspace= new Workspace();
         this.setState({
             restart: true,      //should probably just be restarting a single step
+            steps: temp,
             equipments:{},
 
         });
-
-        this.state.steps[step_id].workspace= new Workspace();
     };
 
 
@@ -225,8 +229,9 @@ class create_lab extends React.Component {
 
     instruction(index)
     {
+        //,width: '20rem' for div
         return(
-            <div style={{padding: 10,width: '20rem',height:'30vh'}}>
+            <div style={{padding: 10,height:'30vh'}}>
 
                 <textarea
                     style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
@@ -244,7 +249,7 @@ class create_lab extends React.Component {
     {
         return(
             <div style={{ paddingTop:10,paddingLeft:3}}>
-                <Card style={{ width: '20rem',height:'30vh'}}>
+                <Card style={{ height:'30vh'}}>
                     <Card.Header>STEP {step}:</Card.Header>
                     <Card.Body style={{overflowY: "scroll",height:"3vh"}}>
                         <Card.Text style={{textAlign:"left"}}>
@@ -269,7 +274,7 @@ class create_lab extends React.Component {
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
-            <EquipmentList handleAddEquipment={this.handleAddEquipment}/>
+            <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
             "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
@@ -277,7 +282,7 @@ class create_lab extends React.Component {
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList step={i} handleAddEquipment={this.handleAddEquipment}/>
+                <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
                 instruction for step {i} {this.instruction(i)}</Tab.Pane>);
             }
@@ -295,9 +300,17 @@ class create_lab extends React.Component {
     interation_handler(target, workspace_id1,eq_id1,workspace_id2,eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
+        // const interatable = eq1.canInteract(eq2);
+
+        // eq1.interact(eq2);
+
         this.eq1 = eq1;
+        this.eq2 = eq2;
+
+        console.log(eq1);
         this.target = target;
         this.setState({showPopover:!this.state.showPopover});
+
     }
 
     handle_equip_delete(e,data){
@@ -340,6 +353,66 @@ class create_lab extends React.Component {
 
     }
 
+    popover(){
+        const source = this.eq1;
+        const target = this.eq2;
+
+        let source_name = null;
+        let target_name = null;
+        if(source !== undefined){
+            source_name=source.name;
+        }
+        if(target !== undefined){
+            target_name=target.name;
+        }
+
+        return(
+        <Overlay
+            show={this.state.showPopover}
+            target={this.target}
+            placement="bottom"
+            container={this.ref.current}
+            containerPadding={20}
+            rootClose={true}
+            onHide={() => this.setState({ showPopover: false })}
+            style={{width:400}}
+        >
+            <Popover id="popover-contained" >
+                <Popover.Title >From <strong>{source_name}</strong> to <strong>{target_name}</strong></Popover.Title>
+                <Popover.Content>
+
+                        <div className="arrowBox">
+                            <form className="form-inline" role="form">
+
+                                <div className="form-group form-inline">
+                                    <input id="transferAmountInput" type="number"
+                                           className="form-control transferAmount input-sm" placeholder="Volume (mL)"//FIXME: placeholder
+                                           style={{width:150}} min="0"/>
+                                </div>
+
+                                <div  style={{height:38}}>
+
+                                    <Button variant="primary" size={'sm'} >Withdraw</Button>
+                                    <Button variant="primary" size={'sm'}>Pour</Button>
+
+                                    {/*<button type="button" id="withdrawButton" className="btn btn-xs"*/}
+                                    {/*        style={{display:null,margin:1,}}>Withdraw </button>*/}
+                                    {/*<button type="button" id="transferButton" className="btn btn-sm transferButton"*/}
+                                    {/*        style={{margin:1}}>Pour </button>*/}
+                                </div>
+                                <br/>
+                                    {/*<span className="transferVessels" style="color:white">From Distilled H<sub>2</sub>O to 250 mL Flask</span>*/}
+                                    {/*<span id="transferInputWarning" className="inputWarning"*/}
+                                    {/*      style="display:none;"></span>*/}
+                                    {/*<span id="transferFeedback" className="transferFeedback"*/}
+                                    {/*      style="display:none;color:white"></span>*/}
+                            </form>
+                        </div>
+                </Popover.Content>
+            </Popover>
+        </Overlay>
+        )
+    }
     workspacePane(){
         const workspaces = [];
 
@@ -362,27 +435,14 @@ class create_lab extends React.Component {
                         <Draggable_equipment wkspace_id={i} equip_id={index}
                                              interation_handler= {this.interation_handler}
                                              handle_equip_delete={this.handle_equip_delete}
-                                             image={equipment}
-                                             left={50} top={10} width={200} height={200}/>
+                                             equipment={equipment}
+                                              width={200} height={200}/>
 
                     ))
                     }
-                    <Overlay
-                        show={this.state.showPopover}
-                        target={this.target}
-                        placement="bottom"
-                        container={this.ref.current}
-                        containerPadding={20}
-                        rootClose={true}
-                        onHide={() => this.setState({ showPopover: false })}
-                    >
-                        <Popover id="popover-contained">
-                            <Popover.Title as="h3">Interaction</Popover.Title>
-                            <Popover.Content>
-                                input: {this.eq1}
-                            </Popover.Content>
-                        </Popover>
-                    </Overlay>
+
+                    {this.popover()}
+
 
                     <ToastsContainer store={ToastsStore}/>
                 </div>
@@ -397,8 +457,11 @@ class create_lab extends React.Component {
     }
 
     handleAddChild = () => {
+        // adding a new step
         this.state.steps.push(new Step(this.state.steps.length,""));
         var temp = this.state.equipments;
+
+        //right now temp is filled with image sources of equipments
         temp[this.state.step_num+1]=temp[this.state.step_num].slice();
         this.setState({
             //add a new step to steps[]
@@ -417,9 +480,23 @@ class create_lab extends React.Component {
         });
         // alert(this.state.step_num);
     };
-    handleAddEquipment= (step,image) =>
+    handleSelectEquipment=(equipment)=>
     {
+        equipment.disabled = !equipment.disabled;
+        alert(equipment.name+" "+equipment.disabled)
 
+
+    };
+
+    handleAddEquipment= (step,equipment) =>
+    {
+        if(step===0)
+        {
+            this.forceUpdate();
+            return
+        }
+
+        // var image = equipment;
 
         const current = this.state.equipments;
         if(current[step].length>=10)
@@ -428,10 +505,8 @@ class create_lab extends React.Component {
         }
         else
         {
-            current[step].push(image);
+            current[step].push(equipment);
             //            <Draggable_equipment image={image} x={500} y={100} width={this.state.equipments.length*100} height={this.state.equipments.length*100}/>
-
-
 
             this.setState(
                 {
@@ -441,9 +516,6 @@ class create_lab extends React.Component {
                 }
             )
         }
-
-
-
     };
 
 

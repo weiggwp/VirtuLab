@@ -89,6 +89,9 @@ class Draggable_equipment extends React.Component{
                  this.props.wkspace_id,this.props.equip_id,
                  );
          }
+         else{
+             move_element(ev);
+         }
 
          ev.target.style.border="";
          ev.target.style.opacity = '1.0';
@@ -116,8 +119,8 @@ class Draggable_equipment extends React.Component{
                  onDragOver={this.dragover_handler}
                  onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
                  onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
-                 src={this.props.image}
-                 style={{position:"absolute",left:this.props.left,top:this.props.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}
+                 src={this.props.equipment.image}
+                 style={{position:"absolute",left:this.props.equipment.left,top:this.props.equipment.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}
                  alt={"Not Found"}/>
             </ContextMenuTrigger>
 

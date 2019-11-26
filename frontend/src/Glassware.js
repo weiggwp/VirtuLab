@@ -56,7 +56,7 @@ export default class Glassware extends Equipment{
     }
     toString()
     {
-        return this._capacity+" ml "+this._name;
+        return this._capacity+" mL "+this._name;
     }
 
 }

@@ -125,8 +125,17 @@
 }
 
 /* Clear floats after the columns */
-.row:after {
+.row1:after {
     content: "";
     display: table;
     clear: both;
+}
+.row1 {
+
+
+    display: flex;
+
+    flex-wrap: wrap;
+    margin-right: -15px;
+
 }
