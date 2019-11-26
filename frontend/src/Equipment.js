@@ -2,7 +2,16 @@
 // Initializing a class definition
 
 
+import Glassware from "./Glassware";
+
 export default class Equipment {
+    get temperature() {
+        return this._temperature;
+    }
+
+    set temperature(value) {
+        this._temperature = value;
+    }
     get disabled() {
         return this._disabled;
     }
@@ -20,11 +29,13 @@ export default class Equipment {
         this._amount=0;
         this.unit="";
         this._capacity=0;
+        this._temperature=15;
         this._state=state;
         this._image=image;
         this._items=[];
         this._disabled = false;
     }
+
 
 
     get name() {
@@ -113,6 +124,14 @@ export default class Equipment {
     {
         return this._name;
     }
+
+
+    canInteract(target)
+    {
+        return false;
+
+    }
+
 
 }
 
