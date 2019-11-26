@@ -13,11 +13,12 @@ export default class Element extends Equipment{
         this.state_names= ["solid", "liquid", "gas"];
 
     }
-
+    getWeight(){
+        return this.weight * this.amount
+    }
     output(amount){
         // let amount = opt["amount"];
         const clone = JSON.parse(JSON.stringify(this));
-        console.log(clone);
 
         if(amount<=0){
             amount=0;
@@ -25,7 +26,7 @@ export default class Element extends Equipment{
         else if(amount>=this.amount){
             amount = this.amount;
         }
-        clone.amount=amount;
+        clone._amount=amount;
         this._amount-=amount;
         return clone;
     }
@@ -54,9 +55,8 @@ export default class Element extends Equipment{
     }
     pour(target,amount,callback=null)
     {
-
         target.add_item(this.output(amount));
-        console.log(this);
+        console.log("target");
         console.log(target);
         // if(!callback){
         //     callback("Poured "+amount+" ml of "+this.name + " into " + target.name);

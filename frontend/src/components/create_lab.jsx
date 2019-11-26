@@ -308,17 +308,22 @@ class create_lab extends React.Component {
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
         return eq1.canInteract(eq2);
     }
-    interaction_handler(target, workspace_id1, eq_id1, workspace_id2, eq_id2){
-        const eq1 = this.state.equipments[workspace_id1][eq_id1];
-        const eq2 = this.state.equipments[workspace_id2][eq_id2];
-        const interactable = eq1.canInteract(eq2);
+    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2){
+        const source = this.state.equipments[workspace_id1][eq_id1];
+        const target = this.state.equipments[workspace_id2][eq_id2];
+        const interactable = source.canInteract(target);
 
         if(interactable){
-            this.eq1 = eq1;
-            this.eq2 = eq2;
-            this.actions = eq1.getActions(eq2);
-            this.target = target;
-            this.setState({showPopover:true});
+            this.eq1 = source;
+            this.eq2 = target;
+            let actions = source.getActions(target);
+            this.target = target_ev;
+            if(actions){
+                this.setState({showPopover:true});
+            }
+            else{
+                source.interact(target);
+            }
         }
 
 
@@ -393,10 +398,16 @@ class create_lab extends React.Component {
             source_name=source.name;
             target_name=target.name;
             const actions = source.getActions(target);
-            actions.map((action)=>(
-                buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
-            // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
-            ));
+            if(actions){
+
+                actions.map((action)=>(
+                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
+                // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
+                ));
+            }
+            else{
+                source.interact(target);
+            }
         }
         const overflow_msg = "Target Vessels will Overflow. Your Desired volume has not been completely transferred.";
 

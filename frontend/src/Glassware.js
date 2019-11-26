@@ -8,6 +8,25 @@ export default class Glassware extends Equipment{
         this.capacity=capacity;
         this.state_names= ["empty", "filled", "full"];
 
+
+    }
+    getWeight(){
+        let total = this.weight;
+        for (const [key, item] of Object.entries(this.items)) {
+            // out[key] = obj.output(obj.amount*percentage);
+            console.log("item",item);
+            alert(item);
+            total+=item.getWeight();
+        }
+        // this.items.(function (item) {
+        //     console.log(item.toString());
+        //     alert(item);
+        //     total+=item.getWeight();
+        // });
+        // for(const item in this.items){
+        //     total+=item.getWeight()
+        // }
+        return  total;
     }
     add_item(item){
         if(this.item_exist(item)){
@@ -18,16 +37,16 @@ export default class Glassware extends Equipment{
             itemfound.amount +=item.amount;
         }
         else{
-            // console.log("not exist");
-            // console.log(item);
-            // console.log(this.items);
+            console.log("not exist");
+            console.log(item);
+            console.log(this.items);
 
-            this._items.push(item);
+            this.items.push(item);
         }
     }
     add_items(items){
-        for(var item in items)
-            this.add_item(items);
+        for(const item in items)
+            this.add_item(item);
     }
 
     output(amount){
@@ -125,7 +144,8 @@ export default class Glassware extends Equipment{
     {
         if(target.name==="Scale")
         {
-            target.value=this.weight;
+            target.value=this.getWeight();
+            alert(this.name +" is "+ target.value +"g.");
         }
         else
         {
