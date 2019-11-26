@@ -1,5 +1,8 @@
 import Element from "./Element.js";
 import Equipment from "./Equipment.js";
+import Glassware from "./Glassware";
+import Tool from "./Tool.js";
+
 
 import water from "./Images/water.svg";
 
@@ -25,7 +28,6 @@ import large_volFlask from "./Images/1000mLVolumetricFlask.svg";
 
 import bunsun_burner from "./Images/bunsenBurner.svg";
 import scale from "./Images/scale.svg";
-import Glassware from "./Glassware";
 
 
 export default class EquipmentSet{
@@ -72,9 +74,9 @@ export default class EquipmentSet{
     }
     createPipettes()
     {
-        return [new Glassware("Pipettes",small_pipette,5,0,0),
-            new Glassware("Pipettes",medium_pipette,10,0,0),
-            new Glassware("Pipettes",large_pipette,25,0,0),]
+        return [new Glassware("Pipette",small_pipette,5,0,0),
+            new Glassware("Pipette",medium_pipette,10,0,0),
+            new Glassware("Pipette",large_pipette,25,0,0),]
     }
 
 
@@ -88,8 +90,8 @@ export default class EquipmentSet{
             'Beakers': this.createBeakers(),
             'Volumetric Flasks': this.createVolumetricFlasks()
         }
-        this.equipmentList['Tools'] = [new Equipment('Bunsun Burner', bunsun_burner, 0, 0),
-            new Equipment('Scale', scale, 0, 0),]
+        this.equipmentList['Tools'] = [new Tool('Bunsun Burner', bunsun_burner),
+            new Tool('Scale', scale),]
         console.log(this.equipmentList)
     }
 
