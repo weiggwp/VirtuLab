@@ -76,26 +76,35 @@ class Draggable_equipment extends React.Component{
          if (ev.stopPropagation) {
              ev.stopPropagation(); // Stops some browsers from redirecting.
          }
+
+
+         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+         const equip_id = ev.dataTransfer.getData('text/equip_id');
          // Don't do anything if dropping the same column we're dragging.
-         if (dragSrcEl !== this) {
+         if (dragSrcEl !== this &&
+             this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
 
              move_element(ev);
 
-             const workspace_id = ev.dataTransfer.getData('text/workspace_id');
-             const equip_id = ev.dataTransfer.getData('text/equip_id');
              this.props.interation_handler(
                  ev.target,
                  workspace_id, equip_id,
                  this.props.wkspace_id,this.props.equip_id,
                  );
+
+
          }
-         else{
+         else if (dragSrcEl === this){
              move_element(ev);
          }
+         else{
+             alert("Not Interactable!");
 
+         }
          ev.target.style.border="";
          ev.target.style.opacity = '1.0';
          return false;
+
      }
      handleDragEnd(ev) {
         // e.target is the source node.
@@ -109,8 +118,7 @@ class Draggable_equipment extends React.Component{
         return (
             <div>
 
-            <ContextMenuTrigger id={"trigger"+this.props.wkspace_id+","+this.props.equip_id}
-                                holdToDisplay={-1}>
+            <ContextMenuTrigger id={"trigger"+this.props.wkspace_id+","+this.props.equip_id} holdToDisplay={-1}>
                 {/*<div className="well">Right click to see the menu</div>*/}
             <img id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
                  draggable="true"

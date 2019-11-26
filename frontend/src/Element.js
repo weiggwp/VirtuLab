@@ -1,6 +1,6 @@
 import Equipment from "./Equipment";
 import Glassware from "./Glassware";
-
+import {functionName} from "./Globals"
 
 export default class Element extends Equipment{
     constructor(name, image ,capacity, weight, state=1)
@@ -16,16 +16,18 @@ export default class Element extends Equipment{
 
     output(amount){
         // let amount = opt["amount"];
-        var out = this.cloneNode();
+        const clone = JSON.parse(JSON.stringify(this));
+        console.log(clone);
+
         if(amount<=0){
             amount=0;
         }
         else if(amount>=this.amount){
             amount = this.amount;
         }
-        out.amount=amount;
+        clone.amount=amount;
         this._amount-=amount;
-        return out;
+        return clone;
     }
     /*
         An element is simply a solution type - can be liquid, solid, or gas
@@ -34,25 +36,33 @@ export default class Element extends Equipment{
      */
     canInteract(target)
     {
-        if(target instanceof Glassware)
+        if(Glassware.prototype.isPrototypeOf(target) )
         {
             return target.name !== 'Pipette';
         }
         return target.name === "Scale";
 
     }
+
     getActions(target)
     {
-        if(target instanceof Glassware)
+        if(Glassware.prototype.isPrototypeOf(target) )
         {
-            return ['pour',this.pour]
+            return [this.pour.name]
         }
         return null;
     }
-    pour(target,amount)
+    pour(target,amount,callback=null)
     {
 
         target.add_item(this.output(amount));
+        console.log(this);
+        console.log(target);
+        // if(!callback){
+        //     callback("Poured "+amount+" ml of "+this.name + " into " + target.name);
+        // }
+        alert("Poured "+amount+" ml of "+this.name + " into " + target.name);
+
     }
 
     //elements can only be weighted

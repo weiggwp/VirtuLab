@@ -36,6 +36,7 @@ import {Equipment} from "./Equipment";
 import {Draggable_equipment} from "./Draggable_equipment";
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import Workspace from "../Workspace"
+import Glassware from "../Glassware";
 
 
 class create_lab extends React.Component {
@@ -56,12 +57,17 @@ class create_lab extends React.Component {
             lab_loaded:false,
             lab_title:"Untitled Lab",
             equipments:[[]],
+            input:0,
+            popoverWarning:"",
 
 
         };
+
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
-        this.interation_handler = this.interation_handler.bind(this);
+        this.interaction_handler = this.interaction_handler.bind(this);
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
+        this.canInteract = this.canInteract.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     populateSteps()
@@ -297,19 +303,25 @@ class create_lab extends React.Component {
 
     }
 
-    interation_handler(target, workspace_id1,eq_id1,workspace_id2,eq_id2){
+    canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
-        // const interatable = eq1.canInteract(eq2);
+        return eq1.canInteract(eq2);
+    }
+    interaction_handler(target, workspace_id1, eq_id1, workspace_id2, eq_id2){
+        const eq1 = this.state.equipments[workspace_id1][eq_id1];
+        const eq2 = this.state.equipments[workspace_id2][eq_id2];
+        const interactable = eq1.canInteract(eq2);
 
-        // eq1.interact(eq2);
+        if(interactable){
+            this.eq1 = eq1;
+            this.eq2 = eq2;
+            this.actions = eq1.getActions(eq2);
+            this.target = target;
+            this.setState({showPopover:true});
+        }
 
-        this.eq1 = eq1;
-        this.eq2 = eq2;
 
-        console.log(eq1);
-        this.target = target;
-        this.setState({showPopover:!this.state.showPopover});
 
     }
 
@@ -339,9 +351,6 @@ class create_lab extends React.Component {
             ev.stopPropagation(); // Stops some browsers from redirecting.
         }
         move_element(ev);
-
-        // ev.target.style.border="";
-        // ev.target.style.opacity = '1.0';
         return false;
     }
     dragover_handler(ev) {
@@ -353,18 +362,44 @@ class create_lab extends React.Component {
 
     }
 
+    handleSubmit(e){
+        e.persist();
+        const source = this.eq1;
+        const target = this.eq2;
+        const actions = source.getActions(target);
+        console.log(e);
+
+        const data = new FormData(e.target);
+        console.log(data);
+    }
+    handleInputChange(e){
+        this.setState({input: e.target.value},);
+
+    }
+
+    setPopoverWarningMsg(msg){
+
+        this.setState({popoverWarning:msg},()=>(alert(msg)));
+    };
+
     popover(){
         const source = this.eq1;
         const target = this.eq2;
-
         let source_name = null;
         let target_name = null;
-        if(source !== undefined){
+        let buttonList = [];
+
+        if(source !== undefined && target !== undefined){
             source_name=source.name;
-        }
-        if(target !== undefined){
             target_name=target.name;
+            const actions = source.getActions(target);
+            actions.map((action)=>(
+                buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
+            // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
+            ));
         }
+        const overflow_msg = "Target Vessels will Overflow. Your Desired volume has not been completely transferred.";
+
 
         return(
         <Overlay
@@ -378,35 +413,43 @@ class create_lab extends React.Component {
             style={{width:400}}
         >
             <Popover id="popover-contained" >
-                <Popover.Title >From <strong>{source_name}</strong> to <strong>{target_name}</strong></Popover.Title>
+                <Popover.Title >
+                    <div className={"col1"}>
+                        <strong>Action</strong>
+                    </div>
+                    <div className={"col2"}>
+                        <a className="close" onClick={()=>this.setState({showPopover: false})}/>
+                    </div>
+                </Popover.Title>
                 <Popover.Content>
 
                         <div className="arrowBox">
-                            <form className="form-inline" role="form">
+                            <form className="form-inline" role="form" onSubmit={this.handleSubmit}>
+                                <FormGroup controlId="popover_input">
+                                    <FormControl
+                                        // style={{height: 60}}
+                                        style={{width:150}}
+                                        autoFocus
+                                        type="number"
+                                        placeholder="Volume (mL)"
+                                        onChange={(e) => this.handleInputChange(e)}
+                                        required
+                                    />
+                                </FormGroup>
 
-                                <div className="form-group form-inline">
-                                    <input id="transferAmountInput" type="number"
-                                           className="form-control transferAmount input-sm" placeholder="Volume (mL)"//FIXME: placeholder
-                                           style={{width:150}} min="0"/>
+
+                                <div>
+                                    {buttonList}
                                 </div>
-
-                                <div  style={{height:38}}>
-
-                                    <Button variant="primary" size={'sm'} >Withdraw</Button>
-                                    <Button variant="primary" size={'sm'}>Pour</Button>
-
-                                    {/*<button type="button" id="withdrawButton" className="btn btn-xs"*/}
-                                    {/*        style={{display:null,margin:1,}}>Withdraw </button>*/}
-                                    {/*<button type="button" id="transferButton" className="btn btn-sm transferButton"*/}
-                                    {/*        style={{margin:1}}>Pour </button>*/}
-                                </div>
-                                <br/>
-                                    {/*<span className="transferVessels" style="color:white">From Distilled H<sub>2</sub>O to 250 mL Flask</span>*/}
-                                    {/*<span id="transferInputWarning" className="inputWarning"*/}
-                                    {/*      style="display:none;"></span>*/}
-                                    {/*<span id="transferFeedback" className="transferFeedback"*/}
-                                    {/*      style="display:none;color:white"></span>*/}
                             </form>
+                            <div className="transferVessels" >
+                                From <strong>{source_name}</strong> to <strong>{target_name}</strong>
+                            </div>
+                            <div id="transferInputWarning" className="inputWarning" style={{display:null}}>
+                                {this.state.popoverWarning}
+                            </div>
+                            {/*<span id="transferFeedback" className="transferFeedback"*/}
+                            {/*      style="display:none;color:white"></span>*/}
                         </div>
                 </Popover.Content>
             </Popover>
@@ -433,7 +476,8 @@ class create_lab extends React.Component {
                     {equipments.map((equipment,index) => (
 
                         <Draggable_equipment wkspace_id={i} equip_id={index}
-                                             interation_handler= {this.interation_handler}
+                                             interation_handler= {this.interaction_handler}
+                                             canInteract = {this.canInteract}
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}
                                               width={200} height={200}/>

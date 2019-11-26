@@ -50,9 +50,9 @@ export default class EquipmentSet{
     }
     createFlasks()
     {
-        return [new Glassware("Flask",small_flask,250,0,0),
-            new Glassware("Flask",medium_flask,500,0,0),
-            new Glassware("Flask",large_flask,1000,0,0),]
+        return [new Glassware("Titration Flask",small_flask,250,0,0),
+            new Glassware("Titration Flask",medium_flask,500,0,0),
+            new Glassware("Titration Flask",large_flask,1000,0,0),]
     }
     createCylinders()
     {
@@ -84,7 +84,7 @@ export default class EquipmentSet{
         this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 0, 1)];
 
         this.equipmentList['Glassware'] = {
-            'Erlenmeyers': this.createFlasks(),
+            'Titration Flask': this.createFlasks(),
             'Graduated Cylinders': this.createCylinders(),
             'Pipettes': this.createPipettes(),
             'Beakers': this.createBeakers(),
