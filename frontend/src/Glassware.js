@@ -2,12 +2,16 @@ import Equipment from "./Equipment";
 
 
 export default class Glassware extends Equipment{
-    constructor(name,image, capacity, weight, state=0)
+    constructor(name,image, capacity,weight, state=0)
     {
-        super(name,image,weight, state);
+        super(name,image,weight);
         this.capacity=capacity;
         this.state_names= ["empty", "filled", "full"];
 
+    }
+    setType(type)
+    {
+        this.type =type;
     }
     add_item(item){
         if(this.item_exist(item)){
@@ -130,7 +134,7 @@ export default class Glassware extends Equipment{
     }
     toString()
     {
-        return this._capacity+" mL "+this._name;
+        return this.capacity+" mL "+this.name;
     }
 
 }

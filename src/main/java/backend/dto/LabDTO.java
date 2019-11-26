@@ -36,6 +36,15 @@ public class LabDTO {
     @NotEmpty
     private List<StepDTO> steps;
 
+    private List<EquipmentDTO> equipments;
+
+    public List<EquipmentDTO> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<EquipmentDTO> equipments) {
+        this.equipments = equipments;
+    }
 
 //    public long getId() {
 //        return id;
@@ -86,6 +95,7 @@ public class LabDTO {
                 ", lastModified=" + lastModified +
                 ", creator=" + creator +
                 ", steps=" + steps +
+                ", equipments=" + equipments+
                 '}';
     }
 }

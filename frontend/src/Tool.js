@@ -6,29 +6,22 @@ export default class Tool extends Equipment{
     constructor(name,image)
     {
         super(name,image);
-        this._name = name;
-        this._image=image;
-        this._disabled = false;
+        this.name = name;
+        this.image=image;
+        this.disabled = false;
+        this.type="Tools";
         this.setVal()
+
     }
 
-    setVal()
-    {
-        if (this._name === "Scale")
-            this._value=0
+    setVal() {
+        if (this.name === "Scale")
+            this.value = 0
         else
-            this._value=15;//room temperature
+            this.value = 15;//room temperature
 
 
     }
-    get value() {
-        return this._value;
-    }
-
-    set value(value) {
-        this._value = value;
-    }
-
 
     /*
         A tool is either a scale or a bunsun burner
@@ -43,6 +36,6 @@ export default class Tool extends Equipment{
 
     toString()
     {
-        return this._name;
+        return this.name;
     }
 }

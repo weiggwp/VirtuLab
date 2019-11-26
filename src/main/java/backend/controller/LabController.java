@@ -1,19 +1,12 @@
 package backend.controller;
 
 
-import backend.dto.StepDTO;
-import backend.dto.UserDTO;
-import backend.model.Step;
-import backend.service.CourseService;
-import backend.service.StepService;
+import backend.dto.*;
+import backend.model.*;
+import backend.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import backend.dto.LabDTO;
-import backend.model.Lab;
-import backend.model.User;
-import backend.service.LabService;
-import backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
-import backend.dto.CourseDTO;
-import backend.model.Course;
 import backend.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +49,9 @@ public class LabController {
     @Autowired
     StepService stepService;
 
+    @Autowired
+    EquipmentService equipmentService;
+
     ModelMapper modelMapper = new ModelMapper();
 
 
@@ -79,6 +73,13 @@ public class LabController {
             steps.add(step);
         }
 
+        List<Equipment> equipments = new ArrayList<>();
+        for (EquipmentDTO dto: labDTO.getEquipments()) {
+            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            equipmentService.saveEquipment(equipment);
+            equipments.add(equipment);
+        }
+
 
         long returnid = -1;
         if (existing != null)
@@ -86,6 +87,7 @@ public class LabController {
             existing.setName(labDTO.getName());
             existing.setLastModified(labDTO.getLastModified());
             existing.setSteps(steps);
+            existing.setEquipments(equipments);
             labService.saveLab(existing);
 
         }
@@ -93,10 +95,12 @@ public class LabController {
             System.out.println("lab does not exist, creating new lab");
             Lab lab = modelMapper.map(labDTO, Lab.class);
             lab.setSteps(steps);
+            lab.setEquipments(equipments);
 
             returnid = labService.createNewLab(lab);
 
             User instructor = userService.findByEmail(labDTO.getCreator());
+
             instructor.getLabs().add(lab);
             userService.save(instructor);
         }

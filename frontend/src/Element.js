@@ -10,6 +10,7 @@ export default class Element extends Equipment{
         this.capacity=capacity;
         this.image=image;
         this.state=state;
+        this.type="Solution"
         this.state_names= ["solid", "liquid", "gas"];
 
     }
@@ -24,7 +25,7 @@ export default class Element extends Equipment{
             amount = this.amount;
         }
         out.amount=amount;
-        this._amount-=amount;
+        this.amount-=amount;
         return out;
     }
     /*
@@ -65,6 +66,6 @@ export default class Element extends Equipment{
 
     toString()
     {
-        return this._capacity+" mL "+this._name;
+        return this.capacity+" mL "+this.name;
     }
 }

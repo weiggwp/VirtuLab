@@ -37,7 +37,7 @@ class App extends Component {
                 <PrivateRoute exact path="/public_labs" role="instructor" component={PublicLab}/>
                 <PrivateRoute exact path="/create_course" role="instructor" component={CreateCourse}/>
               <PrivateRoute exact path="/do_lab" role="student" component={DoLab} />
-              <Route exact path="/create_lab" role="instructor" component={CreateLab} />
+              <PrivateRoute exact path="/create_lab" role="instructor" component={CreateLab} />
               <PrivateRoute exact path="/statistics" role="instructor" component={Statistics} />
 
             </Switch>

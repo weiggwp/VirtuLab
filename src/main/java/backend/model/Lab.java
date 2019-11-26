@@ -2,14 +2,13 @@ package backend.model;
 
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import backend.dto.StepDTO;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,9 +26,16 @@ public class Lab {
     private String creator;
     private Date lastModified;
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List <Equipment> equipments = new ArrayList<>();
 
+    public List<Equipment> getEquipments() {
+        return equipments;
+    }
 
-
+    public void setEquipments(List<Equipment> equipments) {
+        this.equipments = equipments;
+    }
 
     @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})

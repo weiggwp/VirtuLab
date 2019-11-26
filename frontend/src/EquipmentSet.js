@@ -28,6 +28,8 @@ import large_volFlask from "./Images/1000mLVolumetricFlask.svg";
 
 import bunsun_burner from "./Images/bunsenBurner.svg";
 import scale from "./Images/scale.svg";
+import {Draggable_equipment} from "./components/Draggable_equipment";
+import React from "react";
 
 
 export default class EquipmentSet{
@@ -43,6 +45,11 @@ export default class EquipmentSet{
 
             }
             this.populateList();
+    }
+    setEquipmentList(list)
+    {
+        this.equipmentList=list;
+        console.log("loading equipment list in js ",list)
     }
     getEquipments()
     {
@@ -90,10 +97,75 @@ export default class EquipmentSet{
             'Beakers': this.createBeakers(),
             'Volumetric Flasks': this.createVolumetricFlasks()
         }
+
+        //solution and tool types are set in constructor, as they don't have nested def's
         this.equipmentList['Tools'] = [new Tool('Bunsun Burner', bunsun_burner),
             new Tool('Scale', scale),]
-        console.log(this.equipmentList)
+        this.assignTypes();
     }
+    assignTypes()
+    {
+        var glass = this.equipmentList['Glassware'];
+        Object.keys(glass).map((elements,index)=>
+            (
+                glass[elements].map((equipment) => (
+                    equipment.setType(elements)
+
+
+
+                ))
+            )
+
+        );
+    }
+    setType(elements)
+    {
+        elements.map((equipment)=>(
+            equipment.setType()
+            )
+        )
+    }
+
+    getJSONList()
+    {
+
+        return this.getFlatList();
+    }
+
+    getFlatList()
+    {
+
+        var glass = this.equipmentList['Glassware'];
+        var result = [];
+        // Object.keys(glass).map((element)=>
+        //     (
+        //         result.push(glass[element])
+        //     )
+        //
+        // );
+        Object.keys(glass).map((elements,index)=>
+            (
+                glass[elements].map((equipment) => (
+                    result.push(equipment)
+
+
+
+                ))
+            ))
+        this.equipmentList['Solution'].map((equipment) => (
+            result.push(equipment)
+
+
+        ))
+        this.equipmentList['Tools'].map((equipment) => (
+            result.push(equipment)
+
+
+        ))
+        return result;
+    }
+
+
 
 
 

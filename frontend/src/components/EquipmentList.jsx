@@ -79,18 +79,21 @@ class EquipmentList extends React.Component
     }
     renderButton(equipment)
     {
-        console.log("at step "+this.props.step+" and "+equipment.name+" is disabled "+equipment.disabled)
+        const opacity= equipment.disabled?"0.3":"1";
+        const borderColor= equipment.disabled?"#C5C5C5":"blue";
+
 
         if(!equipment.disabled || this.props.step===0)
         {
             return(
-                <Button   onClick={(e) => this.handleOnClick(e, equipment)}
 
-                          style={{width:"100%",color:"black",backgroundColor:"transparent",borderStyle:"solid",borderWidth:1,marginTop:5}}>
+                <button   onClick={(e) => this.handleOnClick(e, equipment)}
 
-                    <Equipment image={equipment.image} description={equipment.toString()}/>
+                          style={{width:"100%",color:"black",backgroundColor:"transparent",borderRadius:3,borderColor:borderColor,borderStyle:"solid",borderWidth:1,marginTop:5}}>
 
-                </Button>
+                    <Equipment opacity={opacity} image={equipment.image} description={equipment.toString()}/>
+
+                </button>
             )
         }
     }
@@ -118,13 +121,13 @@ class EquipmentList extends React.Component
         return(
             Object.keys(glassware).map((elements,index)=>
                 (
+
                     this.createCollapsible(index,elements,glassware[elements])
                 )
 
 
             )
             )
-
 
 
     }

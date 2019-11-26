@@ -29,6 +29,7 @@ class Equipment extends React.Component{
                 style={{
 
                     cursor: 'move',
+                    opacity:this.props.opacity,
                 }}
             >
                 <Image  style={{height:"6.6vh",width:"6vh",display:"inline-block"}}

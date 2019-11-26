@@ -20,16 +20,18 @@ import GLOBALS from "../Globals";
 import Draggable from 'react-draggable';
 import {Equipment} from "./Equipment";
 import {Draggable_equipment} from "./Draggable_equipment";
-import {test_draggable} from "./test_draggable";
 import {ToastsContainer, ToastsStore} from 'react-toasts';
+import Element from "../Element";
+import water from "../Images/water.svg";
+import Tool from "../Tool";
+import Glassware from "../Glassware";
+import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 
 
 class create_lab extends React.Component {
     constructor(props) {
         super(props);
-        this.steps = [new Step(0)];
-        this.equipmentSet = new EquipmentSet();
-
+        this.equipmentSet=new EquipmentSet();;
 
         this.state = {
             redirectHome: false,
@@ -46,12 +48,56 @@ class create_lab extends React.Component {
         };
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
     }
+    populateEquipmentSetup()
+    {
+        var equipList = this.props.location.state.equipments;
+        if (equipList !== undefined)//opening a previously saved lab
+        {
+            var result ={
+                'Solution': [],
+                'Tools': [],
+                'Glassware': {},
+
+            };
+            for (var i = 0; i < equipList.length; i++) {
+                var current = equipList[i];
+                if(current.disabled)
+                    console.log(current.name+" is disabled");
+                if(current.type==="Solution")
+                {
+                    var equip = new Element(current.name, current.image, current.capacity);
+                    equip.setDisabled(current.disabled)
+                    result['Solution'].push(equip)
+                }
+                else if(current.type==='Tools')
+                {
+                    var equip =new Tool(current.name, current.image);
+                    equip.setDisabled(current.disabled)
+                    result['Tools'].push(equip);
+                }
+                else {
+                    if(result['Glassware'][current.type]===undefined)
+                        result['Glassware'][current.type]=[]
+
+                    var equip = new Glassware(current.name, current.image, current.capacity);
+                    equip.setDisabled(current.disabled)
+                    equip.setType(current.type)
+                    result['Glassware'][current.type].push(equip);
+                }
+
+
+            }
+            console.log("current equipment set",this.equipmentSet)
+            console.log("setting to new equipment set",result)
+            this.equipmentSet.setEquipmentList(result);
+
+        }
+    }
 
     populateSteps()
     {
         if(this.props.location.state!==undefined)
         {
-            // alert(this.props.location.state);
 
 
             var step_list = this.props.location.state.steps;
@@ -60,10 +106,13 @@ class create_lab extends React.Component {
             {
                 for (var i = 1; i < step_list.length; i++) {
                     this.state.steps.push(new Step(i, step_list[i].instruction));
+                    this.state.equipments[i]=[];
 
                 }
 
             }
+            this.populateEquipmentSetup();
+
             // alert("got here"+this.props.location.state.id);
 
             this.setState(
@@ -82,6 +131,8 @@ class create_lab extends React.Component {
         }
         else
         {
+
+
             this.setState(
                 {
 
@@ -145,6 +196,7 @@ class create_lab extends React.Component {
             name: this.state.lab_title,
             creator: this.props.email,
             steps: this.state.steps,
+            equipments: this.equipmentSet.getJSONList(),
         };
 
         let axiosConfig = {
