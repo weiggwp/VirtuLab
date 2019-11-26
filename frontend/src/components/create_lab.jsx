@@ -4,7 +4,21 @@ import icon from "../Images/v.jpg";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {Tab,Button, Col, Container, FormGroup, Image, Nav, Navbar, Row,InputGroup,FormControl,Card} from "react-bootstrap";
+import {
+    Tab,
+    Button,
+    Col,
+    Container,
+    FormGroup,
+    Image,
+    Nav,
+    Navbar,
+    Row,
+    InputGroup,
+    FormControl,
+    Card,
+    OverlayTrigger, Tooltip
+} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
@@ -187,14 +201,16 @@ class create_lab extends React.Component {
 
     }
 
+
     handleLabSave = (e) => {
-        // e.preventDefault();
+     // alert("saving " +this.state.lab_id)
         const lab = {
             labID: this.state.lab_id,
             //if zero, it's not a valid labID
 
-            name: this.state.lab_title,
-            creator: this.props.email,
+            lab_name: this.state.lab_title,
+            author: this.props.email,
+
             steps: this.state.steps,
             equipments: this.equipmentSet.getJSONList(),
         };
@@ -245,22 +261,63 @@ class create_lab extends React.Component {
                     </Nav>
 
                     <Nav>
-                        <Link to="/create_lab">
-                            <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
-                        </Link>
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Start fresh. All contents are wiped at the current step
+                                </Tooltip>
+                            }
+                        >
+                            <Link to="/create_lab">
+                                <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
+                            </Link>
+                        </OverlayTrigger>
+
+
                         {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
-                        <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
-                        <Image className={"save_image"} onClick={this.handleLabSave}
-                               src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
-                               rounded/>
 
 
-                        <Link to="/instructor_labs">
-                            <Image onClick={this.setRedirectHome} className={"config_image"}
-                                   src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Trash selected item
+                                </Tooltip>
+                            }
+                        >
+                            <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
+                        </OverlayTrigger>
+
+
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Save your edits
+                                </Tooltip>
+                            }
+                        >
+                            <Image className={"save_image"} onClick={this.handleLabSave}
+                                   src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
                                    rounded/>
-                        </Link>
+                        </OverlayTrigger>
+
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Exit. Remember to save your edits.
+                                </Tooltip>
+                            }
+                        >
+                            <Link to="/instructor_labs">
+                                <Image onClick={this.setRedirectHome} className={"config_image"}
+                                       src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
+                                       rounded/>
+                            </Link>
+                        </OverlayTrigger>
+
+
+
+
                     </Nav>
 
                 </Navbar>

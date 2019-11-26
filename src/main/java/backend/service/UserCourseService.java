@@ -6,6 +6,8 @@ import backend.repository.UserCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserCourseService {
 
@@ -14,5 +16,8 @@ public class UserCourseService {
 
     public void saveUserCourse(UserCourse userCourse) {
         userCourseRepository.save(userCourse);
+    }
+    public List<UserCourse> getAllUserCourses(){
+        return (List<UserCourse>) userCourseRepository.findAll();
     }
 }

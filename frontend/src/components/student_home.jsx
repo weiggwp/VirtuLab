@@ -8,7 +8,7 @@ import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 // import 'react-notifications/lib/notifications.css'; // FIXME: DELETE
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, Nav, Form, FormControl} from 'react-bootstrap';
+import {Button, Image, Navbar, Nav, Form, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import GLOBALS from "../Globals";
@@ -40,7 +40,8 @@ class student_home extends React.Component
     };
     updateClasses(){
         const user = {
-            email:this.props.email
+
+            email: this.props.email
         };
         let axiosConfig = {
             headers: {
@@ -58,18 +59,18 @@ class student_home extends React.Component
             .then((response) => {
                 console.log("email is " +this.props.email)
                 // console.log("resp is " +response.json())
-                console.log("dat is " + JSON.stringify(response));
 
+                console.log("resp is "+JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
-                    classArray[i]={classname:response.data[i].courseName,classID:response.data[i].courseID,
-                        clicked:false,labs:response.data[i].labs,accessCode:response.data[i].accessCode};
-                    console.log("class array[i] is " +classArray[i].classname+" labs are "+classArray[i].labs)
+                    classArray[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
+                        clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
+
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
-                this.render()
+                // this.render()
             })
             .catch((error) => {
                 //console.log(error)
@@ -83,11 +84,10 @@ class student_home extends React.Component
 
         const course = {
             course_number: this.state.code,
-            email   :this.props.email
+            email: this.props.email
         };
-        const user={
 
-        }
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -132,7 +132,7 @@ class student_home extends React.Component
 
             <div>
                 {this.renderRedirect()}
-                <StudentHeader/>
+                <StudentHeader currentTab="Courses"/>
 
                 <Navbar>
                     <Navbar.Brand href="#student_home">Welcome!</Navbar.Brand>
@@ -173,9 +173,17 @@ class student_home extends React.Component
 
                                     </span>
                             </label>
-                            <Link to="/account_settings">
-                                <Image  className={"config_image"} src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded />
-                            </Link>
+                            <OverlayTrigger
+                                overlay={
+                                    <Tooltip>
+                                        Account Setting
+                                    </Tooltip>
+                                }
+                            >
+                                <Link to="/account_settings">
+                                    <Image  className={"config_image"} src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded />
+                                </Link>
+                            </OverlayTrigger>
                         </Nav>
 
                     </Navbar>

@@ -2,9 +2,10 @@ package backend.model;
 
 
 import javax.persistence.*;
+
 import java.util.*;
 
-import backend.dto.StepDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -21,10 +22,13 @@ public class Lab {
     private long labID;
     private String name;
     private String description;
-    private boolean isPublic;
-
+    private int open;
     private String creator;
     private Date lastModified;
+    private ArrayList<String> tags=new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
+    private List<Step> steps = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private List <Equipment> equipments = new ArrayList<>();
@@ -32,14 +36,24 @@ public class Lab {
     public List<Equipment> getEquipments() {
         return equipments;
     }
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<CourseLab> courseLabList = new ArrayList<>();
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "labs")
+    private List<Course> courses;
+
+
+    public Lab clone(List<Step> lis){
+        return new Lab(name+" (CLONE)",description,creator,lastModified,lis, new ArrayList<String>());
+    }
+
 
     public void setEquipments(List<Equipment> equipments) {
         this.equipments = equipments;
     }
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
-    private List<Step> steps = new ArrayList<>();
 //    private Step steps;
 
 //    @ManyToMany
@@ -48,16 +62,37 @@ public class Lab {
 //    private List<Equipment> equipments;
 
 
-    public Lab(String name, String description, boolean isPublic, String creator, Date lastModified, List<Step> steps) {
+    public Lab(String name, String description, int open, String creator, Date lastModified, List<Step> steps) {
         this.name = name;
         this.description = description;
-        this.isPublic = isPublic;
+        this.open = open;
         this.creator = creator;
         this.lastModified = lastModified;
         this.steps = new ArrayList<>();
+        this.tags=new ArrayList<>();
     }
 
+    public Lab(String name, String description,  String creator, Date lastModified, List<Step> steps,
+               ArrayList<String> tags) {
+        this.name = name;
+        this.description = description;
+        this.open = 0;
+        this.creator = creator;
+        this.lastModified = lastModified;
+        this.steps = steps;
+        this.tags=tags;
+    }
+
+
+
     public Lab() {
+    }
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
     }
 
     public String getCreator() {
@@ -100,6 +135,14 @@ public class Lab {
         this.name = name;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     public Lab(long labID, String name){
         this.name=name;
         this.labID=labID;
@@ -113,13 +156,41 @@ public class Lab {
         this.description = description;
     }
 
-    public boolean isPublic() {
-        return isPublic;
+    public List<CourseLab> getCourseLabList() {
+        return courseLabList;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setCourseLabList(List<CourseLab> courseLabList) {
+        this.courseLabList = courseLabList;
     }
+
+    public int getOpen() {
+        return open;
+    }
+
+    public void setOpen(int open) {
+        this.open = open;
+    }
+
+    @PreRemove
+    public void removeLab(){
+        for (Course c: courses) {
+            c.getLabs().remove(this);
+        }
+        this.getCourses().clear();
+    }
+
+    private String tagString(){
+        if (tags==null){
+            return "None";
+        }
+        String s ="";
+        for (int i=0; i<tags.size();i++){
+            s+=tags.get(i)+", ";
+        }
+        return s;
+    }
+
 
     @Override
     public String toString() {
@@ -127,10 +198,11 @@ public class Lab {
                 "labID=" + labID +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", isPublic=" + isPublic +
+                ", isPublic=" + open +
                 ", creator=" + creator +
                 ", lastModified=" + lastModified +
                 ", steps=" + steps +
+                ", tags=" + tagString() +
                 '}';
     }
 }

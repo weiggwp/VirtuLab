@@ -24,29 +24,39 @@ export class create_course extends Component {
     handleFieldChange = (e, field) => {
         this.setState({[field]: e.target.value});
     };
-    handleCreateCourse = (e) => {
 
-        const course = {
-            email: this.props.email,
-            course_name: this.state.course_name,
+
+
+    handleCreateCourse  = (e) => {
+        e.preventDefault()
+        const course= {
+            email:this.props.email,
             course_number: this.state.course_number,
-            semester: this.state.semester,
-            description: this.state.description,
+            course_name:this.state.course_name
         };
 
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
+
             }
         };
-
-        axios.post(GLOBALS.CREATE_COURSE, course, axiosConfig)
+        var classArr=[];
+        var classArray=[];
+        alert("sending back "+course);
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'create_course', course, axiosConfig)
             .then((response) => {
 
-            })
-    }
 
+            })
+            .catch((error) => {
+                    console.log("doot" + error)
+                }
+            );
+    }
 
     renderBanner() {
         return (

@@ -12,7 +12,13 @@ import backend.repository.LabRepository;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LabService {
@@ -27,18 +33,33 @@ public class LabService {
 
     public void deleteById(long id) {labRepository.deleteById(id);}
 
-
     private ModelMapper modelMapper = new ModelMapper();
-
 
     public Lab findByLabID(long id){
         return labRepository.findByLabID(id);
     }
 
+    public Page<Lab> pageAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Lab> pageLab = labRepository.findAll(pageable);
+        return pageLab;
+    }
+
+    public Page<Lab> pageAllPublicLabs(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Lab> pageLab = labRepository.findAllByOpen(1, pageable);
+        return pageLab;
+    }
+
+
+    public Optional<Lab> findLabByLabID(long id) { return labRepository.findLabByLabID(id); }
     public long createNewLab(Lab lab){
         return labRepository.save(lab).getLabID();
 
 
+    }
+    public List<Lab> getAllLabs(){
+        return labRepository.findAll();
     }
 
     public void save( LabDTO labDTO) {

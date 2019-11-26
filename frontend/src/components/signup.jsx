@@ -36,7 +36,18 @@ class signup extends Component {
         if(this.state.password!==this.state.confirm_password)
         {
             this.setState({
-                errors: 'Inconsistent passwords entered, try again',
+                errors: 'Error: Passwords do not match.',
+                username: '',
+                password: '',
+                confirm_password:''
+            });
+            return;
+        }
+        if(this.state.password.length<=3)
+        {
+            //console.log("pass is "+this.state.password)
+            this.setState({
+                errors: 'Error: Password must be at least 4 characters.',
                 username: '',
                 password: '',
                 confirm_password:''
@@ -46,7 +57,7 @@ class signup extends Component {
         const user = {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
-            email_address:this.state.email_address,
+            email:this.state.email_address,
             password: this.state.password,
             role: this.state.role,
             // isStudent: String(this.state.role === "student")
@@ -69,13 +80,14 @@ class signup extends Component {
             (response) => {
                 // console.log(response);
                 // alert("Signed up successfully");
-                console.log(response);
+                //console.log(response);
                 this.setState({ redirect: true });
             },
             (error) => {
                 console.log(error);
                 this.setState({
-                    errors: "Email already registered!",
+
+                    errors: "There is already an account registered with that e-mail address.",
                     username: '',
                     password: ''
                 });
@@ -206,7 +218,7 @@ class signup extends Component {
                                         <Row style={{paddingTop:20}}>
                                             <Col md={{ span: 5, offset: 0 }}>
                                                 <Button style={{ backgroundColor: 'blue',color:"white"}} block bsSize="large" type="submit">
-                                                    Create Student Account
+                                                    Create {this.state.role} Account
                                                 </Button>
                                             </Col>
                                         </Row>

@@ -37,11 +37,11 @@ public class User {
 //    private List<Course> courses = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<UserCourse> userCourseList = new ArrayList<>();
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "instructor_lab",
             joinColumns = {@JoinColumn(name = "email")},
             inverseJoinColumns = {@JoinColumn(name = "labID")})
@@ -160,6 +160,21 @@ public class User {
     public void setStudent(boolean student) {
         isStudent = student;
     }
+
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", isStudent=" + isStudent +
+//                ", courses=" + courses +
+//                ", labs=" + labs +
+//                ", roles=" + roles +
+//                '}';
+//    }
 
     @Override
     public String toString() {

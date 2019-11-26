@@ -26,6 +26,7 @@ class login extends Component {
             pathname: {instructor:'/instructor_home',
                         student: '/student_home'},
             to_register: false,
+            to_forgotPass:false,
             email_address: '',
             password: '',
             register_role: '',
@@ -43,10 +44,16 @@ class login extends Component {
         //
         e.preventDefault();
     };
+    handleForgotPassClick=(e)=>{
+        this.setState({to_forgotPass: true,
+           });
+        //
+        e.preventDefault();
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         const user = {
-            email_address: this.state.email_address,
+            email: this.state.email_address,
             password: this.state.password
         };
         let axiosConfig = {
@@ -56,7 +63,7 @@ class login extends Component {
             }
         };
         //axio sends post request to backend at \login to handle authentication
-        //TODO: ask backend to respond with user object including role, names, etc. instead of just 200 OK
+
         axios.post(GLOBALS.BASE_URL + 'login', user, axiosConfig)
             .then((response) => {
                 localStorage.setItem('token', response.data["token"]);
@@ -69,7 +76,8 @@ class login extends Component {
             .catch((error) => {
                 // alert("bad?")
                 this.setState({
-                    errors: 'Error signing up! Try a different username',
+                    errors: 'The username or password you have entered does not match a registered user.' +
+                        ' Please verify the information.',
                     username: '',
                     password: ''
                 });
@@ -93,7 +101,12 @@ class login extends Component {
                 state: {role: this.state.register_role},
             }}/>;
         }
-
+        if (this.state.to_forgotPass) {
+            return <Redirect exact to={{
+                pathname: "/forgot_password",
+                state: {role: this.state.register_role},
+            }}/>;
+        }
         const errorMessage = this.state.errors;
         return (
             <div>
@@ -152,10 +165,19 @@ class login extends Component {
                                                 />
 
                                             </FormGroup>
-                                            <p style={{color: 'red'}}> {errorMessage}</p>
+                                            <p style={{color: 'black'}}> {errorMessage}</p>
                                             <Button style={{backgroundColor: "white", color: "black", height: 60}} block
-                                                    bsSize="large" type="submit">
-                                                Sign in
+                                                              bsSize="large" type="submit">
+                                            Sign in
+
+
+
+                                        </Button> <div style={{paddingBottom: 20}}>
+                                        </div>
+                                            <Button style={{backgroundColor: "white", color: "black", height: 60}}
+                                                    block bsSize="large"
+                                                    onClick={(e) => this.handleForgotPassClick(e)}>
+                                                Forgot Password
                                             </Button>
                                             <h2 className="formTitle loginH2">Register</h2>
                                                 {/*either student signup or professor signup*/}

@@ -18,7 +18,7 @@ public class UserCourse {
     User user;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "courseID")
     Course course;
 

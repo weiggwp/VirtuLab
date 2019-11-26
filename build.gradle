@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
+    //id 'com.sun.mail' version '1.6.0'
 }
 
 group = 'VirtuLab'
@@ -29,6 +30,7 @@ dependencyManagement {
     }*/
 }
 dependencies {
+    compile 'javax.mail:mail:1.4.7'
     implementation 'org.modelmapper:modelmapper:2.3.0'
 //   implementation 'com.microsoft.azure:azure-spring-boot-starter'
 //    testImplementation 'org.springframework.boot:spring-boot-starter-test'

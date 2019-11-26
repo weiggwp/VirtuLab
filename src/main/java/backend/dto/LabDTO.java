@@ -1,33 +1,72 @@
 package backend.dto;
 
-import backend.model.Step;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class LabDTO {
 
+
+
+    @JsonProperty("labID")
     private long labID;
-
-    public long getLabID() {
-        return labID;
-    }
-
-    public void setLabID(long labID) {
-        this.labID = labID;
-    }
-
     @NotNull
     @NotEmpty
+    @JsonProperty("lab_name")
     private String name;
+    @JsonProperty("description")
+    private String description;
+    @JsonProperty("email")
+    private String email;
 
+    private Date date;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @JsonProperty("tags")
+    private ArrayList<String> tags;
     @NotNull
     @NotEmpty
     private Date lastModified;
     @NotNull
     @NotEmpty
+    @JsonProperty("author")
     private String creator;
 //    @NotNull
 //    @NotEmpty
@@ -35,6 +74,13 @@ public class LabDTO {
     @NotNull
     @NotEmpty
     private List<StepDTO> steps;
+    @JsonProperty("open")
+    private int open;
+
+    public int getOpen() {
+        return open;
+    }
+
 
     private List<EquipmentDTO> equipments;
 
@@ -43,16 +89,19 @@ public class LabDTO {
     }
 
     public void setEquipments(List<EquipmentDTO> equipments) {
-        this.equipments = equipments;
+        this.equipments = equipments;}
+
+    public void setOpen(int open) {
+        this.open = open;
     }
 
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
+    public long getLabID() {
+        return labID;
+    }
+
+    public void setLabID(long labID) {
+        this.labID = labID;
+    }
 
     public String getName() {
         return name;
@@ -86,16 +135,30 @@ public class LabDTO {
         this.steps = steps;
     }
 
+    private String tagString(){
+        if (tags==null){
+            return "None";
+        }
+        String s ="";
+        for (int i=0; i<tags.size();i++){
+            s+=tags.get(i)+", ";
+        }
+        return s;
+    }
 
     @Override
     public String toString() {
         return "LabDTO{" +
-                "id=" + labID +
+                "labID=" + labID +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", email='" + email + '\'' +
+                ", tags=" + tags +
                 ", lastModified=" + lastModified +
-                ", creator=" + creator +
+                ", creator='" + creator + '\'' +
                 ", steps=" + steps +
                 ", equipments=" + equipments+
+                ", isPublic=" + open +
                 '}';
     }
 }

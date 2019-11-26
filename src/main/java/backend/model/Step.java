@@ -14,6 +14,10 @@ public class Step {
 //    @JoinColumn(name="labID")
 //    private Lab lab;
 
+    public Step clone(){
+        return new Step(stepNum,instruction);
+    }
+
     public long getStepID() {
         return stepID;
     }
