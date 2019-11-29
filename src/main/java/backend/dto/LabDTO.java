@@ -24,6 +24,7 @@ public class LabDTO {
     private String email;
 
     private Date date;
+    private boolean complete;
 
     public String getDescription() {
         return description;
@@ -123,6 +124,14 @@ public class LabDTO {
 
     public void setSteps(List<StepDTO> steps) {
         this.steps = steps;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     private String tagString(){

@@ -77,8 +77,9 @@ class student_home extends React.Component
     handleAddCourse = (e) => {
         e.preventDefault();
 
+        alert(this.state.code)
         const course = {
-            course_number: this.state.code,
+            code: this.state.code,
             email: this.props.email
         };
 
@@ -110,6 +111,9 @@ class student_home extends React.Component
 
     };
 
+    handleCheckBox = () => {
+        this.updateClasses()
+    }
 
 
     render() {
@@ -163,7 +167,7 @@ class student_home extends React.Component
                         <Nav >
                             <label className="contain">
                                 Show Completed Labs
-                                <input type="checkbox"/>
+                                <input type="checkbox" onClick={this.handleCheckBox}/>
                                 <span className="checkmark">
 
                                     </span>
