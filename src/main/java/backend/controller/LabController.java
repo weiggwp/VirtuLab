@@ -441,10 +441,10 @@ public class LabController {
     @RequestMapping(value = "/set_completion", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity setCompletion(@RequestBody CourseDTO courseDTO) {
-        System.out.println("LabController set completion for a lab: ");
+        System.out.println("LabController set completion for a lab: "+courseDTO);
         // send the lab you want to send the date in a list
-        long labID = courseDTO.getLabDTOS().get(0).getLabID();
-        long courseID = courseDTO.getCourseID();
+        long labID = courseDTO.getLabs().get(0).getLabID();
+
         String email = courseDTO.getEmail();
         User user = userService.findByEmail(email);
         long userID = user.getId();
@@ -454,6 +454,7 @@ public class LabController {
         if (optional.isPresent()) {
 
             Course course = optional.get();
+            long courseID = course.getCourseID();
             for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
                 if (userCourseLab.getLab().getLabID() == labID &&
                     userCourseLab.getCourse().getCourseID() == courseID &&

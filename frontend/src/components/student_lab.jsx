@@ -9,6 +9,8 @@ import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
 import StudentHeader from './studentHeader.jsx';
 import {EquipmentList} from "./EquipmentList";
+import axios from "axios";
+import GLOBALS from "../Globals";
 class do_lab extends React.Component {
     constructor(props) {
         super(props);
@@ -19,9 +21,43 @@ class do_lab extends React.Component {
         };
     }
     setRedirectHome = () => {
+
         this.setState({
             redirectHome: true
         })
+    }
+    completeLab(){
+
+        console.log("props is "+JSON.stringify(this.props))
+        const lab = {
+            labID:this.props.location.state.labID,
+        }
+        let labs =[];
+        labs[0]=lab;
+        const courselab= {
+            labs:labs,
+            email: this.props.email,
+            code:this.props.location.state.courseID,
+
+        };
+        alert("courselab is "+JSON.stringify(courselab))
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
+            .then((response) => {
+                console.log("success!")
+
+            })
+            .catch((error) => {
+                    alert("doot" + error)
+
+                }
+            );
     }
     setRestart = () => {
         this.setState({
@@ -82,7 +118,7 @@ class do_lab extends React.Component {
     }
     render(){
         this.renderRedirect();
-
+        this.completeLab()
         return(
             <div >
 

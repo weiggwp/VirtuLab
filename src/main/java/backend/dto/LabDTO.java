@@ -24,6 +24,7 @@ public class LabDTO {
     private String email;
 
     private Date date;
+    @JsonProperty("complete")
     private boolean complete;
 
     public String getDescription() {
@@ -157,6 +158,7 @@ public class LabDTO {
                 ", creator='" + creator + '\'' +
                 ", steps=" + steps +
                 ", isPublic=" + open +
+                ", completed=" + complete +
                 '}';
     }
 }
