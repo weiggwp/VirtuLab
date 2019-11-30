@@ -115,8 +115,10 @@ public class CourseController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_students", method = RequestMethod.POST)
     public ResponseEntity<List<User>> getStudents(@RequestBody CourseDTO courseDTO) {
+        System.out.println("CourseController get_students: ");
         System.out.println("course is "+courseDTO);
         List<UserCourse> userCourses = userCourseService.getAllUserCourses();
+        System.out.println("OMG");
         List<User> students = new LinkedList<>();
         for (UserCourse userCourse: userCourses){
               //  System.out.println("coursecode is " +userCourse.getCourse().getAccessCode());
@@ -126,6 +128,7 @@ public class CourseController {
                     students.add(userCourse.getUser());
             }
         }
+        System.out.println("Leaving get_students");
         return new ResponseEntity(students, HttpStatus.OK);
     }
 

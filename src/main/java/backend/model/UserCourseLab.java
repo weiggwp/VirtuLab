@@ -1,5 +1,7 @@
 package backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,14 +11,17 @@ public class UserCourseLab {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userCourseLabID;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "courseID")
     private Course course;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "labID")
     private Lab lab;
