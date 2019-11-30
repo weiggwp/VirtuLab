@@ -124,6 +124,7 @@ export class assign_lab extends Component {
             labID:this.state.lab_id,
         }
         labs[0]=lab
+        this.state.due_date.setDate(this.state.due_date.getDate()-1);
         const course= {
             email:this.props.email,
             course_number: this.state.course_code,

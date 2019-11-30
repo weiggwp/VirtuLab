@@ -173,15 +173,19 @@ public class CourseController {
                 labDTO.setLabID(lab.getLabID());
 
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
+                    System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
+                        +"\ncourse id is "+userCourseLab.getCourse().getCourseID()+
+                            "\nlab id is "+ userCourseLab.getLab().getLabID()+"\ncomplete is "+userCourseLab.getComplete()+"\n");
                     if (user.getId() == userCourseLab.getUser().getId() &&
                         course.getCourseID() == userCourseLab.getCourse().getCourseID() &&
                         lab.getLabID() == userCourseLab.getLab().getLabID()) {
                         /* hard code every completion to true for testing, uncomment next line after testing */
-                        labDTO.setComplete(true);
-//                        labDTO.setComplete(userCourseLab.getComplete() == 1);
+                        //labDTO.setComplete(true);
+                       labDTO.setComplete(userCourseLab.getComplete() == 1);
                     }
 
                 }
+                System.out.println("adding DTO " +labDTO);
                 labs.add(labDTO);
             }
 

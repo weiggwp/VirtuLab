@@ -51,7 +51,14 @@ class Lab extends React.Component
             this.setState({renderLab: false})
             return null;
         } else if (this.state.renderStudent) {
-
+            return <Redirect exact to={{
+                pathname: '/do_lab',
+                state: {
+                    labID: this.props.labID,
+                    due_date:this.props.due_date,
+                    courseID: this.props.courseID,
+                },
+            }}/>
         } else if (this.state.renderInstructor) {
             //  alert("classes are " +this.props.courseID)
             return <Redirect exact to={{
@@ -73,6 +80,10 @@ class Lab extends React.Component
             console.log("date is " +this.props.due_date)
             date =   this.props.due_date.substring(0,10)
         }
+        let isComplete='incomplete'
+        if (this.props.complete){
+            isComplete='complete'
+        }
         return (
 
             <div onClick={this.onClick} style={{border: '5px solid gray', borderBottomColor: 'black'}}>
@@ -88,7 +99,7 @@ class Lab extends React.Component
                     <Nav className={"ml-auto"}>
                         <label className={this.props.style} style={{marginBottom: 0}}>Due: {date}</label>
 
-                        <Image className={"config_image"} src={check['incomplete']} rounded/>
+                        <Image className={"config_image"} src={check[isComplete]} rounded/>
 
                     </Nav>
 
