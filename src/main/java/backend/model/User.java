@@ -36,6 +36,9 @@ public class User {
 //            inverseJoinColumns = {@JoinColumn(name = "courseID")})
 //    private List<Course> courses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UserCourseLab> userCourseLabList = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<UserCourse> userCourseList = new ArrayList<>();
@@ -149,6 +152,14 @@ public class User {
 
     public void setUserCourseList(List<UserCourse> userCourseList) {
         this.userCourseList = userCourseList;
+    }
+
+    public List<UserCourseLab> getUserCourseLabList() {
+        return userCourseLabList;
+    }
+
+    public void setUserCourseLabList(List<UserCourseLab> userCourseLabList) {
+        this.userCourseLabList = userCourseLabList;
     }
 
     public boolean isStudent() {

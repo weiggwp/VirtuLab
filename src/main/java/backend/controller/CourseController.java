@@ -171,6 +171,17 @@ public class CourseController {
                 labDTO.setCreator(lab.getCreator());
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
+
+                for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
+                    if (user.getId() == userCourseLab.getUser().getId() &&
+                        course.getCourseID() == userCourseLab.getCourse().getCourseID() &&
+                        lab.getLabID() == userCourseLab.getLab().getLabID()) {
+                        /* hard code every completion to true for testing, uncomment next line after testing */
+                        labDTO.setComplete(true);
+//                        labDTO.setComplete(userCourseLab.getComplete() == 1);
+                    }
+
+                }
                 labs.add(labDTO);
             }
 
@@ -197,27 +208,73 @@ public class CourseController {
 
             courseName = "Introduction to General Chemistry| Fall 2019";
             labName="Chem I Lab";
+//        try {
+//            Course course = getCourses(courseDto);
+//            String email = courseDto.getEmail();
+//            User user = userRepository.findByEmail(email);
+//            System.out.println("user is " + user);
+//            for (int i=0; i<user.getUserCourseList().size(); i++)
+//            if (user.getUserCourseList().get(i).getCourse().equals(course)){
+//                return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
+//            }
+//            Lab lab = new Lab(6 ,labName);
+//            course.addLab(lab);
+//            UserCourse usercourse = new UserCourse(user.getId(),user,course);
+//            userCourseService.saveUserCourse(usercourse);
+//            System.out.println("enrolling!");
+////        return "redirect:/login";
+//            return new ResponseEntity(courseName, HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//           // e.printStackTrace();
+//            return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
+//        }
+
+        System.out.println("CourseController: student enrolls a course");
+        System.out.println(courseDto);
         try {
-            Course course = getCourses(courseDto);
+            Optional<Course> optional = courseService.
+                    findCourseByNameOrCode(courseDto.getCode(),0);
+            Course course = optional.get();
+            System.out.println(course);
+//            Course course = getCourses(courseDto);
             String email = courseDto.getEmail();
             User user = userRepository.findByEmail(email);
             System.out.println("user is " + user);
-            for (int i=0; i<user.getUserCourseList().size(); i++)
-            if (user.getUserCourseList().get(i).getCourse().equals(course)){
-                return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
+
+            /* reject if student in already in course */
+            for (UserCourse userCourse: user.getUserCourseList()) {
+                Course c = userCourse.getCourse();
+                if (c.getAccessCode().equals(course.getAccessCode())){
+                    return new ResponseEntity("already enrolled", HttpStatus.NOT_FOUND);
+                }
             }
-            Lab lab = new Lab(6 ,labName);
-            course.addLab(lab);
-            UserCourse usercourse = new UserCourse(user.getId(),user,course);
+//            for (int i=0; i<user.getUserCourseList().size(); i++) {
+//                if (user.getUserCourseList().get(i).getCourse().equals(course)) {
+//                    return new ResponseEntity("already enrolled", HttpStatus.NOT_FOUND);
+//                }
+//            }
+
+            UserCourse usercourse = new UserCourse(user.getId(), user, course);
             userCourseService.saveUserCourse(usercourse);
+
+            List<UserCourseLab> userCourseLabList = user.getUserCourseLabList();
+            for (CourseLab courseLab: course.getCourseLabList()) {
+                Lab lab = courseLab.getLab();
+                System.out.println(lab);
+                userCourseLabList.add(new UserCourseLab(user, course, lab));
+            }
+            System.out.println("b4");
+            userRepository.save(user);
             System.out.println("enrolling!");
-//        return "redirect:/login";
             return new ResponseEntity(courseName, HttpStatus.OK);
         }
         catch (Exception e){
-           // e.printStackTrace();
+//            System.out.println(e.printStackTrace());
+            e.printStackTrace();
             return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
         }
+
     }
 
 
@@ -258,6 +315,17 @@ public class CourseController {
                 }
 
             }
+
+            for (Iterator<UserCourseLab> it = user.getUserCourseLabList().iterator(); it.hasNext();) {
+                UserCourseLab userCourseLab = it.next();
+                if (userCourseLab.getUser().getId() == user.getId() &&
+                        userCourseLab.getCourse().getCourseID() == courseID){
+                    it.remove();
+                }
+
+            }
+
+
 //            course.getUserCourseList().remove(del);
             userRepository.save(user);
 

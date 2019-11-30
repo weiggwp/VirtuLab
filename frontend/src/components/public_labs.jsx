@@ -422,7 +422,7 @@ handleDrag(tag, currPos, newPos) {
                 <div>
                     <Pagination onClick={this.handlePage}>{items}
 
-                        <Pagination.Next/>
+                        {/*<Pagination.Next/>*/}
                     </Pagination>
 
                 </div>
