@@ -301,7 +301,7 @@ public class LabController {
                 System.out.println(course);
                 Lab lab = courseDTO.getLabs().get(0);
 
-                // Todo: check if lab is already in the course
+                // check if lab is already in the course
                 for (CourseLab courseLab: course.getCourseLabList()) {
                     if (courseLab.getLab().getLabID() == lab.getLabID()) {
                         return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -316,6 +316,16 @@ public class LabController {
                 lab.getCourseLabList().add(courseLab);
 //                courseLabService.saveOrUpdate(courseLab);
                 courseService.addCourse(course);
+
+                // add to UserCourseLab
+                for(UserCourse userCourse: course.getUserCourseList()){
+                    User user = userCourse.getUser();
+                    if(user.getRole().toLowerCase().equals("student")) {
+                        user.getUserCourseLabList().add(new UserCourseLab(user, course, lab));
+                        userService.save(user);
+                    }
+                }
+
                 System.out.println("LEAVING ADD LAB CLASS");
                 return new ResponseEntity(HttpStatus.OK);
 
