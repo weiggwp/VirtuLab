@@ -93,7 +93,8 @@ export class account_settings extends Component {
 
     updateClasses(){
         const user = {
-            email: this.props.email
+            email:this.props.email
+
         };
         let axiosConfig = {
             headers: {
@@ -110,10 +111,6 @@ export class account_settings extends Component {
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
                 // console.log("resp is " +response.json())
-
-                 console.log("dat is " + JSON.stringify(response));
-                // console.log("resp is " +response.data[0].courseID);
-                // console.log("resp is " +response.data[0].courseName);
 
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
@@ -133,6 +130,7 @@ export class account_settings extends Component {
                     console.log("error is "+error)
                 }
             );
+        console.log("yeet")
     }
 
 

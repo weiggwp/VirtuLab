@@ -10,6 +10,7 @@ import java.util.ArrayList;
 @Entity
 public class Glassware extends Equipment {
     protected ArrayList<Substance> substances = new ArrayList<>();
+    private String type;
 
 
     public Glassware() {
@@ -24,7 +25,6 @@ public class Glassware extends Equipment {
         this.weight = weight;
     }
 
-    @Override
     public DataNode interact(Equipment e, double capacityGiven) {
         if (e instanceof Glassware) { //pour the liquid
             Glassware g = (Glassware) e;

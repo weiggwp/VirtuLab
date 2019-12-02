@@ -41,7 +41,8 @@ class Course extends React.Component {
         const imageName = this.getImageName();
         return(
             <Card style={{borderWidth:2,borderColor:"black"}} >
-                <Accordion.Toggle as={Card.Header} onClick={this.toggleImage} eventKey={this.props.icount} style={{backgroundColor:"#DDB57E"}}>
+                <Accordion.Toggle as={Card.Header} onClick={this.toggleImage}
+                                  eventKey={this.props.icount} style={{backgroundColor:"#DDB57E"}}>
                     <Navbar  className={"justify-content-between"}>
                         <Nav >
 

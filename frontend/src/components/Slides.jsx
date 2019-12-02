@@ -20,11 +20,13 @@ class Slides extends React.Component {
     };
 
     render (){
+        console.log(this.props.onSelect)
         const children = [];
+        //onSelect={this.props.onSelect}
         children.push(<ChildComponent key={0} number={0} />);
 
         for (let i = 1; i <= this.props.slide_num; i += 1) {
-            children.push(<ChildComponent key={i} number={i}/>);
+            children.push(<ChildComponent key={i} number={i} />);
         }
 
         return (
@@ -79,8 +81,8 @@ class Slides extends React.Component {
 //     </div>
 //     // </div>
 // );
-
-const ChildComponent = props => <Nav.Item> <Nav.Link eventKey={props.number}>Step {props.number}</Nav.Link> </Nav.Item>;
+//onSelect={(e)=>(props.onSelect(e,props.number))
+const ChildComponent = props => <Nav.Item> <Nav.Link eventKey={props.number} >Step {props.number}</Nav.Link> </Nav.Item>;
 // const ChildComponent = props => <ToggleButton value={props.number} className={"Btn-Blue-BG togglebutton "}>{"Step "+props.number}</ToggleButton>;
 
 export {Slides};
