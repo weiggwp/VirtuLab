@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" afterDir="false" />
@@ -100,6 +101,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -228,6 +230,10 @@
       <workItem from="1573673679694" duration="5361000" />
       <workItem from="1573869121635" duration="521000" />
       <workItem from="1574644853039" duration="13123000" />
+      <workItem from="1574798052955" duration="2204000" />
+      <workItem from="1574830506594" duration="74000" />
+      <workItem from="1575072927230" duration="4329000" />
+      <workItem from="1575304777793" duration="1362000" />
     </task>
     <servers />
   </component>
