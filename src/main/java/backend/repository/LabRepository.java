@@ -12,6 +12,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,16 @@ public interface LabRepository extends PagingAndSortingRepository<Lab, Long> {
     Page<Lab> findAll(Pageable pageable);
 
     Page<Lab> findAllByOpen(int isOpen, Pageable pageable);
+
+    Page<Lab> findAllByTagsContains(List<String> list, Pageable pageable);
+
+    Page<Lab> findAllByTags(ArrayList<String> list, Pageable pageable);
+
+    Page<Lab> findAllByTags(String tags, Pageable pageable);
+
+    Page<Lab> findAllByTagsContaining(List<String> list, Pageable pageable);
+
+    Page<Lab> findLabsByTagsIn(List<String> list, Pageable pageable);
+
+    Page<Lab> findByTagsIn(List<String> list, Pageable pageable);
 }

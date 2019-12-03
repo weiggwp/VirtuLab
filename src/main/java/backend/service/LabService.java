@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,15 @@ public class LabService {
         Page<Lab> pageLab = labRepository.findAllByOpen(1, pageable);
         return pageLab;
     }
+
+    public Page<Lab> pageLabsByTags(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        ArrayList<String> list = new ArrayList<>();
+        list.add("rr");
+        Page<Lab> pageLab = labRepository.findByTagsIn(list, pageable);
+        return pageLab;
+    }
+
 
 
     public Optional<Lab> findLabByLabID(long id) { return labRepository.findLabByLabID(id); }
