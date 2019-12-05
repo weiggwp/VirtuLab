@@ -73,7 +73,7 @@ class student_home extends React.Component
                 // this.render()
             })
             .catch((error) => {
-                //console.log(error)
+                console.log("err is"+error)
                 }
             );
     }
@@ -82,17 +82,18 @@ class student_home extends React.Component
     handleAddCourse = (e) => {
         e.preventDefault();
 
-        alert(this.state.code)
+        //alert(this.state.code)
         const course = {
             code: this.state.code,
             email: this.props.email
         };
-
+        console.log("course is "+JSON.stringify(course))
 
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
+
             }
         };
         //axio sends message to backend to handle authentication

@@ -50,6 +50,7 @@ class instructor_home extends React.Component {
 
 
     updateClasses(){
+        console.log("email is "+JSON.stringify(this.props))
         const user = {
             email: this.props.email
         };

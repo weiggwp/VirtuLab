@@ -114,8 +114,9 @@ public class EmailController {
     }
 
     public String resetCustomerPassword(String email) throws Exception {
+        System.out.println("email is "+email);
         User user = userService.findByEmail(email);
-
+        System.out.println("email is "+user.toString());
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;
