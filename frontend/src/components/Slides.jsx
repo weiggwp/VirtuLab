@@ -16,8 +16,25 @@ class Slides extends React.Component {
         this.state = {
             // numChildren: props.slide_num,
             // addChild: props.addChild,
+            curStep: 0,
+            delFun: this.props.delChild
         }
+
+        this.handleDelButton = this.handleDelButton.bind(this);
     };
+
+
+    handleOnSelectedKey(selectedKey){
+        this.setState({
+            curStep: selectedKey
+        })
+    }
+
+    handleDelButton() {
+        this.state.delFun(this.state.curStep)
+        // alert("HI")
+    }
+
 
     render (){
         console.log(this.props.onSelect)
@@ -30,7 +47,9 @@ class Slides extends React.Component {
         }
 
         return (
+
             <div>
+                <Button onClick={() => this.handleDelButton()}> del </Button>
                 <div>
                     <a href="#" onClick={this.props.addChild}>
                         <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
@@ -38,7 +57,7 @@ class Slides extends React.Component {
                     </a>
                 </div>
 
-                <Nav variant="pills" className="flex-column">
+                <Nav variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
                     {children}
                 </Nav>
             </div>
