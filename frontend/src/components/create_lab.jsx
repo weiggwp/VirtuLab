@@ -387,7 +387,7 @@ class create_lab extends React.Component {
             {this.setupInstruction(0,"This is the setup stage. " +
             "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
 
-        for (let i = 1; i <= this.state.step_num; i += 1) {
+        for (let i = 1; i < this.state.steps.length; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             instructions.push(<Tab.Pane eventKey={i}>
                 <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
@@ -711,7 +711,7 @@ class create_lab extends React.Component {
             return null;
         }
 
-        // let size = this.state.steps.length
+        let size = this.state.steps.length
         return(
             <div >
 
@@ -724,7 +724,7 @@ class create_lab extends React.Component {
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
-                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild} delChild={this.handleDelChild}/>
+                            <Slides slide_num={size} addChild={this.handleAddChild} delChild={this.handleDelChild}/>
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
                                 {this.instructionPane()}
