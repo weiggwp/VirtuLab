@@ -31,7 +31,7 @@ public class Statistic {
         return findPercentage(n, size);
     }
 
-    private static double[] findPercentage(double n, double size){
+    public static double[] findPercentage(double n, double size){
 
         double[] stats = new double[2];
         double completeRate = n / size;
@@ -41,6 +41,8 @@ public class Statistic {
         return stats;
 
     }
+
+
 
 
 

@@ -41,7 +41,7 @@ class public_labs extends React.Component {
             tags: [],
             totalPages: 1,
             currentPage: 1,
-            perPage: 2,
+            perPage: 3,
 
             notFound:"",
             suggestions: [
@@ -58,7 +58,9 @@ class public_labs extends React.Component {
                     "Anonymous",
                     "Beaker, Chemicals, Solution, Reaction",
                     "Student will learn how to use mix solution with different concentrations"),
-            ]
+            ],
+
+            curr_page_labs: [],
 
 
         };
@@ -67,6 +69,10 @@ class public_labs extends React.Component {
         this.handleDrag = this.handleDrag.bind(this);
 
         this.handlePage = this.handlePage.bind(this);
+        this.handlePageFrontend = this.handlePageFrontend.bind(this);
+
+        this.handleNext = this.handleNext.bind(this);
+        this.handlePrev = this.handlePrev.bind(this);
     }
 
 
@@ -76,9 +82,11 @@ handleSelect(page) {
 }
 
 handlePage(event) {
+
     this.setState({
         currentPage: Number(event.target.id)
     })
+
     alert(event.target.id)
     let pageNum = event.target.id
     let pagingReq = {
@@ -105,12 +113,71 @@ handlePage(event) {
                 totalPages: numPages
             })
 
+            let results = response.data['labs']['content']
+            let labArray=[]
+            for (let i = 0; i < results.length; i ++) {
+                labArray[i]={lab_id: results[i].labID,
+                    name: results[i].name,
+                    author: results[i].creator,
+                    keywords: results[i].tags,
+                    description: results[i].description};
+            }
+
             this.setState({
-                labs: response.data['labs']['content']
+                labs: labArray
             })
 
         })
 }
+
+handlePageFrontend(event) {
+    alert("handling page")
+
+    alert(event.target.id)
+    let pageNum;
+    if (event.target.id != null || event.target.id !== '') {
+        pageNum = event.target.id
+    } else {
+        pageNum = this.state.currentPage
+    }
+    let itemsPerPage = this.state.perPage
+    let startIndex = (pageNum - 1) * itemsPerPage
+    this.setState({
+        current_page_labs: this.state.labs.slice(startIndex, startIndex + 3),
+        currentPage: pageNum
+    })
+    console.log("current page labs: " + this.state.current_page_labs)
+
+}
+
+handleNext() {
+    if (this.state.currentPage !== this.state.totalPages) {
+        // alert("next page is : " + (this.state.currentPage + 1))
+        let pageNum = (this.state.currentPage + 1)
+        let itemsPerPage = this.state.perPage
+        let startIndex = (pageNum - 1) * itemsPerPage
+        this.setState({
+            currentPage: this.state.currentPage + 1,
+            current_page_labs: this.state.labs.slice(startIndex, startIndex + 3)
+        })
+    }
+}
+
+
+handlePrev() {
+
+    if (this.state.currentPage > 1) {
+        let pageNum = this.state.currentPage - 1
+        let itemsPerPage = this.state.perPage
+        let startIndex = (pageNum - 1) * itemsPerPage
+        this.setState({
+            currentPage: this.state.currentPage - 1,
+            current_page_labs: this.state.labs.slice(startIndex, startIndex + 3)
+        })
+    }
+
+}
+
 
 
 
@@ -163,12 +230,20 @@ handleFieldChange = (e, field) => {
             this.state.notFound="";
             for (let i=0; i<response.data.length; i++){
 
-                labArray[i]={lab_id:response.data[i].labID,name:response.data[i].name,author:response.data[i].creator,
-                    keywords:response.data[i].tags,description:response.data[i].description};
+                labArray[i]={lab_id:response.data[i].labID,
+                    name: response.data[i].name,
+                    author: response.data[i].creator,
+                    keywords: response.data[i].tags,
+                    description: response.data[i].description};
 
             }
             // console.log("AAA classarray is "+classArray);
-            this.setState({labs:labArray,loading_labs:false});
+            let totalPages = Math.ceil(labArray.length / this.state.perPage);
+            this.setState({labs:labArray,
+                        loading_labs:false,
+                        totalPages: totalPages,
+                        currentPage: 1});
+
         })
         .catch((error) => {
                 alert(error +" is the error")
@@ -280,7 +355,11 @@ handleDrag(tag, currPos, newPos) {
 
                 }
                 // console.log("AAA classarray is "+classArray);
-                this.setState({labs:labArray,loading_labs:false});
+                let totalPages = Math.ceil(labArray.length / this.state.perPage);
+                this.setState({labs:labArray,loading_labs:false, totalPages: totalPages,
+                            current_page_labs: labArray.slice(0, 3)});
+
+
             })
             .catch((error) => {
                 console.log(error +" is the error")
@@ -319,13 +398,13 @@ handleDrag(tag, currPos, newPos) {
 
 
     render() {
-
         const numberPages = Math.floor(this.state.totalResults / 5)
         if (this.state.loading_labs){
             this.updateLabs();
             return null;
         }
-        let labs = this.state.labs;
+        // let labs = this.state.labs;
+        let labs = this.state.current_page_labs;
 
         let active = this.state.currentPage
         let items = [];
@@ -335,8 +414,6 @@ handleDrag(tag, currPos, newPos) {
                     {number}
                 </Pagination.Item>,
             );
-
-
         }
 
         const paginationBasic = (
@@ -420,11 +497,12 @@ handleDrag(tag, currPos, newPos) {
                 </div>
 
                 <div>
-                    <Pagination style={{float:"right",marginRight:"3%"}} onClick={this.handlePage}>
-                        {items}
+                    <Pagination onClick={this.handlePageFrontend}>{items}
 
-                        {/*<Pagination.Next/>*/}
+
                     </Pagination>
+                    <Pagination.Prev onClick={this.handlePrev}/>
+                    <Pagination.Next onClick={this.handleNext}/>
 
                 </div>
 

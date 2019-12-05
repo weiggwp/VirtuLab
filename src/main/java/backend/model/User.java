@@ -197,7 +197,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
-                ", userCourseList=" + userCourseList +
+//                ", userCourseList=" + userCourseList +
                 ", labs=" + labs +
                 ", roles=" + roles +
                 '}';
