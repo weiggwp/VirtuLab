@@ -11,6 +11,7 @@ import CreateCourse from './components/create_course.jsx';
 import DoLab from './components/student_lab.jsx';
 import CreateLab from './components/create_lab.jsx';
 import Statistics from './components/Statistics.jsx';
+import test_draggable from './components/test_draggable.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
 
@@ -30,12 +31,13 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/" component={Login} />
+              <Route exact path="/test" component={test_draggable} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/forgot_password" component={forgot_password} />
               <PrivateRoute exact path="/account_settings" component={Account} />
                 <PrivateRoute exact path="/student_home" role="student" component={StudentHome}/>
-                <PrivateRoute exact path="/instructor_home" role="instructor" component={InstructorHome}/>
+                <Route exact path="/instructor_home" role="instructor" component={InstructorHome}/>
                 <PrivateRoute exact path="/instructor_labs" role="instructor" component={InstructorLabs}/>
                 <PrivateRoute exact path="/public_labs" role="instructor" component={PublicLab}/>
                 <PrivateRoute exact path="/create_course" role="instructor" component={CreateCourse}/>
@@ -58,5 +60,3 @@ export default App;
               <Route exact path="/replay/:id" component={Replay}/>
               <Route component={NoMatch} />
  */
-
-//TODO:need to implement PrivateRoute

@@ -26,6 +26,7 @@ export class create_course extends Component {
     };
 
 
+
     handleCreateCourse  = (e) => {
         e.preventDefault()
         const course= {
@@ -33,6 +34,7 @@ export class create_course extends Component {
             course_number: this.state.course_number,
             course_name:this.state.course_name
         };
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',

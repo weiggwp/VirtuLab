@@ -37,7 +37,8 @@ class instructor_labs extends React.Component {
         this.redirectEdit={
             id:0,
             name:'',
-            steps:[]
+            steps:[],
+            equipments:[]
         }
         this.state = {
             user: this.props.user,
@@ -208,7 +209,9 @@ class instructor_labs extends React.Component {
         this.redirectEdit={
             id:lab.labID,
             name:lab.name,
-            steps:lab.steps
+            steps:lab.steps,
+            equipments:lab.equipments
+
 
 
         }
@@ -356,7 +359,8 @@ class instructor_labs extends React.Component {
                 state: {
                     id:this.redirectEdit.id,
                     name:this.redirectEdit.name,
-                    steps:this.redirectEdit.steps
+                    steps:this.redirectEdit.steps,
+                    equipments:this.redirectEdit.equipments
                 },
             }}/>;
 

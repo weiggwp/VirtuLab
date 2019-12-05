@@ -99,15 +99,15 @@ class forgot_password extends Component {
                                 <div className="Reset" >
                                     <form className="reset_form" onSubmit={this.handleReset}>
                                         <Container>
-                                            <Row>
-                                                <Col md={{span:10,offset:0}}>
+                                            <Row style={{marginTop:"5%"}}>
+                                                <Col md={{span:10,offset:1}}>
                                                     <h2 className="signupH2">Enter e-mail address</h2>
 
                                                 </Col>
 
                                             </Row>
                                             <Row>
-                                                <Col md={{ span: 10, offset: 0 }}>
+                                                <Col md={{ span: 10, offset: 1 }}>
                                                     <FormGroup controlId="formBasicText" bsSize="large">
                                                         <FormControl
                                                             autoFocus
@@ -118,12 +118,12 @@ class forgot_password extends Component {
                                                         />
                                                     </FormGroup>
                                                 </Col>
-                                                <Col md={{ span: 10, offset: 0 }}>
+                                                <Col md={{ span: 10, offset: 1 }}>
                                                 <Button style={{ span:10,backgroundColor: 'blue',color:"white"}} block bsSize="large" type="submit">
                                                     E-mail me
                                                 </Button>
                                                 </Col>
-                                                {this.state.confirmation}
+                                                <div style={{marginLeft:"3%",marginTop:"3%"}}>{this.state.confirmation}</div>
                                             </Row>
                                         </Container>
                                     </form>

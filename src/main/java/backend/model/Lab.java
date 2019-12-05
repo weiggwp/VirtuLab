@@ -2,16 +2,14 @@ package backend.model;
 
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import javax.persistence.*;
 import java.util.List;
 
@@ -32,7 +30,12 @@ public class Lab {
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
     private List<Step> steps = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List <Equipment> equipments = new ArrayList<>();
 
+    public List<Equipment> getEquipments() {
+        return equipments;
+    }
     @OneToMany(mappedBy = "lab", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<CourseLab> courseLabList = new ArrayList<>();
 
@@ -47,7 +50,9 @@ public class Lab {
     }
 
 
-
+    public void setEquipments(List<Equipment> equipments) {
+        this.equipments = equipments;
+    }
 
 //    private Step steps;
 

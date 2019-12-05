@@ -2,7 +2,7 @@ import Workspace from "./Workspace.js";
 // Initializing a class definition
 class Step {
 
-    constructor(stepNum,instruction)
+    constructor(stepNum,instruction, workspace)
     {
 
         if(stepNum===0) {
@@ -10,21 +10,25 @@ class Step {
         }
         else
         {
-            this.init(stepNum,instruction,new Workspace());
+            //if workspace is not defined, create a new one
+            if(!workspace){
+                workspace=new Workspace();
+            }
+            this.init(stepNum,instruction,workspace);
 
         }
     }
     init(stepNum, instruction, workspace) {
         this.stepNum = stepNum;
         this.instruction = instruction;
-        // this.workspace = workspace;
+        this.workspace = workspace;
     }
 
     initStep()
     {
         this.stepNum = 0;
         this.instruction = "This is the setup stage. Click on equipments you would like to be available for the duration of the lab (click again to unselect) ";
-        // this.workspace= new Workspace();
+        this.workspace= new Workspace();
 
     }
     setInstruction(str){

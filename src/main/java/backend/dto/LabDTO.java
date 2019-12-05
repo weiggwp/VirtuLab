@@ -83,6 +83,16 @@ public class LabDTO {
         return open;
     }
 
+
+    private List<EquipmentDTO> equipments;
+
+    public List<EquipmentDTO> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<EquipmentDTO> equipments) {
+        this.equipments = equipments;}
+
     public void setOpen(int open) {
         this.open = open;
     }
@@ -157,6 +167,7 @@ public class LabDTO {
                 ", lastModified=" + lastModified +
                 ", creator='" + creator + '\'' +
                 ", steps=" + steps +
+                ", equipments=" + equipments+
                 ", isPublic=" + open +
                 ", completed=" + complete +
                 '}';

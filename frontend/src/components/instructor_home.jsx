@@ -68,9 +68,6 @@ class instructor_home extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
 
-                console.log(JSON.stringify(response))
-                console.log(response)
-
 
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
@@ -79,6 +76,7 @@ class instructor_home extends React.Component {
                 var classArray=[];
 
                 for (let i=0; i<response.data.length; i++){
+
                     classArray[i]={classname:response.data[i].course_name, classID:0,
                         clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
 
@@ -88,7 +86,7 @@ class instructor_home extends React.Component {
                 console.log("classes is "+JSON.stringify(this.state.classes))
             })
             .catch((error) => {
-                    console.log("doot" + error)
+
                 }
             );
     }

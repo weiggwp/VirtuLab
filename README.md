@@ -19,7 +19,7 @@ roam freely in the kitchen.
 
 ## Deployment
 
-:confetti_ball: Frontend deployed on https://mysterious-escarpment-43038.herokuapp.com/
+:confetti_ball: Frontend deployed on http://mysterious-escarpment-43038.herokuapp.com/
 
 ## Contributing
 

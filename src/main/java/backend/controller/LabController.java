@@ -7,7 +7,6 @@ import backend.service.*;
 import org.modelmapper.ModelMapper;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +52,8 @@ public class LabController {
     StepService stepService;
 
     @Autowired
+    EquipmentService equipmentService;
+
     EntityManager em;
 
     ModelMapper modelMapper = new ModelMapper();
@@ -76,6 +77,13 @@ public class LabController {
             steps.add(step);
         }
 
+        List<Equipment> equipments = new ArrayList<>();
+        for (EquipmentDTO dto: labDTO.getEquipments()) {
+            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            equipmentService.saveEquipment(equipment);
+            equipments.add(equipment);
+        }
+
 
         long returnid = -1;
         if (existing != null)
@@ -84,6 +92,7 @@ public class LabController {
 
             existing.setLastModified(labDTO.getLastModified());
             existing.setSteps(steps);
+            existing.setEquipments(equipments);
             labService.saveLab(existing);
 
         }
@@ -92,11 +101,13 @@ public class LabController {
           //  System.out.println("lab is "+labDTO);
             Lab lab = modelMapper.map(labDTO, Lab.class);
             lab.setSteps(steps);
+            lab.setEquipments(equipments);
             lab.setOpen(0);
             returnid = labService.createNewLab(lab);
           //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
             //System.out.println("return id is "+returnid);
             User instructor = userService.findByEmail(labDTO.getCreator());
+
             instructor.getLabs().add(lab);
             userService.save(instructor);
         }

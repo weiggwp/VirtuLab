@@ -106,8 +106,8 @@ handlePage(event) {
         .then((response) => {
             // alert(response)
             let numPages = response.data["totalPages"]
-            console.log(response.data['totalPages']) // number of pages needed
-            console.log(response.data['labs']['content']) //this is the list
+            // console.log(response.data['totalPages']) // number of pages needed
+            // console.log(response.data['labs']['content']) //this is the list
 
             this.setState({
                 totalPages: numPages
@@ -498,6 +498,7 @@ handleDrag(tag, currPos, newPos) {
 
                 <div>
                     <Pagination onClick={this.handlePageFrontend}>{items}
+
 
                     </Pagination>
                     <Pagination.Prev onClick={this.handlePrev}/>

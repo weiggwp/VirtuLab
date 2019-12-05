@@ -6,7 +6,7 @@ import axios from 'axios';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
-import {add_course} from './add_course.jsx'
+// import 'react-notifications/lib/notifications.css'; // FIXME: DELETE
 import icon from '../Images/v.jpg';
 import {Button, Image, Navbar, Nav, Form, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 
@@ -40,6 +40,7 @@ class student_home extends React.Component
     };
     updateClasses(){
         const user = {
+
             email: this.props.email
         };
         let axiosConfig = {
@@ -51,12 +52,14 @@ class student_home extends React.Component
         };
         var classArr=[];
         var classArray=[];
-
+        console.log("sending email of "+user.email)
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
+                console.log("email is " +this.props.email)
                 // console.log("resp is " +response.json())
+
                 console.log("resp is "+JSON.stringify(response))
 
 
@@ -67,8 +70,10 @@ class student_home extends React.Component
                 }
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
+                // this.render()
             })
             .catch((error) => {
+                //console.log(error)
                 }
             );
     }
@@ -103,9 +108,9 @@ class student_home extends React.Component
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
-                console.log("failure...");
+                console.log(error.toString());
 
-                ToastsStore.error("Course ID not found.")
+                ToastsStore.error("Course ID not found, or you\n are already enrolled in course.")
                 }
             );
 
