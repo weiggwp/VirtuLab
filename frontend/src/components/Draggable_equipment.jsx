@@ -5,7 +5,9 @@ import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
 import {move_element} from "./create_lab"
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-
+import { ReactSVG } from 'react-svg'
+import { css } from 'glamor'
+import Water from "./water";
 let dragSrcEl = null;
 
 class Draggable_equipment extends React.Component{
@@ -115,21 +117,50 @@ class Draggable_equipment extends React.Component{
 
 
     render() {
+        const styles = css({
+            ' svg': {
+                height: 200,
+                width: 200,
+                fill: 'blue',
+            },
+            // ' rect': {
+            //     fill: 'aqua',
+            //     height: 190,
+            //     stroke: 'darkmagenta',
+            //     width: 190
+            // }
+        })
+        // const water = new Water();
         return (
             <div>
 
             <ContextMenuTrigger id={"trigger"+this.props.wkspace_id+","+this.props.equip_id} holdToDisplay={-1}>
                 {/*<div className="well">Right click to see the menu</div>*/}
-            <img id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
-                 draggable="true"
-                 onDragStart={this.dragStart_handler}
-                 onDrop={this.drop_handler}
-                 onDragOver={this.dragover_handler}
-                 onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
-                 onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
-                 src={this.props.equipment.image}
-                 style={{position:"absolute",left:this.props.equipment.left,top:this.props.equipment.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}
-                 alt={"Not Found"}/>
+            {/*<img id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}*/}
+            {/*     draggable="true"*/}
+            {/*     onDragStart={this.dragStart_handler}*/}
+            {/*     onDrop={this.drop_handler}*/}
+            {/*     onDragOver={this.dragover_handler}*/}
+            {/*     onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}*/}
+            {/*     onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}*/}
+            {/*     src={this.props.equipment.image}*/}
+            {/*     style={{position:"absolute",left:this.props.equipment.left,top:this.props.equipment.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}*/}
+            {/*     alt={"Not Found"}/>*/}
+                <div>
+                    <Water width={200} />
+
+                </div>
+                 {/*<ReactSVG*/}
+                 {/*    draggable="true"*/}
+                 {/*    onDragStart={this.dragStart_handler}*/}
+                 {/*    onDrop={this.drop_handler}*/}
+                 {/*    onDragOver={this.dragover_handler}*/}
+                 {/*    onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}*/}
+                 {/*    onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}*/}
+                 {/*    src={this.props.equipment.image}*/}
+                 {/*   {...styles}*/}
+                 {/*    */}
+                 {/*/>*/}
             </ContextMenuTrigger>
 
             <ContextMenu id={"trigger"+this.props.wkspace_id+","+this.props.equip_id}>
