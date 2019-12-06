@@ -1,6 +1,8 @@
 package backend.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Step {
@@ -8,7 +10,18 @@ public class Step {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long stepID;
     private long stepNum;
+
+    public List<Equipment> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<Equipment> equipments) {
+        this.equipments = equipments;
+    }
+
     private String instruction;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Equipment> equipments = new ArrayList<>();
 
 //    @ManyToOne
 //    @JoinColumn(name="labID")
@@ -56,7 +69,7 @@ public class Step {
                 "stepID=" + stepID +
                 ", stepNum=" + stepNum +
                 ", instruction='" + instruction + '\'' +
+                ", equipments=" + equipments +
                 '}';
     }
-
 }

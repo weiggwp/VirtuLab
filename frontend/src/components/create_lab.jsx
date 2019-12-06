@@ -74,6 +74,54 @@ class create_lab extends React.Component {
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.drop_handler = this.drop_handler.bind(this);
+        this.move_element = this.move_element.bind(this);
+    }
+    populateStepEquipment(equipList)
+    {
+
+            var result =[];
+
+            for (var i = 0; i < equipList.length; i++) {
+                var current = equipList[i];
+                console.log("current",current)
+
+                if(current.type==="Solution")
+                {
+                    var equip = new Element(current.name, current.image, current.capacity);
+                    equip.setDisabled(current.disabled)
+                    equip.setLocation(current.x,current.y)
+
+                    result.push(equip)
+                    console.log("equip",equip)
+                }
+                else if(current.type==='Tools')
+                {
+                    var equip =new Tool(current.name, current.image);
+                    equip.setDisabled(current.disabled)
+                    equip.setLocation(current.x,current.y)
+
+                    result.push(equip);
+                    console.log("equip",equip)
+
+                }
+                else {
+
+                    var equip = new Glassware(current.name, current.image, current.capacity);
+                    equip.setDisabled(current.disabled)
+                    equip.setType(current.type)
+                    equip.setLocation(current.x,current.y)
+                    result.push(equip);
+                    console.log("equip",equip)
+
+                }
+
+
+            }
+
+            return result;
+
+
     }
     populateEquipmentSetup()
     {
@@ -133,8 +181,9 @@ class create_lab extends React.Component {
             if (step_list !== undefined)
             {
                 for (var i = 1; i < step_list.length; i++) {
+                    console.log("step ",i," ",step_list[i])
                     this.state.steps.push(new Step(i, step_list[i].instruction));
-                    this.state.equipments[i]=[];
+                    this.state.equipments[i]=this.populateStepEquipment(step_list[i].equipments);
 
                 }
 
@@ -202,9 +251,21 @@ class create_lab extends React.Component {
 
     }
 
+    setStepsEquips()
+    {
+        this.state.steps.map((step,index)=>(
+            step.setEquipments(this.state.equipments[index])
+
+            ));
+
+        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
+    }
+
 
     handleLabSave = (e) => {
      // alert("saving " +this.state.lab_id)
+        this.setStepsEquips()
+        alert("stop")
         const lab = {
             labID: this.state.lab_id,
             //if zero, it's not a valid labID
@@ -455,7 +516,7 @@ class create_lab extends React.Component {
         if (ev.stopPropagation) {
             ev.stopPropagation(); // Stops some browsers from redirecting.
         }
-        move_element(ev);
+        this.move_element(ev);
         return false;
     }
     dragover_handler(ev) {
@@ -591,7 +652,8 @@ class create_lab extends React.Component {
                                              canInteract = {this.canInteract}
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}
-                                              width={200} height={200}/>
+                                             move_element={this.move_element}
+                                             width={200} height={200}/>
 
                     ))
                     }
@@ -643,6 +705,18 @@ class create_lab extends React.Component {
 
     };
 
+    createNewEquipment(equipment)
+    {
+
+            const copy = new equipment.constructor()
+            const keys = Object.keys(equipment)
+            keys.forEach(key => {
+                copy[key] = equipment[key]
+            })
+            return copy
+
+    }
+
     handleAddEquipment= (step,equipment) =>
     {
         if(step===0)
@@ -660,7 +734,7 @@ class create_lab extends React.Component {
         }
         else
         {
-            current[step].push(equipment);
+            current[step].push(this.createNewEquipment(equipment));
             //            <Draggable_equipment image={image} x={500} y={100} width={this.state.equipments.length*100} height={this.state.equipments.length*100}/>
 
             this.setState(
@@ -710,16 +784,24 @@ class create_lab extends React.Component {
             </div>
         )
     }
+    move_element(ev){
+        const offset = ev.dataTransfer.getData("text/offset").split(',');
+        const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+        dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
+        dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
+        console.log("moving element ",dm.style.left)
+        console.log("moving element ",dm.style.top)
 
+        const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const equip_id = ev.dataTransfer.getData('text/equip_id');
+
+        const source = this.state.equipments[workspace_id][equip_id];
+        source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
+        console.log("moving ",workspace_id,equip_id,source);
+    }
 
 }
-export function move_element(ev){
-    const offset = ev.dataTransfer.getData("text/offset").split(',');
-    const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
-    dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
-    dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-    // console.log(dm.style);
-}
+
 
 
 export default create_lab;
