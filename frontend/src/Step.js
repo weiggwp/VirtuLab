@@ -18,6 +18,10 @@ class Step {
 
         }
     }
+    setEquipments(equips)
+    {
+        this.equipments=equips;
+    }
     init(stepNum, instruction, workspace) {
         this.stepNum = stepNum;
         this.instruction = instruction;

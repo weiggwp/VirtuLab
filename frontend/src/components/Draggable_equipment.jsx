@@ -3,7 +3,8 @@ import {Image, Nav} from "react-bootstrap";
 import {Equipment} from "./Equipment";
 import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
-import {move_element} from "./create_lab"
+
+import { ReactComponent as Example } from '../Images/water.svg';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 let dragSrcEl = null;
@@ -14,6 +15,8 @@ class Draggable_equipment extends React.Component{
         this.state = {
             object:undefined,
             target:undefined,
+            x:undefined,
+            y:undefined
 
         };
 
@@ -84,7 +87,7 @@ class Draggable_equipment extends React.Component{
          if (dragSrcEl !== this &&
              this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
 
-             move_element(ev);
+             this.props.move_element(ev);
 
              this.props.interation_handler(
                  ev.target,
@@ -95,7 +98,7 @@ class Draggable_equipment extends React.Component{
 
          }
          else if (dragSrcEl === this){
-             move_element(ev);
+             this.props.move_element(ev);
          }
          else{
              alert("Not Interactable!");
@@ -113,23 +116,33 @@ class Draggable_equipment extends React.Component{
 
     }
 
+    //<object className="emb" data="images/svglogo.svg" width="100" height="100" type="image/svg+xml"></object>
+
 
     render() {
+        // alert(this.props.equipment.image);
         return (
-            <div>
+            <div
+            >
 
             <ContextMenuTrigger id={"trigger"+this.props.wkspace_id+","+this.props.equip_id} holdToDisplay={-1}>
                 {/*<div className="well">Right click to see the menu</div>*/}
-            <img id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
-                 draggable="true"
-                 onDragStart={this.dragStart_handler}
-                 onDrop={this.drop_handler}
-                 onDragOver={this.dragover_handler}
-                 onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
-                 onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
-                 src={this.props.equipment.image}
-                 style={{position:"absolute",left:this.props.equipment.left,top:this.props.equipment.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}
-                 alt={"Not Found"}/>
+
+            <Image
+                id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
+                draggable="true"
+                onDragStart={this.dragStart_handler}
+                onDrop={this.drop_handler}
+                onDragOver={this.dragover_handler}
+                onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
+                onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
+                src={this.props.equipment.image}
+
+                style={{position:"absolute",left:this.props.equipment.left,height:200,width:200,top:this.props.equipment.top,display:"inline-block"}}
+            >
+
+            </Image>
+
             </ContextMenuTrigger>
 
             <ContextMenu id={"trigger"+this.props.wkspace_id+","+this.props.equip_id}>

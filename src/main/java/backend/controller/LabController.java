@@ -69,20 +69,17 @@ public class LabController {
 
 
         List<Step> steps = new ArrayList<>();
-        for (Step step: labDTO.getSteps()) {
-          /*  Step step = new Step();
+        for (StepDTO dto: labDTO.getSteps()) {
+            Step step = new Step();
             step.setStepNum(dto.getStepNum());
-            step.setInstruction(dto.getInstruction());*/
+            step.setInstruction(dto.getInstruction());
+            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
             stepService.addStep(step);
             steps.add(step);
         }
 
-        List<Equipment> equipments = new ArrayList<>();
-        for (EquipmentDTO dto: labDTO.getEquipments()) {
-            Equipment equipment = modelMapper.map(dto, Equipment.class);
-            equipmentService.saveEquipment(equipment);
-            equipments.add(equipment);
-        }
+
+        List<Equipment> equipments = mapEquipmentDTO(labDTO.getEquipments());
 
 
         long returnid = -1;
@@ -114,6 +111,17 @@ public class LabController {
 
 
         return new ResponseEntity<>(returnid, HttpStatus.OK);
+    }
+
+    private List<Equipment> mapEquipmentDTO(List<EquipmentDTO> DTO)
+    {
+        List<Equipment> equipments = new ArrayList<>();
+        for (EquipmentDTO dto: DTO) {
+            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            equipmentService.saveEquipment(equipment);
+            equipments.add(equipment);
+        }
+        return equipments;
     }
 
 
@@ -163,7 +171,6 @@ public class LabController {
         else
             return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
     }
-
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_public_labs", method = RequestMethod.POST)
     public ResponseEntity getPublicLabs() {
@@ -173,11 +180,10 @@ public class LabController {
             if (labs.get(i).getOpen() > 0){
                 ret.add(labs.get(i));
             }
-            System.out.println("Lab: "+labs.get(i));
+          //  System.out.println("Lab: "+labs.get(i));
         }
         return new ResponseEntity(ret,HttpStatus.OK);
     }
-
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_matching_public_labs", method = RequestMethod.POST)
     public ResponseEntity getMatchingPublicLabs(@RequestBody LabDTO labDTO) {
@@ -314,7 +320,7 @@ public class LabController {
                 System.out.println(course);
                 Lab lab = courseDTO.getLabs().get(0);
 
-                // check if lab is already in the course
+                // Todo: check if lab is already in the course
                 for (CourseLab courseLab: course.getCourseLabList()) {
                     if (courseLab.getLab().getLabID() == lab.getLabID()) {
                         return new ResponseEntity(HttpStatus.NOT_FOUND);
