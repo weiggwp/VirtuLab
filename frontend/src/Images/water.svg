@@ -18,11 +18,12 @@
   </metadata>
   <g
      id="layer1">
+
     <path
        transform="matrix(1.235547,0,0,1.4728611,-7.2477263,-11.066117)"
        d="m 36.79528,19.152676 a 11.357388,1.527602 0 1 1 -22.714775,0 11.357388,1.527602 0 1 1 22.714775,0 z"
        id="path10583"
-       style="fill:blue;fill-opacity:1;stroke:none" />
+       style="fill:#eff5f5;fill-opacity:1;stroke:none" />
     <path
        d="m 29.05118,38.323128 c -1.519797,-0.169999 -3.162594,-0.263541 -4.878215,-0.263541 -5.729306,0 -10.65701,1.03595 -12.843554,2.521503"
        style="fill:none;stroke:#1e1e1e;stroke-width:0.10141162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"

@@ -147,7 +147,7 @@ class Draggable_equipment extends React.Component{
             {/*     style={{position:"absolute",left:this.props.equipment.left,top:this.props.equipment.top,paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}*/}
             {/*     alt={"Not Found"}/>*/}
                 <div>
-                    <Water width={200} />
+                    <Water width={200}   />
 
                 </div>
                  {/*<ReactSVG*/}
