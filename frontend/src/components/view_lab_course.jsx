@@ -110,7 +110,7 @@ class view_lab_course extends React.Component
                 console.log("resp is "+JSON.stringify(response))
                 for (let i=0; i<response.data.length; i++){
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
-                    completed:"N/A"};
+                        completed:"N/A"};
                 }
                 let date =new Date(this.props.location.state.due_date);
                 console.log("date is " +date)

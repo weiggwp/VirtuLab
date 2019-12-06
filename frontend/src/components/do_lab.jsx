@@ -44,11 +44,11 @@ import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
 
 
-class create_lab extends React.Component {
+class DoLab extends React.Component {
     constructor(props) {
         super(props);
 
-        this.steps = [new Step(0)];
+        this.steps = [];
         this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
@@ -57,15 +57,16 @@ class create_lab extends React.Component {
             showPopover: false,
             redirectHome: false,
             restart:false,
-            steps : [new Step(0)],
+            steps : [],
             step_num: 0,
+            completedSteps:0,
             lab_id:0,
             lab_loaded:false,
             lab_title:"Untitled Lab",
             equipments:[[]],
             input:0,
             popoverWarning:"",
-
+            slide:undefined,
 
         };
 
@@ -77,9 +78,11 @@ class create_lab extends React.Component {
     }
     populateEquipmentSetup()
     {
+        console.log("populating,s tate is "+JSON.stringify(this.props.location.state))
         var equipList = this.props.location.state.equipments;
-        if (equipList !== undefined)//opening a previously saved lab
+        if (equipList !== undefined&&equipList!=null)//opening a previously saved lab
         {
+            console.log("equplist is "+JSON.stringify(equipList))
             var result ={
                 'Solution': [],
                 'Tools': [],
@@ -128,18 +131,22 @@ class create_lab extends React.Component {
 
             //get steps from prop
             var step_list = this.props.location.state.steps;
-
+            console.log("propstepsss    s is "+JSON.stringify(this.props.location.state.steps))
+            console.log("steplist is now "+JSON.stringify(this.state.steps))
             //opening a previously saved lab
             if (step_list !== undefined)
             {
-                for (var i = 1; i < step_list.length; i++) {
-
-                    this.state.steps.push(new Step(i, step_list[i].instruction));
+                for (var i = 1; i <step_list.length ; i++) {
+                    console.log("pushing instruction "+i+"="+JSON.stringify( step_list[i].instruction))
+                    this.state.steps.push(new Step(i+1, step_list[i].instruction));
+                    console.log("steplist is now "+JSON.stringify(this.state.steps))
                     this.state.equipments[i]=[];
 
                 }
 
             }
+            console.log("steplist is now "+JSON.stringify(this.state.steps))
+            console.log("populationg equipsetup!")
             this.populateEquipmentSetup();
 
             // alert("got here"+this.props.location.state.id);
@@ -205,7 +212,7 @@ class create_lab extends React.Component {
 
 
     handleLabSave = (e) => {
-     // alert("saving " +this.state.lab_id)
+        // alert("saving " +this.state.lab_id)
         const lab = {
             labID: this.state.lab_id,
             //if zero, it's not a valid labID
@@ -261,6 +268,18 @@ class create_lab extends React.Component {
                     </Nav>
 
                     <Nav>
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
+                                    Check to see if you successfully completed the step.
+                                </Tooltip>
+                            }
+                        >
+
+                                <Button onClick={this.completeStep} style={{backgroundColor: "black"}}>Check Step</Button>
+
+                        </OverlayTrigger>
+
                         <OverlayTrigger
                             overlay={
                                 <Tooltip>
@@ -325,18 +344,10 @@ class create_lab extends React.Component {
 
     }
 
-    handleInstructionChange=(e,index)=>
-    {
-        var list = this.state.steps;
-        list[index].setInstruction(e.target.value);
-        this.setState({
-            steps:list
-        })
-    };
 
     instruction(index)
     {
-        console.log(index)
+        console.log("index is "+index)
         //,width: '20rem' for div
         return(
             <div style={{padding: 10,height:'30vh'}}>
@@ -344,9 +355,8 @@ class create_lab extends React.Component {
                 <textarea
                     style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
                     placeholder="Input instruction for this step here"
-                    onChange={(e) => this.handleInstructionChange(e, index)}
-                    // ?. Why is this called after delChild.
-                    value={this.state.steps[index].instruction}
+                    readOnly = "true"
+                    value={this.state.steps[index-1].instruction}
                 />
 
             </div>
@@ -375,26 +385,24 @@ class create_lab extends React.Component {
         );
     }
 
+    addInstruction(){
 
+    }
     instructionPane()
     {
         const instructions = [];
         // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
-        instructions.push(<Tab.Pane eventKey={0}>
-            <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
-
-            {this.setupInstruction(0,"This is the setup stage. " +
-            "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
-
-        for (let i = 1; i < this.state.steps.length; i += 1) {
+        //console.log("state is "+JSON.stringify(this.state))
+        for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
+            console.log("i is "+i)
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
+                <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
 
                 instruction for step {i} {this.instruction(i)}</Tab.Pane>);
-            }
+        }
 
 
         return(
@@ -505,7 +513,7 @@ class create_lab extends React.Component {
 
                 actions.map((action)=>(
                     buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
-                // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
+                    // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
                 ));
             }
             else{
@@ -516,26 +524,26 @@ class create_lab extends React.Component {
 
 
         return(
-        <Overlay
-            show={this.state.showPopover}
-            target={this.target}
-            placement="bottom"
-            container={this.ref.current}
-            containerPadding={20}
-            rootClose={true}
-            onHide={() => this.setState({ showPopover: false })}
-            style={{width:400}}
-        >
-            <Popover id="popover-contained" >
-                <Popover.Title >
-                    <div className={"col1"}>
-                        <strong>Action</strong>
-                    </div>
-                    <div className={"col2"}>
-                        <a className="close" onClick={()=>this.setState({showPopover: false})}/>
-                    </div>
-                </Popover.Title>
-                <Popover.Content>
+            <Overlay
+                show={this.state.showPopover}
+                target={this.target}
+                placement="bottom"
+                container={this.ref.current}
+                containerPadding={20}
+                rootClose={true}
+                onHide={() => this.setState({ showPopover: false })}
+                style={{width:400}}
+            >
+                <Popover id="popover-contained" >
+                    <Popover.Title >
+                        <div className={"col1"}>
+                            <strong>Action</strong>
+                        </div>
+                        <div className={"col2"}>
+                            <a className="close" onClick={()=>this.setState({showPopover: false})}/>
+                        </div>
+                    </Popover.Title>
+                    <Popover.Content>
 
                         <div className="arrowBox">
                             <form className="form-inline" role="form" onSubmit={this.handleSubmit}>
@@ -565,46 +573,47 @@ class create_lab extends React.Component {
                             {/*<span id="transferFeedback" className="transferFeedback"*/}
                             {/*      style="display:none;color:white"></span>*/}
                         </div>
-                </Popover.Content>
-            </Popover>
-        </Overlay>
+                    </Popover.Content>
+                </Popover>
+            </Overlay>
         )
     }
     workspacePane(){
         const workspaces = [];
 
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
-        workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
+        //workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
         console.log("equips is "+JSON.stringify(this.state.equipments))
-        for (let i = 1; i < this.state.steps.length; i += 1) {
-            const equipments = this.state.equipments[i];
+        for (let i = 1; i <= this.state.step_num; i += 1) {
+            const equipments = this.state.equipments[i-1];
+            if (equipments==undefined)break;
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
                 <Tab.Pane
                     eventKey={i}
                     onDrop={this.drop_handler} onDragOver={this.dragover_handler}
                     style={{height:"100%"}}>
-                workspace for step {i}
-                <div style={{height:"100%"}}>
+                    workspace for step {i}
+                    <div style={{height:"100%"}}>
 
-                    {equipments.map((equipment,index) => (
+                        {equipments.map((equipment,index) => (
 
-                        <Draggable_equipment wkspace_id={i} equip_id={index}
-                                             interation_handler= {this.interaction_handler}
-                                             canInteract = {this.canInteract}
-                                             handle_equip_delete={this.handle_equip_delete}
-                                             equipment={equipment}
-                                              width={200} height={200}/>
+                            <Draggable_equipment wkspace_id={i} equip_id={index}
+                                                 interation_handler= {this.interaction_handler}
+                                                 canInteract = {this.canInteract}
+                                                 handle_equip_delete={this.handle_equip_delete}
+                                                 equipment={equipment}
+                                                 width={200} height={200}/>
 
-                    ))
-                    }
+                        ))
+                        }
 
-                    {this.popover()}
+                        {this.popover()}
 
 
-                    <ToastsContainer store={ToastsStore}/>
-                </div>
-            </Tab.Pane>);
+                        <ToastsContainer store={ToastsStore}/>
+                    </div>
+                </Tab.Pane>);
         }
 
         return(
@@ -612,33 +621,6 @@ class create_lab extends React.Component {
                 {workspaces}
             </Tab.Content>
         )
-    }
-
-    handleDelChild = (curStep) => {
-
-        /* should probably toast a error msg, step 0 can't be removed */
-        if (curStep === 0) {
-            return
-        }
-
-        curStep = parseInt(curStep)
-        alert("perform del: step " + curStep)
-        console.log(this.state.steps)
-        let newSteps= []
-        let steps = this.state.steps
-        newSteps[0] = steps[0]
-        for (let i = 1; i < steps.length; i ++) {
-            if (i === curStep)
-                continue;
-            else
-                newSteps.push(steps[i])
-        }
-        console.log(newSteps)
-        this.setState({
-            steps: newSteps,
-            step_num: curStep - 1 // after del the selectedStep, should highlight the previous step
-        })
-
     }
 
     handleAddChild = () => {
@@ -649,12 +631,12 @@ class create_lab extends React.Component {
         //right now temp is filled with image sources of equipments
         temp[this.state.step_num+1]=temp[this.state.step_num].slice();
         this.setState({
-            //add a new step to steps[]
-            step_num: this.state.step_num + 1,
-            equipments:temp
+                //add a new step to steps[]
+                step_num: this.state.step_num + 1,
+                equipments:temp
 
 
-        }
+            }
         );
 
     };
@@ -680,10 +662,11 @@ class create_lab extends React.Component {
             this.forceUpdate();
             return
         }
-
+        step=step-2;
         // var image = equipment;
 
         const current = this.state.equipments;
+        console.log("current is "+JSON.stringify(current )+"step is "+JSON.stringify(step))
         if(current[step].length>=10)
         {
             ToastsStore.error("Workspace full! Only ten equipments allowed")
@@ -702,18 +685,87 @@ class create_lab extends React.Component {
             )
         }
     };
+     makeSlide(){
+        var currslide =
+            <Slides id="slides"steps={this.state.steps}
+                    completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
+                            role={"student"}/>;
+        this.setState({slide:currslide});
+    }
+    callback(){
+         console.log("called back!")
+        var currslide =
+            <Slides id="slides"steps={this.state.steps}
+                    completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
+                    role={"student"}/>;
+        this.setState({slide:currslide});
+        ToastsStore.success("Step completed!")
+    }
+    completeStep  = (step_id) => {{
+        let currentStep = this.state.completedSteps+1;
+        console.log("currentstep is " +currentStep + "len is "+ this.state.steps.length
+        +"equips is "+JSON.stringify(this.state.equipments)+ "with length "+this.state.equipments.length)
 
+        //console.log("num equips is "+this.state.equipments[currentStep].length)
+        if (this.state.equipments[currentStep-1].length<2){
+            ToastsStore.error("Step failed. Try again.")
+            return null;
+        }
+        if (currentStep+1>this.state.steps.length){
+            ToastsStore.success("Lab completed!")
+            this.completeLab()
+            return
+        }
+        this.setState({completedSteps: this.state.completedSteps + 1},this.callback)
+
+
+    }};
+
+    completeLab(){
+
+        console.log("props is "+JSON.stringify(this.props))
+        const lab = {
+            labID:this.props.location.state.labID,
+        }
+        let labs =[];
+        labs[0]=lab;
+        const courselab= {
+            labs:labs,
+            email: this.props.email,
+            code:this.props.location.state.courseID,
+
+        };
+        alert("courselab is "+JSON.stringify(courselab))
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
+            .then((response) => {
+                console.log("success!")
+
+            })
+            .catch((error) => {
+                    alert("doot" + error)
+
+                }
+            );
+    }
 
     render(){
 
         if(!this.state.lab_loaded)
         {
+            console.log("popualtign steps")
             this.populateSteps();
+            this.makeSlide()
+
             return null;
         }
-
-
-        let size = this.state.steps.length
+        console.log("steps is "+JSON.stringify(this.state.steps))
 
         return(
             <div >
@@ -727,12 +779,10 @@ class create_lab extends React.Component {
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
-
-                            <Slides slide_num={size} addChild={this.handleAddChild} delChild={this.handleDelChild}/>
-
+                            {this.state.slide}
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
-                                {this.instructionPane()}
+                            {this.instructionPane()}
                         </Col>
 
                         <Col lg={{span:7}} className="darkerBack"  >
@@ -758,4 +808,4 @@ export function move_element(ev){
 }
 
 
-export default create_lab;
+export default DoLab

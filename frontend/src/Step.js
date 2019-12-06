@@ -22,6 +22,7 @@ class Step {
         this.stepNum = stepNum;
         this.instruction = instruction;
         this.workspace = workspace;
+        this.completed=false;
     }
 
     initStep()
@@ -33,6 +34,9 @@ class Step {
     }
     setInstruction(str){
         this.instruction = str;
+    }
+    setCompletedTrue(){
+        this.completed=true;
     }
     // updateInstruction(stepNum,value)
     // {

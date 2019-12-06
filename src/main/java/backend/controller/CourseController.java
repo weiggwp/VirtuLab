@@ -115,20 +115,22 @@ public class CourseController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_students", method = RequestMethod.POST)
     public ResponseEntity<List<User>> getStudents(@RequestBody CourseDTO courseDTO) {
-        System.out.println("CourseController get_students: ");
         System.out.println("course is "+courseDTO);
         List<UserCourse> userCourses = userCourseService.getAllUserCourses();
-        System.out.println("OMG");
+        System.out.println("course is "+courseDTO);
         List<User> students = new LinkedList<>();
+        System.out.println("course is "+courseDTO);
         for (UserCourse userCourse: userCourses){
-              //  System.out.println("coursecode is " +userCourse.getCourse().getAccessCode());
+                System.out.println("coursecode is " +userCourse.getCourse().getAccessCode());
             if (userCourse.getCourse().getAccessCode().equals(courseDTO.getCourseNumber())){
-             //   System.out.println("adding " +userCourse.getUser());
+                System.out.println("adding " +userCourse.getUser());
                 if (userCourse.getUser().getRole().toLowerCase().equals("student"))
+                    System.out.println("A");
                     students.add(userCourse.getUser());
+                System.out.println("B");
             }
         }
-        System.out.println("Leaving get_students");
+        System.out.println("returning...");
         return new ResponseEntity(students, HttpStatus.OK);
     }
 
@@ -174,6 +176,7 @@ public class CourseController {
                 labDTO.setCreator(lab.getCreator());
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
+                labDTO.setSteps(lab.getSteps());
 
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
                     System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
@@ -208,7 +211,7 @@ public class CourseController {
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity enroll(@RequestBody CourseDTO courseDto) {
-    //    System.out.println("course is is " +courseDto.toString());
+        System.out.println("course is is " +courseDto.toString());
 
         String courseName="";
         String  labName="";

@@ -57,6 +57,8 @@ class Lab extends React.Component
                     labID: this.props.labID,
                     due_date:this.props.due_date,
                     courseID: this.props.courseID,
+                    steps:this.props.steps,
+                    equipments:this.props.equipments,
                 },
             }}/>
         } else if (this.state.renderInstructor) {
