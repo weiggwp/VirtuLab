@@ -30,7 +30,7 @@ public class Lab {
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
     private List<Step> steps = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List <Equipment> equipments = new ArrayList<>();
 
     public List<Equipment> getEquipments() {

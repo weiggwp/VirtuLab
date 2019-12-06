@@ -72,17 +72,17 @@ public class LabController {
         for (Step step: labDTO.getSteps()) {
           /*  Step step = new Step();
             step.setStepNum(dto.getStepNum());
+//<<<<<<< HEAD
             step.setInstruction(dto.getInstruction());*/
+//            step.setInstruction(dto.getInstruction());
+//            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
+//>>>>>>> origin/frontequip
             stepService.addStep(step);
             steps.add(step);
         }
 
-        List<Equipment> equipments = new ArrayList<>();
-        for (EquipmentDTO dto: labDTO.getEquipments()) {
-            Equipment equipment = modelMapper.map(dto, Equipment.class);
-            equipmentService.saveEquipment(equipment);
-            equipments.add(equipment);
-        }
+
+        List<Equipment> equipments = mapEquipmentDTO(labDTO.getEquipments());
 
 
         long returnid = -1;
@@ -114,6 +114,17 @@ public class LabController {
 
 
         return new ResponseEntity<>(returnid, HttpStatus.OK);
+    }
+
+    private List<Equipment> mapEquipmentDTO(List<EquipmentDTO> DTO)
+    {
+        List<Equipment> equipments = new ArrayList<>();
+        for (EquipmentDTO dto: DTO) {
+            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            equipmentService.saveEquipment(equipment);
+            equipments.add(equipment);
+        }
+        return equipments;
     }
 
 

@@ -11,7 +11,7 @@ import CreateCourse from './components/create_course.jsx';
 import DoLab from './components/do_lab.jsx';
 import CreateLab from './components/create_lab.jsx';
 import Statistics from './components/Statistics.jsx';
-import test_draggable from './components/test_draggable.jsx';
+import test_draggable from './components/testDrag.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
 
@@ -31,6 +31,7 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/" component={Login} />
+
               <Route exact path="/test" component={test_draggable} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />

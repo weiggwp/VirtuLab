@@ -2,20 +2,32 @@ package backend.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class StepDTO {
 
     @NotNull
     @NotEmpty
     private int stepNum;
+
     @NotNull
     @NotEmpty
     private String instruction;
     private long stepID;
 
 
+    public List<EquipmentDTO> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<EquipmentDTO> equipments) {
+        this.equipments = equipments;
+    }
 
 
+    @NotNull
+    @NotEmpty
+    private List<EquipmentDTO> equipments;
     public StepDTO(){}
     public void setStepID(long stepID){
         this.stepID=stepID;
@@ -46,6 +58,7 @@ public class StepDTO {
         return "StepDTO{" +
                 "stepNum=" + stepNum +
                 ", instruction='" + instruction + '\'' +
+                ", equipments=" + equipments +
                 '}';
     }
 }

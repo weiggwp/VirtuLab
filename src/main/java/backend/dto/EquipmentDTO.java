@@ -1,5 +1,7 @@
 package backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class EquipmentDTO {
@@ -7,34 +9,34 @@ public class EquipmentDTO {
     private double weight;
     private double amount;
     private long capacity;
+
     private double temperature;
-
-    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type) {
-        this.name = name;
-        this.weight = weight;
-        this.amount = amount;
-        this.capacity = capacity;
-        this.temperature = temperature;
-        this.image = image;
-        this.items = items;
-        this.disabled = disabled;
-        this.type = type;
-    }
-
     private String image;
     private List<EquipmentDTO> items;
     private boolean disabled;
     private String type;
+    @JsonProperty("left")
+    private long x=0;
+    @JsonProperty("top")
+    private long y=0;
 
-    public String getType() {
-        return type;
+
+    @Override
+    public String toString() {
+        return "EquipmentDTO{" +
+                "name='" + name + '\'' +
+                ", weight=" + weight +
+                ", amount=" + amount +
+                ", capacity=" + capacity +
+                ", temperature=" + temperature +
+                ", image='" + image + '\'' +
+                ", items=" + items +
+                ", disabled=" + disabled +
+                ", type='" + type + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
     }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    EquipmentDTO(){}
 
     public String getName() {
         return name;
@@ -100,28 +102,27 @@ public class EquipmentDTO {
         this.disabled = disabled;
     }
 
-    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled) {
-        this.name = name;
-        this.weight = weight;
-        this.amount = amount;
-        this.capacity = capacity;
-        this.temperature = temperature;
-        this.image = image;
-        this.items = items;
-        this.disabled = disabled;
+    public String getType() {
+        return type;
     }
 
-    @Override
-    public String toString() {
-        return "EquipmentDTO{" +
-                "name='" + name + '\'' +
-                ", weight=" + weight +
-                ", amount=" + amount +
-                ", capacity=" + capacity +
-                ", temperature=" + temperature +
-                ", image='" + image + '\'' +
-                ", containingItems=" + items +
-                ", disabled=" + disabled +
-                '}';
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public long getX() {
+        return x;
+    }
+
+    public void setX(long x) {
+        this.x = x;
+    }
+
+    public long getY() {
+        return y;
+    }
+
+    public void setY(long y) {
+        this.y = y;
     }
 }
