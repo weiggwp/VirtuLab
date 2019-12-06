@@ -69,11 +69,14 @@ public class LabController {
 
 
         List<Step> steps = new ArrayList<>();
-        for (StepDTO dto: labDTO.getSteps()) {
-            Step step = new Step();
+        for (Step step: labDTO.getSteps()) {
+          /*  Step step = new Step();
             step.setStepNum(dto.getStepNum());
-            step.setInstruction(dto.getInstruction());
-            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
+//<<<<<<< HEAD
+            step.setInstruction(dto.getInstruction());*/
+//            step.setInstruction(dto.getInstruction());
+//            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
+//>>>>>>> origin/frontequip
             stepService.addStep(step);
             steps.add(step);
         }
@@ -171,6 +174,7 @@ public class LabController {
         else
             return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
     }
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_public_labs", method = RequestMethod.POST)
     public ResponseEntity getPublicLabs() {
@@ -180,10 +184,11 @@ public class LabController {
             if (labs.get(i).getOpen() > 0){
                 ret.add(labs.get(i));
             }
-          //  System.out.println("Lab: "+labs.get(i));
+            System.out.println("Lab: "+labs.get(i));
         }
         return new ResponseEntity(ret,HttpStatus.OK);
     }
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_matching_public_labs", method = RequestMethod.POST)
     public ResponseEntity getMatchingPublicLabs(@RequestBody LabDTO labDTO) {
@@ -320,7 +325,7 @@ public class LabController {
                 System.out.println(course);
                 Lab lab = courseDTO.getLabs().get(0);
 
-                // Todo: check if lab is already in the course
+                // check if lab is already in the course
                 for (CourseLab courseLab: course.getCourseLabList()) {
                     if (courseLab.getLab().getLabID() == lab.getLabID()) {
                         return new ResponseEntity(HttpStatus.NOT_FOUND);

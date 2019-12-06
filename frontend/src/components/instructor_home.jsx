@@ -48,7 +48,6 @@ class instructor_home extends React.Component {
 
     };
 
-
     updateClasses(){
         console.log("email is "+JSON.stringify(this.props))
         const user = {
@@ -61,6 +60,8 @@ class instructor_home extends React.Component {
 
             }
         };
+        console.log("email is " + this.props.email)
+
         var classArr=[];
         var classArray=[];
 

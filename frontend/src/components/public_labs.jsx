@@ -130,53 +130,50 @@ handlePage(event) {
         })
 }
 
-handlePageFrontend(event) {
-    alert("handling page")
+    handlePageFrontend(event) {
+        alert("handling page")
 
-    alert(event.target.id)
-    let pageNum;
-    if (event.target.id != null || event.target.id !== '') {
-        pageNum = event.target.id
-    } else {
-        pageNum = this.state.currentPage
-    }
-    let itemsPerPage = this.state.perPage
-    let startIndex = (pageNum - 1) * itemsPerPage
-    this.setState({
-        current_page_labs: this.state.labs.slice(startIndex, startIndex + 3),
-        currentPage: pageNum
-    })
-    console.log("current page labs: " + this.state.current_page_labs)
+        alert(event.target.id)
+        let pageNum;
+        pageNum = parseInt(event.target.id)
 
-}
-
-handleNext() {
-    if (this.state.currentPage !== this.state.totalPages) {
-        // alert("next page is : " + (this.state.currentPage + 1))
-        let pageNum = (this.state.currentPage + 1)
         let itemsPerPage = this.state.perPage
         let startIndex = (pageNum - 1) * itemsPerPage
         this.setState({
-            currentPage: this.state.currentPage + 1,
-            current_page_labs: this.state.labs.slice(startIndex, startIndex + 3)
+            current_page_labs: this.state.labs.slice(startIndex, startIndex + 3),
+            currentPage: pageNum
         })
-    }
-}
+        console.log("current page labs: " + this.state.current_page_labs)
 
-
-handlePrev() {
-
-    if (this.state.currentPage > 1) {
-        let pageNum = this.state.currentPage - 1
-        let itemsPerPage = this.state.perPage
-        let startIndex = (pageNum - 1) * itemsPerPage
-        this.setState({
-            currentPage: this.state.currentPage - 1,
-            current_page_labs: this.state.labs.slice(startIndex, startIndex + 3)
-        })
     }
 
-}
+    handleNext() {
+
+        if (this.state.currentPage <= this.state.totalPages) {
+            let pageNum = this.state.currentPage + 1
+            let itemsPerPage = this.state.perPage
+            let startIndex = (pageNum - 1) * itemsPerPage
+            this.setState({
+                currentPage: this.state.currentPage + 1,
+                current_page_labs: this.state.labs.slice(startIndex, startIndex + 3)
+            })
+        }
+    }
+
+
+    handlePrev() {
+
+        if (this.state.currentPage > 1) {
+            let pageNum = this.state.currentPage - 1
+            let itemsPerPage = this.state.perPage
+            let startIndex = (pageNum - 1) * itemsPerPage
+            this.setState({
+                currentPage: this.state.currentPage - 1,
+                current_page_labs: this.state.labs.slice(startIndex, startIndex + 3)
+            })
+        }
+
+    }
 
 
 

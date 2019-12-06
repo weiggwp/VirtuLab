@@ -1,5 +1,6 @@
 package backend.dto;
 
+import backend.model.Step;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
@@ -70,13 +71,13 @@ public class LabDTO {
     @NotEmpty
     @JsonProperty("author")
     private String creator;
-//    @NotNull
+    //    @NotNull
 //    @NotEmpty
 //    private String password;
     @NotNull
     @NotEmpty
     @JsonProperty("steps")
-    private List<StepDTO> steps;
+    private List<Step> steps;
     @JsonProperty("open")
     private int open;
 
@@ -130,11 +131,11 @@ public class LabDTO {
         this.creator = creator;
     }
 
-    public List<StepDTO> getSteps() {
+    public @NotNull @NotEmpty List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<StepDTO> steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 

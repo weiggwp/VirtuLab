@@ -142,7 +142,7 @@ public class CourseController {
     public ResponseEntity<List<Course>> getAllCourse(@RequestBody CourseDTO courseDTO) {
         System.out.println("Course Controller called: get_courses");
         Map<String, Object> map = new HashMap<>();
-     //   System.out.println(courseDTO);
+        System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
 
@@ -179,7 +179,7 @@ public class CourseController {
                 labDTO.setLabID(lab.getLabID());
                 ArrayList<StepDTO> stepDTOList = new ArrayList<>();
                 for (Step step : lab.getSteps()){
-                    stepDTOList.add(new StepDTO())
+                    stepDTOList.add(new StepDTO());
                 }
                 labDTO.setSteps(lab.getSteps());
 

@@ -398,6 +398,7 @@ class create_lab extends React.Component {
 
     instruction(index)
     {
+        console.log(index)
         //,width: '20rem' for div
         return(
             <div style={{padding: 10,height:'30vh'}}>
@@ -406,6 +407,7 @@ class create_lab extends React.Component {
                     style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
                     placeholder="Input instruction for this step here"
                     onChange={(e) => this.handleInstructionChange(e, index)}
+                    // ?. Why is this called after delChild.
                     value={this.state.steps[index].instruction}
                 />
 
@@ -448,7 +450,7 @@ class create_lab extends React.Component {
             {this.setupInstruction(0,"This is the setup stage. " +
             "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
 
-        for (let i = 1; i <= this.state.step_num; i += 1) {
+        for (let i = 1; i < this.state.steps.length; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             instructions.push(<Tab.Pane eventKey={i}>
                 <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
@@ -636,7 +638,7 @@ class create_lab extends React.Component {
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
         console.log("equips is "+JSON.stringify(this.state.equipments))
-        for (let i = 1; i <= this.state.step_num; i += 1) {
+        for (let i = 1; i < this.state.steps.length; i += 1) {
             const equipments = this.state.equipments[i];
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
@@ -673,6 +675,33 @@ class create_lab extends React.Component {
                 {workspaces}
             </Tab.Content>
         )
+    }
+
+    handleDelChild = (curStep) => {
+
+        /* should probably toast a error msg, step 0 can't be removed */
+        if (curStep === 0) {
+            return
+        }
+
+        curStep = parseInt(curStep)
+        alert("perform del: step " + curStep)
+        console.log(this.state.steps)
+        let newSteps= []
+        let steps = this.state.steps
+        newSteps[0] = steps[0]
+        for (let i = 1; i < steps.length; i ++) {
+            if (i === curStep)
+                continue;
+            else
+                newSteps.push(steps[i])
+        }
+        console.log(newSteps)
+        this.setState({
+            steps: newSteps,
+            step_num: curStep - 1 // after del the selectedStep, should highlight the previous step
+        })
+
     }
 
     handleAddChild = () => {
@@ -759,6 +788,8 @@ class create_lab extends React.Component {
         }
 
 
+        let size = this.state.steps.length
+
         return(
             <div >
 
@@ -771,7 +802,9 @@ class create_lab extends React.Component {
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
-                            <Slides steps = {this.state.steps}slide_num={this.state.step_num} addChild={this.handleAddChild}/>
+
+                            <Slides slide_num={size} addChild={this.handleAddChild} delChild={this.handleDelChild}/>
+
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
                                 {this.instructionPane()}
