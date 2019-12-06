@@ -9,7 +9,6 @@ public class StepDTO {
     @NotNull
     @NotEmpty
     private int stepNum;
-
     @NotNull
     @NotEmpty
     private String instruction;
@@ -23,7 +22,6 @@ public class StepDTO {
     public void setEquipments(List<EquipmentDTO> equipments) {
         this.equipments = equipments;
     }
-
 
     @NotNull
     @NotEmpty

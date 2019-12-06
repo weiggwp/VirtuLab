@@ -270,9 +270,28 @@ public class CourseController {
 
             List<UserCourseLab> userCourseLabList = user.getUserCourseLabList();
             for (CourseLab courseLab: course.getCourseLabList()) {
+
                 Lab lab = courseLab.getLab();
                 System.out.println(lab);
-                userCourseLabList.add(new UserCourseLab(user, course, lab));
+                UserCourseLab userCourseLab = new UserCourseLab(user, course, lab);
+
+                /* students get their own steps and equipments to keep track */
+                StudentProgress studentProgress = new StudentProgress();
+
+                List<Step> steps = lab.getSteps();
+                List<Attempt> attempts = new ArrayList<>();
+                for (Step step: steps) {
+                    Attempt attempt = new Attempt();
+                    List<Equipment> equipmentList = step.getEquipments();
+                    List<Equipment> copy = new ArrayList<>(equipmentList);
+                    attempt.setEquipmentList(copy);
+                    attempts.add(attempt);
+                }
+                studentProgress.setAttempts(attempts);
+                userCourseLab.setStudentProgress(studentProgress);
+
+                userCourseLabList.add(userCourseLab);
+
             }
             System.out.println("b4");
             userRepository.save(user);

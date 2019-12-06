@@ -29,6 +29,9 @@ public class UserCourseLab {
     private int grade;
     private int complete;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private StudentProgress studentProgress;
+
     public UserCourseLab() {
     }
 
@@ -90,4 +93,11 @@ public class UserCourseLab {
         complete = complete;
     }
 
+    public StudentProgress getStudentProgress() {
+        return studentProgress;
+    }
+
+    public void setStudentProgress(StudentProgress studentProgress) {
+        this.studentProgress = studentProgress;
+    }
 }

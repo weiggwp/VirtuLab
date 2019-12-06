@@ -69,14 +69,11 @@ public class LabController {
 
 
         List<Step> steps = new ArrayList<>();
-        for (Step step: labDTO.getSteps()) {
-          /*  Step step = new Step();
+        for (StepDTO dto: labDTO.getStepsDTO()) {
+            Step step = new Step();
             step.setStepNum(dto.getStepNum());
-//<<<<<<< HEAD
-            step.setInstruction(dto.getInstruction());*/
-//            step.setInstruction(dto.getInstruction());
-//            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
-//>>>>>>> origin/frontequip
+            step.setInstruction(dto.getInstruction());
+            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
             stepService.addStep(step);
             steps.add(step);
         }

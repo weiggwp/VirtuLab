@@ -275,7 +275,7 @@ class create_lab extends React.Component {
             lab_name: this.state.lab_title,
             author: this.props.email,
 
-            steps: this.state.steps,
+            stepsDTO: this.state.steps,
             equipments: this.equipmentSet.getJSONList(),
             // lastModified: new Date(),
         };
@@ -788,7 +788,7 @@ class create_lab extends React.Component {
         }
 
 
-        let size = this.state.steps.length
+        let size = this.state.steps.length - 1
 
         return(
             <div >

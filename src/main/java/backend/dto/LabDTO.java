@@ -28,6 +28,11 @@ public class LabDTO {
     @JsonProperty("complete")
     private boolean complete;
 
+    @NotNull
+    @NotEmpty
+    private List<StepDTO> stepsDTO;
+
+
     public String getDescription() {
         return description;
     }
@@ -44,7 +49,13 @@ public class LabDTO {
         this.tags = tags;
     }
 
+    public List<StepDTO> getStepsDTO() {
+        return stepsDTO;
+    }
 
+    public void setStepsDTO(List<StepDTO> stepsDTO) {
+        this.stepsDTO = stepsDTO;
+    }
 
     public String getEmail() {
         return email;
