@@ -176,6 +176,7 @@ public class CourseController {
                 labDTO.setCreator(lab.getCreator());
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
+                labDTO.setSteps(lab.getSteps());
 
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
                     System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()

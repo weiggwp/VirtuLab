@@ -69,10 +69,10 @@ public class LabController {
 
 
         List<Step> steps = new ArrayList<>();
-        for (StepDTO dto: labDTO.getSteps()) {
-            Step step = new Step();
+        for (Step step: labDTO.getSteps()) {
+          /*  Step step = new Step();
             step.setStepNum(dto.getStepNum());
-            step.setInstruction(dto.getInstruction());
+            step.setInstruction(dto.getInstruction());*/
             stepService.addStep(step);
             steps.add(step);
         }
@@ -514,7 +514,7 @@ public class LabController {
                 if (userCourseLab.getLab().getLabID() == labID &&
                     userCourseLab.getCourse().getCourseID() == courseID &&
                         userCourseLab.getUser().getId() == userID)
-                    userCourseLab.setComplete(1 - userCourseLab.getComplete());
+                    userCourseLab.setComplete(1 );
             }
 
             userService.save(user);

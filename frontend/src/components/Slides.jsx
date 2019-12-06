@@ -23,12 +23,31 @@ class Slides extends React.Component {
         console.log(this.props.onSelect)
         const children = [];
         //onSelect={this.props.onSelect}
-        children.push(<ChildComponent key={0} number={0} />);
+        if (this.props.role!=undefined){
 
-        for (let i = 1; i <= this.props.slide_num; i += 1) {
-            children.push(<ChildComponent key={i} number={i} />);
+            for (let i = 1; i <this.props.completedSteps+2; i += 1) {
+                children.push(<ChildComponent key={i} number={i}/>);
+            }
+
+            return (
+                <div>
+
+
+                    <Nav variant="pills" className="flex-column">
+                        {children}
+                    </Nav>
+                </div>
+            );
+
+
         }
+        else {
+            children.push(<ChildComponent key={0} number={0}/>);
 
+            for (let i = 1; i <= this.props.slide_num; i += 1) {
+                children.push(<ChildComponent key={i} number={i}/>);
+            }
+        }
         return (
             <div>
                 <div>
@@ -81,8 +100,17 @@ class Slides extends React.Component {
 //     </div>
 //     // </div>
 // );
+
+function isComplete (stepnum,aa){
+    console.log("props is "+JSON.stringify(aa))
+    if (stepnum==1)
+        return stepnum
+
+    else return stepnum
+}
+
 //onSelect={(e)=>(props.onSelect(e,props.number))
-const ChildComponent = props => <Nav.Item> <Nav.Link eventKey={props.number} >Step {props.number}</Nav.Link> </Nav.Item>;
+const ChildComponent = props => <Nav.Item> <Nav.Link eventKey={isComplete(props.number,props)} >Step {props.number}</Nav.Link> </Nav.Item>;
 // const ChildComponent = props => <ToggleButton value={props.number} className={"Btn-Blue-BG togglebutton "}>{"Step "+props.number}</ToggleButton>;
 
 export {Slides};

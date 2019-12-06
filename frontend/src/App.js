@@ -8,7 +8,7 @@ import InstructorHome from './components/instructor_home.jsx';
 import InstructorLabs from './components/instructor_labs.jsx';
 import PublicLab from './components/public_labs.jsx';
 import CreateCourse from './components/create_course.jsx';
-import DoLab from './components/student_lab.jsx';
+import DoLab from './components/do_lab.jsx';
 import CreateLab from './components/create_lab.jsx';
 import Statistics from './components/Statistics.jsx';
 import test_draggable from './components/test_draggable.jsx';

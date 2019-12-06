@@ -11,7 +11,7 @@ import StudentHeader from './studentHeader.jsx';
 import {EquipmentList} from "./EquipmentList";
 import axios from "axios";
 import GLOBALS from "../Globals";
-class do_lab extends React.Component {
+class dolab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -153,4 +153,4 @@ class do_lab extends React.Component {
 }
 
 
-export default do_lab;
+export default dolab;

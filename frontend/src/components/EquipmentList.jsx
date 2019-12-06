@@ -98,6 +98,7 @@ class EquipmentList extends React.Component
     }
     renderArray(elementType)
     {
+        //console.log("this.props is "+JSON.stringify(this.props) + "elementtype is " +elementType)
         var solutions = this.props.set[elementType];//gives the list of solutions
 
         return(

@@ -133,6 +133,7 @@ class create_lab extends React.Component {
             if (step_list !== undefined)
             {
                 for (var i = 1; i < step_list.length; i++) {
+
                     this.state.steps.push(new Step(i, step_list[i].instruction));
                     this.state.equipments[i]=[];
 
@@ -572,7 +573,7 @@ class create_lab extends React.Component {
 
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
-
+        console.log("equips is "+JSON.stringify(this.state.equipments))
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
@@ -681,6 +682,8 @@ class create_lab extends React.Component {
             this.populateSteps();
             return null;
         }
+
+
         return(
             <div >
 
@@ -693,7 +696,7 @@ class create_lab extends React.Component {
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
-                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild}/>
+                            <Slides steps = {this.state.steps}slide_num={this.state.step_num} addChild={this.handleAddChild}/>
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
                                 {this.instructionPane()}

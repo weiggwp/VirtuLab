@@ -11,13 +11,15 @@ public class StepDTO {
     @NotNull
     @NotEmpty
     private String instruction;
-
+    private long stepID;
 
 
 
 
     public StepDTO(){}
-
+    public void setStepID(long stepID){
+        this.stepID=stepID;
+    }
     public int getStepNum() {
         return stepNum;
     }

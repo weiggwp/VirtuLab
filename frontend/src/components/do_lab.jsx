@@ -48,7 +48,7 @@ class DoLab extends React.Component {
     constructor(props) {
         super(props);
 
-        this.steps = [new Step(0)];
+        this.steps = [];
         this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
@@ -57,15 +57,16 @@ class DoLab extends React.Component {
             showPopover: false,
             redirectHome: false,
             restart:false,
-            steps : [new Step(0)],
+            steps : [],
             step_num: 0,
+            completedSteps:0,
             lab_id:0,
             lab_loaded:false,
             lab_title:"Untitled Lab",
             equipments:[[]],
             input:0,
             popoverWarning:"",
-
+            slide:undefined,
 
         };
 
@@ -77,9 +78,11 @@ class DoLab extends React.Component {
     }
     populateEquipmentSetup()
     {
+        console.log("populating,s tate is "+JSON.stringify(this.props.location.state))
         var equipList = this.props.location.state.equipments;
-        if (equipList !== undefined)//opening a previously saved lab
+        if (equipList !== undefined&&equipList!=null)//opening a previously saved lab
         {
+            console.log("equplist is "+JSON.stringify(equipList))
             var result ={
                 'Solution': [],
                 'Tools': [],
@@ -128,17 +131,22 @@ class DoLab extends React.Component {
 
             //get steps from prop
             var step_list = this.props.location.state.steps;
-
+            console.log("propstepsss    s is "+JSON.stringify(this.props.location.state.steps))
+            console.log("steplist is now "+JSON.stringify(this.state.steps))
             //opening a previously saved lab
             if (step_list !== undefined)
             {
-                for (var i = 1; i < step_list.length; i++) {
-                    this.state.steps.push(new Step(i, step_list[i].instruction));
+                for (var i = 1; i <step_list.length ; i++) {
+                    console.log("pushing instruction "+i+"="+JSON.stringify( step_list[i].instruction))
+                    this.state.steps.push(new Step(i+1, step_list[i].instruction));
+                    console.log("steplist is now "+JSON.stringify(this.state.steps))
                     this.state.equipments[i]=[];
 
                 }
 
             }
+            console.log("steplist is now "+JSON.stringify(this.state.steps))
+            console.log("populationg equipsetup!")
             this.populateEquipmentSetup();
 
             // alert("got here"+this.props.location.state.id);
@@ -263,6 +271,18 @@ class DoLab extends React.Component {
                         <OverlayTrigger
                             overlay={
                                 <Tooltip>
+                                    Check to see if you successfully completed the step.
+                                </Tooltip>
+                            }
+                        >
+
+                                <Button onClick={this.completeStep} style={{backgroundColor: "black"}}>Check Step</Button>
+
+                        </OverlayTrigger>
+
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip>
                                     Start fresh. All contents are wiped at the current step
                                 </Tooltip>
                             }
@@ -324,17 +344,10 @@ class DoLab extends React.Component {
 
     }
 
-    handleInstructionChange=(e,index)=>
-    {
-        var list = this.state.steps;
-        list[index].setInstruction(e.target.value);
-        this.setState({
-            steps:list
-        })
-    };
 
     instruction(index)
     {
+        console.log("index is "+index)
         //,width: '20rem' for div
         return(
             <div style={{padding: 10,height:'30vh'}}>
@@ -342,8 +355,8 @@ class DoLab extends React.Component {
                 <textarea
                     style={{resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
                     placeholder="Input instruction for this step here"
-                    onChange={(e) => this.handleInstructionChange(e, index)}
-                    value={this.state.steps[index].instruction}
+                    readOnly = "true"
+                    value={this.state.steps[index-1].instruction}
                 />
 
             </div>
@@ -372,23 +385,21 @@ class DoLab extends React.Component {
         );
     }
 
+    addInstruction(){
 
+    }
     instructionPane()
     {
         const instructions = [];
         // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
-        instructions.push(<Tab.Pane eventKey={0}>
-            <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
-
-            {this.setupInstruction(0,"This is the setup stage. " +
-                "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
-
+        //console.log("state is "+JSON.stringify(this.state))
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
+            console.log("i is "+i)
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
+                <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
 
                 instruction for step {i} {this.instruction(i)}</Tab.Pane>);
         }
@@ -571,10 +582,11 @@ class DoLab extends React.Component {
         const workspaces = [];
 
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
-        workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
-
+        //workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
+        console.log("equips is "+JSON.stringify(this.state.equipments))
         for (let i = 1; i <= this.state.step_num; i += 1) {
-            const equipments = this.state.equipments[i];
+            const equipments = this.state.equipments[i-1];
+            if (equipments==undefined)break;
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
                 <Tab.Pane
@@ -650,10 +662,11 @@ class DoLab extends React.Component {
             this.forceUpdate();
             return
         }
-
+        step=step-2;
         // var image = equipment;
 
         const current = this.state.equipments;
+        console.log("current is "+JSON.stringify(current )+"step is "+JSON.stringify(step))
         if(current[step].length>=10)
         {
             ToastsStore.error("Workspace full! Only ten equipments allowed")
@@ -672,15 +685,88 @@ class DoLab extends React.Component {
             )
         }
     };
+     makeSlide(){
+        var currslide =
+            <Slides id="slides"steps={this.state.steps}
+                    completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
+                            role={"student"}/>;
+        this.setState({slide:currslide});
+    }
+    callback(){
+         console.log("called back!")
+        var currslide =
+            <Slides id="slides"steps={this.state.steps}
+                    completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
+                    role={"student"}/>;
+        this.setState({slide:currslide});
+        ToastsStore.success("Step completed!")
+    }
+    completeStep  = (step_id) => {{
+        let currentStep = this.state.completedSteps+1;
+        console.log("currentstep is " +currentStep + "len is "+ this.state.steps.length
+        +"equips is "+JSON.stringify(this.state.equipments)+ "with length "+this.state.equipments.length)
 
+        //console.log("num equips is "+this.state.equipments[currentStep].length)
+        if (this.state.equipments[currentStep-1].length<2){
+            ToastsStore.error("Step failed. Try again.")
+            return null;
+        }
+        if (currentStep+1>this.state.steps.length){
+            ToastsStore.success("Lab completed!")
+            this.completeLab()
+            return
+        }
+        this.setState({completedSteps: this.state.completedSteps + 1},this.callback)
+
+
+    }};
+
+    completeLab(){
+
+        console.log("props is "+JSON.stringify(this.props))
+        const lab = {
+            labID:this.props.location.state.labID,
+        }
+        let labs =[];
+        labs[0]=lab;
+        const courselab= {
+            labs:labs,
+            email: this.props.email,
+            code:this.props.location.state.courseID,
+
+        };
+        alert("courselab is "+JSON.stringify(courselab))
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
+            .then((response) => {
+                console.log("success!")
+
+            })
+            .catch((error) => {
+                    alert("doot" + error)
+
+                }
+            );
+    }
 
     render(){
 
         if(!this.state.lab_loaded)
         {
+            console.log("popualtign steps")
             this.populateSteps();
+            this.makeSlide()
+
             return null;
         }
+        console.log("steps is "+JSON.stringify(this.state.steps))
+
         return(
             <div >
 
@@ -693,7 +779,7 @@ class DoLab extends React.Component {
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
-                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild}/>
+                            {this.state.slide}
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
                             {this.instructionPane()}
