@@ -74,6 +74,7 @@ class create_lab extends React.Component {
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAction = this.handleAction.bind(this);
     }
     populateEquipmentSetup()
     {
@@ -114,8 +115,8 @@ class create_lab extends React.Component {
 
 
             }
-            console.log("current equipment set",this.equipmentSet)
-            console.log("setting to new equipment set",result)
+            // console.log("current equipment set",this.equipmentSet)
+            // console.log("setting to new equipment set",result)
             this.equipmentSet.setEquipmentList(result);
 
         }
@@ -435,17 +436,17 @@ class create_lab extends React.Component {
         const workspace_id = data.workspace_id;
         const eq_id = parseInt(data.equip_id);
 
-        console.log(data);
+        // console.log(data);
         let temp = this.state.equipments;
         // delete temp[workspace_id][eq_id];
-        console.log(temp[workspace_id][1]);
+        // console.log(temp[workspace_id][1]);
         // console.log(temp);
 
         const removed = temp[workspace_id].splice(eq_id,1);
 
         this.setState({equipments: temp});
-        console.log(removed);
-        console.log(temp);
+        // console.log(removed);
+        // console.log(temp);
     }
 
 
@@ -472,10 +473,10 @@ class create_lab extends React.Component {
         const source = this.eq1;
         const target = this.eq2;
         const actions = source.getActions(target);
-        console.log(e);
+        // console.log(e);
 
         const data = new FormData(e.target);
-        console.log(data);
+        // console.log(data);
     }
     handleInputChange(e){
         this.setState({input: e.target.value},);
@@ -486,6 +487,11 @@ class create_lab extends React.Component {
 
         this.setState({popoverWarning:msg},()=>(alert(msg)));
     };
+
+    handleAction(source, action,target,input){
+        source[action](target,input);
+        this.forceUpdate();
+    }
 
     popover(){
         const source = this.eq1;
@@ -501,7 +507,8 @@ class create_lab extends React.Component {
             if(actions){
 
                 actions.map((action)=>(
-                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
+                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>this.handleAction(source,action,target,this.state.input)}>{action}</Button>)
+
                 // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
                 ));
             }
@@ -716,6 +723,9 @@ class create_lab extends React.Component {
 export function move_element(ev){
     const offset = ev.dataTransfer.getData("text/offset").split(',');
     const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+    // console.log('moved');
+    // console.log(dm);
+
     dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
     dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
     // console.log(dm.style);

@@ -25,6 +25,7 @@ const SvgComponent =
             viewBox={viewBox}
             className={className}
             // viewBox="0 0 48 48" height={200} width={200} {...props}
+
         >
 
 
@@ -69,7 +70,7 @@ const SvgComponent =
             <g opacity={opacity}>
                 <ellipse cx={24} cy={y_bot} rx={14} ry={4.5} fill={fill}/>
                 <g fill={fill}>
-                    <rect width="28" height={(y_bot - y_top) * fill_percent} x="10" y={((current_y>y_top) ? y_top:current_y)}/>
+                    <rect width="28" height={(y_bot - y_top) * fill_percent} x="10" y={((current_y<y_top) ? y_top:current_y)}/>
                     {/*<path d="M10 17h28v25H10z" />*/}
                     <ellipse cx={24} cy={current_y} rx={14} ry={2.5} fill={fill}/>
                     <ellipse cx={24} cy={current_y} rx={14} ry={2.5} fill={top_eclipse_color} opacity={.6}/>

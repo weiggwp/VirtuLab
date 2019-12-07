@@ -2,17 +2,33 @@ import Equipment from "./Equipment";
 
 
 export default class Glassware extends Equipment{
-    constructor(name,image, capacity,weight, state=0)
+
+    constructor(name,image, capacity,weight, state=0,svg=null)
     {
-        super(name,image,weight);
+        super(name,image,weight,"Glassware",0,svg);
         this.capacity=capacity;
-        this.state_names= ["empty", "filled", "full"];
+        // this.state_names= ["empty", "filled", "full"];
 
 
     }
+    getAmount(){
+
+        let amount = 0;
+        for (const [, item] of Object.entries(this.items)) {
+            console.log(item);
+            // out[key] = obj.output(obj.amount*percentage);
+            amount+=item.amount;
+        }
+        console.log(amount);
+        return amount;
+    }
+    getFillPercent(){
+        console.log(this.getAmount()/this.capacity)
+        return this.getAmount()/this.capacity;
+    }
     getWeight(){
         let total = this.weight;
-        for (const [key, item] of Object.entries(this.items)) {
+        for (const [, item] of Object.entries(this.items)) {
             // out[key] = obj.output(obj.amount*percentage);
             console.log("item",item);
             alert(item);
@@ -32,13 +48,20 @@ export default class Glassware extends Equipment{
     {
         this.type =type;
     }
+    overflow_handler(item){
+        const total_amount = this.getAmount(); // total = 6500 = (4500+2000)
+        if(total_amount>this.capacity){ // capacity = 4500
+            item.amount-= total_amount-this.capacity; //4500- 2000
+        }
+    }
     add_item(item){
         if(this.item_exist(item)){
             // console.log("exist");
             var itemfound = this.find(item);
             // console.log(itemfound);
 
-            itemfound.amount +=item.amount;
+            itemfound.amount +=item.amount;  //item amount = 2000 + 2500
+            this.overflow_handler(itemfound);
         }
         else{
             console.log("not exist");
@@ -46,6 +69,7 @@ export default class Glassware extends Equipment{
             console.log(this.items);
 
             this.items.push(item);
+            this.overflow_handler(item);
         }
     }
     add_items(items){

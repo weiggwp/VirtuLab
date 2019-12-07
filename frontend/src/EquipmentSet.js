@@ -5,8 +5,11 @@ import Tool from "./Tool.js";
 
 
 import water from "./Images/water.svg";
+import watersvg from "./components/water"
 
 import small_flask from "./Images/250mLFlask.svg";
+import small_flask_svg from "./components/svg_sm_flask";
+
 import medium_flask from "./Images/500mLFlask.svg";
 import large_flask from "./Images/1000mLFlask.svg";
 
@@ -57,7 +60,7 @@ export default class EquipmentSet{
     }
     createFlasks()
     {
-        return [new Glassware("Titration Flask",small_flask,250,100,0),
+        return [new Glassware("Titration Flask",small_flask,250,100,0,small_flask_svg),
             new Glassware("Titration Flask",medium_flask,500,200,0),
             new Glassware("Titration Flask",large_flask,1000,400,0),]
     }
@@ -88,7 +91,7 @@ export default class EquipmentSet{
 
 
     populateList() {
-        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1)];
+        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1,watersvg)];
 
         this.equipmentList['Glassware'] = {
             'Titration Flask': this.createFlasks(),

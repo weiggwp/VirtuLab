@@ -3,23 +3,37 @@ import Glassware from "./Glassware";
 import {functionName} from "./Globals"
 
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1)
+    constructor(name, image ,capacity, weight, state=1,svg=null)
     {
-        super(name,image,weight);
+        super(name,image,weight,"Solution",0,svg);
         this.amount=capacity;
         this.capacity=capacity;
         this.image=image;
         this.state=state;
-        this.type="Solution"
+        // this.svg = svg;
         this.state_names= ["solid", "liquid", "gas"];
 
+    }
+    getAmount(){
+        return this.amount;
+    }
+    getFillPercent(){
+        return this.amount/this.capacity;
     }
     getWeight(){
         return this.weight * this.amount
     }
     output(amount){
-        // let amount = opt["amount"];
+
         const clone = JSON.parse(JSON.stringify(this));
+        // let clone = Object.assign({}, this);
+        //FIXME: Alert: clone loses proto type, isPrototypeOf no longer works
+
+        // console.log(this)
+        // console.log(clone)
+        // console.log(Element.prototype.isPrototypeOf(this));
+        // console.log(Element.prototype.isPrototypeOf(clone));
+        // alert()
 
         if(amount<=0){
             amount=0;
@@ -27,8 +41,9 @@ export default class Element extends Equipment{
         else if(amount>=this.amount){
             amount = this.amount;
         }
-        clone._amount=amount;
-        this._amount-=amount;
+        clone.amount=parseFloat(amount);
+        this.amount-=amount;
+
         return clone;
     }
     /*
@@ -57,12 +72,14 @@ export default class Element extends Equipment{
     pour(target,amount,callback=null)
     {
         target.add_item(this.output(amount));
-        console.log("target");
-        console.log(target);
+        // console.log("pouring");
+        // console.log(target);
         // if(!callback){
         //     callback("Poured "+amount+" ml of "+this.name + " into " + target.name);
         // }
         alert("Poured "+amount+" ml of "+this.name + " into " + target.name);
+
+        // callback();
 
     }
 
