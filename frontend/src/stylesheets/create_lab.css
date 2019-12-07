@@ -22,6 +22,8 @@
     color: #ecffff;
     font-weight: bold;
     position: relative;
+    font-family:serif;
+    height:35px;
     /*border-bottom: 1px dotted black;*/
     /*border: 1px dotted blue;*/
 }
@@ -29,6 +31,11 @@
 .lab_title_label:hover  {
     visibility: visible;
     color: #1e276d;
+
+}
+.lab_title_input
+{
+    height:37px;
 
 }
 
@@ -210,3 +217,66 @@
         display:inline-block;
 
  }
+
+.config_image
+{
+    width:25px;
+    height:25px;
+    margin: 0px 0px 0px 10px;
+    transition:all .3s;
+    cursor:pointer;
+    /*    last one is right margin*/
+}
+.save_image
+{
+    width:30px;
+    height:30px;
+    margin: 0px 0px 0px 10px;
+    transition:all .3s;
+    cursor:pointer;
+    /*    last one is right margin*/
+}
+.restart_image
+{
+    width:25px;
+    height:28px;
+    margin: 0px 0px 0px 10px;
+    transition:all .3s;
+    cursor:pointer;
+
+
+
+}
+.restart_image:hover
+{
+    box-shadow :0px 15px 25px -5px ;
+}
+.restart_image:active
+{
+    box-shadow :0px 4px 8px ;
+    transform :scale(.98);
+}
+
+.config_image:active
+{
+    box-shadow :0px 4px 8px ;
+    transform :scale(.98);
+}
+.config_image:hover
+{
+    box-shadow :0px 15px 25px -5px ;
+}
+.save_image:active
+{
+    box-shadow :0px 4px 8px ;
+    transform :scale(.98);
+}
+.save_image:hover
+{
+    box-shadow :0px 15px 25px -5px ;
+}
+
+#nav-dropdown
+{
+
+}

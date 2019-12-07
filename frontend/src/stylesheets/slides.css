@@ -44,5 +44,12 @@
     margin-top:5px;
     margin-bottom: 5px;
 }
+.step {
+    color:white;
+}
+.step:hover, .step:active {
+    background-color:#92c8e0
+}
+
 
 

@@ -81,7 +81,12 @@ class Slides extends React.Component {
 //     // </div>
 // );
 //onSelect={(e)=>(props.onSelect(e,props.number))
-const ChildComponent = props => <Nav.Item> <Nav.Link eventKey={props.number} onClick={(e)=>(props.selectStep(e, props.number))}>Step {props.number}</Nav.Link> </Nav.Item>;
+const ChildComponent = props => <Nav.Item> <Nav.Link
+    className={"step"}
+    eventKey={props.number}
+    onClick={(e)=>(props.selectStep(e, props.number))}>
+    Step {props.number}
+</Nav.Link> </Nav.Item>;
 // const ChildComponent = props => <ToggleButton value={props.number} className={"Btn-Blue-BG togglebutton "}>{"Step "+props.number}</ToggleButton>;
 
 export {Slides};

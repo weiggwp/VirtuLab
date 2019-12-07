@@ -26,7 +26,8 @@
     "react-scripts": "3.2.0",
     "react-tag-input": "^6.4.1",
     "react-toasts": "^3.0.6",
-    "svg-inline-react": "^3.2.0"
+    "svg-inline-react": "^3.2.0",
+    "prop-types": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

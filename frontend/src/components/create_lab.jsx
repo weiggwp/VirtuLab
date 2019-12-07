@@ -26,7 +26,7 @@ import {Instruction} from "./instruction";
 // import {Workspace} from "./Droppable_space";
 import Step from "../Step.js";
 import {Slides} from "./Slides";
-import EditableLabel from 'react-editable-label';
+// import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
 import EquipmentSet from "../EquipmentSet.js";
 
@@ -43,6 +43,7 @@ import Glassware from "../Glassware";
 import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
 import NavDropdown from "react-bootstrap/NavDropdown";
+import EditableLabel from "./EditableLabel";
 
 
 class create_lab extends React.Component {
@@ -226,6 +227,10 @@ class create_lab extends React.Component {
     }
 
     setRedirectHome = () => {
+
+        //TODO:autosave commented out for testing purposes
+        //autosave
+        // this.handleLabSave()
         this.setState({
             redirectHome: true
         })
@@ -271,7 +276,6 @@ class create_lab extends React.Component {
     handleLabSave = (e) => {
      // alert("saving " +this.state.lab_id)
         this.setStepsEquips()
-        alert("stop")
         const lab = {
             labID: this.state.lab_id,
             //if zero, it's not a valid labID
@@ -310,6 +314,21 @@ class create_lab extends React.Component {
                 }
             );
     };
+    handleEnterTitle=(value)=>
+    {
+
+        if(value.length>85)
+        {
+            ToastsStore.error("Limit title length to 85 characters")
+            this.setState({lab_title:this.state.lab_title})
+            value=this.state.lab_title
+            this.forceUpdate()
+
+            return
+        }
+
+        this.setState({lab_title:value})
+    }
 
     toolbar()
     {
@@ -320,11 +339,13 @@ class create_lab extends React.Component {
                     <Nav>
                         <EditableLabel
                             labelClass="lab_title_label"
-                                       inputClass="lab_title_input"
-                                       initialValue={this.state.lab_title}
-                                       save={value => {
-                                           this.setState({lab_title:value});}
-                                       }
+                            inputClass="lab_title_input"
+                            initialValue={this.state.lab_title}
+                            value={"hello"}
+                            save={value => {
+                                this.handleEnterTitle(value);}
+                            }
+
                         />
                     </Nav>
 
@@ -337,22 +358,25 @@ class create_lab extends React.Component {
                                 </Tooltip>
                             }
                         >
-                                <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Reset</Button>
+                            <Image className={"restart_image"}
+                                   onClick={this.setRestart}
+                                   src={"https://cdn0.iconfinder.com/data/icons/basic-ui-elements-plain/461/012_restart-512.png"}
+                            rounded />
                         </OverlayTrigger>
 
 
                         {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
 
-                        <OverlayTrigger
-                            overlay={
-                                <Tooltip>
-                                    Trash selected item
-                                </Tooltip>
-                            }
-                        >
-                            <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
-                        </OverlayTrigger>
+                        {/*<OverlayTrigger*/}
+                        {/*    overlay={*/}
+                        {/*        <Tooltip>*/}
+                        {/*            Trash selected item*/}
+                        {/*        </Tooltip>*/}
+                        {/*    }*/}
+                        {/*>*/}
+                        {/*    <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />*/}
+                        {/*</OverlayTrigger>*/}
 
 
                         <OverlayTrigger
@@ -370,7 +394,7 @@ class create_lab extends React.Component {
                         <OverlayTrigger
                             overlay={
                                 <Tooltip>
-                                    Exit. Remember to save your edits.
+                                    Exit and go back to home.
                                 </Tooltip>
                             }
                         >
@@ -458,12 +482,12 @@ class create_lab extends React.Component {
             instructions.push(<Tab.Pane eventKey={i}>
                 <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
-                instruction for step {i} {this.instruction(i)}</Tab.Pane>);
+                <span>instruction for step {i} </span>{this.instruction(i)}</Tab.Pane>);
             }
 
 
         return(
-            <Tab.Content>
+            <Tab.Content >
 
                 {instructions}
             </Tab.Content>
@@ -666,7 +690,10 @@ class create_lab extends React.Component {
         const workspaces = [];
 
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
-        workspaces.push(<Tab.Pane eventKey={0}> <span>workspace for step {0}</span> </Tab.Pane>);
+        workspaces.push(<Tab.Pane eventKey={0}>
+            <span>workspace for step {0}</span>
+            <ToastsContainer store={ToastsStore}/>
+        </Tab.Pane>);
 
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
@@ -680,7 +707,7 @@ class create_lab extends React.Component {
                     <div>
                         {/*<span style={{left:"50%"}}>workspace for step {i}</span>*/}
 
-                    <NavDropdown title="Import from" id="basic-nav-dropdown"
+                    <NavDropdown title="Import from" id="nav-dropdown"
                                  style={{float:"right",display:"inline-block",width:"220px"}}>
 
                             <form style={{height:"40px",display:"inline-block",background: "rgba(255, 0, 0, 0.1);"}} role="form" onSubmit={(e)=>this.handleImport(e,i)}>
@@ -830,16 +857,16 @@ class create_lab extends React.Component {
 
                 <Tab.Container id="steps" defaultActiveKey="0">
                     <Row>
-                        <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
+                        <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
                             <Slides slide_num={this.state.step_num} addChild={this.handleAddChild} onSelect={this.selectStep}/>
                         </Col>
-                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
+                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                                 {this.instructionPane()}
                         </Col>
 
-                        <Col lg={{span:7}} className="darkerBack"  >
+                        <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                             {this.workspacePane()}
 
 
