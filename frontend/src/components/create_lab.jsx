@@ -260,6 +260,10 @@ class create_lab extends React.Component {
 
             ));
 
+        this.setState({
+            steps: this.state.steps
+        })
+
         console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
@@ -634,12 +638,13 @@ class create_lab extends React.Component {
     }
     workspacePane(){
         const workspaces = [];
-
+        console.log("workspacePane")
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
         console.log("equips is "+JSON.stringify(this.state.equipments))
+        console.log(this.state.steps)
         for (let i = 1; i < this.state.steps.length; i += 1) {
-            const equipments = this.state.equipments[i];
+            const equipments = this.state.equipments[i]
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
                 <Tab.Pane

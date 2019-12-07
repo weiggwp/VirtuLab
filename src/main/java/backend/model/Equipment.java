@@ -154,4 +154,10 @@ public class Equipment {
         this.disabled = disabled;
     }
 
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

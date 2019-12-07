@@ -530,10 +530,24 @@ public class LabController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-
-
-
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/get_lab", method = RequestMethod.POST)
+    public ResponseEntity getLab(@RequestBody LabDTO labDTO) {
+        try {
+            System.out.println("lab is " + labDTO);
+            Optional<Lab> optional = labService.findLabByLabID(labDTO.getLabID());
+            if (optional.isPresent()) {
+                Lab lab = optional.get();
+                System.out.println(lab);
+                return new ResponseEntity(lab, HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+        }
+        catch (Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 }

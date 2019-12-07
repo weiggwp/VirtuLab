@@ -68,7 +68,13 @@ class DoLab extends React.Component {
             popoverWarning:"",
             slide:undefined,
 
+
+            curStep: 0,
+            lab: {}
+
         };
+
+
 
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
         this.interaction_handler = this.interaction_handler.bind(this);
@@ -76,6 +82,73 @@ class DoLab extends React.Component {
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+
+    componentDidMount() {
+        this.handleGetLab();
+    }
+
+
+    /* function call to combine previous step equips and cur step equips */
+    combine(prevStepEquips, curStepEquips) {
+        // there are only 10 things allowed on the workspace, so this can get tricky.
+        // we can keep the all the previousEquips, and only add the equips that are not alrdy in previous steps
+        // TODO:
+
+    }
+
+    /* function call on finishing the lab */
+    complete() {
+        // TODO: axios call to update completion.
+
+    }
+
+    /* */
+
+
+    /* function call to verify if current step is correct */
+    verifyStep(studentEquips, stepEquips) {
+        let m = stepEquips.length;
+        let n = studentEquips.length;
+
+        let arr = []
+        for (let i = 0; i < m; i ++) {
+            arr.push(false)
+        }
+
+        for (let i = 0; i < m; i ++) {
+            let equip1 = stepEquips[i]
+            for (let j = 0; j < n; j ++) {
+                let equip2 = studentEquips[j]
+                /* check for same type equipment and same volume, amount */
+                if (equip1.name === equip2.name &&
+                    equip1.amount === equip2.amount) {
+                    arr[i] = true
+                }
+            }
+        }
+
+        let res = true
+        for (let i = 0; i < arr.length; i ++) {
+            res &= arr[i];
+        }
+        return res;
+
+    }
+
+    /* function call to filter the equipments selected with 0, 0... they should not be on workspace */
+    filerInitalEquips(equips){
+        let filter = []
+        for (let i = 0; i < equips.length; i ++) {
+            let x = equips[i].x
+            let y = equips[i].y
+            if (x === 0 && y === 0) {
+                filter.push(equips[i])
+            }
+        }
+        return filter;
+    }
+
     populateEquipmentSetup()
     {
         console.log("populating,s tate is "+JSON.stringify(this.props.location.state))
@@ -210,22 +283,13 @@ class DoLab extends React.Component {
 
     }
 
-
-    handleLabSave = (e) => {
+    /* call this function to get the lab */
+    handleGetLab = () => {
         // alert("saving " +this.state.lab_id)
         const lab = {
-            labID: this.state.lab_id,
-            //if zero, it's not a valid labID
-
-            lab_name: this.state.lab_title,
-            author: this.props.email,
-
-            steps: this.state.steps,
-            equipments: this.equipmentSet.getJSONList(),
-            // lastModified: new Date(),
+            labID: this.state.lab_id
+            // labID: 871,
         };
-
-        console.log("lab.lastModified", lab.lastModified);
 
         let axiosConfig = {
             headers: {
@@ -234,19 +298,21 @@ class DoLab extends React.Component {
             }
         };
 
-        axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_lab', lab, axiosConfig)
             .then((response) => {
-                this.setState({save_success: true});
-                // console.log("id is "+response.data);
-                if(this.state.lab_id===0)  //only if not set
-                    this.setState({lab_id:response.data});
+                // TODO: pull the lab
+                console.log("The lab is: ")
+                let theLab = response.data
+                console.log(lab)
 
+                this.setState({
+                    lab: theLab
+                })
 
-                // console.log("response: ", response);
             })
             .catch((error) => {
                     this.setState({
-                        errors: 'Saving error',
+                        errors: 'Error getting the lab',
                     });
                 }
             );
