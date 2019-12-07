@@ -3,6 +3,7 @@ package backend.controller;
 
 import backend.dto.CourseDTO;
 import backend.dto.LabDTO;
+import backend.dto.StepDTO;
 import backend.dto.UserDTO;
 import backend.model.*;
 import backend.repository.UserRepository;
@@ -176,8 +177,12 @@ public class CourseController {
                 labDTO.setCreator(lab.getCreator());
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
+                ArrayList<StepDTO> stepDTOList = new ArrayList<>();
+                for (Step step : lab.getSteps()){
+                    stepDTOList.add(new StepDTO());
+                }
                 labDTO.setSteps(lab.getSteps());
-
+                labDTO.setReturnEquips(lab.getEquipments());
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
                     System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
                         +"\ncourse id is "+userCourseLab.getCourse().getCourseID()+

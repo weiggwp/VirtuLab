@@ -79,8 +79,10 @@ class DoLab extends React.Component {
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
         this.interaction_handler = this.interaction_handler.bind(this);
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
+        this.drop_handler = this.drop_handler.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.move_element = this.move_element.bind(this);
     }
 
 
@@ -151,7 +153,7 @@ class DoLab extends React.Component {
 
     populateEquipmentSetup()
     {
-        console.log("populating,s tate is "+JSON.stringify(this.props.location.state))
+        console.log("populating,s tate is "+JSON.stringify(this.props.location.state.equipments))
         var equipList = this.props.location.state.equipments;
         if (equipList !== undefined&&equipList!=null)//opening a previously saved lab
         {
@@ -196,7 +198,52 @@ class DoLab extends React.Component {
 
         }
     }
+    populateStepEquipment(equipList)
+    {
 
+        var result =[];
+
+        for (var i = 0; i < equipList.length; i++) {
+            var current = equipList[i];
+            console.log("current",current)
+
+            if(current.type==="Solution")
+            {
+                var equip = new Element(current.name, current.image, current.capacity);
+                equip.setDisabled(current.disabled)
+                equip.setLocation(current.x,current.y)
+
+                result.push(equip)
+                console.log("equip",equip)
+            }
+            else if(current.type==='Tools')
+            {
+                var equip =new Tool(current.name, current.image);
+                equip.setDisabled(current.disabled)
+                equip.setLocation(current.x,current.y)
+
+                result.push(equip);
+                console.log("equip",equip)
+
+            }
+            else {
+
+                var equip = new Glassware(current.name, current.image, current.capacity);
+                equip.setDisabled(current.disabled)
+                equip.setType(current.type)
+                equip.setLocation(current.x,current.y)
+                result.push(equip);
+                console.log("equip",equip)
+
+            }
+
+
+        }
+
+        return result;
+
+
+    }
     populateSteps()
     {
         //if not new lab, load old lab
@@ -213,7 +260,7 @@ class DoLab extends React.Component {
                     console.log("pushing instruction "+i+"="+JSON.stringify( step_list[i].instruction))
                     this.state.steps.push(new Step(i+1, step_list[i].instruction));
                     console.log("steplist is now "+JSON.stringify(this.state.steps))
-                    this.state.equipments[i]=[];
+                    this.state.equipments[i+1]=this.populateStepEquipment(step_list[i].equipments);
 
                 }
 
@@ -237,7 +284,7 @@ class DoLab extends React.Component {
                     // console.log(this.state.steps);
                 }
             )
-
+            //this.setStepsEquips()
         }
         else
         {
@@ -252,7 +299,25 @@ class DoLab extends React.Component {
             )
         }
     }
+    setStepsEquips()
+    {
+        console.log("YERR CURRENT EQUP IS "+JSON.stringify(this.state.equipments))
 
+        let i=0;
+        for (i=0; i<this.state.steps.length; i++){
+            console.log("this step is "+JSON.stringify(this.state.steps[i]));
+            console.log("this equip is "+this.state.equipments[i+1])
+            this.state.steps[i].setEquipments(this.state.equipments[i-1])
+            console.log("now this step is "+JSON.stringify(this.state.steps[i]));
+        }
+      /*  this.state.steps.map((step,index)=>(
+
+            step.setEquipments(this.state.equipments[count++])
+
+        ));*/
+
+        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
+    }
     setRedirectHome = () => {
         this.setState({
             redirectHome: true
@@ -532,9 +597,27 @@ class DoLab extends React.Component {
         if (ev.stopPropagation) {
             ev.stopPropagation(); // Stops some browsers from redirecting.
         }
-        move_element(ev);
+
+        this.move_element(ev);
         return false;
     }
+
+    move_element(ev){
+        const offset = ev.dataTransfer.getData("text/offset").split(',');
+        const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+        dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
+        dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
+        console.log("moving element ",dm.style.left)
+        console.log("moving element ",dm.style.top)
+
+        const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const equip_id = ev.dataTransfer.getData('text/equip_id');
+
+        const source = this.state.equipments[workspace_id][equip_id];
+        source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
+        console.log("moving ",workspace_id,equip_id,source);
+    }
+
     dragover_handler(ev) {
         if (ev.preventDefault) {
             ev.preventDefault(); // Necessary. Allows us to drop.
@@ -651,7 +734,7 @@ class DoLab extends React.Component {
         //workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
         console.log("equips is "+JSON.stringify(this.state.equipments))
         for (let i = 1; i <= this.state.step_num; i += 1) {
-            const equipments = this.state.equipments[i-1];
+            const equipments = this.state.equipments[i];
             if (equipments==undefined)break;
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
@@ -669,6 +752,7 @@ class DoLab extends React.Component {
                                                  canInteract = {this.canInteract}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
+                                                 move_element={this.move_element}
                                                  width={200} height={200}/>
 
                         ))
@@ -728,11 +812,15 @@ class DoLab extends React.Component {
             this.forceUpdate();
             return
         }
-        step=step-2;
+        step=step-1;
         // var image = equipment;
 
         const current = this.state.equipments;
         console.log("current is "+JSON.stringify(current )+"step is "+JSON.stringify(step))
+        if (current[step]==null){
+
+            current[step] = []
+        }
         if(current[step].length>=10)
         {
             ToastsStore.error("Workspace full! Only ten equipments allowed")
@@ -767,13 +855,53 @@ class DoLab extends React.Component {
         this.setState({slide:currslide});
         ToastsStore.success("Step completed!")
     }
+    verifyStep( stepEquips,studentEquips) {
+        let m = stepEquips.length;
+        let n = studentEquips.length;
+        console.log("step equip is "+JSON.stringify(stepEquips))
+        console.log("verifying step, studentEquips = "+JSON.stringify(studentEquips));
+
+        let arr = []
+        for (let i = 0; i < m; i ++) {
+            arr.push(false)
+        }
+
+        for (let i = 0; i < m; i ++) {
+            let equip1 = stepEquips[i]
+            for (let j = 0; j < n; j ++) {
+                let equip2 = studentEquips[j]
+                /* check for same type equipment and same volume, amount */
+                if (equip1.name === equip2.name &&
+                    equip1.amount === equip2.amount
+                    &&equip1.capacity==equip2.capacity) {
+                    arr[i] = true
+                }
+            }
+        }
+
+        let res = true
+        for (let i = 0; i < arr.length; i ++) {
+            res &= arr[i];
+        }
+        return res;
+
+    }
+
+
     completeStep  = (step_id) => {{
         let currentStep = this.state.completedSteps+1;
-        console.log("currentstep is " +currentStep + "len is "+ this.state.steps.length
-        +"equips is "+JSON.stringify(this.state.equipments)+ "with length "+this.state.equipments.length)
+        console.log("all steps are "+JSON.stringify(this.state.steps))
+        console.log("currentstep is " +currentStep + "aka  "+ JSON.stringify(this.state.steps[currentStep-1]))
+        console.log("equips is "+JSON.stringify(this.state.equipments[currentStep]))
+        console.log("all equips is "+JSON.stringify(this.state.equipments))
 
         //console.log("num equips is "+this.state.equipments[currentStep].length)
-        if (this.state.equipments[currentStep-1].length<2){
+        if (this.state.equipments[currentStep]==null){
+            ToastsStore.error("Step failed. Try again.")
+            console.log("aaaa")
+            return null;
+        }
+        if (!this.verifyStep(this.state.equipments[currentStep+1],this.state.equipments[currentStep])){
             ToastsStore.error("Step failed. Try again.")
             return null;
         }
@@ -865,13 +993,7 @@ class DoLab extends React.Component {
 
 
 }
-export function move_element(ev){
-    const offset = ev.dataTransfer.getData("text/offset").split(',');
-    const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
-    dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
-    dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-    // console.log(dm.style);
-}
+
 
 
 export default DoLab
