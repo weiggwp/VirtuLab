@@ -34,6 +34,11 @@ export default class Equipment {
     {
         this.disabled = j;
     }
+    setLocation(x,y)
+    {
+        this.left=x;
+        this.top=y;
+    }
 
 
     item_exist(item){
