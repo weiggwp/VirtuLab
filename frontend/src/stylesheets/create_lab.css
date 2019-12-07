@@ -19,7 +19,7 @@
 .lab_title_label
 {
     font-size: 25px;
-    color: gray;
+    color: #ecffff;
     font-weight: bold;
     position: relative;
     /*border-bottom: 1px dotted black;*/
@@ -28,7 +28,7 @@
 
 .lab_title_label:hover  {
     visibility: visible;
-    color: blue;
+    color: #1e276d;
 
 }
 
@@ -198,3 +198,15 @@
 .workspace{
     max-height: none;
 }
+
+.import{
+
+     background-color: transparent;
+     color: #4c76ff;
+    margin-left:5px;
+     letter-spacing: 0.4px;
+     font-size: .67rem;
+     text-transform: uppercase;
+        display:inline-block;
+
+ }

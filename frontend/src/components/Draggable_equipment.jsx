@@ -80,12 +80,15 @@ class Draggable_equipment extends React.Component{
              ev.stopPropagation(); // Stops some browsers from redirecting.
          }
 
+         //ev is target
 
          const workspace_id = ev.dataTransfer.getData('text/workspace_id');
          const equip_id = ev.dataTransfer.getData('text/equip_id');
          // Don't do anything if dropping the same column we're dragging.
+         //dragSrcEl is equipment.js source object
          if (dragSrcEl !== this &&
              this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
+             //first src, second target
 
              this.props.move_element(ev);
 
@@ -98,7 +101,12 @@ class Draggable_equipment extends React.Component{
 
          }
          else if (dragSrcEl === this){
-             this.props.move_element(ev);
+             console.log(ev)
+             const offset = ev.dataTransfer.getData("text/offset").split(',');
+             console.log("offset",offset)
+             //can drop on top of itself but within bounds
+             if(ev.clientX + parseInt(offset[0],10)>=0 && (ev.clientY + parseInt(offset[1],10))>=0)
+                this.props.move_element(ev);
          }
          else{
              alert("Not Interactable!");
