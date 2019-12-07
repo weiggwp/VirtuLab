@@ -1,5 +1,6 @@
 package backend.dto;
 
+import backend.model.Equipment;
 import backend.model.Step;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -87,9 +88,17 @@ public class LabDTO {
 
 
     private List<EquipmentDTO> equipments;
-
+    private List<Equipment> returnEquips;
     public List<EquipmentDTO> getEquipments() {
         return equipments;
+    }
+
+    public List<Equipment> getReturnEquips() {
+        return returnEquips;
+    }
+
+    public void setReturnEquips(List<Equipment> returnEquips) {
+        this.returnEquips = returnEquips;
     }
 
     public void setEquipments(List<EquipmentDTO> equipments) {

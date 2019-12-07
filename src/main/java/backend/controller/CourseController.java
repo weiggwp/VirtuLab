@@ -182,7 +182,7 @@ public class CourseController {
                     stepDTOList.add(new StepDTO());
                 }
                 labDTO.setSteps(lab.getSteps());
-
+                labDTO.setReturnEquips(lab.getEquipments());
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
                     System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
                         +"\ncourse id is "+userCourseLab.getCourse().getCourseID()+

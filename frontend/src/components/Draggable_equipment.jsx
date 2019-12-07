@@ -86,7 +86,8 @@ class Draggable_equipment extends React.Component{
          // Don't do anything if dropping the same column we're dragging.
          if (dragSrcEl !== this &&
              this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
-
+                console.log("props is "+JSON.stringify(this.props) +"func is "+this.props.canInteract+"func2 is "+
+                this.props.move_element)
              this.props.move_element(ev);
 
              this.props.interation_handler(

@@ -125,6 +125,7 @@ class create_lab extends React.Component {
     }
     populateEquipmentSetup()
     {
+        console.log("populating,s tate is "+JSON.stringify(this.props.location.state))
         var equipList = this.props.location.state.equipments;
         if (equipList !== undefined)//opening a previously saved lab
         {
@@ -172,6 +173,7 @@ class create_lab extends React.Component {
     populateSteps()
     {
         //if not new lab, load old lab
+
         if(this.props.location.state!==undefined){
 
             //get steps from prop
