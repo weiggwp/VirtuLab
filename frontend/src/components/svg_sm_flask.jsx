@@ -12,9 +12,7 @@ const SvgComponent =
          // height = '100%',
          // viewBox = "0 0 48 48",
          viewBox="13 13 20 20",
-         height="150px",
-         width="100px",
-
+         size = 100,
          y_top = 20,
          y_bot = 32.95,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
@@ -40,9 +38,9 @@ const SvgComponent =
 
      }) => (
         <svg
-            width={width}
+            width={size}
             style={style}
-            height={height}
+            height={size*1.5}
             viewBox={viewBox}
             className={className}
             // viewBox="0 0 48 48" height={200} width={200} {...props}

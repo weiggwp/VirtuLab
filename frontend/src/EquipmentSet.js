@@ -60,9 +60,9 @@ export default class EquipmentSet{
     }
     createFlasks()
     {
-        return [new Glassware("Titration Flask",small_flask,250,100,0,small_flask_svg,136,136),
-            new Glassware("Titration Flask",medium_flask,500,200,0),
-            new Glassware("Titration Flask",large_flask,1000,400,0),]
+        return [new Glassware("Titration Flask",small_flask,250,100,0,small_flask_svg,100),
+            new Glassware("Titration Flask",medium_flask,500,200,0,small_flask_svg,125),
+            new Glassware("Titration Flask",large_flask,1000,400,0,small_flask_svg,150),]
     }
     createCylinders()
     {

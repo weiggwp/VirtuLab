@@ -18,7 +18,7 @@ const SvgComponent =
          y_top = 17.2,
          y_bot = 42.5,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
-         opacity = ((fill_percent === 0) ? 0 : .4),
+         opacity = ((fill_percent === 0) ? 0 : 1),
 
 
      }) => (

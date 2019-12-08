@@ -52,7 +52,6 @@ class Draggable_equipment extends React.Component {
         counter++;
         if (dragSrcEl !== this) {
             const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
-            console.log(dm);
             dm.style.border = "3px dotted red";
         }
         // ev.target.style.cursor="copy";
@@ -64,7 +63,6 @@ class Draggable_equipment extends React.Component {
         counter--;
         if(counter===0){
             const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
-            console.log(dm);
             dm.style.border = "";
         }
         // ev.target.style.cursor="";
@@ -94,7 +92,6 @@ class Draggable_equipment extends React.Component {
         console.log(dm);
         dm.style.border = "";
         dm.style.opacity = '1.0';
-        console.log("new ", dm);
          //ev is target
          const workspace_id = ev.dataTransfer.getData('text/workspace_id');
          const equip_id = ev.dataTransfer.getData('text/equip_id');
