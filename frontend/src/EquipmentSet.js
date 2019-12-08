@@ -20,6 +20,7 @@ import large_beaker from "././Images/1000mLBeaker.svg";
 import small_cylinder from "./Images/10mLGraduatedCylinder.svg";
 import medium_cylinder from "./Images/25mLGraduatedCylinder.svg";
 import large_cylinder from "./Images/50mLGraduatedCylinder.svg";
+import cylinder_svg from "./components/svg_graduatedCylinder"
 
 import small_pipette from "./Images/5mLPipette.svg";
 import medium_pipette from "./Images/10mLPipette.svg";
@@ -66,9 +67,9 @@ export default class EquipmentSet{
     }
     createCylinders()
     {
-        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0),
-            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0),
-            new Glassware("Graduated Cylinder",large_cylinder,50,130,0),]
+        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0,cylinder_svg,100),
+            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0,cylinder_svg),
+            new Glassware("Graduated Cylinder",large_cylinder,50,130,0,cylinder_svg),]
     }
     createBeakers()
     {

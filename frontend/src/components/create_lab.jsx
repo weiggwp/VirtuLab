@@ -86,42 +86,39 @@ class create_lab extends React.Component {
     populateStepEquipment(equipList)
     {
 
-            var result =[];
+            let equip;
+        var result =[];
 
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
-                console.log("current",current)
 
                 if(current.type==="Solution")
                 {
-                    var equip = new Element(current.name, current.image, current.capacity,
-                        current.weight,current.state,current.svg, current.size,
-                        );
+                    equip = new Element(current.name, current.image, current.capacity,
+                        current.weight, current.state, current.svg, current.size,
+                    );
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
 
                     result.push(equip)
-                    console.log("equip",equip)
                 }
                 else if(current.type==='Tools')
                 {
-                    var equip =new Tool(current.name, current.image);
+                    equip = new Tool(current.name, current.image);
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
 
                     result.push(equip);
-                    console.log("equip",equip)
 
                 }
                 else {
 
-                    var equip = new Glassware(current.name, current.image, current.capacity,
+                    equip = new Glassware(current.name, current.image, current.capacity,
                         current.weight,current.state,current.svg, current.size);
                     equip.setDisabled(current.disabled);
                     equip.setType(current.type);
                     equip.setLocation(current.x,current.y);
                     result.push(equip);
-                    console.log("equip",equip)
 
                 }
 
@@ -146,7 +143,6 @@ class create_lab extends React.Component {
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
                 if(current.disabled)
-                    console.log(current.name+" is disabled");
                 if(current.type==="Solution")
                 {
                     var equip = new Element(current.name, current.image, current.capacity);

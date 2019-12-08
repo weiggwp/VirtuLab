@@ -4,8 +4,8 @@ const SvgComponent =
     ({
          style = {},
          className = '',
-         // fill = "#dee4e4",
-         fill = 'blue',
+         fill = "#dee4e4",
+         // fill = 'blue',
          fill_percent = 0,
 
          top_eclipse_color = "#ffffff",
@@ -18,7 +18,7 @@ const SvgComponent =
          y_top = 17.2,
          y_bot = 42.5,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
-         opacity = ((fill_percent === 0) ? 0 : 1),
+         opacity = ((fill_percent === 0) ? 0 : .6),
 
 
      }) => (
