@@ -31,7 +31,8 @@ public class UserCourseLab {
     private int grade;
     private int complete;
 
-    @OneToMany(mappedBy = "user_course_lab_association", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnore
+    @OneToMany(mappedBy = "userCourseLab", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<UserCourseLabStep> userCourseLabStepList = new ArrayList<>();
 
     public UserCourseLab() {
@@ -95,4 +96,15 @@ public class UserCourseLab {
         return userCourseLabID;
     }
 
+    public void setUserCourseLabID(long userCourseLabID) {
+        this.userCourseLabID = userCourseLabID;
+    }
+
+    public List<UserCourseLabStep> getUserCourseLabStepList() {
+        return userCourseLabStepList;
+    }
+
+    public void setUserCourseLabStepList(List<UserCourseLabStep> userCourseLabStepList) {
+        this.userCourseLabStepList = userCourseLabStepList;
+    }
 }

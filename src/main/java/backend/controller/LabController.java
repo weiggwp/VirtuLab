@@ -61,6 +61,9 @@ public class LabController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserCourseLabStepService userCourseLabStepService;
+
     EntityManager em;
 
     ModelMapper modelMapper = new ModelMapper();
@@ -349,8 +352,24 @@ public class LabController {
                 for(UserCourse userCourse: course.getUserCourseList()){
                     User user = userCourse.getUser();
                     if(user.getRole().toLowerCase().equals("student")) {
-                        user.getUserCourseLabList().add(new UserCourseLab(user, course, lab));
+                        if (!userCourseLabService.exists(user, course, lab)) {
+                            UserCourseLab userCourseLab = new UserCourseLab(user, course, lab);
+                            user.getUserCourseLabList().add(userCourseLab);
+                        }
                         userService.save(user);
+                    }
+                }
+
+                for (UserCourseLab userCourseLab: course.getUserCourseLabList()) {
+                    Lab l = userCourseLab.getLab();
+                    for (Step step: l.getSteps()) {
+                        if (!userCourseLabStepService.exists(userCourseLab, step)) {
+                            UserCourseLabStep userCourseLabStep = new UserCourseLabStep();
+                            userCourseLabStep.setStep(step);
+                            userCourseLabStep.setUserCourseLab(userCourseLab);
+                            userCourseLab.getUserCourseLabStepList().add(userCourseLabStep);
+                            userCourseLabStepService.save(userCourseLabStep);
+                        }
                     }
                 }
 
@@ -565,6 +584,5 @@ public class LabController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
-
 
 }

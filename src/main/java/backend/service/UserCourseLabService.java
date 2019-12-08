@@ -41,4 +41,12 @@ public class UserCourseLabService {
         userCourseLabRepository.deleteById(userCourseLabID);
     }
 
+    public void save(UserCourseLab userCourseLab) {
+        userCourseLabRepository.save(userCourseLab);
+    }
+
+    public boolean exists(User user, Course course, Lab lab){
+        return (userCourseLabRepository.existsByUserAndAndCourseAndAndLab(user, course, lab));
+    }
+
 }

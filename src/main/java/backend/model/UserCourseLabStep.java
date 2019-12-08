@@ -1,8 +1,6 @@
 package backend.model;
 
 
-import org.hibernate.annotations.ManyToAny;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,9 +11,11 @@ public class UserCourseLabStep {
     private long userCourseLabStepID;
 
     @ManyToOne
+    @JoinColumn(name = "userCourseLabID")
     private UserCourseLab userCourseLab;
 
     @ManyToOne
+    @JoinColumn(name = "stepID")
     private Step step;
 
     private int triesPerStep;
