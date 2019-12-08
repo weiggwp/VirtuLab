@@ -44,7 +44,7 @@ import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EditableLabel from "./EditableLabel";
-
+import deepCloneWithType from "../clone"
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -94,7 +94,9 @@ class create_lab extends React.Component {
 
                 if(current.type==="Solution")
                 {
-                    var equip = new Element(current.name, current.image, current.capacity);
+                    var equip = new Element(current.name, current.image, current.capacity,
+                        current.weight,current.state,current.svg, current.size,
+                        );
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
 
@@ -113,10 +115,11 @@ class create_lab extends React.Component {
                 }
                 else {
 
-                    var equip = new Glassware(current.name, current.image, current.capacity);
-                    equip.setDisabled(current.disabled)
-                    equip.setType(current.type)
-                    equip.setLocation(current.x,current.y)
+                    var equip = new Glassware(current.name, current.image, current.capacity,
+                        current.weight,current.state,current.svg, current.size);
+                    equip.setDisabled(current.disabled);
+                    equip.setType(current.type);
+                    equip.setLocation(current.x,current.y);
                     result.push(equip);
                     console.log("equip",equip)
 
@@ -800,13 +803,7 @@ class create_lab extends React.Component {
 
     createNewEquipment(equipment)
     {
-
-            const copy = new equipment.constructor()
-            const keys = Object.keys(equipment)
-            keys.forEach(key => {
-                copy[key] = equipment[key]
-            })
-            return copy
+        return deepCloneWithType(equipment);
 
     }
 
@@ -834,7 +831,7 @@ class create_lab extends React.Component {
                 {
                     equipments:current
                 }, () => {
-                    // console.log(this.state.equipments)
+                    console.log(this.state.equipments);
                 }
             )
         }

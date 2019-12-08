@@ -9,4 +9,3 @@ module.exports = {
     //http://virtulab.us-east-2.elasticbeanstalk.com
 
 };
-

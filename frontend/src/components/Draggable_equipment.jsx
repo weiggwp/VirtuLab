@@ -13,6 +13,7 @@ class Draggable_equipment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            eq: props.equipment,
             object: undefined,
             target: undefined,
             x:undefined,
@@ -138,13 +139,13 @@ class Draggable_equipment extends React.Component {
 
     render() {
         const equip = this.props.equipment;
-
+        const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
         return (
             <div>
                 <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
                                     holdToDisplay={-1}>
 
-                    <div id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
+                    <div id={id}
                          className={"workspace_equip"}
                         draggable="true"
                          onDragStart={this.dragStart_handler}
@@ -157,7 +158,7 @@ class Draggable_equipment extends React.Component {
                              top:equip.top,
                              }}
                     >
-                        <this.props.equipment.svg fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler}/>
+                        <this.props.equipment.svg fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
                     </div>
                 </ContextMenuTrigger>
 

@@ -2,6 +2,7 @@ import React from 'react'
 
 const SvgComponent =
     ({
+        id,
          style = {},
          className = '',
          fill = "white",
@@ -38,6 +39,7 @@ const SvgComponent =
 
      }) => (
         <svg
+            id={id+"flask"}
             width={size}
             style={style}
             height={size*1.5}
