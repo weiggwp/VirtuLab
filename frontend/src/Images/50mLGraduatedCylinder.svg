@@ -56,6 +56,18 @@ width="1000px"
     <g
        id="g9614"
        transform="translate(23.555356,20.190304)">
+      <g style="opacity:.6;">
+        <ellipse cx=".3" cy="17.8" rx="3.7" ry="1" style="fill:red;" transform="rotate(-3)"></ellipse>
+
+        <g style="opacity:.6;">
+          <rect x="-2.6" y="-5.47" width="7.45" height="23.2" style="fill:red;fill-opacity:1;stroke:none"></rect>
+
+          <ellipse cx="1.35" cy="17.8" rx="3.6" ry="1.1" transform="rotate(.7)" style="fill:red;"></ellipse>
+
+        </g>
+
+      </g>
+
 
       <path
          inkscape:connector-curvature="0"

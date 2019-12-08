@@ -4,8 +4,8 @@ const SvgComponent =
     ({
          style = {},
          className = '',
-         // fill = "#dee4e4",
-         fill = 'blue',
+         fill = "#dee4e4",
+         // fill = 'blue',
          fill_percent = 1,
 
          viewBox = "14 11 21 25",
@@ -15,6 +15,10 @@ const SvgComponent =
          y_bot = 17.8,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
          opacity = ((fill_percent === 0) ? 0 : 1),
+
+        x_top = 1.35,
+        x_bot = .3,
+        current_x = x_bot + (x_top-x_bot) * fill_percent,
 
 
      }) => (
@@ -34,10 +38,10 @@ const SvgComponent =
                     id="g9614"
                     transform="translate(23.555356,20.190304)"
                     opacity={opacity} fill={fill}>
-                    <ellipse cx={1.35} cy={current_y} rx={3.7} ry={1} transform="rotate(-3)" />
+                    <ellipse cx={current_x} cy={current_y} rx={3.7} ry={1} transform="rotate(-3)" />
                     <g opacity={0.6}>
                         <rect x={-2.6} y={current_y} width={7.45} height={(y_bot - y_top) * fill_percent} />
-                        <ellipse cx={1.35} cy={17.8} rx={3.6} ry={1.1} transform="rotate(.7)" />
+                        <ellipse cx={.3} cy={17.8} rx={3.6} ry={1.1} transform="rotate(-3)" />
                     </g>
                 </g>
                 <path
