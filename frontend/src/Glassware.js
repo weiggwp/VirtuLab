@@ -1,4 +1,5 @@
 import Equipment from "./Equipment";
+import {ToastsStore} from "react-toasts";
 
 
 export default class Glassware extends Equipment{
@@ -55,6 +56,7 @@ export default class Glassware extends Equipment{
         }
     }
     add_item(item){
+
         if(this.item_exist(item)){
             // console.log("exist");
             var itemfound = this.find(item);
@@ -64,7 +66,6 @@ export default class Glassware extends Equipment{
             this.overflow_handler(itemfound);
         }
         else{
-            console.log("not exist");
             console.log(item);
             console.log(this.items);
 
@@ -80,6 +81,7 @@ export default class Glassware extends Equipment{
     output(amount){
         var percentage = amount/this.amount;
         if(percentage>=1){
+            this.amount=0;
             return this.items;
         }
         else if (percentage<=0){
@@ -89,6 +91,7 @@ export default class Glassware extends Equipment{
         for (const [key, obj] of Object.entries(this.items)) {
             out[key] = obj.output(obj.amount*percentage);
         }
+        this.amount-=amount;
         return out;
     }
 
@@ -143,19 +146,30 @@ export default class Glassware extends Equipment{
 
         return null;
     }
-    pour(target,amount)
+    pour(target,amount,pourAction=true)
     {
+        amount = parseInt(amount);
+
+        if(this.amount===0)
+        {
+            ToastsStore.warning(this.name+"is empty")
+        }
         if(amount+target.amount>=target.capacity)
         {
             //cannot pour anymore
             console.log("pouring more than enough");
+            ToastsStore.warning(target.name+" is full")
+
+            amount=parseInt(amount)>target.amount?(target.capacity-target.amount):parseInt(amount);
+
         }
-        else
-        {
+        if(amount>0){
             target.add_items(this.output(amount));
             target.amount+=amount;
             //also need to account for total volume
-            alert("Poured "+amount+" ml from "+this.name + " into " + target.name);
+            // alert("Poured "+amount+" ml from "+this.name + " into " + target.name);
+            if(pourAction)
+                ToastsStore.success("Poured"+amount+" ml from "+this.name + " into " + target.name)
 
         }
 
@@ -163,8 +177,9 @@ export default class Glassware extends Equipment{
 
     withdraw(target,amount)
     {
-        target.pour(this,amount);
-        alert("withdrew "+amount+" ml from "+target.name + " into " + this.name);
+        target.pour(this,parseInt(amount),false);
+        // alert("withdrew "+amount+" ml from "+target.name + " into " + this.name);
+        ToastsStore.success("Withdrew "+amount+" ml from "+target.name + " into " + this.name)
 
 
     }

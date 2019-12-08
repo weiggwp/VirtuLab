@@ -6,6 +6,7 @@ import '../stylesheets/create_lab.css';
 import {css} from 'glamor';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import {ToastsStore} from "react-toasts";
 
 let dragSrcEl = null;
 let counter =0;
@@ -119,8 +120,9 @@ class Draggable_equipment extends React.Component {
              if(ev.clientX + parseInt(offset[0],10)>=0 && (ev.clientY + parseInt(offset[1],10))>=0)
                 this.props.move_element(ev);
          }
-         else {
-             alert("Not Interactable!");
+         else{
+             ToastsStore.error("Not interactable")
+
          }
 
         return false;
@@ -133,6 +135,7 @@ class Draggable_equipment extends React.Component {
         ev.target.style.opacity = '1.0';
 
     }
+
 
     //<object className="emb" data="images/svglogo.svg" width="100" height="100" type="image/svg+xml"></object>
 
@@ -175,7 +178,6 @@ class Draggable_equipment extends React.Component {
                         View Info
                     </MenuItem>
                 </ContextMenu>
-
             </div>
 
         )

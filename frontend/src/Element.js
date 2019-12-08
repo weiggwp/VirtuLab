@@ -1,6 +1,7 @@
 import Equipment from "./Equipment";
 import Glassware from "./Glassware";
 import {functionName} from "./Globals"
+import {ToastsStore} from "react-toasts";
 
 export default class Element extends Equipment{
     constructor(name, image ,capacity, weight, state=1,svg=null,size=100)
@@ -70,16 +71,46 @@ export default class Element extends Equipment{
     }
     pour(target,amount,callback=null)
     {
-        target.add_item(this.output(amount));
-        // console.log("pouring");
-        // console.log(target);
-        // if(!callback){
-        //     callback("Poured "+amount+" ml of "+this.name + " into " + target.name);
-        // }
-        alert("Poured "+amount+" ml of "+this.name + " into " + target.name);
+        amount=amount>this.amount?this.amount:amount;
 
-        // callback();
+        var warning = false;
+        var warning_msg = target.name+" is full.";
 
+        if(this.amount===0)
+        {
+            ToastsStore.warning(this.name+"is empty")
+            return
+        }
+        /*
+        if pouring more than the target can contain, set amount to target.capacity-target.amount
+         */
+        if(amount+target.amount>=target.capacity)
+        {
+            //cannot pour anymore
+            amount=amount>target.amount?(target.capacity-target.amount):amount;
+            console.log("pouring more than enough");
+            warning=true;
+            ToastsStore.warning(target.name+" is full")
+
+
+        }
+        if(amount>0)
+        {
+
+            target.add_item(this.output(amount));
+            target.amount += amount;
+            console.log("target");
+            console.log(target);
+            // if(!callback){
+            //     callback("Poured "+amount+" ml of "+this.name + " into " + target.name);
+            // }
+            // alert("Poured "+amount+" ml of "+this.name + " into " + target.name);
+            var success = "Poured " + amount + " ml of " + this.name + " into " + target.name;
+            if(!warning)
+                ToastsStore.success(success)
+            else
+                ToastsStore.warning(warning_msg+" "+success)
+        }
     }
 
     //elements can only be weighted

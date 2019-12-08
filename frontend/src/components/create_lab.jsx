@@ -28,6 +28,7 @@ import Step from "../Step.js";
 import {Slides} from "./Slides";
 // import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
+import {EquipmentInfo} from "./EquipmentInfo";
 import EquipmentSet from "../EquipmentSet.js";
 
 import axios from "axios";
@@ -69,6 +70,8 @@ class create_lab extends React.Component {
             popoverWarning:"",
             importStep:1,
             currentStep:0,
+            currentEquipment:undefined,
+            viewInfo:false,
 
 
         };
@@ -82,6 +85,7 @@ class create_lab extends React.Component {
         this.drop_handler = this.drop_handler.bind(this);
         this.move_element = this.move_element.bind(this);
         this.selectStep = this.selectStep.bind(this);
+        this.getInfo = this.getInfo.bind(this);
     }
     populateStepEquipment(equipList)
     {
@@ -234,6 +238,33 @@ class create_lab extends React.Component {
             redirectHome: true
         })
     };
+
+    setViewInfo=()=>{
+        this.setState({
+            viewInfo: !this.state.viewInfo
+        })
+    }
+
+
+    getInfo(e,data)
+    {
+        const workspace_id = data.workspace_id;
+        const eq_id = parseInt(data.equip_id);
+
+
+        const source = this.state.equipments[workspace_id][eq_id];
+
+        this.setState({
+            currentEquipment: source,
+            viewInfo:true
+        }, () => {
+            console.log(this.state.currentEquipment)
+            console.log(this.state.viewInfo)
+
+        })
+        // this.setViewInfo();
+        this.forceUpdate()
+    }
 
     setRestart = () => {
 
@@ -464,6 +495,8 @@ class create_lab extends React.Component {
     }
 
 
+
+
     instructionPane()
     {
         const instructions = [];
@@ -471,6 +504,7 @@ class create_lab extends React.Component {
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
+
             <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
@@ -479,8 +513,8 @@ class create_lab extends React.Component {
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
+                {this.getEquipmentTab(i)}
                 <span>instruction for step {i} </span>{this.instruction(i)}</Tab.Pane>);
             }
 
@@ -491,6 +525,18 @@ class create_lab extends React.Component {
                 {instructions}
             </Tab.Content>
         )
+
+    }
+
+    getEquipmentTab(i)
+    {
+        // setViewInfo
+        if(this.state.viewInfo===true)
+            return  <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
+        else
+            return  <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
+
+
 
     }
 
@@ -713,14 +759,14 @@ class create_lab extends React.Component {
                         {/*<span style={{left:"50%"}}>workspace for step {i}</span>*/}
 
                     <NavDropdown title="Import from" id="nav-dropdown"
-                                 style={{float:"right",display:"inline-block",width:"220px"}}>
+                                 style={{float:"right",display:"inline-block",width:"240px"}}>
 
                             <form style={{height:"40px",display:"inline-block",background: "rgba(255, 0, 0, 0.1);"}} role="form" onSubmit={(e)=>this.handleImport(e,i)}>
                                 <span style={{marginLeft:10}}>Step</span>
                                 <FormGroup controlId="popover_input" style={{display:"inline-block"}}>
                                     <FormControl
                                         // style={{height: 60}}
-                                        style={{width:50,marginLeft:10}}
+                                        style={{width:60,marginLeft:10}}
                                         autoFocus
                                         type="number"
                                         value={this.state.importStep}
@@ -741,6 +787,7 @@ class create_lab extends React.Component {
 
                         <Draggable_equipment wkspace_id={i} equip_id={index}
                                              interation_handler= {this.interaction_handler}
+                                             getInfo={this.getInfo}
                                              canInteract = {this.canInteract}
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}
@@ -792,7 +839,6 @@ class create_lab extends React.Component {
     handleSelectEquipment=(equipment)=>
     {
         equipment.disabled = !equipment.disabled;
-        alert(equipment.name+" "+equipment.disabled)
 
 
     };
