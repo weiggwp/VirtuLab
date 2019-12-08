@@ -171,8 +171,6 @@ class create_lab extends React.Component {
 
 
             }
-            // console.log("current equipment set",this.equipmentSet)
-            // console.log("setting to new equipment set",result)
             this.equipmentSet.setEquipmentList(result);
 
         }
@@ -258,8 +256,8 @@ class create_lab extends React.Component {
             currentEquipment: source,
             viewInfo:true
         }, () => {
-            console.log(this.state.currentEquipment)
-            console.log(this.state.viewInfo)
+            // console.log(this.state.currentEquipment)
+            // console.log(this.state.viewInfo)
 
         })
         // this.setViewInfo();
@@ -652,6 +650,9 @@ class create_lab extends React.Component {
     };
 
     handleAction(source, action,target,input){
+
+
+
         source[action](target,parseFloat(input));
         this.forceUpdate();
     }
@@ -787,7 +788,7 @@ class create_lab extends React.Component {
 
                         <Draggable_equipment wkspace_id={i} equip_id={index}
                                              interation_handler= {this.interaction_handler}
-                                             getInfo={this.getInfo}
+                                             viewInfo={this.getInfo}
                                              canInteract = {this.canInteract}
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}

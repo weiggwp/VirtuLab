@@ -3,6 +3,8 @@ import Glassware from "./Glassware";
 import {functionName} from "./Globals"
 import {ToastsStore} from "react-toasts";
 
+import deepCloneWithType from "./clone"
+
 export default class Element extends Equipment{
     constructor(name, image ,capacity, weight, state=1,svg=null,size=100)
     {
@@ -25,7 +27,8 @@ export default class Element extends Equipment{
     }
     output(amount){
 
-        const clone = JSON.parse(JSON.stringify(this));
+        // const clone = JSON.parse(JSON.stringify(this));
+        const clone = deepCloneWithType(this);
         // let clone = Object.assign({}, this);
         //FIXME: Alert: clone loses proto type, isPrototypeOf no longer works
 
@@ -87,7 +90,11 @@ export default class Element extends Equipment{
         /*
         if pouring more than the target can contain, set amount to target.capacity-target.amount
          */
-        console.log(amount+" "+target.amount+" "+target.capacity)
+        // console.log(amount+" "+target.amount+" "+target.capacity);
+        if(this.amount<amount){
+            amount = this.amount;
+        }
+
         if(amount+target.amount>=target.capacity)
         {
             console.log("target", target);

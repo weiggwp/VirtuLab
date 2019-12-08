@@ -174,7 +174,7 @@ class Draggable_equipment extends React.Component {
                         Remove Containing Elements
                     </MenuItem>
                     <MenuItem divider/>
-                    <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                    <MenuItem data={{workspace_id: this.props.wkspace_id, equip_id: this.props.equip_id}} onClick={this.props.viewInfo}>
                         View Info
                     </MenuItem>
                 </ContextMenu>
