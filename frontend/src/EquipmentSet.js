@@ -67,9 +67,9 @@ export default class EquipmentSet{
     }
     createCylinders()
     {
-        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0,cylinder_svg,100),
-            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0,cylinder_svg),
-            new Glassware("Graduated Cylinder",large_cylinder,50,130,0,cylinder_svg),]
+        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0,cylinder_svg,70),
+            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0,cylinder_svg,85),
+            new Glassware("Graduated Cylinder",large_cylinder,50,130,0,cylinder_svg,100),]
     }
     createBeakers()
     {
