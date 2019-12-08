@@ -652,7 +652,7 @@ class create_lab extends React.Component {
     };
 
     handleAction(source, action,target,input){
-        source[action](target,input);
+        source[action](target,parseFloat(input));
         this.forceUpdate();
     }
 

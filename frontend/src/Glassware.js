@@ -16,22 +16,19 @@ export default class Glassware extends Equipment{
 
         let amount = 0;
         for (const [, item] of Object.entries(this.items)) {
-            console.log(item);
             // out[key] = obj.output(obj.amount*percentage);
             amount+=item.amount;
         }
-        console.log(amount);
         return amount;
     }
     getFillPercent(){
-        console.log(this.getAmount()/this.capacity)
         return this.getAmount()/this.capacity;
     }
     getWeight(){
         let total = this.weight;
         for (const [, item] of Object.entries(this.items)) {
             // out[key] = obj.output(obj.amount*percentage);
-            console.log("item",item);
+            // console.log("item",item);
             alert(item);
             total+=item.getWeight();
         }
@@ -66,8 +63,8 @@ export default class Glassware extends Equipment{
             this.overflow_handler(itemfound);
         }
         else{
-            console.log(item);
-            console.log(this.items);
+            // console.log(item);
+            // console.log(this.items);
 
             this.items.push(item);
             this.overflow_handler(item);
@@ -157,7 +154,7 @@ export default class Glassware extends Equipment{
         if(amount+target.amount>=target.capacity)
         {
             //cannot pour anymore
-            console.log("pouring more than enough");
+            // console.log("pouring more than enough");
             ToastsStore.warning(target.name+" is full")
 
             amount=parseInt(amount)>target.amount?(target.capacity-target.amount):parseInt(amount);

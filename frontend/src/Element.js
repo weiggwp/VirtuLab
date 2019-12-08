@@ -71,7 +71,10 @@ export default class Element extends Equipment{
     }
     pour(target,amount,callback=null)
     {
+        console.log(amount);
         amount=amount>this.amount?this.amount:amount;
+
+        console.log(amount);
 
         var warning = false;
         var warning_msg = target.name+" is full.";
@@ -84,8 +87,10 @@ export default class Element extends Equipment{
         /*
         if pouring more than the target can contain, set amount to target.capacity-target.amount
          */
+        console.log(amount+" "+target.amount+" "+target.capacity)
         if(amount+target.amount>=target.capacity)
         {
+            console.log("target", target);
             //cannot pour anymore
             amount=amount>target.amount?(target.capacity-target.amount):amount;
             console.log("pouring more than enough");
