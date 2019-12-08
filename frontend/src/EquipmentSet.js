@@ -60,7 +60,7 @@ export default class EquipmentSet{
     }
     createFlasks()
     {
-        return [new Glassware("Titration Flask",small_flask,250,100,0,small_flask_svg),
+        return [new Glassware("Titration Flask",small_flask,250,100,0,small_flask_svg,136,136),
             new Glassware("Titration Flask",medium_flask,500,200,0),
             new Glassware("Titration Flask",large_flask,1000,400,0),]
     }
@@ -91,7 +91,7 @@ export default class EquipmentSet{
 
 
     populateList() {
-        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1,watersvg)];
+        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1,watersvg,130)];
 
         this.equipmentList['Glassware'] = {
             'Titration Flask': this.createFlasks(),

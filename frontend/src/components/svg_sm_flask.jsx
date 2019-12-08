@@ -8,9 +8,12 @@ const SvgComponent =
          fill_percent = 0,
 
          top_eclipse_color = "#ffffff",
-         width = '100%',
-         height = '100%',
-         viewBox = "0 0 48 48",
+         // width = '100%',
+         // height = '100%',
+         // viewBox = "0 0 48 48",
+         viewBox="13 13 20 20",
+         height="150px",
+         width="100px",
 
          y_top = 20,
          y_bot = 32.95,

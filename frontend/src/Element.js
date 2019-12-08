@@ -3,14 +3,13 @@ import Glassware from "./Glassware";
 import {functionName} from "./Globals"
 
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1,svg=null)
+    constructor(name, image ,capacity, weight, state=1,svg=null,size=100)
     {
-        super(name,image,weight,"Solution",0,svg);
+        super(name,image,weight,"Solution",0,svg,size);
         this.amount=capacity;
         this.capacity=capacity;
         this.image=image;
         this.state=state;
-        // this.svg = svg;
         this.state_names= ["solid", "liquid", "gas"];
 
     }

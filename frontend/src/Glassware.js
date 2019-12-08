@@ -3,9 +3,9 @@ import Equipment from "./Equipment";
 
 export default class Glassware extends Equipment{
 
-    constructor(name,image, capacity,weight, state=0,svg=null)
+    constructor(name,image, capacity,weight, state=0,svg=null,width=136,height=200)
     {
-        super(name,image,weight,"Glassware",0,svg);
+        super(name,image,weight,"Glassware",0,svg,width,height);
         this.capacity=capacity;
         // this.state_names= ["empty", "filled", "full"];
 

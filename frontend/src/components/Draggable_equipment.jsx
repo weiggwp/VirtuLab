@@ -8,7 +8,7 @@ import {css} from 'glamor';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 let dragSrcEl = null;
-
+let counter =0;
 class Draggable_equipment extends React.Component {
     constructor(props) {
         super(props);
@@ -34,10 +34,7 @@ class Draggable_equipment extends React.Component {
         // console.log(style.getPropertyValue("left"));
         const left = (parseInt(style.getPropertyValue("left"), 10) - ev.clientX);
         const top = (parseInt(style.getPropertyValue("top"), 10) - ev.clientY);
-        console.log(left);
 
-        // console.log(left);
-        // console.log(top);
         ev.dataTransfer.setData("text/offset", left + ',' + top);
         ev.dataTransfer.setData("text/id", ev.target.id);
 
@@ -51,16 +48,25 @@ class Draggable_equipment extends React.Component {
         ev.dataTransfer.effectAllowed = 'move';
     };
     dragEnter_handler = (ev) => {
+        ev.preventDefault();
+        counter++;
         if (dragSrcEl !== this) {
-            ev.target.style.border = "3px dotted red";
+            const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
+            console.log(dm);
+            dm.style.border = "3px dotted red";
         }
         // ev.target.style.cursor="copy";
 
     };
 
     dragLeave_handler(ev) {
-        // ev.preventDefault();
-        ev.target.style.border = "";
+        ev.preventDefault();
+        counter--;
+        if(counter===0){
+            const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
+            console.log(dm);
+            dm.style.border = "";
+        }
         // ev.target.style.cursor="";
     }
 
@@ -83,7 +89,12 @@ class Draggable_equipment extends React.Component {
         if (ev.stopPropagation) {
             ev.stopPropagation(); // Stops some browsers from redirecting.
         }
-
+        counter=0;
+        const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
+        console.log(dm);
+        dm.style.border = "";
+        dm.style.opacity = '1.0';
+        console.log("new ", dm);
          //ev is target
          const workspace_id = ev.dataTransfer.getData('text/workspace_id');
          const equip_id = ev.dataTransfer.getData('text/equip_id');
@@ -113,8 +124,7 @@ class Draggable_equipment extends React.Component {
          else {
              alert("Not Interactable!");
          }
-        ev.target.style.border = "";
-        ev.target.style.opacity = '1.0';
+
         return false;
 
     }
@@ -130,12 +140,15 @@ class Draggable_equipment extends React.Component {
 
 
     render() {
+        const equip = this.props.equipment;
+
         return (
             <div>
                 <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
                                     holdToDisplay={-1}>
 
                     <div id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
+                         className={"workspace_equip"}
                         draggable="true"
                          onDragStart={this.dragStart_handler}
                          onDrop={this.drop_handler}
@@ -143,12 +156,11 @@ class Draggable_equipment extends React.Component {
                          onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
                          onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
                          style={{position:"absolute",
-                             left:this.props.equipment.left,
-                             top:this.props.equipment.top,
-                             width: this.props.width,
-                             height: this.props.height}}
+                             left:equip.left,
+                             top:equip.top,
+                             }}
                     >
-                        <this.props.equipment.svg fill_percent={this.props.equipment.getFillPercent()}/>
+                        <this.props.equipment.svg fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler}/>
                     </div>
                 </ContextMenuTrigger>
 

@@ -4,13 +4,17 @@ const SvgComponent =
     ({
          style = {},
          className = '',
-         fill = "#dee4e4",
+         // fill = "#dee4e4",
+         fill = 'blue',
          fill_percent = 0,
 
          top_eclipse_color = "#ffffff",
-         width = '100%',
-         height = '100%',
-         viewBox = "0 0 48 48",
+         // width = '100%',
+         // height = '100%',
+         viewBox = "7 4 34 40",
+         size = 100,
+         // height="150px",
+         // width="100px",
          y_top = 17.2,
          y_bot = 42.5,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
@@ -19,9 +23,9 @@ const SvgComponent =
 
      }) => (
         <svg
-            width={width}
             style={style}
-            height={height}
+            width={size}
+            height={size*1.5}
             viewBox={viewBox}
             className={className}
             // viewBox="0 0 48 48" height={200} width={200} {...props}
@@ -68,12 +72,12 @@ const SvgComponent =
 
 
             <g opacity={opacity}>
-                <ellipse cx={24} cy={y_bot} rx={14} ry={4.5} fill={fill}/>
-                <g fill={fill}>
+                    <ellipse cx={24} cy={current_y} rx={14} ry={2.5} fill={fill}/>
+                    {/*<ellipse cx={24} cy={current_y} rx={14} ry={2.5} fill={top_eclipse_color} opacity={.6}/>*/}
+                <g fill={fill} opacity={.6}>
                     <rect width="28" height={(y_bot - y_top) * fill_percent} x="10" y={((current_y<y_top) ? y_top:current_y)}/>
                     {/*<path d="M10 17h28v25H10z" />*/}
-                    <ellipse cx={24} cy={current_y} rx={14} ry={2.5} fill={fill}/>
-                    <ellipse cx={24} cy={current_y} rx={14} ry={2.5} fill={top_eclipse_color} opacity={.6}/>
+                    <ellipse cx={24} cy={y_bot} rx={14} ry={4.5} />
                 </g>
             </g>
             <path

@@ -187,7 +187,6 @@ class create_lab extends React.Component {
             if (step_list !== undefined)
             {
                 for (var i = 1; i < step_list.length; i++) {
-                    console.log("step ",i," ",step_list[i])
                     this.state.steps.push(new Step(i, step_list[i].instruction));
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i].equipments);
 
@@ -270,7 +269,7 @@ class create_lab extends React.Component {
 
             ));
 
-        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
+        // console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
 
@@ -289,7 +288,7 @@ class create_lab extends React.Component {
             // lastModified: new Date(),
         };
 
-        console.log("lab.lastModified", lab.lastModified);
+        // console.log("lab.lastModified", lab.lastModified);
 
         let axiosConfig = {
             headers: {
@@ -835,7 +834,7 @@ class create_lab extends React.Component {
                 {
                     equipments:current
                 }, () => {
-                    console.log(this.state.equipments)
+                    // console.log(this.state.equipments)
                 }
             )
         }
@@ -889,15 +888,15 @@ class create_lab extends React.Component {
         const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
         dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
         dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-        console.log("moving element ",dm.style.left)
-        console.log("moving element ",dm.style.top)
+        // console.log("moving element ",dm.style.left)
+        // console.log("moving element ",dm.style.top)
 
         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
         const equip_id = ev.dataTransfer.getData('text/equip_id');
 
         const source = this.state.equipments[workspace_id][equip_id];
         source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
-        console.log("moving ",workspace_id,equip_id,source);
+        // console.log("moving ",workspace_id,equip_id,source);
     }
 
     adjust_interactive_element(ev,src_workspace,src_equip,target_workspace,target_equip){
@@ -911,15 +910,15 @@ class create_lab extends React.Component {
         const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
         dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
         dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-        console.log("moving element ",dm.style.left)
-        console.log("moving element ",dm.style.top)
+        // console.log("moving element ",dm.style.left)
+        // console.log("moving element ",dm.style.top)
 
         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
         const equip_id = ev.dataTransfer.getData('text/equip_id');
 
         const source = this.state.equipments[workspace_id][equip_id];
         source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
-        console.log("moving ",workspace_id,equip_id,source);
+        // console.log("moving ",workspace_id,equip_id,source);
     }
 
 }
