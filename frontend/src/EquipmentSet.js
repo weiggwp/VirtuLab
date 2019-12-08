@@ -16,6 +16,7 @@ import large_flask from "./Images/1000mLFlask.svg";
 import small_beaker from "./Images/250mLBeaker.svg";
 import medium_beaker from "./Images/600mLBeaker.svg";
 import large_beaker from "././Images/1000mLBeaker.svg";
+import beaker_svg from "./components/svg_beaker";
 
 import small_cylinder from "./Images/10mLGraduatedCylinder.svg";
 import medium_cylinder from "./Images/25mLGraduatedCylinder.svg";
@@ -73,9 +74,9 @@ export default class EquipmentSet{
     }
     createBeakers()
     {
-        return [new Glassware("Beaker",small_beaker,250,100,0),
-            new Glassware("Beaker",medium_beaker,600,200,0),
-            new Glassware("Beaker",large_beaker,1000,400,0),]
+        return [new Glassware("Beaker",small_beaker,250,100,0,beaker_svg,70),
+            new Glassware("Beaker",medium_beaker,600,200,0,beaker_svg,85),
+            new Glassware("Beaker",large_beaker,1000,400,0,beaker_svg,100),]
     }
     createVolumetricFlasks()
     {

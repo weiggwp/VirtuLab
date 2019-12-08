@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 50 50"
-height="2000px"
-width="2000px"
+   viewBox="5 0 40 50"
+  height="2000px"
+  width="1500px"
    id="svg5120"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -53,6 +53,19 @@ width="2000px"
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
+
+    <g style="opacity:.6;">
+      <ellipse cx="24.5" cy="15.5" rx="12.1" ry="3.23" style="fill:red;"></ellipse>
+
+      <g style="opacity:.6;">
+        <rect x="12.3" y="15.7" width="24.5" height="24.5" style="fill:red;fill-opacity:1;stroke:none"></rect>
+
+        <ellipse cx="24.5" cy="40.55" rx="12.1" ry="3.23"  style="fill:red;"></ellipse>
+
+      </g>
+
+    </g>
+
     <path
        d="m 91.986814,20.0145 c -1.181663,-0.557383 -1.4522,-1.263594 -1.4522,-1.859975"
        id="path46-3"
