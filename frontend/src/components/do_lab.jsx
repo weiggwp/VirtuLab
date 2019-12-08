@@ -60,7 +60,7 @@ class DoLab extends React.Component {
             steps : [],
             step_num: 0,
             completedSteps:0,
-            lab_id:0,
+            lab_id: this.props.lab_id,
             lab_loaded:false,
             lab_title:"Untitled Lab",
             equipments:[[]],
@@ -352,8 +352,8 @@ class DoLab extends React.Component {
     handleGetLab = () => {
         // alert("saving " +this.state.lab_id)
         const lab = {
-            labID: this.state.lab_id
-            // labID: 871,
+            // labID: this.state.lab_id
+            labID: this.props.location.state.labID,
         };
 
         let axiosConfig = {
@@ -368,7 +368,7 @@ class DoLab extends React.Component {
                 // TODO: pull the lab
                 console.log("The lab is: ")
                 let theLab = response.data
-                console.log(lab)
+                console.log(theLab)
 
                 this.setState({
                     lab: theLab
