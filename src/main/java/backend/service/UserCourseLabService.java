@@ -37,4 +37,8 @@ public class UserCourseLabService {
         return userCourseLabRepository.findAllByLab(lab);
     }
 
+    public void delAssociateion(long userCourseLabID) {
+        userCourseLabRepository.deleteById(userCourseLabID);
+    }
+
 }

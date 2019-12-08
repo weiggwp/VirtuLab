@@ -8,6 +8,7 @@ import backend.dto.UserDTO;
 import backend.model.*;
 import backend.repository.UserRepository;
 import backend.service.CourseService;
+import backend.service.UserCourseLabService;
 import backend.service.UserCourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class CourseController {
     UserRepository userRepository;
     @Autowired
     UserCourseService userCourseService;
+    @Autowired
+    UserCourseLabService userCourseLabService;
 
     @Autowired
     ModelMapper modelMapper;
@@ -279,22 +282,6 @@ public class CourseController {
                 Lab lab = courseLab.getLab();
                 System.out.println(lab);
                 UserCourseLab userCourseLab = new UserCourseLab(user, course, lab);
-
-                /* students get their own steps and equipments to keep track */
-                StudentProgress studentProgress = new StudentProgress();
-
-                List<Step> steps = lab.getSteps();
-                List<Attempt> attempts = new ArrayList<>();
-                for (Step step: steps) {
-                    Attempt attempt = new Attempt();
-                    List<Equipment> equipmentList = step.getEquipments();
-                    List<Equipment> copy = new ArrayList<>(equipmentList);
-                    attempt.setEquipmentList(copy);
-                    attempts.add(attempt);
-                }
-                studentProgress.setAttempts(attempts);
-                userCourseLab.setStudentProgress(studentProgress);
-
                 userCourseLabList.add(userCourseLab);
 
             }
@@ -355,8 +342,8 @@ public class CourseController {
                 if (userCourseLab.getUser().getId() == user.getId() &&
                         userCourseLab.getCourse().getCourseID() == courseID){
                     it.remove();
+                    userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
                 }
-
             }
 
 

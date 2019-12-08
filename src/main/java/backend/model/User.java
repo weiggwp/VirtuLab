@@ -36,7 +36,7 @@ public class User {
 //            inverseJoinColumns = {@JoinColumn(name = "courseID")})
 //    private List<Course> courses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<UserCourseLab> userCourseLabList = new ArrayList<>();
 
 

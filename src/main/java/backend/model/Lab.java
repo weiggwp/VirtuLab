@@ -39,6 +39,9 @@ public class Lab {
     @OneToMany(mappedBy = "lab", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<CourseLab> courseLabList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "lab", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UserCourseLab> userCourseLabList = new ArrayList<>();
+
 
     @JsonIgnore
     @ManyToMany(mappedBy = "labs")
@@ -162,6 +165,14 @@ public class Lab {
 
     public void setCourseLabList(List<CourseLab> courseLabList) {
         this.courseLabList = courseLabList;
+    }
+
+    public List<UserCourseLab> getUserCourseLabList() {
+        return userCourseLabList;
+    }
+
+    public void setUserCourseLabList(List<UserCourseLab> userCourseLabList) {
+        this.userCourseLabList = userCourseLabList;
     }
 
     public int getOpen() {

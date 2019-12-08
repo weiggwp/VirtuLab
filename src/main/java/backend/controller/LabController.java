@@ -3,6 +3,7 @@ package backend.controller;
 
 import backend.dto.*;
 import backend.model.*;
+import backend.repository.UserRepository;
 import backend.service.*;
 import org.modelmapper.ModelMapper;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
@@ -53,6 +54,12 @@ public class LabController {
 
     @Autowired
     EquipmentService equipmentService;
+
+    @Autowired
+    UserCourseLabService userCourseLabService;
+
+    @Autowired
+    UserRepository userRepository;
 
     EntityManager em;
 
@@ -380,6 +387,20 @@ public class LabController {
             System.out.println("take out lab");
             Lab lab = optional.get();
             lab.removeLab(); // remove the rows in association table
+
+
+            List<UserCourseLab> userCourseLabList = new ArrayList<>(lab.getUserCourseLabList());
+            for (Iterator<UserCourseLab> it = userCourseLabList.iterator(); it.hasNext();) {
+                UserCourseLab userCourseLab = it.next();
+                System.out.println("hi " + userCourseLab.getLab().getName());
+                if (userCourseLab.getUser().getId() == user.getId() &&
+                        userCourseLab.getLab().getLabID() == labID){
+                    it.remove();
+                    userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
+                }
+                labService.saveLab(lab);
+            }
+
 //            System.out.println(lab.getCourses());
 //            lab.getCourses().clear();
 //            labService.saveLab(lab);
@@ -390,11 +411,7 @@ public class LabController {
             user.getLabs().remove(lab);
         }
 
-
         labService.deleteById(labID);
-
-
-
 
         return new ResponseEntity(HttpStatus.OK);
     }
