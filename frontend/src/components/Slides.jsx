@@ -30,11 +30,14 @@ class Slides extends React.Component {
 
         return (
             <div>
-                <div>
-                    <a href="#" onClick={this.props.addChild}>
-                        <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
-                        Add new
-                    </a>
+                <div style={{width:"100%"}} onClick={this.props.addChild} >
+                    <button className="newButton" style={{width:"100%",backgroundColor:"transparent",borderStyle:"none"}}  variant="flat" >
+
+                        <Image  className="add"  src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
+
+                        <span style={{marginTop:20}} >Add</span>
+
+                    </button>
                 </div>
 
                 <Nav variant="pills" className="flex-column">

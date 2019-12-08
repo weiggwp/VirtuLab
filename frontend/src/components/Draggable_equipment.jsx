@@ -6,6 +6,7 @@ import '../stylesheets/create_lab.css';
 
 import { ReactComponent as Example } from '../Images/water.svg';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import {ToastsStore} from "react-toasts";
 
 let dragSrcEl = null;
 
@@ -109,7 +110,7 @@ class Draggable_equipment extends React.Component{
                 this.props.move_element(ev);
          }
          else{
-             alert("Not Interactable!");
+             ToastsStore.error("Not interactable")
 
          }
          ev.target.style.border="";
@@ -124,11 +125,13 @@ class Draggable_equipment extends React.Component{
 
     }
 
+
     //<object className="emb" data="images/svglogo.svg" width="100" height="100" type="image/svg+xml"></object>
 
 
     render() {
         // alert(this.props.equipment.image);
+        const equipment = this.props.equipment;
         return (
             <div
             >
@@ -161,7 +164,7 @@ class Draggable_equipment extends React.Component{
                     Remove Containing Elements
                 </MenuItem>
                 <MenuItem divider />
-                <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                <MenuItem data={{workspace_id:this.props.wkspace_id,equip_id:this.props.equip_id}} onClick={this.props.getInfo}>
                     View Info
                 </MenuItem>
             </ContextMenu>
