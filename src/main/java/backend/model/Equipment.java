@@ -154,4 +154,11 @@ public class Equipment {
         this.disabled = disabled;
     }
 
+    public String toString(){
+        return
+                 " name: "+name
+                +" amount: "+amount
+                + "capacity: "+capacity
+                +" weight: "+weight;
+    }
 }

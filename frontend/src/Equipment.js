@@ -34,6 +34,12 @@ export default class Equipment {
         this.left=x;
         this.top=y;
     }
+    setItems(item){
+        this.items=item;
+    }
+    setWeight(weight){
+        this.weight=weight;
+    }
 
 
     item_exist(item){

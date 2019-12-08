@@ -27,8 +27,8 @@ export default class Element extends Equipment{
         else if(amount>=this.amount){
             amount = this.amount;
         }
-        clone._amount=amount;
-        this._amount-=amount;
+        clone.amount=amount;
+        this.amount-=amount;
         return clone;
     }
     /*
