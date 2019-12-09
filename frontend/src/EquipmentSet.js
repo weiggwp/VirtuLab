@@ -30,6 +30,7 @@ import large_pipette from "./Images/25mLPipette.svg";
 import small_volFlask from "./Images/100mLVolumetricFlask.svg";
 import medium_volFlask from "./Images/250mLVolumetricFlask.svg";
 import large_volFlask from "./Images/1000mLVolumetricFlask.svg";
+import volFlask_svg from "./components/svg_volumetricFlask"
 
 import bunsun_burner from "./Images/bunsenBurner.svg";
 import scale from "./Images/scale.svg";
@@ -80,9 +81,9 @@ export default class EquipmentSet{
     }
     createVolumetricFlasks()
     {
-        return [new Glassware("Volumetric Flask",small_volFlask,100,50,0),
-            new Glassware("Volumetric Flask",medium_volFlask,250,125,0),
-            new Glassware("Volumetric Flask",large_volFlask,1000,600,0),]
+        return [new Glassware("Volumetric Flask",small_volFlask,100,50,0,volFlask_svg,70),
+            new Glassware("Volumetric Flask",medium_volFlask,250,125,0,volFlask_svg,85),
+            new Glassware("Volumetric Flask",large_volFlask,1000,600,0,volFlask_svg,100),]
     }
     createPipettes()
     {
