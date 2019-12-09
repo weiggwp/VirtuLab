@@ -78,11 +78,34 @@ class DoLab extends React.Component {
         this.drop_handler = this.drop_handler.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.move_element = this.move_element.bind(this);
+        this.move_element = this.move_element.bind(this)
+        this.getInfo = this.getInfo.bind(this);
     }
+
+    getInfo(e,data)
+    {
+        const workspace_id = data.workspace_id;
+        const eq_id = parseInt(data.equip_id);
+
+
+        const source = this.state.equipments[workspace_id][eq_id];
+
+        this.setState({
+            currentEquipment: source,
+            viewInfo:true
+        }, () => {
+            console.log(this.state.currentEquipment)
+            console.log(this.state.viewInfo)
+
+        })
+        // this.setViewInfo();
+        this.forceUpdate()
+    }
+
     populateEquipmentSetup()
     {
-        console.log("populating,s tate is "+JSON.stringify(this.props.location.state.equipments))
+        console.log("populating,state is ")
+        console.log(this.props.location.state.equipments)
         var equipList = this.props.location.state.equipments;
         if (equipList !== undefined&&equipList!=null)//opening a previously saved lab
         {
@@ -99,13 +122,19 @@ class DoLab extends React.Component {
                     console.log(current.name+" is disabled");
                 if(current.type==="Solution")
                 {
-                    var equip = new Element(current.name, current.image, current.capacity);
+                    equip = new Element(current.name, current.image, current.capacity,
+                        current.weight, current.state, current.svg, current.size,
+                    );
+                    console.log("equip is")
+                    console.log(equip)
                     equip.setDisabled(current.disabled)
                     result['Solution'].push(equip)
                 }
                 else if(current.type==='Tools')
                 {
                     var equip =new Tool(current.name, current.image);
+                    console.log("equip is")
+                    console.log(equip)
                     equip.setDisabled(current.disabled)
                     result['Tools'].push(equip);
                 }
@@ -113,9 +142,12 @@ class DoLab extends React.Component {
                     if(result['Glassware'][current.type]===undefined)
                         result['Glassware'][current.type]=[]
 
-                    var equip = new Glassware(current.name, current.image, current.capacity);
+                    equip = new Glassware(current.name, current.image, current.capacity,
+                        current.weight,current.state,current.svg, current.size);
                     equip.setDisabled(current.disabled)
                     equip.setType(current.type)
+                    console.log("equip is")
+                    console.log(equip)
                     result['Glassware'][current.type].push(equip);
                 }
 
@@ -139,7 +171,9 @@ class DoLab extends React.Component {
 
             if(current.type==="Solution")
             {
-                var equip = new Element(current.name, current.image, current.capacity);
+                equip = new Element(current.name, current.image, current.capacity,
+                    current.weight, current.state, current.svg, current.size,
+                );
                 equip.setDisabled(current.disabled)
                 equip.setLocation(current.x,current.y)
                 equip.setWeight(current.weight)
@@ -159,7 +193,8 @@ class DoLab extends React.Component {
             }
             else {
 
-                var equip = new Glassware(current.name, current.image, current.capacity);
+                equip = new Glassware(current.name, current.image, current.capacity,
+                    current.weight,current.state,current.svg, current.size);
                 equip.setDisabled(current.disabled)
                 equip.setType(current.type)
                 equip.setLocation(current.x,current.y)
@@ -178,7 +213,8 @@ class DoLab extends React.Component {
 
     }
     populateSteps()
-    {
+    {    console.log("populating,state is ")
+        console.log(this.props.location.state.equipments)
         //if not new lab, load old lab
         if(this.props.location.state!==undefined){
 
@@ -682,6 +718,8 @@ class DoLab extends React.Component {
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
             if (equipments==undefined)break;
+            console.log("equip is ")
+            console.log(equipments)
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
                 <Tab.Pane
@@ -695,6 +733,7 @@ class DoLab extends React.Component {
 
                             <Draggable_equipment wkspace_id={i} equip_id={index}
                                                  interation_handler= {this.interaction_handler}
+                                                 getInfo={this.getInfo}
                                                  canInteract = {this.canInteract}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
@@ -711,7 +750,7 @@ class DoLab extends React.Component {
                     </div>
                 </Tab.Pane>);
         }
-
+        console.log("PUSHED!")
         return(
             <Tab.Content style={{height:"100%"}}>
                 {workspaces}
@@ -978,11 +1017,11 @@ class DoLab extends React.Component {
                         {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
                         {this.state.slide}
                     </Col>
-                    <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
+                    <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                         {this.instructionPane()}
                     </Col>
 
-                    <Col lg={{span:7}} className="darkerBack"  >
+                    <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                         {this.workspacePane()}
 
 

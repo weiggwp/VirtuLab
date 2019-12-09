@@ -1,0 +1,70 @@
+.equipment
+{
+    width:100%;
+    color:black;
+    background-color:transparent;
+    border-radius:3px;
+
+    border-style:solid;
+    border-width:1px;
+    margin-top:5px;
+
+    user-select: none;
+}
+
+.equipment:active
+{
+    box-shadow :0px 4px 8px ;
+    transform :scale(.98);
+    outline:none;
+
+}
+.equipment:hover
+{
+    background-color: #67a8a1;
+
+}
+
+.column1 {
+
+    float:left;
+    padding-left:20px;
+    width: 90%;
+}
+
+.column2 {
+    float: right;
+    width: 10%;
+    margin-bottom: 5px;
+
+}
+.rowTab
+{
+
+    background-color: #84aac2;
+    width:100%;
+    height:50px;
+    padding-top:10px;
+    margin-top:5px;
+    border-width:2px;
+    border-style:outset;
+    user-select:none;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+}
+.informationPane
+{
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-right:10px;
+    text-align: left;
+    height:80%;
+    margin-top:5px;
+    background-color:#99c3d9;
+    font-family:monospace;
+}
+
+* {
+    outline:0 !important;
+}

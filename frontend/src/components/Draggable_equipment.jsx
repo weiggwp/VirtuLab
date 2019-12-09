@@ -3,20 +3,22 @@ import {Image, Nav} from "react-bootstrap";
 import {Equipment} from "./Equipment";
 import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
+import {css} from 'glamor';
 
-import { ReactComponent as Example } from '../Images/water.svg';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import {ToastsStore} from "react-toasts";
 
 let dragSrcEl = null;
-
-class Draggable_equipment extends React.Component{
+let counter =0;
+class Draggable_equipment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            object:undefined,
-            target:undefined,
+            eq: props.equipment,
+            object: undefined,
+            target: undefined,
             x:undefined,
-            y:undefined
+            y:undefined,
 
         };
 
@@ -28,14 +30,13 @@ class Draggable_equipment extends React.Component{
 
     }
 
-    dragStart_handler=(ev)=> {
+    dragStart_handler = (ev) => {
         // calculate the offset of the mouse pointer from the left and top of the element and passes it in the dataTransfer
         const style = window.getComputedStyle(ev.target, null);
         // console.log(style.getPropertyValue("left"));
-        const left = (parseInt(style.getPropertyValue("left"),10) - ev.clientX);
-        const top = (parseInt(style.getPropertyValue("top"),10) - ev.clientY);
-        // console.log(left);
-        // console.log(top);
+        const left = (parseInt(style.getPropertyValue("left"), 10) - ev.clientX);
+        const top = (parseInt(style.getPropertyValue("top"), 10) - ev.clientY);
+
         ev.dataTransfer.setData("text/offset", left + ',' + top);
         ev.dataTransfer.setData("text/id", ev.target.id);
 
@@ -48,135 +49,141 @@ class Draggable_equipment extends React.Component{
 
         ev.dataTransfer.effectAllowed = 'move';
     };
-    dragEnter_handler=(ev)=>{
+    dragEnter_handler = (ev) => {
+        ev.preventDefault();
+        counter++;
         if (dragSrcEl !== this) {
-            ev.target.style.border = "3px dotted red";
+            const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
+            dm.style.border = "3px dotted red";
         }
         // ev.target.style.cursor="copy";
 
     };
 
-    dragLeave_handler(ev){
-        // ev.preventDefault();
-        ev.target.style.border="";
+    dragLeave_handler(ev) {
+        ev.preventDefault();
+        counter--;
+        if(counter===0){
+            const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
+            dm.style.border = "";
+        }
         // ev.target.style.cursor="";
     }
 
     dragover_handler(ev) {
-     if (ev.preventDefault) {
-         ev.preventDefault(); // Necessary. Allows us to drop.
-     }
-     ev.dataTransfer.dropEffect = "move";
-     return false;
+        if (ev.preventDefault) {
+            ev.preventDefault(); // Necessary. Allows us to drop.
+        }
+        ev.dataTransfer.dropEffect = "move";
+        return false;
 
     }
+
     dragExit_handler(ev) {
         ev.preventDefault();
 
     }
-     drop_handler(ev) {
+
+    drop_handler(ev) {
         // ev.preventDefault();
-         if (ev.stopPropagation) {
-             ev.stopPropagation(); // Stops some browsers from redirecting.
-         }
-
-
+        if (ev.stopPropagation) {
+            ev.stopPropagation(); // Stops some browsers from redirecting.
+        }
+        counter=0;
+        const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
+        console.log(dm);
+        dm.style.border = "";
+        dm.style.opacity = '1.0';
+         //ev is target
          const workspace_id = ev.dataTransfer.getData('text/workspace_id');
          const equip_id = ev.dataTransfer.getData('text/equip_id');
          // Don't do anything if dropping the same column we're dragging.
+         //dragSrcEl is equipment.js source object
          if (dragSrcEl !== this &&
              this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
-                console.log("props is "+JSON.stringify(this.props) +"func is "+this.props.canInteract+"func2 is "+
-                this.props.move_element)
-             this.props.move_element(ev);
 
+             this.props.move_element(ev);
              this.props.interation_handler(
                  ev.target,
                  workspace_id, equip_id,
-                 this.props.wkspace_id,this.props.equip_id,
-                 );
+                 this.props.wkspace_id, this.props.equip_id,
+             );
 
 
          }
          else if (dragSrcEl === this){
-             this.props.move_element(ev);
+             // console.log(ev)
+             const offset = ev.dataTransfer.getData("text/offset").split(',');
+             // console.log("offset",offset)
+             //can drop on top of itself but within bounds
+             if(ev.clientX + parseInt(offset[0],10)>=0 && (ev.clientY + parseInt(offset[1],10))>=0)
+                this.props.move_element(ev);
          }
          else{
-             alert("Not Interactable!");
+             ToastsStore.error("Not interactable")
 
          }
-         ev.target.style.border="";
-         ev.target.style.opacity = '1.0';
-         return false;
 
-     }
-     handleDragEnd(ev) {
-        // e.target is the source node.
-         ev.target.style.border="";
-         ev.target.style.opacity = '1.0';
+        return false;
 
     }
+
+    handleDragEnd(ev) {
+        // e.target is the source node.
+        ev.target.style.border = "";
+        ev.target.style.opacity = '1.0';
+
+    }
+
 
     //<object className="emb" data="images/svglogo.svg" width="100" height="100" type="image/svg+xml"></object>
 
 
     render() {
-        // alert(this.props.equipment.image);
+
+        const equip = this.props.equipment;
+        const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
+        console.log("equip is ")
+        console.log(equip)
+        console.log("fill percent is "+equip.getFillPercent());
+        console.log("size is "+equip.size)
+        console.log("id is "+id)
         return (
-            <div
-            >
+            <div>
+                <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
+                                    holdToDisplay={-1}>
 
-            <ContextMenuTrigger id={"trigger"+this.props.wkspace_id+","+this.props.equip_id} holdToDisplay={-1}>
-                {/*<div className="well">Right click to see the menu</div>*/}
+                    <div id={id}
+                         className={"workspace_equip"}
+                        draggable="true"
+                         onDragStart={this.dragStart_handler}
+                         onDrop={this.drop_handler}
+                         onDragOver={this.dragover_handler}
+                         onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
+                         onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
+                         style={{position:"absolute",
+                             left:equip.left,
+                             top:equip.top,
+                             }}
+                    >
+                        <this.props.equipment.svg fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
+                    </div>
+                </ContextMenuTrigger>
 
-            <Image
-                id={"workspace"+this.props.wkspace_id+"equip"+this.props.equip_id}
-                draggable="true"
-                onDragStart={this.dragStart_handler}
-                onDrop={this.drop_handler}
-                onDragOver={this.dragover_handler}
-                onDragEnter={this.dragEnter_handler} onDragLeave={this.dragLeave_handler}
-                onDragExit={this.dragExit_handler} onDragEnd={this.handleDragEnd}
-                src={this.props.equipment.image}
-
-                style={{position:"absolute",left:this.props.equipment.left,height:200,width:200,top:this.props.equipment.top,display:"inline-block"}}
-            >
-
-            </Image>
-
-            </ContextMenuTrigger>
-
-            <ContextMenu id={"trigger"+this.props.wkspace_id+","+this.props.equip_id}>
-                <MenuItem data={{workspace_id:this.props.wkspace_id,equip_id:this.props.equip_id}} onClick={this.props.handle_equip_delete}>
-                    Delete
-                </MenuItem>
-                <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
-                    Remove Containing Elements
-                </MenuItem>
-                <MenuItem divider />
-                <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
-                    View Info
-                </MenuItem>
-            </ContextMenu>
-
+                <ContextMenu id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}>
+                    <MenuItem data={{workspace_id: this.props.wkspace_id, equip_id: this.props.equip_id}}
+                              onClick={this.props.handle_equip_delete}>
+                        Delete
+                    </MenuItem>
+                    <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                        Remove Containing Elements
+                    </MenuItem>
+                    <MenuItem divider/>
+                    <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                        View Info
+                    </MenuItem>
+                </ContextMenu>
             </div>
-
-            // <Draggable
-            //     onDragEnter={this.dragEnter}
-            //     onDragLeave={this.onLeave}
-            //     onStart={this.onStart}
-            //     onStop={this.onStop}
-            //     onDrag={this.onDrag}
-            //     bounds="parent"
-            //     >
-            //     {/*<div id={this.props.width*this.props.height} style={{display:"inline-block",width: this.props.width,height: this.props.height}}>*/}
-            //
-            //     <img id="layout" draggable="false" src={this.props.image} style={{paddingBottom:20,display:"inline-block",width: this.props.width,height: this.props.height}}/>
-            //         {/*<div>drag me</div>*/}
-            //     {/*</div>*/}
-            //
-            //
-            // </Draggable>
 
         )
     }

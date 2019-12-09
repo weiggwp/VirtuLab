@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 50 50"
-height="200px"
-width="200px"
+   viewBox="14 11 21 25"
+height="2000px"
+width="1000px"
    id="svg5120"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -56,6 +56,19 @@ width="200px"
     <g
        id="g9614"
        transform="translate(23.555356,20.190304)">
+      <g style="opacity:.6;">
+        <ellipse cx=".3" cy="17.8" rx="3.7" ry="1" style="fill:red;" transform="rotate(-3)"></ellipse>
+
+        <g style="opacity:.6;">
+          <rect x="-2.6" y="-5.47" width="7.45" height="23.2" style="fill:red;fill-opacity:1;stroke:none"></rect>
+
+          <ellipse cx="1.35" cy="17.8" rx="3.6" ry="1.1" transform="rotate(.7)" style="fill:red;"></ellipse>
+
+        </g>
+
+      </g>
+
+
       <path
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#1e1e1e;stroke-width:0.12255923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -132,9 +145,11 @@ width="200px"
          id="path40-7"
          d="m 89.452358,-12.909929 c 0.308854,-0.75847 0.488031,-1.384617 2.189064,-1.890428 1.755453,-0.521922 4.278906,-0.849241 7.083115,-0.849241 1.389623,0 2.710483,0.08036 3.902863,0.224957" />
     </g>
+
     <g
        id="g9576"
        transform="matrix(0.93922174,0,0,0.93922174,77.445528,5.2828054)">
+
       <path
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#1e1e1e;stroke-width:0.13904472;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -219,6 +234,7 @@ width="200px"
     <g
        id="g9530"
        transform="matrix(0.3518805,0,0,0.3518805,83.766016,13.594199)">
+
       <path
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#1e1e1e;stroke-width:0.30000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -305,6 +321,7 @@ width="200px"
          style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
     </g>
+
     <path
        style="fill:none;stroke:#323232;stroke-width:0.12779868;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path25"
