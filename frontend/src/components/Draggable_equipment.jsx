@@ -4,6 +4,7 @@ import {Equipment} from "./Equipment";
 import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
 import {css} from 'glamor';
+import GetSVG from "../NameToSVGMappings.js";
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {ToastsStore} from "react-toasts";
@@ -20,7 +21,7 @@ class Draggable_equipment extends React.Component {
             target: undefined,
             x:undefined,
             y:undefined,
-            color:"#dee4e4",
+            color:props.equipment.color,
 
         };
 
@@ -36,6 +37,7 @@ class Draggable_equipment extends React.Component {
     setColor=(color)=>
     {
         this.setState({ color: color })
+        this.props.equipment.color=color
     }
 
     getColor()
@@ -178,7 +180,7 @@ class Draggable_equipment extends React.Component {
                     >
 
 
-                        <this.props.equipment.svg fill={this.getColor()} fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
+                        <GetSVG name={this.props.equipment.name} fill={this.getColor()} fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
 
 
                         <div className={"info"}>

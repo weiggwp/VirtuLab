@@ -3,9 +3,9 @@ import Equipment from "./Equipment";
 
 export default class Tool extends Equipment{
 
-    constructor(name,image,weight=0,svg=null)
+    constructor(name,image,weight=0)
     {
-        super(name,image,weight,"Tools",0,svg);
+        super(name,image,weight,"Tools",0);
         this.name = name;
         this.image=image;
         this.disabled = false;

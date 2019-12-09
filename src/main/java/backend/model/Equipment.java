@@ -2,6 +2,8 @@
 package backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,52 @@ public class Equipment {
     private List<Equipment> items = new ArrayList<>();
 
     private boolean disabled;
+    private long size;
+    private String color;
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @JsonProperty("left")
+    private int x;
+    @JsonProperty("top")
+    private int y;
+
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "name='" + name + '\'' +
+                ", equipmentID=" + equipmentID +
+                ", capacity=" + capacity +
+                ", state=" + state +
+                ", lab=" + lab +
+                ", weight=" + weight +
+                ", amount=" + amount +
+                ", temperature=" + temperature +
+                ", image='" + image + '\'' +
+                ", items=" + items +
+                ", disabled=" + disabled +
+                ", size=" + size +
+                ", color='" + color + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", type='" + type + '\'' +
+                '}';
+    }
 
     public int getX() {
         return x;
@@ -46,11 +94,6 @@ public class Equipment {
     public void setY(int y) {
         this.y = y;
     }
-
-    private int x;
-    private int y;
-
-
     public String getType() {
         return type;
     }

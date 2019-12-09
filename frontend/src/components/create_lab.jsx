@@ -78,6 +78,8 @@ class create_lab extends React.Component {
 
         };
 
+
+
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
         this.interaction_handler = this.interaction_handler.bind(this);
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
@@ -101,10 +103,11 @@ class create_lab extends React.Component {
                 if(current.type==="Solution")
                 {
                     equip = new Element(current.name, current.image, current.capacity,
-                        current.weight, current.state, current.svg, current.size,
+                        current.weight, current.state, current.size,
                     );
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
+                    equip.setColor(current.color)
 
                     result.push(equip)
                 }
@@ -113,6 +116,8 @@ class create_lab extends React.Component {
                     equip = new Tool(current.name, current.image);
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
+                    equip.setColor(current.color)
+
 
                     result.push(equip);
 
@@ -120,10 +125,12 @@ class create_lab extends React.Component {
                 else {
 
                     equip = new Glassware(current.name, current.image, current.capacity,
-                        current.weight,current.state,current.svg, current.size);
+                        current.weight,current.state, current.size);
                     equip.setDisabled(current.disabled);
                     equip.setType(current.type);
                     equip.setLocation(current.x,current.y);
+                    equip.setColor(current.color)
+
                     result.push(equip);
 
                 }
@@ -148,16 +155,16 @@ class create_lab extends React.Component {
             };
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
-                if(current.disabled)
                 if(current.type==="Solution")
                 {
-                    var equip = new Element(current.name, current.image, current.capacity);
+                    var equip = new Element(current.name, current.image, current.capacity,current.weight,1,current.size);
                     equip.setDisabled(current.disabled)
                     result['Solution'].push(equip)
+
                 }
                 else if(current.type==='Tools')
                 {
-                    var equip =new Tool(current.name, current.image);
+                    var equip =new Tool(current.name, current.image,current.weight);
                     equip.setDisabled(current.disabled)
                     result['Tools'].push(equip);
                 }
@@ -165,7 +172,7 @@ class create_lab extends React.Component {
                     if(result['Glassware'][current.type]===undefined)
                         result['Glassware'][current.type]=[]
 
-                    var equip = new Glassware(current.name, current.image, current.capacity);
+                    var equip = new Glassware(current.name, current.image, current.capacity,current.weight,1,current.size);
                     equip.setDisabled(current.disabled)
                     equip.setType(current.type)
                     result['Glassware'][current.type].push(equip);
@@ -300,7 +307,7 @@ class create_lab extends React.Component {
 
             ));
 
-        // console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
+        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
 
