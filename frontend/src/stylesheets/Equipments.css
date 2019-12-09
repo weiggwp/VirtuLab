@@ -64,6 +64,32 @@
     background-color:#99c3d9;
     font-family:monospace;
 }
+.infoName
+{
+    margin-top:0;
+
+    font-size:12px;
+    font-family:monospace, serif;
+
+
+}
+
+p {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+
+}
+.info{
+    margin-top:0;
+
+}
+.infoState
+{
+    margin-top:0;
+    font-size:12px;
+    font-family:monospace, serif;
+}
 
 * {
     outline:0 !important;

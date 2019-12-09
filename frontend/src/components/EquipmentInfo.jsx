@@ -87,7 +87,8 @@ class EquipmentInfo extends React.Component{
                 </div>
                 <div className={"informationPane"}>
                     <span>Name: {this.props.equipment.name} <br/></span>
-                    <span>Volume: {this.props.equipment.amount} mL</span>
+                    <span>Volume: {this.props.equipment.amount} mL <br/></span>
+                    <span>Temperature: {this.props.equipment.temperature} Celsius</span>
                     <div style={{marginTop:10}}>
 
                         <StickyHeadTable rows={this.createTableData()} columns={this.headCells}/>

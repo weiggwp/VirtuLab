@@ -84,6 +84,7 @@ public class LabController {
 
         List<Equipment> equipments = mapEquipmentDTO(labDTO.getEquipments());
 
+        System.out.println(equipments);
 
         long returnid = -1;
         if (existing != null)

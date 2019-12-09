@@ -50,6 +50,7 @@ class Slides extends React.Component {
                 <div>
 
 
+
                     <Nav variant="pills" className="flex-column">
                         {children}
                     </Nav>

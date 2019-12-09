@@ -33,6 +33,7 @@ import large_volFlask from "./Images/1000mLVolumetricFlask.svg";
 import bunsun_burner from "./Images/bunsenBurner.svg";
 import scale from "./Images/scale.svg";
 import {Draggable_equipment} from "./components/Draggable_equipment";
+
 import React from "react";
 
 
@@ -61,15 +62,15 @@ export default class EquipmentSet{
     }
     createFlasks()
     {
-        return [new Glassware("Erlenmeyer Flask",small_flask,250,100,0,small_flask_svg,100),
-            new Glassware("Erlenmeyer Flask",medium_flask,500,200,0,small_flask_svg,125),
-            new Glassware("Erlenmeyer Flask",large_flask,1000,400,0,small_flask_svg,150),]
+        return [new Glassware("Erlenmeyer Flask",small_flask,250,100,0,100),
+            new Glassware("Erlenmeyer Flask",medium_flask,500,200,0,125),
+            new Glassware("Erlenmeyer Flask",large_flask,1000,400,0,150),]
     }
     createCylinders()
     {
-        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0,cylinder_svg,100),
-            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0,cylinder_svg),
-            new Glassware("Graduated Cylinder",large_cylinder,50,130,0,cylinder_svg),]
+        return [new Glassware("Graduated Cylinder",small_cylinder,10,25,0,70),
+            new Glassware("Graduated Cylinder",medium_cylinder,25,65,0,85),
+            new Glassware("Graduated Cylinder",large_cylinder,50,130,0,100),]
     }
     createBeakers()
     {
@@ -92,7 +93,7 @@ export default class EquipmentSet{
 
 
     populateList() {
-        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1,watersvg,130)];
+        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1,130)];
 
         this.equipmentList['Glassware'] = {
             'Titration Flask': this.createFlasks(),

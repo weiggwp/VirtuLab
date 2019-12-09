@@ -6,10 +6,11 @@ import Glassware from "./Glassware";
 
 export default class Equipment {
 
-    constructor(name,image,weight, type,state=0,svg=null,size=100)
+    constructor(name,image,weight, type,state=0,size=100)
     {
 
         this.name = name;
+        this.color="#dee4e4";   //default clear color
         this.type = "water";
         this.weight = weight;
         this.amount=0;
@@ -23,8 +24,12 @@ export default class Equipment {
         this.disabled = false;
         this.left = 0;
         this.top = 0;
-        this.svg = svg;
         this.size = size;
+    }
+
+    setColor(color)
+    {
+        this.color =color
     }
 
     getAmount(){
@@ -93,6 +98,10 @@ export default class Equipment {
     {
         return false;
 
+    }
+    toStateString()
+    {
+        return this.amount+" mL @ "+ this.temperature+"°C"
     }
 
 

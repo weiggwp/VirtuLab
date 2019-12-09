@@ -3,10 +3,12 @@ import Glassware from "./Glassware";
 import {functionName} from "./Globals"
 import {ToastsStore} from "react-toasts";
 
+import deepCloneWithType from "./clone"
+
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1,svg=null,size=100)
+    constructor(name, image ,capacity, weight, state=1,size=100)
     {
-        super(name,image,weight,"Solution",0,svg,size);
+        super(name,image,weight,"Solution",0,size);
         this.amount=capacity;
         this.capacity=capacity;
         this.image=image;
@@ -25,7 +27,8 @@ export default class Element extends Equipment{
     }
     output(amount){
 
-        const clone = JSON.parse(JSON.stringify(this));
+        // const clone = JSON.parse(JSON.stringify(this));
+        const clone = deepCloneWithType(this);
         // let clone = Object.assign({}, this);
         //FIXME: Alert: clone loses proto type, isPrototypeOf no longer works
 
@@ -89,13 +92,16 @@ export default class Element extends Equipment{
         /*
         if pouring more than the target can contain, set amount to target.capacity-target.amount
          */
-        console.log(amount+" "+target.amount+" "+target.capacity)
+        // console.log(amount+" "+target.amount+" "+target.capacity);
+        if(this.amount<amount){
+            amount = this.amount;
+        }
+
         if(amount+target.amount>=target.capacity)
         {
             console.log("target", target);
             //cannot pour anymore
             amount=amount>target.amount?(target.capacity-target.amount):amount;
-            console.log("pouring more than enough");
             warning=true;
             ToastsStore.warning(target.name+" is full")
 

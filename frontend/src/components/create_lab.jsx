@@ -4,6 +4,7 @@ import icon from "../Images/v.jpg";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
+import {PhotoshopPicker, SketchPicker} from 'react-color'
 import {
     Tab,
     Button,
@@ -72,9 +73,12 @@ class create_lab extends React.Component {
             currentStep:0,
             currentEquipment:undefined,
             viewInfo:false,
+            selectedStep:-1,
 
 
         };
+
+
 
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
         this.interaction_handler = this.interaction_handler.bind(this);
@@ -96,33 +100,42 @@ class create_lab extends React.Component {
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
 
-            if(current.type==="Solution")
-            {
-                equip = new Element(current.name, current.image, current.capacity,
-                    current.weight, current.state, current.svg, current.size,
-                );
-                equip.setDisabled(current.disabled)
-                equip.setLocation(current.x,current.y)
 
-                result.push(equip)
-            }
-            else if(current.type==='Tools')
-            {
-                equip = new Tool(current.name, current.image);
-                equip.setDisabled(current.disabled)
-                equip.setLocation(current.x,current.y)
+                if(current.type==="Solution")
+                {
+                    equip = new Element(current.name, current.image, current.capacity,
+                        current.weight, current.state, current.size,
+                    );
+                    equip.setDisabled(current.disabled)
+                    equip.setLocation(current.x,current.y)
+                    equip.setColor(current.color)
+
+                    result.push(equip)
+                }
+                else if(current.type==='Tools')
+                {
+                    equip = new Tool(current.name, current.image);
+                    equip.setDisabled(current.disabled)
+                    equip.setLocation(current.x,current.y)
+                    equip.setColor(current.color)
+
+
 
                 result.push(equip);
 
             }
             else {
 
-                equip = new Glassware(current.name, current.image, current.capacity,
-                    current.weight,current.state,current.svg, current.size);
-                equip.setDisabled(current.disabled);
-                equip.setType(current.type);
-                equip.setLocation(current.x,current.y);
-                result.push(equip);
+
+                    equip = new Glassware(current.name, current.image, current.capacity,
+                        current.weight,current.state, current.size);
+                    equip.setDisabled(current.disabled);
+                    equip.setType(current.type);
+                    equip.setLocation(current.x,current.y);
+                    equip.setColor(current.color)
+
+                    result.push(equip);
+
 
             }
 
@@ -146,33 +159,33 @@ class create_lab extends React.Component {
             };
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
-                if(current.disabled)
-                    if(current.type==="Solution")
-                    {
-                        var equip = new Element(current.name, current.image, current.capacity);
-                        equip.setDisabled(current.disabled)
-                        result['Solution'].push(equip)
-                    }
-                    else if(current.type==='Tools')
-                    {
-                        var equip =new Tool(current.name, current.image);
-                        equip.setDisabled(current.disabled)
-                        result['Tools'].push(equip);
-                    }
-                    else {
-                        if(result['Glassware'][current.type]===undefined)
-                            result['Glassware'][current.type]=[]
 
-                        var equip = new Glassware(current.name, current.image, current.capacity);
-                        equip.setDisabled(current.disabled)
-                        equip.setType(current.type)
-                        result['Glassware'][current.type].push(equip);
-                    }
+                if(current.type==="Solution")
+                {
+                    var equip = new Element(current.name, current.image, current.capacity,current.weight,1,current.size);
+                    equip.setDisabled(current.disabled)
+                    result['Solution'].push(equip)
+
+                }
+                else if(current.type==='Tools')
+                {
+                    var equip =new Tool(current.name, current.image,current.weight);
+                    equip.setDisabled(current.disabled)
+                    result['Tools'].push(equip);
+                }
+                else {
+                    if(result['Glassware'][current.type]===undefined)
+                        result['Glassware'][current.type]=[]
+
+                    var equip = new Glassware(current.name, current.image, current.capacity,current.weight,1,current.size);
+                    equip.setDisabled(current.disabled)
+                    equip.setType(current.type)
+                    result['Glassware'][current.type].push(equip);
+                }
+
 
 
             }
-            // console.log("current equipment set",this.equipmentSet)
-            // console.log("setting to new equipment set",result)
             this.equipmentSet.setEquipmentList(result);
 
         }
@@ -182,7 +195,7 @@ class create_lab extends React.Component {
     {
 
         console.log("populating,state is ")
-        console.log(this.props.location.state.equipments)
+       // console.log(this.props.location.state.equipments)
         //if not new lab, load old lab
         if(this.props.location.state!==undefined){
 
@@ -259,10 +272,11 @@ class create_lab extends React.Component {
 
         this.setState({
             currentEquipment: source,
+            selectedStep: workspace_id,
             viewInfo:true
         }, () => {
-            console.log(this.state.currentEquipment)
-            console.log(this.state.viewInfo)
+            // console.log(this.state.currentEquipment)
+            // console.log(this.state.viewInfo)
 
         })
         // this.setViewInfo();
@@ -302,7 +316,7 @@ class create_lab extends React.Component {
 
         ));
 
-        // console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
+        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
 
@@ -511,7 +525,9 @@ class create_lab extends React.Component {
             <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
-                "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
+
+            "Click on equipments you would like to disable for the duration of the lab (click again to unselect). "
+            + "Right click on a equipment to remove liquids, change fill color, view info, delete equipment ") }</Tab.Pane>);
 
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
@@ -534,11 +550,11 @@ class create_lab extends React.Component {
     getEquipmentTab(i)
     {
         // setViewInfo
-        if(this.state.viewInfo===true)
+        console.log("making step",i,this.state.currentStep)
+        if(this.state.viewInfo===true && i===this.state.selectedStep)
             return  <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
         else
             return  <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
-
 
 
     }
@@ -628,7 +644,7 @@ class create_lab extends React.Component {
     }
     handleImport(e,step)
     {
-        if(this.state.importStep<0 || this.state.importStep>this.state.step_num)
+        if(this.state.importStep<1 || this.state.importStep>this.state.step_num)
         {
             ToastsStore.error("Cannot import from an invalid step")
             return
@@ -655,6 +671,9 @@ class create_lab extends React.Component {
     };
 
     handleAction(source, action,target,input){
+
+
+
         source[action](target,parseFloat(input));
         this.forceUpdate();
     }
@@ -724,6 +743,8 @@ class create_lab extends React.Component {
 
                                 <div>
                                     {buttonList}
+
+
                                 </div>
                             </form>
                             <div className="transferVessels" >
@@ -790,14 +811,16 @@ class create_lab extends React.Component {
 
                         {equipments.map((equipment,index) => (
 
-                            <Draggable_equipment wkspace_id={i} equip_id={index}
-                                                 interation_handler= {this.interaction_handler}
-                                                 getInfo={this.getInfo}
-                                                 canInteract = {this.canInteract}
-                                                 handle_equip_delete={this.handle_equip_delete}
-                                                 equipment={equipment}
-                                                 move_element={this.move_element}
-                                                 width={200} height={200}/>
+
+                        <Draggable_equipment wkspace_id={i} equip_id={index}
+                                             interation_handler= {this.interaction_handler}
+                                             viewInfo={this.getInfo}
+                                             canInteract = {this.canInteract}
+                                             handle_equip_delete={this.handle_equip_delete}
+                                             equipment={equipment}
+                                             move_element={this.move_element}
+                                             width={200} height={200}/>
+
 
                         ))
                         }
