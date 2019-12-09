@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class EquipmentDTO {
+
+    private long EquipmentID;
     private String name;
     private double weight;
     private double amount;
@@ -16,9 +18,9 @@ public class EquipmentDTO {
     private boolean disabled;
     private String type;
     @JsonProperty("left")
-    private long x=0;
+    private int x=0;
     @JsonProperty("top")
-    private long y=0;
+    private int y=0;
 
 
     @Override
@@ -36,6 +38,14 @@ public class EquipmentDTO {
                 ", x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public long getEquipmentID() {
+        return EquipmentID;
+    }
+
+    public void setEquipmentID(long equipmentID) {
+        EquipmentID = equipmentID;
     }
 
     public String getName() {
@@ -94,7 +104,7 @@ public class EquipmentDTO {
         this.items = items;
     }
 
-    public boolean isDisabled() {
+    public boolean getDisabled() {
         return disabled;
     }
 
@@ -110,19 +120,21 @@ public class EquipmentDTO {
         this.type = type;
     }
 
-    public long getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(long x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public long getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(long y) {
+    public void setY(int y) {
         this.y = y;
     }
+
+
 }

@@ -46,6 +46,10 @@ public class StepDTO {
         this.instruction = instruction;
     }
 
+    public long getStepID() {
+        return stepID;
+    }
+
     public StepDTO(@NotNull @NotEmpty int stepNum, @NotNull @NotEmpty String instruction) {
         this.stepNum = stepNum;
         this.instruction = instruction;
