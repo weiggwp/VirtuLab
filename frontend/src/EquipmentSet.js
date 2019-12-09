@@ -5,10 +5,10 @@ import Tool from "./Tool.js";
 
 
 import water from "./Images/water.svg";
-import watersvg from "./components/water"
+import flame from "./Images/2500mLBottle.svg";
+import indicator from "./Images/100mLBottle_black.svg";
 
 import small_flask from "./Images/250mLFlask.svg";
-import small_flask_svg from "./components/svg_sm_flask";
 
 import medium_flask from "./Images/500mLFlask.svg";
 import large_flask from "./Images/1000mLFlask.svg";
@@ -20,7 +20,6 @@ import large_beaker from "././Images/1000mLBeaker.svg";
 import small_cylinder from "./Images/10mLGraduatedCylinder.svg";
 import medium_cylinder from "./Images/25mLGraduatedCylinder.svg";
 import large_cylinder from "./Images/50mLGraduatedCylinder.svg";
-import cylinder_svg from "./components/svg_graduatedCylinder"
 
 import small_pipette from "./Images/5mLPipette.svg";
 import medium_pipette from "./Images/10mLPipette.svg";
@@ -78,6 +77,8 @@ export default class EquipmentSet{
             new Glassware("Beaker",medium_beaker,600,200,0),
             new Glassware("Beaker",large_beaker,1000,400,0),]
     }
+
+
     createVolumetricFlasks()
     {
         return [new Glassware("Volumetric Flask",small_volFlask,100,50,0),
@@ -91,9 +92,66 @@ export default class EquipmentSet{
             new Glassware("Pipette",large_pipette,25,25,0),]
     }
 
+    createStockSolutions()
+    {
+        return [new Element("19M NaOH", flame, 2000, 1.515, 1,100,"Sodium Hydroxide"),
+            new Element("11.6M HCI",flame,2000,1.18,1,130,"Hydrochloric Acid"),
+            new Element("17.6M H\u2082SO\u2084",flame,2000,1.83,1,100,"Sulfuric Acid"),
+            new Element("15.4M HNO\u2083",flame,2000,1.51,1,130,"Nitric Acid"),
+            new Element("14.6M H\u2083PO\u2084",flame,2000,1.87,1,100,"Phosphoric Acid"),
+            new Element("15.4M NH\u2083",flame,2000,0.68,1,100,'Ammonia')
+        ]
+
+    }
+    createAcids()
+    {
+        return [new Element("3M HBr", small_flask, 250, 1.49, 1,100,"Hydrobromic Acid",100),
+            new Element("3M HCI",small_flask,250,1.18,1,130,"Hydrochloric Acid",100),
+            new Element("3M H\u2082SO\u2084",small_flask,250,1.83,1,100,"Sulfuric Acid",100),
+            new Element("3M HNO\u2083",small_flask,250,1.51,1,100,"Nitric Acid",100),
+            new Element("3M H\u2083PO\u2084",small_flask,250,1.87,1,100,"Phosphoric Acid",100)
+            ]
+    }
+
+    createBases()
+    {
+        return [
+            new Element("3M NaOH", small_flask, 250, 1.515, 1,100,"Sodium Hydroxide",100),
+            new Element("3M NH\u2083",small_flask,250,0.68,1,100,'Ammonia',100)
+        ]
+    }
+
+    createGeneral()
+    {
+        return[
+            new Element("Distilled Water", water, 3000, 1, 1, 130),
+            new Element("1M C\u2086H\u2081\u2082O\u2086", small_flask, 250, 1.56, 1, 100,"Glucose Solution",100)
+
+        ]
+    }
+
+    createIndicators()
+    {
+        return [
+            new Element("Methyl Orange",indicator,100,1,1,100),
+            new Element("Methyl Red",indicator,100,1,1,100),
+            new Element("Phenolphthalein",indicator,100,1,1,100),
+            new Element("Bromocresol Green",indicator,100,1,1,100),
+
+
+        ]
+    }
+
 
     populateList() {
-        this.equipmentList['Solution'] = [new Element("Distilled Water", water, 3000, 1, 1,130)];
+        this.equipmentList['Solution'] = {
+            'General': this.createGeneral(),
+            'Stock Solutions':this.createStockSolutions(),
+            'Acids':this.createAcids(),
+            'Bases':this.createBases(),
+            'Indicators':this.createIndicators()
+
+        };
 
         this.equipmentList['Glassware'] = {
             'Titration Flask': this.createFlasks(),
@@ -107,13 +165,27 @@ export default class EquipmentSet{
         this.equipmentList['Tools'] = [new Tool('Bunsun Burner', bunsun_burner),
             new Tool('Scale', scale),]
         this.assignTypes();
+        console.log("equips",this.equipmentList)
     }
     assignTypes()
     {
         var glass = this.equipmentList['Glassware'];
+        var solution = this.equipmentList['Solution']
         Object.keys(glass).map((elements,index)=>
             (
                 glass[elements].map((equipment) => (
+                    equipment.setType(elements)
+
+
+
+                ))
+            )
+
+        );
+
+        Object.keys(solution).map((elements,index)=>
+            (
+                solution[elements].map((equipment) => (
                     equipment.setType(elements)
 
 
@@ -141,6 +213,7 @@ export default class EquipmentSet{
     {
 
         var glass = this.equipmentList['Glassware'];
+        var solution = this.equipmentList['Solution']
         var result = [];
         // Object.keys(glass).map((element)=>
         //     (
@@ -157,11 +230,22 @@ export default class EquipmentSet{
 
                 ))
             ))
-        this.equipmentList['Solution'].map((equipment) => (
-            result.push(equipment)
+
+        Object.keys(solution).map((elements,index)=>
+            (
+                solution[elements].map((equipment) => (
+                    result.push(equipment)
 
 
-        ))
+
+                ))
+            ))
+
+        // this.equipmentList['Solution'].map((equipment) => (
+        //     result.push(equipment)
+        //
+        //
+        // ))
         this.equipmentList['Tools'].map((equipment) => (
             result.push(equipment)
 

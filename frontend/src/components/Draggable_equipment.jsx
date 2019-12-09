@@ -3,7 +3,6 @@ import {Image, Nav} from "react-bootstrap";
 import {Equipment} from "./Equipment";
 import Draggable from "react-draggable";
 import '../stylesheets/create_lab.css';
-import {css} from 'glamor';
 import GetSVG from "../NameToSVGMappings.js";
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
@@ -180,7 +179,16 @@ class Draggable_equipment extends React.Component {
                     >
 
 
-                        <GetSVG name={this.props.equipment.name} fill={this.getColor()} fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
+                        <GetSVG
+                                equip={this.props.equipment}
+                                name={this.props.equipment.name}
+                                type={this.props.equipment.type}
+                                fill={this.getColor()}
+                                fill_percent={equip.getFillPercent()}
+                                size={equip.size}
+                                onDrop={this.drop_handler}
+                                id={id}
+                        />
 
 
                         <div className={"info"}>

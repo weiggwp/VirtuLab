@@ -105,6 +105,7 @@ class create_lab extends React.Component {
                     equip = new Element(current.name, current.image, current.capacity,
                         current.weight, current.state, current.size,
                     );
+                    equip.setType(current.type);
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
                     equip.setColor(current.color)
@@ -157,9 +158,12 @@ class create_lab extends React.Component {
                 var current = equipList[i];
                 if(current.type==="Solution")
                 {
+                    if(result['Solution'][current.type]===undefined)
+                        result['Solution'][current.type]=[]
+
                     var equip = new Element(current.name, current.image, current.capacity,current.weight,1,current.size);
                     equip.setDisabled(current.disabled)
-                    result['Solution'].push(equip)
+                    result['Solution'][current.type].push(equip)
 
                 }
                 else if(current.type==='Tools')
@@ -646,11 +650,10 @@ class create_lab extends React.Component {
         }
 
 
-        var temp = this.state.equipments;
+        const temp = deepCloneWithType(this.state.equipments);
 
-        //TODO:INSTEAD OF SLICE() SHOULD USE A DEEP CLONE OF THE OBJECTS
         //right now temp is filled with image sources of equipments
-        temp[step]=temp[this.state.importStep].slice();
+        temp[step]=temp[this.state.importStep];
         this.setState(
             {equipments:temp}
         )
