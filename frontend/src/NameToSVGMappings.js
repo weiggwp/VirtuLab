@@ -4,10 +4,8 @@ import Cylinder_svg from "./components/svg_graduatedCylinder";
 import beaker_svg from "./components/svg_beaker";
 import volFlask_svg from "./components/svg_volumetricFlask";
 import pipette_svg from "./components/svg_pipette"
-
+import svg_scale from "./components/svg_scale"
 import React from "react";
-
-
 
 export default function GetSVG(props) {
     const mappings = {
@@ -17,11 +15,12 @@ export default function GetSVG(props) {
         "Beaker": beaker_svg,
         "Volumetric Flask": volFlask_svg,
         "Pipette": pipette_svg,
+        "Scale": svg_scale,
 
     };
     const Component = mappings[props.name];
 
     return (
-        <Component fill={props.fill} fill_percent={props.fill_percent} size={props.size} onDrop={props.onDrop} id={props.id}/>
+        <Component fill={props.fill} fill_percent={props.fill_percent} equip={props.equip} size={props.size} onDrop={props.onDrop} id={props.id}/>
     );
 }

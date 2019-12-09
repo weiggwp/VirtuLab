@@ -8,7 +8,6 @@ const SvgComponent =
          fill = "white",
          fill_percent = 0,
 
-         top_eclipse_color = "#ffffff",
          // width = '100%',
          // height = '100%',
          // viewBox = "0 0 48 48",
@@ -29,7 +28,6 @@ const SvgComponent =
             height={size*1.5}
             viewBox={viewBox}
             className={className}
-            // viewBox="0 0 48 48" height={200} width={200} {...props}
         >
             <defs>
                 <clipPath clipPathUnits="userSpaceOnUse" id="a">
@@ -913,6 +911,6 @@ const SvgComponent =
                 strokeMiterlimit={10}
             />
         </svg>
-    )
+    );
 
 export default SvgComponent

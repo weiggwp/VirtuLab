@@ -154,12 +154,10 @@ class Draggable_equipment extends React.Component {
     }
 
 
-    //<object className="emb" data="images/svglogo.svg" width="100" height="100" type="image/svg+xml"></object>
-
-
     render() {
         const equip = this.props.equipment;
         const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
+        console.log(equip);
         return (
             <div>
                 <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
@@ -180,7 +178,8 @@ class Draggable_equipment extends React.Component {
                     >
 
 
-                        <GetSVG name={this.props.equipment.name} fill={this.getColor()} fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
+                        <GetSVG name={this.props.equipment.name} fill={this.getColor()}
+                                equip={equip} fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
 
 
                         <div className={"info"}>

@@ -6,7 +6,7 @@ import Glassware from "./Glassware";
 
 export default class Equipment {
 
-    constructor(name,image,weight, type,state=0,size=100)
+    constructor(name,image,weight, type,state=0,size=100,svgArgs ={})
     {
 
         this.name = name;
@@ -25,6 +25,11 @@ export default class Equipment {
         this.left = 0;
         this.top = 0;
         this.size = size;
+        this.svgArgs = svgArgs;
+    }
+
+    getSvgArgs(){
+        return "placeholder";
     }
 
     setColor(color)
@@ -101,17 +106,3 @@ export default class Equipment {
 
 }
 
-
-
-
-
-// export default Equipment;
-
-// var water = new Element('water',100);
-// var water2 = new Element('water',99);
-//
-// var beaker = new Glassware('beaker',250);
-// beaker.additem(water);
-// beaker.additem(water2);
-// // console.log(water);
-// console.log(beaker);
