@@ -9,7 +9,6 @@ public class EquipmentDTO {
     private double weight;
     private double amount;
     private long capacity;
-
     private double temperature;
     private String image;
     private List<EquipmentDTO> items;
@@ -19,7 +18,16 @@ public class EquipmentDTO {
     private long x=0;
     @JsonProperty("top")
     private long y=0;
+    private long size;
+    private String color;
 
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
 
     @Override
     public String toString() {
@@ -35,7 +43,33 @@ public class EquipmentDTO {
                 ", type='" + type + '\'' +
                 ", x=" + x +
                 ", y=" + y +
+                ", size=" + size +
+                ", color='" + color + '\'' +
                 '}';
+    }
+
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, long x, long y, long size, String color) {
+        this.name = name;
+        this.weight = weight;
+        this.amount = amount;
+        this.capacity = capacity;
+        this.temperature = temperature;
+        this.image = image;
+        this.items = items;
+        this.disabled = disabled;
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getName() {

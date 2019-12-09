@@ -6,9 +6,9 @@ import {ToastsStore} from "react-toasts";
 import deepCloneWithType from "./clone"
 
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1,svg=null,size=100)
+    constructor(name, image ,capacity, weight, state=1,size=100)
     {
-        super(name,image,weight,"Solution",0,svg,size);
+        super(name,image,weight,"Solution",0,size);
         this.amount=capacity;
         this.capacity=capacity;
         this.image=image;
@@ -100,7 +100,6 @@ export default class Element extends Equipment{
             console.log("target", target);
             //cannot pour anymore
             amount=amount>target.amount?(target.capacity-target.amount):amount;
-            console.log("pouring more than enough");
             warning=true;
             ToastsStore.warning(target.name+" is full")
 

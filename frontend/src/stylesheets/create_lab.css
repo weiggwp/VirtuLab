@@ -285,3 +285,9 @@
     height: auto;
     width: auto;
 }
+
+#nav-dropdown
+{
+    color: white;
+    font-weight: bold;
+}

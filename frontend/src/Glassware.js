@@ -4,9 +4,9 @@ import {ToastsStore} from "react-toasts";
 
 export default class Glassware extends Equipment{
 
-    constructor(name,image, capacity,weight, state=0,svg=null,size=100)
+    constructor(name,image, capacity,weight, state=0,size=100)
     {
-        super(name,image,weight,"Glassware",0,svg,size);
+        super(name,image,weight,"Glassware",0,size);
         this.capacity=capacity;
         // this.state_names= ["empty", "filled", "full"];
 
@@ -189,7 +189,7 @@ export default class Glassware extends Equipment{
             //also need to account for total volume
             // alert("Poured "+amount+" ml from "+this.name + " into " + target.name);
             if(pourAction)
-                ToastsStore.success("Poured"+amount+" ml from "+this.name + " into " + target.name)
+                ToastsStore.success("Poured "+amount+" ml from "+this.name + " into " + target.name)
 
         }
 

@@ -32,7 +32,7 @@ export default function StickyHeadTable(props) {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth}}
+                                    style={{ minWidth: column.minWidth,fontSize:12}}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -42,7 +42,7 @@ export default function StickyHeadTable(props) {
                     <TableBody>
                         {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                             return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                <TableRow hover style={{fontSize:12}} role="checkbox" tabIndex={-1} key={row.code}>
                                     {columns.map(column => {
                                         const value = row[column.id];
                                         return (
@@ -58,6 +58,7 @@ export default function StickyHeadTable(props) {
                 </Table>
             </div>
             <TablePagination
+                style={{fontSize:12}}
                 rowsPerPageOptions={[3, 5, 7]}
                 component="div"
                 count={rows.length}
