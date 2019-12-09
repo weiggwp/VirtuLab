@@ -35,7 +35,7 @@ class Slides extends React.Component {
 
                         <Image  className="add"  src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
 
-                        <span style={{marginTop:20}} >Add</span>
+                        <span style={{float:"right",marginTop:8,color:"white",fontWeight:"bold"}} >Add</span>
 
                     </button>
                 </div>

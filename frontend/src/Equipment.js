@@ -10,6 +10,7 @@ export default class Equipment {
     {
 
         this.name = name;
+        this.color="#dee4e4";   //default clear color
         this.type = "water";
         this.weight = weight;
         this.amount=0;
@@ -87,6 +88,10 @@ export default class Equipment {
     {
         return false;
 
+    }
+    toStateString()
+    {
+        return this.amount+" mL @ "+ this.temperature+"°C"
     }
 
 

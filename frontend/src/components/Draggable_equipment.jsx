@@ -7,6 +7,7 @@ import {css} from 'glamor';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {ToastsStore} from "react-toasts";
+import {ColorPicker} from "./ColorPicker";
 
 let dragSrcEl = null;
 let counter =0;
@@ -19,6 +20,7 @@ class Draggable_equipment extends React.Component {
             target: undefined,
             x:undefined,
             y:undefined,
+            color:"#dee4e4",
 
         };
 
@@ -27,8 +29,21 @@ class Draggable_equipment extends React.Component {
         this.dragover_handler = this.dragover_handler.bind(this);
         this.dragLeave_handler = this.dragLeave_handler.bind(this);
         this.drop_handler = this.drop_handler.bind(this);
+        this.setColor = this.setColor.bind(this);
 
     }
+
+    setColor=(color)=>
+    {
+        this.setState({ color: color })
+    }
+
+    getColor()
+    {
+        return this.state.color;
+
+    }
+
 
     dragStart_handler = (ev) => {
         // calculate the offset of the mouse pointer from the left and top of the element and passes it in the dataTransfer
@@ -161,15 +176,29 @@ class Draggable_equipment extends React.Component {
                              top:equip.top,
                              }}
                     >
-                        <this.props.equipment.svg fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
+
+
+                        <this.props.equipment.svg fill={this.getColor()} fill_percent={equip.getFillPercent()} size={equip.size} onDrop={this.drop_handler} id={id}/>
+
+
+                        <div className={"info"}>
+                        <p className="infoName" >{this.props.equipment.toString()}</p>
+                        <p className="infoState" >{this.props.equipment.toStateString()}</p>
+                    </div>
+
                     </div>
                 </ContextMenuTrigger>
 
                 <ContextMenu id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}>
+
+                    <div style={{width:"100%"}}>
+                        <ColorPicker setColor={this.setColor}/>
+                    </div>
                     <MenuItem data={{workspace_id: this.props.wkspace_id, equip_id: this.props.equip_id}}
                               onClick={this.props.handle_equip_delete}>
                         Delete
                     </MenuItem>
+
                     <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
                         Remove Containing Elements
                     </MenuItem>

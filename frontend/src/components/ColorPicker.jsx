@@ -1,22 +1,16 @@
 import React from 'react'
-import {Image, Nav} from "react-bootstrap";
-import {Equipment} from "./Equipment";
-import Draggable from "react-draggable";
-import reactCSS from 'reactcss'
-import '../stylesheets/create_lab.css';
-import { ReactComponent as Example } from '../Images/water.svg';
-import water from '../Images/water.svg';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import {ChromePicker, PhotoshopPicker, SketchPicker} from 'react-color'
-let dragSrcEl = null;
 
-class test extends React.Component{
+import {ChromePicker, PhotoshopPicker, SketchPicker} from 'react-color'
+import reactCSS from "reactcss";
+
+class ColorPicker extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             background:"#dee4e4",
+            color:"#dee4e4",
             displayColorPicker: false,
-            presetColors:["#dee4e4"]
+            presetColors:["#dee4e4","red","pink","orange","green","blue","purple","#CAA2C1","brown","black"]
 
         };
 
@@ -31,6 +25,7 @@ class test extends React.Component{
 
     handleChange = (color) => {
         this.setState({ color: color.hex })
+        this.props.setColor(color.hex);
     };
 
 
@@ -40,23 +35,23 @@ class test extends React.Component{
     };
 
 
-
-
-
-
 //color=default color
     render() {
         const styles = reactCSS({
             'default': {
                 color: {
-                    width: '36px',
-                    height: '14px',
+                    paddingLeft:'15px',
+                    width: '100%',
+                    height: '100%',
                     borderRadius: '2px',
                     background: this.state.color,
                     color: "black",
-                    textShadow: "2px 2px #ffff",
+                    textShadow: "1px 1px 3px #ffff",
+
                 },
                 swatch: {
+                    width: '100%',
+                    height: '100%',
                     padding: '5px',
                     background: '#fff',
                     borderRadius: '1px',
@@ -83,15 +78,15 @@ class test extends React.Component{
 
             >
 
-                    <div style={ styles.swatch } onClick={ this.handleClick }>
-                        <div style={ styles.color } >
-                            hello
-                            </div>
+                <div style={ styles.swatch } onClick={ this.handleClick }>
+                    <div style={ styles.color } >
+                        Change Fill Color
                     </div>
-                    { this.state.displayColorPicker ? <div style={ styles.popover }>
-                        <div style={ styles.cover } onClick={ this.handleClose }/>
-                        <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
-                    </div> : null }
+                </div>
+                { this.state.displayColorPicker ? <div style={ styles.popover }>
+                    <div style={ styles.cover } onClick={ this.handleClose }/>
+                    <SketchPicker presetColors={this.state.presetColors} color={ this.state.color } onChange={ this.handleChange } />
+                </div> : null }
 
 
 
@@ -103,4 +98,4 @@ class test extends React.Component{
     }
 }
 
-export default test;
+export {ColorPicker};

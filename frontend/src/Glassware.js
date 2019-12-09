@@ -189,7 +189,7 @@ export default class Glassware extends Equipment{
             //also need to account for total volume
             // alert("Poured "+amount+" ml from "+this.name + " into " + target.name);
             if(pourAction)
-                ToastsStore.success("Poured"+amount+" ml from "+this.name + " into " + target.name)
+                ToastsStore.success("Poured "+amount+" ml from "+this.name + " into " + target.name)
 
         }
 

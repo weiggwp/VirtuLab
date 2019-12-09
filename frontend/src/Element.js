@@ -100,7 +100,6 @@ export default class Element extends Equipment{
             console.log("target", target);
             //cannot pour anymore
             amount=amount>target.amount?(target.capacity-target.amount):amount;
-            console.log("pouring more than enough");
             warning=true;
             ToastsStore.warning(target.name+" is full")
 
