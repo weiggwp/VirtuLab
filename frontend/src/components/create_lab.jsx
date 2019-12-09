@@ -583,6 +583,7 @@ class create_lab extends React.Component {
             }
             else{
                 source.interact(target);
+                this.forceUpdate()
             }
         }
 

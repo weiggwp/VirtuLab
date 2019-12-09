@@ -2,7 +2,10 @@ import Watersvg from "./components/water"
 import Small_flask_svg from "./components/svg_sm_flask";
 import Cylinder_svg from "./components/svg_graduatedCylinder"
 import React from "react";
-
+import beaker_svg from "./components/svg_beaker";
+import volFlask_svg from "./components/svg_volumetricFlask";
+import pipette_svg from "./components/svg_pipette"
+import svg_scale from "./components/svg_scale"
 
 
 export default function GetSVG(props) {
@@ -12,7 +15,11 @@ export default function GetSVG(props) {
         "Acids":Small_flask_svg,
         "Bases":Small_flask_svg,
         "Titration Flask":Small_flask_svg,
-        "Graduated Cylinder":Cylinder_svg,
+        "Graduated Cylinders":Cylinder_svg,
+        "Beaker": beaker_svg,
+        "Volumetric Flask": volFlask_svg,
+        "Pipette": pipette_svg,
+        "Scale": svg_scale,
     }
 
     if(props.type==="General")
@@ -24,11 +31,12 @@ export default function GetSVG(props) {
         var variable= props.type;
     }
     console.log(variable)
-
+    console.log(props)
     const Component = mappings[variable];
 
 
     return (
-        <Component fill={props.fill} fill_percent={props.fill_percent} size={props.size} onDrop={props.onDrop} id={props.id}/>
+        <Component fill={props.fill} fill_percent={props.fill_percent}
+                   size={props.size} onDrop={props.onDrop} id={props.id}/>
     );
 }

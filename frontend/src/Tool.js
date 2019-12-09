@@ -3,13 +3,14 @@ import Equipment from "./Equipment";
 
 export default class Tool extends Equipment{
 
-    constructor(name,image,weight=0)
+    constructor(name,image,weight=200,unit='',size = 200)
     {
-        super(name,image,weight,"Tools",0);
+        super(name,image,weight,"Tools",0,size);
         this.name = name;
         this.image=image;
         this.disabled = false;
-        // this.type="Tools";
+        this.capacity = 3000;
+        this.unit=unit;
         this.setVal();
 
     }
@@ -21,6 +22,19 @@ export default class Tool extends Equipment{
             this.value = 15;//room temperature
 
 
+    }
+    getFillPercent(){
+        return this.value;
+    }
+
+    getSvgArgs(){
+        return  {
+            value: this.value,
+            size: this.size,
+            zero: this.zero,
+            obj: this,
+
+        };
     }
 
     /*
@@ -38,4 +52,26 @@ export default class Tool extends Equipment{
     {
         return this.name;
     }
+
+
+}
+
+export class Scale extends Tool{
+    constructor(name="Scale",image,weight=453.592,unit='g',size = 300)
+    {
+        super(name,image,weight,unit,size);
+        this.value = 5;
+        this.capacity = 3000;
+        this.svgArgs =
+            {
+                value: this.value,
+                size: size,
+                zero: this.zero,
+            };
+    }
+    zero(){
+        this.value=0;
+        alert(this.value);
+    }
+
 }

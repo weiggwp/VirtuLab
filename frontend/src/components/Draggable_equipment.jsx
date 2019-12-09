@@ -110,35 +110,36 @@ class Draggable_equipment extends React.Component {
         console.log(dm);
         dm.style.border = "";
         dm.style.opacity = '1.0';
-         //ev is target
-         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
-         const equip_id = ev.dataTransfer.getData('text/equip_id');
-         // Don't do anything if dropping the same column we're dragging.
-         //dragSrcEl is equipment.js source object
-         if (dragSrcEl !== this &&
-             this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
+        //ev is target
+        const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const equip_id = ev.dataTransfer.getData('text/equip_id');
+        // Don't do anything if dropping the same column we're dragging.
+        //dragSrcEl is equipment.js source object
+        if (dragSrcEl !== this &&
+            this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
+            //first src, second target
 
-             this.props.move_element(ev);
-             this.props.interation_handler(
-                 ev.target,
-                 workspace_id, equip_id,
-                 this.props.wkspace_id, this.props.equip_id,
-             );
+            this.props.move_element(ev);
+            this.props.interation_handler(
+                ev.target,
+                workspace_id, equip_id,
+                this.props.wkspace_id, this.props.equip_id,
+            );
 
 
-         }
-         else if (dragSrcEl === this){
-             // console.log(ev)
-             const offset = ev.dataTransfer.getData("text/offset").split(',');
-             // console.log("offset",offset)
-             //can drop on top of itself but within bounds
-             if(ev.clientX + parseInt(offset[0],10)>=0 && (ev.clientY + parseInt(offset[1],10))>=0)
+        }
+        else if (dragSrcEl === this){
+            // console.log(ev)
+            const offset = ev.dataTransfer.getData("text/offset").split(',');
+            // console.log("offset",offset)
+            //can drop on top of itself but within bounds
+            if(ev.clientX + parseInt(offset[0],10)>=0 && (ev.clientY + parseInt(offset[1],10))>=0)
                 this.props.move_element(ev);
-         }
-         else{
-             ToastsStore.error("Not interactable")
+        }
+        else{
+            ToastsStore.error("Not interactable")
 
-         }
+        }
 
         return false;
 
@@ -156,14 +157,8 @@ class Draggable_equipment extends React.Component {
 
 
     render() {
-
         const equip = this.props.equipment;
         const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
-        console.log("equip is ")
-        console.log(equip)
-        console.log("fill percent is "+equip.getFillPercent());
-        console.log("size is "+equip.size)
-        console.log("id is "+id)
         return (
             <div>
                 <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
@@ -171,7 +166,7 @@ class Draggable_equipment extends React.Component {
 
                     <div id={id}
                          className={"workspace_equip"}
-                        draggable="true"
+                         draggable="true"
                          onDragStart={this.dragStart_handler}
                          onDrop={this.drop_handler}
                          onDragOver={this.dragover_handler}
@@ -180,26 +175,26 @@ class Draggable_equipment extends React.Component {
                          style={{position:"absolute",
                              left:equip.left,
                              top:equip.top,
-                             }}
+                         }}
                     >
 
 
                         <GetSVG
-                                equip={this.props.equipment}
-                                name={this.props.equipment.name}
-                                type={this.props.equipment.type}
-                                fill={this.getColor()}
-                                fill_percent={equip.getFillPercent()}
-                                size={equip.size}
-                                onDrop={this.drop_handler}
-                                id={id}
+                            equip={this.props.equipment}
+                            name={this.props.equipment.name}
+                            type={this.props.equipment.type}
+                            fill={this.getColor()}
+                            fill_percent={equip.getFillPercent()}
+                            size={equip.size}
+                            onDrop={this.drop_handler}
+                            id={id}
                         />
 
 
                         <div className={"info"}>
-                        <p className="infoName" >{this.props.equipment.toString()}</p>
-                        <p className="infoState" >{this.props.equipment.toStateString()}</p>
-                    </div>
+                            <p className="infoName" >{this.props.equipment.toString()}</p>
+                            <p className="infoState" >{this.props.equipment.toStateString()}</p>
+                        </div>
 
                     </div>
                 </ContextMenuTrigger>
