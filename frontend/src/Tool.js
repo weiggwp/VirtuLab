@@ -3,20 +3,20 @@ import Equipment from "./Equipment";
 
 export default class Tool extends Equipment{
 
-    constructor(name,image)
+    constructor(name,image,weight=0)
     {
-        super(name,image);
+        super(name,image,weight,"Tools",0);
         this.name = name;
         this.image=image;
         this.disabled = false;
-        this.type="Tools";
-        this.setVal()
+        // this.type="Tools";
+        this.setVal();
 
     }
 
     setVal() {
         if (this.name === "Scale")
-            this.value = 0
+            this.value = 0;
         else
             this.value = 15;//room temperature
 

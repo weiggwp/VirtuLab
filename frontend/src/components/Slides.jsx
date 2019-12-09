@@ -37,43 +37,25 @@ class Slides extends React.Component {
 
 
     render (){
-        console.log(this.props.onSelect)
         const children = [];
         //onSelect={this.props.onSelect}
-        if (this.props.role!=undefined){
 
-            for (let i = 1; i <this.props.completedSteps+2; i += 1) {
-                children.push(<ChildComponent key={i} number={i}/>);
-            }
+        children.push(<ChildComponent selectStep={this.props.onSelect} key={0} number={0} />);
 
-            return (
-                <div>
-
-
-                    <Nav variant="pills" className="flex-column">
-                        {children}
-                    </Nav>
-                </div>
-            );
-
-
-        }
-        else {
-            children.push(<ChildComponent key={0} number={0}/>);
-
-            for (let i = 1; i <= this.props.slide_num; i += 1) {
-                children.push(<ChildComponent key={i} number={i}/>);
-            }
+        for (let i = 1; i <= this.props.slide_num; i += 1) {
+            children.push(<ChildComponent key={i} number={i} selectStep={this.props.onSelect}/>);
         }
         return (
 
             <div>
-                <Button onClick={() => this.handleDelButton()}> del </Button>
-                <div>
-                    <a href="#" onClick={this.props.addChild}>
-                        <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
-                        Add new
-                    </a>
+                <div style={{width:"100%"}} onClick={this.props.addChild} >
+                    <button className="newButton" style={{width:"100%",backgroundColor:"transparent",borderStyle:"none"}}  variant="flat" >
+
+                        <Image  className="add"  src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
+
+                        <span style={{float:"right",marginTop:8,color:"white",fontWeight:"bold"}} >Add</span>
+
+                    </button>
                 </div>
 
                 <Nav variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
@@ -129,7 +111,14 @@ function isComplete (stepnum,aa){
 }
 
 //onSelect={(e)=>(props.onSelect(e,props.number))
-const ChildComponent = props => <Nav.Item> <Nav.Link eventKey={isComplete(props.number,props)} >Step {props.number}</Nav.Link> </Nav.Item>;
+
+const ChildComponent = props => <Nav.Item> <Nav.Link
+    className={"step"}
+    eventKey={props.number}
+    onClick={(e)=>(props.selectStep(e, props.number))}>
+    Step {props.number}
+</Nav.Link> </Nav.Item>;
+
 // const ChildComponent = props => <ToggleButton value={props.number} className={"Btn-Blue-BG togglebutton "}>{"Step "+props.number}</ToggleButton>;
 
 export {Slides};

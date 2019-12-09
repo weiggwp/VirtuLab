@@ -4,6 +4,7 @@ import icon from "../Images/v.jpg";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
+import {PhotoshopPicker, SketchPicker} from 'react-color'
 import {
     Tab,
     Button,
@@ -26,8 +27,9 @@ import {Instruction} from "./instruction";
 // import {Workspace} from "./Droppable_space";
 import Step from "../Step.js";
 import {Slides} from "./Slides";
-import EditableLabel from 'react-editable-label';
+// import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
+import {EquipmentInfo} from "./EquipmentInfo";
 import EquipmentSet from "../EquipmentSet.js";
 
 import axios from "axios";
@@ -42,7 +44,9 @@ import Tool from "../Tool";
 import Glassware from "../Glassware";
 import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
-
+import NavDropdown from "react-bootstrap/NavDropdown";
+import EditableLabel from "./EditableLabel";
+import deepCloneWithType from "../clone"
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -65,54 +69,69 @@ class create_lab extends React.Component {
             equipments:[[]],
             input:0,
             popoverWarning:"",
+            importStep:1,
+            currentStep:0,
+            currentEquipment:undefined,
+            viewInfo:false,
+            selectedStep:-1,
 
 
         };
+
+
 
         this.handleAddEquipment = this.handleAddEquipment.bind(this);
         this.interaction_handler = this.interaction_handler.bind(this);
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAction = this.handleAction.bind(this);
         this.drop_handler = this.drop_handler.bind(this);
         this.move_element = this.move_element.bind(this);
+        this.selectStep = this.selectStep.bind(this);
+        this.getInfo = this.getInfo.bind(this);
     }
     populateStepEquipment(equipList)
     {
 
-            var result =[];
+            let equip;
+        var result =[];
 
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
-                console.log("current",current)
 
                 if(current.type==="Solution")
                 {
-                    var equip = new Element(current.name, current.image, current.capacity);
+                    equip = new Element(current.name, current.image, current.capacity,
+                        current.weight, current.state, current.size,
+                    );
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
+                    equip.setColor(current.color)
 
                     result.push(equip)
-                    console.log("equip",equip)
                 }
                 else if(current.type==='Tools')
                 {
-                    var equip =new Tool(current.name, current.image);
+                    equip = new Tool(current.name, current.image);
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.x,current.y)
+                    equip.setColor(current.color)
+
 
                     result.push(equip);
-                    console.log("equip",equip)
 
                 }
                 else {
 
-                    var equip = new Glassware(current.name, current.image, current.capacity);
-                    equip.setDisabled(current.disabled)
-                    equip.setType(current.type)
-                    equip.setLocation(current.x,current.y)
+                    equip = new Glassware(current.name, current.image, current.capacity,
+                        current.weight,current.state, current.size);
+                    equip.setDisabled(current.disabled);
+                    equip.setType(current.type);
+                    equip.setLocation(current.x,current.y);
+                    equip.setColor(current.color)
+
                     result.push(equip);
-                    console.log("equip",equip)
 
                 }
 
@@ -137,17 +156,16 @@ class create_lab extends React.Component {
             };
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
-                if(current.disabled)
-                    console.log(current.name+" is disabled");
                 if(current.type==="Solution")
                 {
-                    var equip = new Element(current.name, current.image, current.capacity);
+                    var equip = new Element(current.name, current.image, current.capacity,current.weight,1,current.size);
                     equip.setDisabled(current.disabled)
                     result['Solution'].push(equip)
+
                 }
                 else if(current.type==='Tools')
                 {
-                    var equip =new Tool(current.name, current.image);
+                    var equip =new Tool(current.name, current.image,current.weight);
                     equip.setDisabled(current.disabled)
                     result['Tools'].push(equip);
                 }
@@ -155,7 +173,7 @@ class create_lab extends React.Component {
                     if(result['Glassware'][current.type]===undefined)
                         result['Glassware'][current.type]=[]
 
-                    var equip = new Glassware(current.name, current.image, current.capacity);
+                    var equip = new Glassware(current.name, current.image, current.capacity,current.weight,1,current.size);
                     equip.setDisabled(current.disabled)
                     equip.setType(current.type)
                     result['Glassware'][current.type].push(equip);
@@ -163,8 +181,6 @@ class create_lab extends React.Component {
 
 
             }
-            console.log("current equipment set",this.equipmentSet)
-            console.log("setting to new equipment set",result)
             this.equipmentSet.setEquipmentList(result);
 
         }
@@ -226,19 +242,53 @@ class create_lab extends React.Component {
     }
 
     setRedirectHome = () => {
+
+        //TODO:autosave commented out for testing purposes
+        //autosave
+        // this.handleLabSave()
         this.setState({
             redirectHome: true
         })
     };
 
-    setRestart = (step_id) => {
-
-        const temp = this.state.steps;
-        temp[step_id].workspace= new Workspace();
+    setViewInfo=()=>{
         this.setState({
-            restart: true,      //should probably just be restarting a single step
-            steps: temp,
-            equipments:{},
+            viewInfo: !this.state.viewInfo
+        })
+    }
+
+
+    getInfo(e,data)
+    {
+        const workspace_id = data.workspace_id;
+        const eq_id = parseInt(data.equip_id);
+
+
+        const source = this.state.equipments[workspace_id][eq_id];
+
+        this.setState({
+            currentEquipment: source,
+            selectedStep: workspace_id,
+            viewInfo:true
+        }, () => {
+            // console.log(this.state.currentEquipment)
+            // console.log(this.state.viewInfo)
+
+        })
+        // this.setViewInfo();
+        this.forceUpdate()
+    }
+
+    setRestart = () => {
+
+        // console.log(this.state.equipments)
+        const temp = this.state.steps;
+        const temp_equip = this.state.equipments;
+        temp_equip[this.state.currentStep]=[];
+
+        this.setState({
+            // restart: true,      //should probably just be restarting a single step
+            temp_equip,
 
         });
     };
@@ -273,7 +323,6 @@ class create_lab extends React.Component {
     handleLabSave = (e) => {
      // alert("saving " +this.state.lab_id)
         this.setStepsEquips()
-        alert("stop")
         const lab = {
             labID: this.state.lab_id,
             //if zero, it's not a valid labID
@@ -286,7 +335,7 @@ class create_lab extends React.Component {
             // lastModified: new Date(),
         };
 
-        console.log("lab.lastModified", lab.lastModified);
+        // console.log("lab.lastModified", lab.lastModified);
 
         let axiosConfig = {
             headers: {
@@ -312,23 +361,43 @@ class create_lab extends React.Component {
                 }
             );
     };
+    handleEnterTitle=(value)=>
+    {
+
+        if(value.length>85)
+        {
+            ToastsStore.error("Limit title length to 85 characters")
+            this.setState({lab_title:this.state.lab_title})
+            value=this.state.lab_title
+            this.forceUpdate()
+
+            return
+        }
+
+        this.setState({lab_title:value})
+    }
 
     toolbar()
     {
         {
             return (
-                <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
+                <Navbar style={{backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
                     <Nav>
-                        <EditableLabel labelClass="lab_title_label" inputClass="lab_title_input"
-                                       initialValue={this.state.lab_title}
-                                       save={value => {
-                                           this.setState({lab_title:value});}
-                                       }
+                        <EditableLabel
+                            labelClass="lab_title_label"
+                            inputClass="lab_title_input"
+                            initialValue={this.state.lab_title}
+                            value={"hello"}
+                            save={value => {
+                                this.handleEnterTitle(value);}
+                            }
+
                         />
                     </Nav>
 
                     <Nav>
+
                         <OverlayTrigger
                             overlay={
                                 <Tooltip>
@@ -336,24 +405,25 @@ class create_lab extends React.Component {
                                 </Tooltip>
                             }
                         >
-                            <Link to="/create_lab">
-                                <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
-                            </Link>
+                            <Image className={"restart_image"}
+                                   onClick={this.setRestart}
+                                   src={"https://cdn0.iconfinder.com/data/icons/basic-ui-elements-plain/461/012_restart-512.png"}
+                            rounded />
                         </OverlayTrigger>
 
 
                         {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
 
-                        <OverlayTrigger
-                            overlay={
-                                <Tooltip>
-                                    Trash selected item
-                                </Tooltip>
-                            }
-                        >
-                            <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
-                        </OverlayTrigger>
+                        {/*<OverlayTrigger*/}
+                        {/*    overlay={*/}
+                        {/*        <Tooltip>*/}
+                        {/*            Trash selected item*/}
+                        {/*        </Tooltip>*/}
+                        {/*    }*/}
+                        {/*>*/}
+                        {/*    <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />*/}
+                        {/*</OverlayTrigger>*/}
 
 
                         <OverlayTrigger
@@ -371,7 +441,7 @@ class create_lab extends React.Component {
                         <OverlayTrigger
                             overlay={
                                 <Tooltip>
-                                    Exit. Remember to save your edits.
+                                    Exit and go back to home.
                                 </Tooltip>
                             }
                         >
@@ -444,6 +514,8 @@ class create_lab extends React.Component {
     }
 
 
+
+
     instructionPane()
     {
         const instructions = [];
@@ -451,26 +523,40 @@ class create_lab extends React.Component {
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
+
             <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
-            "Click on equipments you would like to be available for the duration of the lab (click again to unselect)") }</Tab.Pane>);
+            "Click on equipments you would like to disable for the duration of the lab (click again to unselect). "
+            + "Right click on a equipment to remove liquids, change fill color, view info, delete equipment ") }</Tab.Pane>);
 
         for (let i = 1; i < this.state.steps.length; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
-                instruction for step {i} {this.instruction(i)}</Tab.Pane>);
+                {this.getEquipmentTab(i)}
+                <span>instruction for step {i} </span>{this.instruction(i)}</Tab.Pane>);
             }
 
 
         return(
-            <Tab.Content>
+            <Tab.Content >
 
                 {instructions}
             </Tab.Content>
         )
+
+    }
+
+    getEquipmentTab(i)
+    {
+        // setViewInfo
+        console.log("making step",i,this.state.currentStep)
+        if(this.state.viewInfo===true && i===this.state.selectedStep)
+            return  <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
+        else
+            return  <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
+
 
     }
 
@@ -506,17 +592,17 @@ class create_lab extends React.Component {
         const workspace_id = data.workspace_id;
         const eq_id = parseInt(data.equip_id);
 
-        console.log(data);
+        // console.log(data);
         let temp = this.state.equipments;
         // delete temp[workspace_id][eq_id];
-        console.log(temp[workspace_id][1]);
+        // console.log(temp[workspace_id][1]);
         // console.log(temp);
 
         const removed = temp[workspace_id].splice(eq_id,1);
 
         this.setState({equipments: temp});
-        console.log(removed);
-        console.log(temp);
+        // console.log(removed);
+        // console.log(temp);
     }
 
 
@@ -543,20 +629,55 @@ class create_lab extends React.Component {
         const source = this.eq1;
         const target = this.eq2;
         const actions = source.getActions(target);
-        console.log(e);
+        // console.log(e);
 
         const data = new FormData(e.target);
-        console.log(data);
+        // console.log(data);
     }
     handleInputChange(e){
         this.setState({input: e.target.value},);
 
     }
 
+    handleImportChange(e)
+    {
+        this.setState({importStep:e.target.value})
+    }
+    handleImport(e,step)
+    {
+        if(this.state.importStep<1 || this.state.importStep>this.state.step_num)
+        {
+            ToastsStore.error("Cannot import from an invalid step")
+            return
+        }
+        if(parseInt(this.state.importStep)===step)
+        {
+            ToastsStore.error("Cannot import from current step")
+            return
+        }
+
+
+        var temp = this.state.equipments;
+
+        //TODO:INSTEAD OF SLICE() SHOULD USE A DEEP CLONE OF THE OBJECTS
+        //right now temp is filled with image sources of equipments
+        temp[step]=temp[this.state.importStep].slice();
+        this.setState(
+            {equipments:temp}
+        )
+    }
     setPopoverWarningMsg(msg){
 
         this.setState({popoverWarning:msg},()=>(alert(msg)));
     };
+
+    handleAction(source, action,target,input){
+
+
+
+        source[action](target,parseFloat(input));
+        this.forceUpdate();
+    }
 
     popover(){
         const source = this.eq1;
@@ -572,7 +693,8 @@ class create_lab extends React.Component {
             if(actions){
 
                 actions.map((action)=>(
-                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
+                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>this.handleAction(source,action,target,this.state.input)}>{action}</Button>)
+
                 // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
                 ));
             }
@@ -622,6 +744,8 @@ class create_lab extends React.Component {
 
                                 <div>
                                     {buttonList}
+
+
                                 </div>
                             </form>
                             <div className="transferVessels" >
@@ -642,24 +766,54 @@ class create_lab extends React.Component {
         const workspaces = [];
         console.log("workspacePane")
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
-        workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
-        console.log("equips is "+JSON.stringify(this.state.equipments))
-        console.log(this.state.steps)
-        for (let i = 1; i < this.state.steps.length; i += 1) {
-            const equipments = this.state.equipments[i]
+        workspaces.push(<Tab.Pane eventKey={0}>
+            <span>workspace for step {0}</span>
+            <ToastsContainer store={ToastsStore}/>
+        </Tab.Pane>);
+
+        for (let i = 1; i <= this.state.step_num; i += 1) {
+            const equipments = this.state.equipments[i];
+
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
                 <Tab.Pane
                     eventKey={i}
                     onDrop={this.drop_handler} onDragOver={this.dragover_handler}
                     style={{height:"100%"}}>
-                workspace for step {i}
+
+                    <div>
+                        {/*<span style={{left:"50%"}}>workspace for step {i}</span>*/}
+
+                    <NavDropdown title="Import from" id="nav-dropdown"
+                                 style={{float:"right",display:"inline-block",width:"240px"}}>
+
+                            <form style={{height:"40px",display:"inline-block",background: "rgba(255, 0, 0, 0.1);"}} role="form" onSubmit={(e)=>this.handleImport(e,i)}>
+                                <span style={{marginLeft:10}}>Step</span>
+                                <FormGroup controlId="popover_input" style={{display:"inline-block"}}>
+                                    <FormControl
+                                        // style={{height: 60}}
+                                        style={{width:60,marginLeft:10}}
+                                        autoFocus
+                                        type="number"
+                                        value={this.state.importStep}
+                                        onChange={(e) => this.handleImportChange(e)}
+
+                                    />
+                                </FormGroup>
+                                <Button className={"import"} onClick={(e)=>this.handleImport(e,i)}>Import</Button>
+
+                            </form>
+
+
+                    </NavDropdown>
+                    </div>
                 <div style={{height:"100%"}}>
 
                     {equipments.map((equipment,index) => (
 
                         <Draggable_equipment wkspace_id={i} equip_id={index}
                                              interation_handler= {this.interaction_handler}
+                                             viewInfo={this.getInfo}
                                              canInteract = {this.canInteract}
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}
@@ -738,20 +892,13 @@ class create_lab extends React.Component {
     handleSelectEquipment=(equipment)=>
     {
         equipment.disabled = !equipment.disabled;
-        alert(equipment.name+" "+equipment.disabled)
 
 
     };
 
     createNewEquipment(equipment)
     {
-
-            const copy = new equipment.constructor()
-            const keys = Object.keys(equipment)
-            keys.forEach(key => {
-                copy[key] = equipment[key]
-            })
-            return copy
+        return deepCloneWithType(equipment);
 
     }
 
@@ -779,13 +926,19 @@ class create_lab extends React.Component {
                 {
                     equipments:current
                 }, () => {
-                    console.log(this.state.equipments)
+                    console.log(this.state.equipments);
                 }
             )
         }
     };
 
 
+    selectStep(e,i){
+        this.setState({currentStep:i},
+
+        );
+
+    }
     render(){
 
         if(!this.state.lab_loaded)
@@ -806,18 +959,22 @@ class create_lab extends React.Component {
 
                 <Tab.Container id="steps" defaultActiveKey="0">
                     <Row>
-                        <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
+                        <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
 
-                            <Slides slide_num={size} addChild={this.handleAddChild} delChild={this.handleDelChild}/>
+
+                            {/*<Slides slide_num={size} addChild={this.handleAddChild} delChild={this.handleDelChild}/>*/}
+
+
+                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild} onSelect={this.selectStep}/>
 
                         </Col>
-                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
+                        <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                                 {this.instructionPane()}
                         </Col>
 
-                        <Col lg={{span:7}} className="darkerBack"  >
+                        <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                             {this.workspacePane()}
 
 
@@ -833,19 +990,40 @@ class create_lab extends React.Component {
         const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
         dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
         dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-        console.log("moving element ",dm.style.left)
-        console.log("moving element ",dm.style.top)
+        // console.log("moving element ",dm.style.left)
+        // console.log("moving element ",dm.style.top)
 
         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
         const equip_id = ev.dataTransfer.getData('text/equip_id');
 
         const source = this.state.equipments[workspace_id][equip_id];
         source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
-        console.log("moving ",workspace_id,equip_id,source);
+        // console.log("moving ",workspace_id,equip_id,source);
+    }
+
+    adjust_interactive_element(ev,src_workspace,src_equip,target_workspace,target_equip){
+        const src_id = "workspace"+src_workspace+"equip"+src_equip;
+        const targ_id = "workspace"+target_workspace+"equip"+target_equip;
+        const src = this.state.equipments[src_workspace][src_equip];
+        const targ = this.state.equipments[target_workspace][target_equip];
+
+        const offset = ev.dataTransfer.getData("text/offset").split(',');
+
+        const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+        dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
+        dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
+        // console.log("moving element ",dm.style.left)
+        // console.log("moving element ",dm.style.top)
+
+        const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const equip_id = ev.dataTransfer.getData('text/equip_id');
+
+        const source = this.state.equipments[workspace_id][equip_id];
+        source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
+        // console.log("moving ",workspace_id,equip_id,source);
     }
 
 }
-
 
 
 export default create_lab;

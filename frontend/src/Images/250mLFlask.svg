@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
@@ -53,6 +53,7 @@ width="200px"
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
+
     <g
        id="g9614"
        transform="translate(23.555356,20.190304)">
@@ -1154,5 +1155,6 @@ width="200px"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccsccccsccsc" />
     </g>
+
   </g>
 </svg>

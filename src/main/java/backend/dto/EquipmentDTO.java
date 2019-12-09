@@ -11,7 +11,6 @@ public class EquipmentDTO {
     private double weight;
     private double amount;
     private long capacity;
-
     private double temperature;
     private String image;
     private List<EquipmentDTO> items;
@@ -22,22 +21,33 @@ public class EquipmentDTO {
     @JsonProperty("top")
     private int y=0;
 
+    private long size;
+    private String color;
 
-    @Override
-    public String toString() {
-        return "EquipmentDTO{" +
-                "name='" + name + '\'' +
-                ", weight=" + weight +
-                ", amount=" + amount +
-                ", capacity=" + capacity +
-                ", temperature=" + temperature +
-                ", image='" + image + '\'' +
-                ", items=" + items +
-                ", disabled=" + disabled +
-                ", type='" + type + '\'' +
-                ", x=" + x +
-                ", y=" + y +
-                '}';
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, int x, int y, long size, String color) {
+        this.name = name;
+        this.weight = weight;
+        this.amount = amount;
+        this.capacity = capacity;
+        this.temperature = temperature;
+        this.image = image;
+        this.items = items;
+        this.disabled = disabled;
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+    }
+
+    public EquipmentDTO(){}
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
     }
 
     public long getEquipmentID() {
@@ -46,6 +56,15 @@ public class EquipmentDTO {
 
     public void setEquipmentID(long equipmentID) {
         EquipmentID = equipmentID;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+
     }
 
     public String getName() {
@@ -134,6 +153,25 @@ public class EquipmentDTO {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "EquipmentDTO{" +
+                "name='" + name + '\'' +
+                ", weight=" + weight +
+                ", amount=" + amount +
+                ", capacity=" + capacity +
+                ", temperature=" + temperature +
+                ", image='" + image + '\'' +
+                ", items=" + items +
+                ", disabled=" + disabled +
+                ", type='" + type + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", size=" + size +
+                ", color='" + color + '\'' +
+                '}';
     }
 
 

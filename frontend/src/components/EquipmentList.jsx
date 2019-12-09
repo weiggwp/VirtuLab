@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../stylesheets/account_settings.css';
 import '../stylesheets/student_home.css';
+import '../stylesheets/Equipments.css';
 import {Button} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Tabs from "react-bootstrap/Tabs";
@@ -88,7 +89,8 @@ class EquipmentList extends React.Component
 
                 <button   onClick={(e) => this.handleOnClick(e, equipment)}
 
-                          style={{width:"100%",color:"black",backgroundColor:"transparent",borderRadius:3,borderColor:borderColor,borderStyle:"solid",borderWidth:1,marginTop:5}}>
+                          className={"equipment"}
+                          style={{borderColor:borderColor}}>
 
                     <Equipment opacity={opacity} image={equipment.image} description={equipment.toString()}/>
 
@@ -144,7 +146,7 @@ class EquipmentList extends React.Component
         return(
 
                 <Tabs
-                    style={{borderStyle:"solid",justifyContent:'center',alignItems:'center',borderWidth:1,marginTop:10,backgroundColor: '#96E2FA',color:"white",height:"8vh"}}
+                    style={{borderStyle:"solid",justifyContent:'center',alignItems:'center',borderWidth:1,marginTop:10,backgroundColor: '#5cab86',color:"white",height:"8vh"}}
                     defaultActiveKey="Solutions" transition={false} id="noanim-tab-example">
 
                     <Tab eventKey="Solutions"

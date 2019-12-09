@@ -80,6 +80,7 @@ public class LabController {
         long returnid = -1;
         if (existing != null)
         {
+            /* modifying existing lab */
             existing.setName(labDTO.getName());
 
             existing.setLastModified(labDTO.getLastModified());
@@ -147,6 +148,7 @@ public class LabController {
         for (int i = 0; i < steps.size(); i ++) {
             Step step = steps.get(i);
             StepDTO dto = stepsDTO.get(i);
+            System.out.println(step.getStepNum() + " == " + dto.getStepNum());
 
             step.setStepNum(dto.getStepNum());
             step.setInstruction(dto.getInstruction());
@@ -174,8 +176,8 @@ public class LabController {
         for (int i = 0; i < equipsDTO.size(); i ++) {
             boolean newEquip = true;
             for (int j = 0; j < stepEquips.size(); j ++) {
-                Equipment equip = stepEquips.get(i);
-                EquipmentDTO dto = equipsDTO.get(j);
+                Equipment equip = stepEquips.get(j);
+                EquipmentDTO dto = equipsDTO.get(i);
                 /* same ID, same equip get the state of the dto */
                 if (equip.getEquipmentID() == dto.getEquipmentID()) {
                     newEquip = false;
