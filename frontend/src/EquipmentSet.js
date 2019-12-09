@@ -149,7 +149,7 @@ export default class EquipmentSet {
         };
 
         this.equipmentList['Glassware'] = {
-            'Titration Flask': this.createFlasks(),
+            'Titration Flasks': this.createFlasks(),
             'Graduated Cylinders': this.createCylinders(),
             'Pipettes': this.createPipettes(),
             'Beakers': this.createBeakers(),
