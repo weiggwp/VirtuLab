@@ -42,14 +42,6 @@ const SvgComponent =
                 </clipPath>
             </defs>
 
-            <g
-                style="opacity:.6">
-                <rect style="opacity:.2;fill:red"
-                      width="5" height="30"
-                      x="21" y="18.85"
-                      clip-path="url('#clippath1')"
-                />
-            </g>
 
             <g opacity={opacity}>
                 <g fill={fill} opacity={.6}>
