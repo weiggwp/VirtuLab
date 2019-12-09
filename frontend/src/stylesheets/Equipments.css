@@ -1,8 +1,10 @@
 .equipment
 {
     width:100%;
-    color:black;
-    background-color:transparent;
+    color: #000000;
+    font-family:monospace;
+    /*background-color:transparent;*/
+    background-color: #67a8a1;
     border-radius:3px;
 
     border-style:solid;
@@ -10,6 +12,8 @@
     margin-top:5px;
 
     user-select: none;
+    cursor:pointer;
+
 }
 
 .equipment:active
@@ -21,7 +25,7 @@
 }
 .equipment:hover
 {
-    background-color: #67a8a1;
+    background-color: #76bdcc;
 
 }
 
@@ -90,7 +94,42 @@ p {
     font-size:12px;
     font-family:monospace, serif;
 }
+.equipmentListHeader
+{
+    border-style:solid;
+    justify-content:center;
+    align-items:center;
+    border-width:1px;
+    margin-top:10px;
+    background-color: #8895b1;
+    color:white;
+    height:8vh;
+}
+
+.equipmentTitle
+{
+    height:5vh;
+    width:9.4vh;
+    color:black;
+}
+
+.equipmentCollapsible
+{
+    margin-right:0;
+    width:100%;
+    height:50px;
+    background-color: #b5c7c9;
+    font-weight:bold;
+    user-select: none;
+}
+.equipmentCollapsible:hover
+{
+
+    background-color: #9fafb1;
+
+}
 
 * {
     outline:0 !important;
 }
+

@@ -31,11 +31,8 @@ class EquipmentList extends React.Component
     handleOnClick=(e,equipment)=>
     {
         e.persist()
-        console.log(e)
-        console.log(equipment)
         if(this.props.step===0)
         {
-            console.log("step 0")
             equipment.disabled = !equipment.disabled;
 
             e.target.style.opacity=e.target.style.opacity==0.3?1:0.3;
@@ -54,7 +51,7 @@ class EquipmentList extends React.Component
 
             <div style={{width:"100%"}}>
 
-                <Accordion.Toggle className={"row1"} style={{marginRight:0,width:"100%",backgroundColor:"#50b0b5",fontWeight:"bold"}} as={Card.Header} eventKey={eventIndex}>
+                <Accordion.Toggle className={"row1 equipmentCollapsible"}  as={Card.Header} eventKey={eventIndex}>
 
 
                         <div className={"column1"}>{type}</div>
@@ -87,12 +84,16 @@ class EquipmentList extends React.Component
         {
             return(
 
-                <button   onClick={(e) => this.handleOnClick(e, equipment)}
+                <button
 
-                          className={"equipment"}
-                          style={{borderColor:borderColor}}>
 
-                    <Equipment opacity={opacity} image={equipment.image} description={equipment.toString()}/>
+
+                        onClick={(e) => this.handleOnClick(e, equipment)}
+
+                        className={"equipment"}
+                        style={{borderColor:borderColor,opacity:{opacity}}}>
+
+                    <Equipment opacity={opacity} image={equipment.image} name={equipment.name} cap={equipment.capacity} description={equipment.toString()}/>
 
                 </button>
             )
@@ -112,19 +113,20 @@ class EquipmentList extends React.Component
         )
 
     }
-    renderGlassware()
+
+    renderCollapsible(type,offset=0)
     {
-        var glassware = this.props.set['Glassware'];
+        var equipment = this.props.set[type];
         // for (var i in a_hashmap)
         //     (
         //         this.createCollapsible(index,glass,glassware[glass])
         //     )
 
         return(
-            Object.keys(glassware).map((elements,index)=>
+            Object.keys(equipment).map((elements,index)=>
                 (
 
-                    this.createCollapsible(index,elements,glassware[elements])
+                    this.createCollapsible(index+offset,elements,equipment[elements])
                 )
 
 
@@ -146,19 +148,21 @@ class EquipmentList extends React.Component
         return(
 
                 <Tabs
-                    style={{borderStyle:"solid",justifyContent:'center',alignItems:'center',borderWidth:1,marginTop:10,backgroundColor: '#5cab86',color:"white",height:"8vh"}}
+                    className={"equipmentListHeader"}
                     defaultActiveKey="Solutions" transition={false} id="noanim-tab-example">
 
                     <Tab eventKey="Solutions"
                      title={
-                         <div style={{height:"5vh",width:"8vh"}}>  Solutions </div>}>
+                         <div className={"equipmentTitle"}>  Solutions </div>}>
                     {/*{
                              <div style={{display:"inline-block"}}>  Solutions <img src={solution} className={"images"} /></div>}*/}
 
                         <div style={{ overflowY: "scroll",height:"35vh"}} >
                              <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
 
-                                 {this.renderArray('Solution')}
+                                 <Accordion style={{width:"100%"}} defaultActiveKey="0">
+                                 {this.renderCollapsible('Solution')}
+                                 </Accordion>
 
 
 
@@ -166,12 +170,12 @@ class EquipmentList extends React.Component
                         </div>
                 </Tab>
                 <Tab eventKey="Glassware" title={
-                    <div style={{height:"5vh",width:"8vh"}}> Glassware </div>} >
+                    <div className={"equipmentTitle"}> Glassware </div>} >
                     <div style={{ overflowY: "scroll",height:"35vh"}} >
                     <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
 
                         <Accordion style={{width:"100%"}} defaultActiveKey="0">
-                            {this.renderGlassware()}
+                            {this.renderCollapsible('Glassware')}
 
 
 
@@ -184,7 +188,7 @@ class EquipmentList extends React.Component
 
                 </Tab>
                 <Tab eventKey="Tools" title={
-                    <div style={{height:"5vh",width:"8vh"}}>  Tools</div>} >
+                    <div className={"equipmentTitle"}>  Tools</div>} >
                     {/*<Sonnet />*/}
 
 
