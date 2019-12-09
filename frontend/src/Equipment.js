@@ -50,6 +50,10 @@ export default class Equipment {
         this.left=x;
         this.top=y;
     }
+    setType(type)
+    {
+        this.type =type;
+    }
 
 
     item_exist(item){

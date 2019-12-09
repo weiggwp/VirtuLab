@@ -6,13 +6,15 @@ import {ToastsStore} from "react-toasts";
 import deepCloneWithType from "./clone"
 
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1,size=100)
+    constructor(name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity)
     {
         super(name,image,weight,"Solution",0,size);
-        this.amount=capacity;
+        this.amount=amount;
         this.capacity=capacity;
         this.image=image;
         this.state=state;
+        this.chemProp=chemProp;
+        console.log("creating ",chemProp)
         this.state_names= ["solid", "liquid", "gas"];
 
     }
@@ -132,8 +134,12 @@ export default class Element extends Equipment{
 
     }
 
+
     toString()
     {
-        return this.capacity+" mL "+this.name;
+        if(this.chemProp)
+            return this.name+" ("+this.chemProp+")"
+
+        return this.name;
     }
 }

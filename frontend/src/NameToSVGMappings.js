@@ -9,8 +9,11 @@ import React from "react";
 
 export default function GetSVG(props) {
     const mappings = {
-        "Distilled Water":Watersvg,
-        "Erlenmeyer Flask":Small_flask_svg,
+        "Water":Watersvg,
+        "Glucose Solution":Small_flask_svg,
+        "Acids":Small_flask_svg,
+        "Bases":Small_flask_svg,
+        "Titration Flask":Small_flask_svg,
         "Graduated Cylinder":Cylinder_svg,
         "Beaker": beaker_svg,
         "Volumetric Flask": volFlask_svg,
@@ -18,7 +21,20 @@ export default function GetSVG(props) {
         "Scale": svg_scale,
 
     };
-    const Component = mappings[props.name];
+
+
+
+    if(props.type==="General")
+    {
+        var variable = props.equip.chemProp===undefined?"Water":props.equip.chemProp;
+    }
+    else
+    {
+        var variable= props.type;
+    }
+
+    const Component = mappings[variable];
+
 
     return (
         <Component fill={props.fill} fill_percent={props.fill_percent} equip={props.equip} size={props.size} onDrop={props.onDrop} id={props.id}/>
