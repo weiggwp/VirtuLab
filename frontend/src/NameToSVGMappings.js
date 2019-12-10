@@ -8,15 +8,15 @@ import svg_scale from "./components/svg_scale"
 import svg_flammableBottle from "./components/svg_flammableBottle"
 import svg_blackBottle from "./components/svg_blackBottle"
 import svg_bunsenBurner from "./components/svg_bunsenBurner"
-
+import svg_bottle from "./components/svg_bottle"
 import React from "react";
 
 export default function GetSVG(props) {
     const mappings = {
         "Water":Watersvg,
         "Glucose Solution":Small_flask_svg,
-        "Acids":Small_flask_svg,
-        "Bases":Small_flask_svg,
+        "Acids":svg_bottle,
+        "Bases":svg_bottle,
         "Titration Flasks":Small_flask_svg,
         "Graduated Cylinders":Cylinder_svg,
         "Beakers": Beaker_svg,

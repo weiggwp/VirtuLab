@@ -4,7 +4,7 @@ import Tool, {Scale, BunsenBurner} from "./Tool.js";
 
 
 import water from "./Images/water.svg";
-import flame from "./Images/2500mLBottle.svg";
+import flame from "./Images/2500mLBottleNonSticker.svg";
 import indicator from "./Images/100mLBottle_black.svg";
 
 import small_flask from "./Images/250mLFlask.svg";

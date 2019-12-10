@@ -834,16 +834,13 @@ class create_lab extends React.Component {
         // adding a new step
         this.state.steps.push(new Step(this.state.steps.length,""));
 
-        var temp = this.state.equipments;
-        //right now temp is filled with image sources of equipments
-        temp[this.state.step_num+1]=deepCloneWithType(temp[this.state.step_num]);
+        const temp = this.state.equipments;
+        temp[this.state.step_num+1]=deepCloneWithType(temp[this.state.step_num],"id"); // ignore='id'
 
         this.setState({
             //add a new step to steps[]
             step_num: this.state.step_num + 1,
             equipments:temp
-
-
         }
         );
 
