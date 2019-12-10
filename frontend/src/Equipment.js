@@ -6,9 +6,9 @@ import Glassware from "./Glassware";
 
 export default class Equipment {
 
-    constructor(name,image,weight, type,state=0,size=100)
+    constructor(name,image,weight, type,state=0,size=100, equipmentID)
     {
-
+        this.equipmentID = equipmentID;
         this.name = name;
         this.color="#dee4e4";   //default clear color
         this.type = "water";
@@ -44,6 +44,9 @@ export default class Equipment {
     {
         this.left=x;
         this.top=y;
+    }
+    setEquipmentID(equipmentID){
+        this.equipmentID = equipmentID
     }
 
 

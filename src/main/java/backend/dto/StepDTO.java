@@ -60,6 +60,7 @@ public class StepDTO {
         return "StepDTO{" +
                 "stepNum=" + stepNum +
                 ", instruction='" + instruction + '\'' +
+                ", stepID=" + stepID +
                 ", equipments=" + equipments +
                 '}';
     }

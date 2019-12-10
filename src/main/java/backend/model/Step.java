@@ -22,7 +22,7 @@ public class Step {
     }
 
     private String instruction;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Equipment> equipments = new ArrayList<>();
 
 //    @ManyToOne

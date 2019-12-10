@@ -95,7 +95,7 @@ class create_lab extends React.Component {
     {
 
             let equip;
-        var result =[];
+            var result =[];
 
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
@@ -103,10 +103,10 @@ class create_lab extends React.Component {
                 if(current.type==="Solution")
                 {
                     equip = new Element(current.name, current.image, current.capacity,
-                        current.weight, current.state, current.size,
+                        current.weight, current.state, current.size, current.equipmentID, current.amount
                     );
                     equip.setDisabled(current.disabled)
-                    equip.setLocation(current.x,current.y)
+                    equip.setLocation(current.left,current.top)
                     equip.setColor(current.color)
 
                     result.push(equip)
@@ -115,7 +115,7 @@ class create_lab extends React.Component {
                 {
                     equip = new Tool(current.name, current.image);
                     equip.setDisabled(current.disabled)
-                    equip.setLocation(current.x,current.y)
+                    equip.setLocation(current.left,current.top)
                     equip.setColor(current.color)
 
 
@@ -125,10 +125,10 @@ class create_lab extends React.Component {
                 else {
 
                     equip = new Glassware(current.name, current.image, current.capacity,
-                        current.weight,current.state, current.size);
+                        current.weight,current.state, current.size, current.equipmentID, current.amount);
                     equip.setDisabled(current.disabled);
                     equip.setType(current.type);
-                    equip.setLocation(current.x,current.y);
+                    equip.setLocation(current.left,current.top);
                     equip.setColor(current.color)
 
                     result.push(equip);
@@ -201,8 +201,7 @@ class create_lab extends React.Component {
                 for (var i = 1; i < step_list.length; i++) {
 
                     console.log("step ",i," ",step_list[i])
-
-                    this.state.steps.push(new Step(i, step_list[i].instruction));
+                    this.state.steps.push(new Step(i, step_list[i].instruction, step_list[i].stepID));
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i].equipments);
 
                 }
@@ -334,6 +333,7 @@ class create_lab extends React.Component {
             equipments: this.equipmentSet.getJSONList(),
             // lastModified: new Date(),
         };
+        console.log(lab)
 
         // console.log("lab.lastModified", lab.lastModified);
 
@@ -347,9 +347,38 @@ class create_lab extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
                 this.setState({save_success: true});
-                // console.log("id is "+response.data);
-                if(this.state.lab_id===0)  //only if not set
-                    this.setState({lab_id:response.data});
+                let strLab = JSON.stringify(response.data)
+                let l = JSON.parse(strLab)
+
+                // if(this.state.lab_id===0)  //only if not set
+                console.log(this.state.steps)
+                // for (let i = 1; i < this.state.steps.length; i ++) {
+                //     for (let j = 1; j < this.state.steps[i].equipments.length; j ++) {
+                //
+                //     }
+                // }
+                console.log("========================")
+                let temp = this.state.steps
+                console.log(temp.length)
+                for (let i = 0; i < temp.length; i ++) {
+                    temp[i].stepID = l['steps'][i].stepID
+                    for (let j = 0; j < temp[i].equipments.length; j ++) {
+                        temp[i].equipments[j].equipmentID = l['steps'][i].equipments[j].equipmentID
+                    }
+                }
+                console.log("========================")
+                console.log(temp)
+
+
+                this.setState({
+                    lab_id: l['labID'],
+                    steps: temp,
+                    // need to assign stepIDs here and equipmentIDs inside each of the step here.
+                    // react setState doesn't perform state change if the thing u want to change is nested
+                })
+
+                console.log(this.state.steps)
+
 
 
                 // console.log("response: ", response);
@@ -657,7 +686,7 @@ class create_lab extends React.Component {
         }
 
 
-        var temp = this.state.equipments;
+        var temp = deepCloneWithType(this.state.equipments)
 
         //TODO:INSTEAD OF SLICE() SHOULD USE A DEEP CLONE OF THE OBJECTS
         //right now temp is filled with image sources of equipments
@@ -868,20 +897,19 @@ class create_lab extends React.Component {
     handleAddChild = () => {
         // adding a new step
         this.state.steps.push(new Step(this.state.steps.length,""));
-        var temp = this.state.equipments;
 
-        //right now temp is filled with image sources of equipments
-        temp[this.state.step_num+1]=temp[this.state.step_num].slice();
+        const temp = this.state.equipments;
+        temp[this.state.step_num+1]=deepCloneWithType(temp[this.state.step_num],"stepID"); // ignore='id'
+
         this.setState({
-            //add a new step to steps[]
-            step_num: this.state.step_num + 1,
-            equipments:temp
-
-
-        }
+                //add a new step to steps[]
+                step_num: this.state.step_num + 1,
+                equipments:temp
+            }
         );
 
     };
+
     handlInstructionUpdate = () => {
         this.setState({
             //add a new step to steps[]
@@ -899,7 +927,6 @@ class create_lab extends React.Component {
     createNewEquipment(equipment)
     {
         return deepCloneWithType(equipment);
-
     }
 
     handleAddEquipment= (step,equipment) =>

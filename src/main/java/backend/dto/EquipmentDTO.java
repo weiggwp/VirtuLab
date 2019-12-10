@@ -158,7 +158,8 @@ public class EquipmentDTO {
     @Override
     public String toString() {
         return "EquipmentDTO{" +
-                "name='" + name + '\'' +
+                "EquipmentID=" + EquipmentID +
+                ", name='" + name + '\'' +
                 ", weight=" + weight +
                 ", amount=" + amount +
                 ", capacity=" + capacity +
@@ -173,6 +174,4 @@ public class EquipmentDTO {
                 ", color='" + color + '\'' +
                 '}';
     }
-
-
 }

@@ -71,7 +71,7 @@ public class LabController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
-    public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
+    public ResponseEntity<Lab> saveLab(@RequestBody LabDTO labDTO) {
 
        // System.out.println("lab Controller is called: save_lab");
         System.out.println(labDTO);
@@ -91,6 +91,8 @@ public class LabController {
 
 //          existing.setEquipments(equipments);
             labService.saveLab(existing);
+
+            return new ResponseEntity<Lab>(existing, HttpStatus.OK);
 
         }
         else {
@@ -118,10 +120,11 @@ public class LabController {
 
             instructor.getLabs().add(lab);
             userService.save(instructor);
+            return new ResponseEntity<Lab>(lab, HttpStatus.OK);
         }
 
-
-        return new ResponseEntity<>(returnid, HttpStatus.OK);
+//
+//        return new ResponseEntity<>(returnid, HttpStatus.OK);
     }
 
     private void mergeStep(List<StepDTO> stepsDTO, List<Step> steps){
@@ -148,7 +151,9 @@ public class LabController {
         for (int i = 0; i < steps.size(); i ++) {
             Step step = steps.get(i);
             StepDTO dto = stepsDTO.get(i);
-            System.out.println(step.getStepNum() + " == " + dto.getStepNum());
+            System.out.println(step);
+            System.out.println(dto);
+            System.out.println(step.getStepID() == dto.getStepID());
 
             step.setStepNum(dto.getStepNum());
             step.setInstruction(dto.getInstruction());
@@ -159,8 +164,9 @@ public class LabController {
         }
 
         /* new steps added */
-        if (stepsDTO.size() > steps.size()) {
+        if (stepsDTO.size() + 1 > steps.size()) {
             for (int i = steps.size(); i < stepsDTO.size(); i ++) {
+                System.out.println("new step " + stepsDTO.get(i).getStepNum());
                 StepDTO dto = stepsDTO.get(i);
                 Step step = new Step();
                 step.setStepNum(dto.getStepNum());
@@ -178,26 +184,65 @@ public class LabController {
             for (int j = 0; j < stepEquips.size(); j ++) {
                 Equipment equip = stepEquips.get(j);
                 EquipmentDTO dto = equipsDTO.get(i);
+//                System.out.println(equip.getEquipmentID());
+//                System.out.println(dto.getEquipmentID());
                 /* same ID, same equip get the state of the dto */
+                //equip.getEquipmentID() == dto.getEquipmentID()
+                System.out.println(equip.getEquipmentID() + " == " + dto.getEquipmentID());
+                System.out.println(equip.getEquipmentID() == dto.getEquipmentID());
                 if (equip.getEquipmentID() == dto.getEquipmentID()) {
+                    System.out.println("same equip");
                     newEquip = false;
                     copyVals(equip, dto);
+                    equipmentService.saveEquipment(equip);
                     // TODO: copy the items (i.e. water, alcohol, or other valid liquids)
                 }
 
             }
             if (newEquip) {
+                System.out.println("new equip in step: creating creating equip");
                 Equipment equipment = modelMapper.map(equipsDTO.get(i), Equipment.class);
                 step.getEquipments().add(equipment);
             }
         }
     }
 
+//    private void mergeStepEquips2(List<EquipmentDTO> equipsDTO, List<Equipment> stepEquips, Step step) {
+//        for (int i = 0; i < stepEquips.size(); i ++) {
+//            boolean drop = true;
+//            for (int j = 0; j < equipsDTO.size(); j ++) {
+//                Equipment equip = stepEquips.get(i);
+//                EquipmentDTO dto = equipsDTO.get(j);
+////                System.out.println(equip.getEquipmentID());
+////                System.out.println(dto.getEquipmentID());
+//                //equip.getEquipmentID() == dto.getEquipmentID()
+//                System.out.println(equip.getEquipmentID() + " == " + dto.getEquipmentID());
+//                System.out.println(equip.getEquipmentID() == dto.getEquipmentID());
+//                if (equip.getEquipmentID() == dto.getEquipmentID()) {
+//                    System.out.println("same equip");
+//                    drop = false;
+//                    // TODO: copy the items (i.e. water, alcohol, or other valid liquids)
+//                }
+//
+//            }
+//            if (drop) {
+//                System.out.println("equip no longer exists in step: ");
+//                for (int k = 0; k < stepEquips.size(); k ++) {
+//                    if (stepEquips.get(i).getEquipmentID() ==)
+//                }
+//                equipmentService.deleteById();
+//            }
+//        }
+//    }
+
     private void mergeLabEquips(List<EquipmentDTO> equipsDTO, List<Equipment> currentEquips) {
         for (int i = 0; i < equipsDTO.size(); i ++) {
             for (int j = 0; j < currentEquips.size(); j ++) {
                 Equipment equip = currentEquips.get(i);
                 EquipmentDTO dto = equipsDTO.get(j);
+//                System.out.println(dto);
+//                System.out.println(equip.getEquipmentID());
+
 
                 /* same ID, same equip get the state of the dto */
                 if (equip.getEquipmentID() == dto.getEquipmentID()) {

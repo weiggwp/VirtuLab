@@ -6,9 +6,9 @@ import {ToastsStore} from "react-toasts";
 import deepCloneWithType from "./clone"
 
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1,size=100)
+    constructor(name, image ,capacity, weight, state=1,size=100, equipmentID, amount)
     {
-        super(name,image,weight,"Solution",0,size);
+        super(name,image,weight,"Solution",0,size,equipmentID, amount);
         this.amount=capacity;
         this.capacity=capacity;
         this.image=image;
