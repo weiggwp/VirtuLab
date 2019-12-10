@@ -5,8 +5,10 @@ const SvgComponent =
          style = {},
          className = '',
          fill = "#dee4e4",
-         // fill = 'blue',
-         fill_percent = 1,
+         equip ={},
+         pre_fill_percent = equip.getFillPercent(),
+         fill_percent = (pre_fill_percent>1) ? 1: (pre_fill_percent<0) ? 0: pre_fill_percent,
+
 
          viewBox="5 0 40 50",
          size = 100,
@@ -15,11 +17,6 @@ const SvgComponent =
          y_bot = 40.55,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
          opacity = ((fill_percent === 0) ? 0 : 1),
-
-        // x_top = 1.35,
-        // x_bot = .3,
-        // current_x = x_bot + (x_top-x_bot) * fill_percent,
-
 
      }) => (
         <svg

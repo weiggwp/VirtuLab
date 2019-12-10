@@ -178,11 +178,12 @@ class Draggable_equipment extends React.Component {
 
 
                         <GetSVG
+
                                 equip={this.props.equipment}
                                 name={this.props.equipment.name}
                                 type={this.props.equipment.type}
                                 fill={this.getColor()}
-                                fill_percent={equip.getFillPercent()}
+                                // fill_percent={equip.getFillPercent()}
                                 size={equip.size}
                                 onDrop={this.drop_handler}
                                 id={id}

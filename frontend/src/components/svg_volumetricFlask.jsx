@@ -6,30 +6,32 @@ const SvgComponent =
          style = {},
          className = '',
          fill = "white",
-         fill_percent= 0,
-         fill_percent_processed = (fill_percent>1) ? 1: (fill_percent<0) ? 0: fill_percent,
+         equip ={},
+         pre_fill_percent = equip.getFillPercent(),
+         fill_percent = (pre_fill_percent>1) ? 1: (pre_fill_percent<0) ? 0: pre_fill_percent,
+
 
          viewBox="12 0 24 48",
          size = 100,
 
          y_top = 16.1,
          y_bot = 40,
-         current_y = y_bot - (y_bot - y_top) * fill_percent_processed,
+         current_y = y_bot - (y_bot - y_top) * fill_percent,
 
          radius_top = 1.3,
          radius_bot = 10,
-         current_top_radius = radius_bot- (radius_bot-radius_top) *fill_percent_processed,
+         current_top_radius = radius_bot- (radius_bot-radius_top) *fill_percent,
 
          y_radius_top = .286,
          y_radius_bot = 1.3,
-         current_top_y_radius = y_radius_bot- (y_radius_bot-y_radius_top) *fill_percent_processed,
+         current_top_y_radius = y_radius_bot- (y_radius_bot-y_radius_top) *fill_percent,
 
-         opacity = ((fill_percent_processed === 0) ? 0 : .6),
+         opacity = ((fill_percent === 0) ? 0 : .6),
 
 
      }) => (
         <svg
-            id={id+"volumetricFlask"}
+            id={id+equip.name}
             width={size}
             style={style}
             height={size*2}

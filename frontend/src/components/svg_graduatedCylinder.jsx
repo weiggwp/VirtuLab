@@ -5,8 +5,10 @@ const SvgComponent =
          style = {},
          className = '',
          fill = "#dee4e4",
-         // fill = 'blue',
-         fill_percent = 1,
+         equip ={},
+         pre_fill_percent = equip.getFillPercent(),
+         fill_percent = (pre_fill_percent>1) ? 1: (pre_fill_percent<0) ? 0: pre_fill_percent,
+
 
          viewBox = "14 11 21 25",
          size = 100,

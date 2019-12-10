@@ -1,6 +1,6 @@
 import Element from "./Element.js";
 import Glassware from "./Glassware";
-import Tool, {Scale} from "./Tool.js";
+import Tool, {Scale, BunsenBurner} from "./Tool.js";
 
 
 import water from "./Images/water.svg";
@@ -157,7 +157,7 @@ export default class EquipmentSet {
         };
 
         //solution and tool types are set in constructor, as they don't have nested def's
-        this.equipmentList['Tools'] = [new Tool('Bunsun Burner', bunsun_burner,215,'°C',200),
+        this.equipmentList['Tools'] = [new BunsenBurner('Bunsen Burner', bunsun_burner,215,'°C',100),
             new Scale('Scale', scale)];
 
         this.assignTypes();

@@ -60,18 +60,23 @@ export class Scale extends Tool{
     constructor(name="Scale",image,weight=453.592,unit='g',size = 300)
     {
         super(name,image,weight,unit,size);
-        this.value = 5;
+        this.value = 0;
         this.capacity = 3000;
-        this.svgArgs =
-            {
-                value: this.value,
-                size: size,
-                zero: this.zero,
-            };
+        this.type = name;
     }
     zero(){
         this.value=0;
         alert(this.value);
+    }
+
+}
+
+export class BunsenBurner extends Tool{
+    constructor(name="Bunsen Burner",image,weight=215,unit='°C',size = 200)
+    {
+        super(name,image,weight,unit,size);
+        this.value = 15;
+        this.type = name;
     }
 
 }
