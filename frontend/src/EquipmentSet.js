@@ -5,8 +5,10 @@ import Tool, {Scale} from "./Tool.js";
 
 import water from "./Images/water.svg";
 
+
 import flame from "./Images/2500mLBottle.svg";
 import indicator from "./Images/100mLBottle_black.svg";
+
 
 
 import small_flask from "./Images/250mLFlask.svg";
@@ -154,7 +156,7 @@ export default class EquipmentSet {
 
 
         this.equipmentList['Glassware'] = {
-            'Titration Flask': this.createFlasks(),
+            'Titration Flasks': this.createFlasks(),
             'Graduated Cylinders': this.createCylinders(),
             'Pipettes': this.createPipettes(),
             'Beakers': this.createBeakers(),
@@ -210,7 +212,6 @@ export default class EquipmentSet {
     }
 
 
-
     getFlatList()
     {
 
@@ -243,11 +244,7 @@ export default class EquipmentSet {
                 ))
             ))
 
-        // this.equipmentList['Solution'].map((equipment) => (
-        //     result.push(equipment)
-        //
-        //
-        // ))
+
         this.equipmentList['Tools'].map((equipment) => (
             result.push(equipment)
 

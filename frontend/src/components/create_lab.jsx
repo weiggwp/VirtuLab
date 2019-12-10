@@ -338,7 +338,7 @@ class create_lab extends React.Component {
             equipments: this.equipmentSet.getJSONList(),
             // lastModified: new Date(),
         };
-
+        console.log(lab)
         // console.log("lab.lastModified", lab.lastModified);
 
         let axiosConfig = {
@@ -847,10 +847,11 @@ class create_lab extends React.Component {
     handleAddChild = () => {
         // adding a new step
         this.state.steps.push(new Step(this.state.steps.length,""));
+
         var temp = this.state.equipments;
 
         //right now temp is filled with image sources of equipments
-        temp[this.state.step_num+1]=temp[this.state.step_num].slice();
+        temp[this.state.step_num+1]=deepCloneWithType(temp[this.state.step_num]);
         this.setState({
                 //add a new step to steps[]
                 step_num: this.state.step_num + 1,

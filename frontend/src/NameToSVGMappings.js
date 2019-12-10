@@ -14,13 +14,17 @@ export default function GetSVG(props) {
         "Glucose Solution":Small_flask_svg,
         "Acids":Small_flask_svg,
         "Bases":Small_flask_svg,
-        "Titration Flask":Small_flask_svg,
+
+        "Titration Flasks":Small_flask_svg,
+
         "Graduated Cylinders":Cylinder_svg,
         "Beaker": beaker_svg,
-        "Volumetric Flask": volFlask_svg,
+        "Volumetric Flasks": volFlask_svg,
         "Pipette": pipette_svg,
         "Scale": svg_scale,
+
     }
+
 
     if(props.type==="General")
     {
@@ -30,8 +34,7 @@ export default function GetSVG(props) {
     {
         var variable= props.type;
     }
-    console.log(variable)
-    console.log(props)
+
     const Component = mappings[variable];
 
 
