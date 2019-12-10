@@ -30,7 +30,7 @@ class Lab extends React.Component
         }
     }
     onClick =()=>{
-        console.log(this.props.role +" and "+this.props.labID +" and course is " +this.props.courseID)
+        // console.log(this.props.role +" and "+this.props.labID +" and course is " +this.props.courseID)
         if (this.props.role=='instructor'){
             this.setState({renderInstructor:true});
             this.render()
@@ -45,7 +45,7 @@ class Lab extends React.Component
 
     }
     render() {
-        console.log("props LAB is " + JSON.stringify(this.props))
+        // console.log("props LAB is " + JSON.stringify(this.props))
         if (this.state.renderLab) {
             this.getDueDate();
             this.setState({renderLab: false})
@@ -70,7 +70,7 @@ class Lab extends React.Component
 
         }
         else {
-            console.log("date is " +this.props.due_date)
+            // console.log("date is " +this.props.due_date)
             date =   this.props.due_date.substring(0,10)
         }
         return (

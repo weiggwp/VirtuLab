@@ -49,7 +49,6 @@ export default class EquipmentSet {
 
     setEquipmentList(list) {
         this.equipmentList = list;
-        console.log("loading equipment list in js ", list)
     }
 
     getEquipments() {
@@ -161,11 +160,10 @@ export default class EquipmentSet {
             new Scale('Scale', scale)];
 
         this.assignTypes();
-        console.log("equips",this.equipmentList)
     }
     assignTypes()
     {
-        var glass = this.equipmentList['Glassware'];
+        const glass = this.equipmentList['Glassware'];
         var solution = this.equipmentList['Solution']
         Object.keys(glass).map((elements,index)=>
             (

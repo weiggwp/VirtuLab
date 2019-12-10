@@ -78,17 +78,17 @@ export default class Glassware extends Equipment{
         }
     }
     add_items(items){
-        console.log("itemss to be added:", items);
+        // console.log("itemss to be added:", items);
         for(let i = 0; i < items.length; i++){
 
-            console.log("item to be added:", items[i]);
+            // console.log("item to be added:", items[i]);
             this.add_item(items[i]);
         }
     }
 
      output(amount){
         var percentage = amount/this.amount;
-        console.log("percentage",percentage)
+        // console.log("percentage",percentage)
         if(percentage>=1){
             this.amount=0;
             return this.items;
@@ -98,10 +98,10 @@ export default class Glassware extends Equipment{
         }
         var out=[];
         for (const [key, obj] of Object.entries(this.items)) {
-            console.log("obj",obj," percentage",percentage);
+            // console.log("obj",obj," percentage",percentage);
             out[key] = obj.output(obj.amount*percentage);
         }
-        console.log("outputting",out)
+        // console.log("outputting",out)
         this.amount-=amount;
         return out;
     }

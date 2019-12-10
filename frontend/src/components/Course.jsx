@@ -24,20 +24,20 @@ class Course extends React.Component {
     clicked()
     {
         this.states.open = this.states.open === false;
-        console.log("clicked");
+        // console.log("clicked");
     }
     toggleImage = () => {
         let x = !(this.states.open);
         this.setState({open: !this.states.open});
-        console.log(this.states.open);
+        // console.log(this.states.open);
     };
     getImageName = () => this.states.open ? 'plus' : 'minus';
 
 
     render()
     {
-        console.log(this.props.class);
-        console.log("props is "+JSON.stringify(this.props.class))
+        // console.log(this.props.class);
+        // console.log("props is "+JSON.stringify(this.props.class))
         const imageName = this.getImageName();
         return(
             <Card style={{borderWidth:2,borderColor:"black"}} >

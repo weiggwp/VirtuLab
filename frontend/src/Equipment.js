@@ -1,8 +1,3 @@
-// import Workspace from "./Workspace.js";
-// Initializing a class definition
-
-
-import Glassware from "./Glassware";
 
 export default class Equipment {
 
@@ -25,12 +20,8 @@ export default class Equipment {
         this.left = 0;
         this.top = 0;
         this.size = size;
-        this.svgArgs = svgArgs;
     }
 
-    getSvgArgs(){
-        return "placeholder";
-    }
 
     setColor(color)
     {

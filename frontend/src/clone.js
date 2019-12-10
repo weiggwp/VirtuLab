@@ -73,3 +73,11 @@ export default function deepCloneWithType(obj){
     // });
     // return copy;
 }
+
+export function floatEqual(a,b=0.0) {
+    const tolerance = Number.EPSILON;
+    if(Math.abs(a - b ) < tolerance){
+        return true;
+    }
+    return false;
+}

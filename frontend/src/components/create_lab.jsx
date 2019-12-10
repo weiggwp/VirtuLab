@@ -311,7 +311,7 @@ class create_lab extends React.Component {
 
             ));
 
-        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
+        // console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
 
@@ -544,7 +544,7 @@ class create_lab extends React.Component {
     getEquipmentTab(i)
     {
         // setViewInfo
-        console.log("making step",i,this.state.currentStep)
+        // console.log("making step",i,this.state.currentStep)
         if(this.state.viewInfo===true && i===this.state.selectedStep)
             return  <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
         else
@@ -892,7 +892,7 @@ class create_lab extends React.Component {
                 {
                     equipments:current
                 }, () => {
-                    console.log(this.state.equipments);
+                    // console.log(this.state.equipments);
                 }
             )
         }
