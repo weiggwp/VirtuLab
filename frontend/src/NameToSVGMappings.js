@@ -12,7 +12,7 @@ export default function GetSVG(props) {
         "Acids":Small_flask_svg,
         "Bases":Small_flask_svg,
         "Titration Flask":Small_flask_svg,
-        "Graduated Cylinder":Cylinder_svg,
+        "Graduated Cylinders":Cylinder_svg,
     }
 
     if(props.type==="General")
@@ -29,6 +29,13 @@ export default function GetSVG(props) {
 
 
     return (
-        <Component fill={props.fill} fill_percent={props.fill_percent} size={props.size} onDrop={props.onDrop} id={props.id}/>
+        <Component
+            fill={props.fill}
+            fill_percent={props.fill_percent}
+            size={props.size}
+            onDrop={props.onDrop}
+            id={props.id}
+            degree={props.degree}
+        />
     );
 }

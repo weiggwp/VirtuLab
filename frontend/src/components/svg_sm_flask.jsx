@@ -7,6 +7,9 @@ const SvgComponent =
          className = '',
          fill = "white",
          fill_percent = 0,
+         degree=0,
+         transform="rotate("+degree+")",
+
 
          top_eclipse_color = "#ffffff",
          // width = '100%',
@@ -44,6 +47,7 @@ const SvgComponent =
             style={style}
             height={size*1.5}
             viewBox={viewBox}
+            transform={transform}
             className={className}
             // viewBox="0 0 48 48" height={200} width={200} {...props}
         >

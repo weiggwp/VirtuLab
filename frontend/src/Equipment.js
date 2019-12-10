@@ -25,11 +25,16 @@ export default class Equipment {
         this.left = 0;
         this.top = 0;
         this.size = size;
+        this.rotate=0;
     }
 
     setColor(color)
     {
         this.color =color
+    }
+    setDegree(degree)
+    {
+        this.rotate=degree;
     }
 
     getAmount(){

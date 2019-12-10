@@ -87,7 +87,6 @@ class EquipmentList extends React.Component
                 <button
 
 
-
                         onClick={(e) => this.handleOnClick(e, equipment)}
 
                         className={"equipment"}
