@@ -33,7 +33,7 @@ export function deepClone(obj) {
     throw new Error("Unable to copy obj! Its type isn't supported.");
 }
 
-export default function deepCloneWithType(obj,ignore="id"){
+export default function deepCloneWithType(obj,ignore=""){
 
     // Handle and null or undefined
     if (null == obj || "object" != typeof obj) return obj;
@@ -61,7 +61,7 @@ export default function deepCloneWithType(obj,ignore="id"){
     if (obj instanceof Object) {
         for (const attr in obj) {
             if(attr===ignore) continue;
-            if (obj.hasOwnProperty(attr)) copy[attr] = deepClone(obj[attr]);
+            if (obj.hasOwnProperty(attr)) copy[attr] = deepCloneWithType(obj[attr]);
         }
         return copy;
     }
