@@ -77,8 +77,8 @@ class EquipmentList extends React.Component
                     className={"equipment"}
                     style={{borderColor: borderColor, opacity: {opacity}}}>
 
-                    <Equipment opacity={opacity} image={equipment.image} name={equipment.name} cap={equipment.capacity}
-                               description={equipment.toString()}/>
+                    <Equipment opacity={opacity} image={equipment.image} name={equipment.name} cap={equipment.capacity} description={equipment.toString()}/>
+
                 </button>
             )
         }

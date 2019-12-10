@@ -90,6 +90,7 @@ class create_lab extends React.Component {
         this.move_element = this.move_element.bind(this);
         this.selectStep = this.selectStep.bind(this);
         this.getInfo = this.getInfo.bind(this);
+        this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
     }
     populateStepEquipment(equipList)
     {
@@ -544,7 +545,6 @@ class create_lab extends React.Component {
     getEquipmentTab(i)
     {
         // setViewInfo
-        // console.log("making step",i,this.state.currentStep)
         if(this.state.viewInfo===true && i===this.state.selectedStep)
             return  <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
         else
@@ -570,6 +570,7 @@ class create_lab extends React.Component {
             this.target = target_ev;
             if(actions){
                 this.setState({showPopover:true});
+                this.forceUpdate()
             }
             else{
                 source.interact(target);
@@ -799,7 +800,10 @@ class create_lab extends React.Component {
 
                     </NavDropdown>
                     </div>
-                <div style={{height:"100%"}}>
+                <div
+                    style={{height:"100%"}}
+                    id={"workspace"+i}
+                >
 
                     {equipments.map((equipment,index) => (
 
@@ -810,6 +814,7 @@ class create_lab extends React.Component {
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}
                                              move_element={this.move_element}
+                                             adjust={this.adjust_interactive_element}
                                              width={200} height={200}/>
 
                     ))
@@ -940,39 +945,107 @@ class create_lab extends React.Component {
     }
     move_element(ev){
         const offset = ev.dataTransfer.getData("text/offset").split(',');
-        const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
-        dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
-        dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-        // console.log("moving element ",dm.style.left)
-        // console.log("moving element ",dm.style.top)
+        const source_dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+        var x =(ev.clientX + parseInt(offset[0],10));
+        var y = (ev.clientY + parseInt(offset[1],10));
 
         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const workspace_dm = document.getElementById("workspace"+workspace_id);
+
+        const bounds = this.getBoundingXY(x,y,workspace_dm,source_dm);
+        x=bounds[0];
+        y=bounds[1];
+
+        source_dm.style.left = x + 'px';
+        source_dm.style.top = y + 'px';
+
+        console.log("client",ev.clientX,"x",x);
+        console.log("client",ev.clientY,"y",y);
+
+
+
         const equip_id = ev.dataTransfer.getData('text/equip_id');
 
         const source = this.state.equipments[workspace_id][equip_id];
-        source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
+        source.setLocation(x,y);
         // console.log("moving ",workspace_id,equip_id,source);
     }
 
-    adjust_interactive_element(ev,src_workspace,src_equip,target_workspace,target_equip){
-        const src_id = "workspace"+src_workspace+"equip"+src_equip;
-        const targ_id = "workspace"+target_workspace+"equip"+target_equip;
-        const src = this.state.equipments[src_workspace][src_equip];
-        const targ = this.state.equipments[target_workspace][target_equip];
+    getBoundingXY(x,y,workspace_dm,source_dm)
+    {
+        const max_x = workspace_dm.getBoundingClientRect().width - source_dm.getBoundingClientRect().width;
+        const max_y = workspace_dm.getBoundingClientRect().height - source_dm.getBoundingClientRect().height;
+        x=x<0?0:x;
+        y=y<0?0:y;
+        x=x>max_x?max_x:x;
+        y=y>max_y?max_y:y;
+
+        return [x,y]
+    }
+
+    getDifference(original,after,value)
+    {
+        const difference = Math.abs(original-after)
+        if(difference!==value)
+            return value;
+        else
+            return difference;
+    }
+
+
+    adjust_interactive_element(ev,workspace,src_equip,target_equip){
+        const src_id = "workspace"+workspace+"equip"+src_equip;
+        const targ_id = "workspace"+workspace+"equip"+target_equip;
+        const workspace_id="workspace"+workspace;
+
+        const src = this.state.equipments[workspace][src_equip];
+        src.setDegree(45);
+        const targ = this.state.equipments[workspace][target_equip];
 
         const offset = ev.dataTransfer.getData("text/offset").split(',');
 
-        const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
-        dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
-        dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-        // console.log("moving element ",dm.style.left)
-        // console.log("moving element ",dm.style.top)
+        const src_element = document.getElementById(src_id);
+        const targ_element = document.getElementById(targ_id);
+        const workspace_element=document.getElementById(workspace_id)
 
-        const workspace_id = ev.dataTransfer.getData('text/workspace_id');
-        const equip_id = ev.dataTransfer.getData('text/equip_id');
+        var src_x=(ev.clientX + parseInt(offset[0],10));
+        var src_y=(ev.clientY + parseInt(offset[1],10));
+        console.log("unverified original",[src_x,src_y])
 
-        const source = this.state.equipments[workspace_id][equip_id];
-        source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
+        const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
+        src_x=verify[0];
+        src_y=verify[1];
+
+        var targ_x = targ.left;
+        var targ_y = targ.top;
+
+
+        const width = src_element.getBoundingClientRect().width/3;
+        const height =src_element.getBoundingClientRect().height/4;
+        console.log("src rect",src_element.getBoundingClientRect())
+        const src_pos = this.getBoundingXY(targ_x-width,targ_y-height,workspace_element,src_element);
+
+        const difference=[this.getDifference(src_pos[0],src_x,width),this.getDifference(src_pos[1],src_y,height)];
+
+        console.log("original ",[src_x,src_y],"new ",src_pos," difference ",difference)
+
+        const targ_pos = this.getBoundingXY(targ_x+difference[0],targ_y+difference[1],workspace_element,targ_element);
+        //position moved back, meaning it went out of bounds
+        // if(src_y===src_pos[1])
+            targ_x=targ_pos[0]
+            targ_y=targ_pos[1]
+            src_x=src_pos[0];
+            src_y=src_pos[1];
+
+            //src move up, no need to reposition target
+
+        src_element.style.left=src_x+'px';
+        src_element.style.top=src_y+'px';
+        src.setLocation(src_x,src_y);
+
+        targ_element.style.left=targ_x+'px';
+        targ_element.style.top=targ_y+'px';
+        targ.setLocation(targ_x,targ_y);
         // console.log("moving ",workspace_id,equip_id,source);
     }
 

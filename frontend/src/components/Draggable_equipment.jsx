@@ -8,6 +8,7 @@ import GetSVG from "../NameToSVGMappings.js";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {ToastsStore} from "react-toasts";
 import {ColorPicker} from "./ColorPicker";
+import {empty} from "glamor";
 
 let dragSrcEl = null;
 let counter =0;
@@ -21,6 +22,7 @@ class Draggable_equipment extends React.Component {
             x:undefined,
             y:undefined,
             color:props.equipment.color,
+            rotate:0,
 
         };
 
@@ -78,6 +80,8 @@ class Draggable_equipment extends React.Component {
 
     dragLeave_handler(ev) {
         ev.preventDefault();
+        ev.persist();
+        // console.log("leaving",ev)
         counter--;
         if(counter===0){
             const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
@@ -107,7 +111,7 @@ class Draggable_equipment extends React.Component {
         }
         counter=0;
         const dm = document.getElementById("workspace"+this.props.wkspace_id+"equip"+this.props.equip_id);
-        console.log(dm);
+        // console.log(dm);
         dm.style.border = "";
         dm.style.opacity = '1.0';
          //ev is target
@@ -119,7 +123,10 @@ class Draggable_equipment extends React.Component {
              this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
              //first src, second target
 
-             this.props.move_element(ev);
+
+             // this.props.move_element(ev);
+             this.props.adjust(ev,workspace_id,equip_id,this.props.equip_id);
+
              this.props.interation_handler(
                  ev.target,
                  workspace_id, equip_id,
@@ -133,8 +140,16 @@ class Draggable_equipment extends React.Component {
              const offset = ev.dataTransfer.getData("text/offset").split(',');
              // console.log("offset",offset)
              //can drop on top of itself but within bounds
-             if(ev.clientX + parseInt(offset[0],10)>=0 && (ev.clientY + parseInt(offset[1],10))>=0)
+             const x = ev.clientX + parseInt(offset[0],10);
+             const y = ev.clientY + parseInt(offset[1],10);
+             // console.log("moving myself to ",x,y)
+             if(x>=0 && y>=0)
                 this.props.move_element(ev);
+             else
+             {
+                 dm.style.left = '0 px';
+                 dm.style.top = '0 px';
+             }
          }
          else{
              ToastsStore.error("Not interactable")
@@ -152,9 +167,40 @@ class Draggable_equipment extends React.Component {
 
     }
 
+    getDisplay(top,equip)
+    {
+
+        const styles = {
+            display:'none'
+        }
+        const emptyStyles={}
+        if(top)
+        {
+
+            if(equip.rotate>0)
+                return emptyStyles;
+            return styles;
+        }
+        else
+        {
+            if(equip.rotate>0)
+                return styles;
+            return emptyStyles;
+
+        }
+
+
+    }
+
+
+
+
 
     render() {
         const equip = this.props.equipment;
+        const top = this.getDisplay(true,equip);
+        const bot = this.getDisplay(false,equip);
+        // console.log(top,bot)
         const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
         console.log(equip);
         return (
@@ -162,9 +208,10 @@ class Draggable_equipment extends React.Component {
                 <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
                                     holdToDisplay={-1}>
 
+
                     <div id={id}
                          className={"workspace_equip"}
-                        draggable="true"
+                         draggable="true"
                          onDragStart={this.dragStart_handler}
                          onDrop={this.drop_handler}
                          onDragOver={this.dragover_handler}
@@ -176,6 +223,10 @@ class Draggable_equipment extends React.Component {
                              }}
                     >
 
+                        <div className={"info"} style={top}>
+                            <p className="infoName" >{this.props.equipment.toString()}</p>
+                            <p className="infoState" >{this.props.equipment.toStateString()}</p>
+                        </div>
 
                         <GetSVG
 
@@ -183,16 +234,17 @@ class Draggable_equipment extends React.Component {
                                 name={this.props.equipment.name}
                                 type={this.props.equipment.type}
                                 fill={this.getColor()}
-                                // fill_percent={equip.getFillPercent()}
+                                degree={this.props.equipment.rotate}
+                                fill_percent={equip.getFillPercent()}
                                 size={equip.size}
                                 onDrop={this.drop_handler}
                                 id={id}
                         />
 
-                        <div className={"info"}>
-                        <p className="infoName" >{this.props.equipment.toString()}</p>
-                        <p className="infoState" >{this.props.equipment.toStateString()}</p>
-                    </div>
+                        <div className={"info"} style={bot}>
+                            <p className="infoName" >{this.props.equipment.toString()}</p>
+                            <p className="infoState" >{this.props.equipment.toStateString()}</p>
+                        </div>
 
                     </div>
                 </ContextMenuTrigger>

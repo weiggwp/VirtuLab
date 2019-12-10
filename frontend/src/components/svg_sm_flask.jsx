@@ -6,6 +6,13 @@ const SvgComponent =
          style = {},
          className = '',
          fill = "white",
+<<<<<<< HEAD
+=======
+         fill_percent = 0,
+         degree=0,
+         transform="rotate("+degree+")",
+
+>>>>>>> 77e78e9c008d6acee94dbf56be346c14cee10698
 
          equip ={},
          pre_fill_percent = equip.getFillPercent(),
@@ -43,6 +50,7 @@ const SvgComponent =
             style={style}
             height={size*1.5}
             viewBox={viewBox}
+            transform={transform}
             className={className}
             // viewBox="0 0 48 48" height={200} width={200} {...props}
         >
