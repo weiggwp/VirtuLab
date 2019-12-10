@@ -1,12 +1,7 @@
-// import Workspace from "./Workspace.js";
-// Initializing a class definition
-
-
-import Glassware from "./Glassware";
 
 export default class Equipment {
 
-    constructor(name,image,weight, type,state=0,size=100)
+    constructor(name,image,weight, type,state=0,size=100,svgArgs ={})
     {
 
         this.name = name;
@@ -26,7 +21,14 @@ export default class Equipment {
         this.top = 0;
         this.size = size;
         this.rotate=0;
+        this.interacting=false;
     }
+
+    setInteracting(f)
+    {
+        this.interacting = f;
+    }
+
 
     setColor(color)
     {
@@ -110,17 +112,3 @@ export default class Equipment {
 
 }
 
-
-
-
-
-// export default Equipment;
-
-// var water = new Element('water',100);
-// var water2 = new Element('water',99);
-//
-// var beaker = new Glassware('beaker',250);
-// beaker.additem(water);
-// beaker.additem(water2);
-// // console.log(water);
-// console.log(beaker);

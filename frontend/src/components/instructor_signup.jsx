@@ -50,12 +50,12 @@ class instructor_signup extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
-                console.log("Sending response")
-                console.log(response);
+                // console.log("Sending response")
+                // console.log(response);
                 this.setState({ redirect: true });
             },
             (error) => {
-                console.log("reject logging message")
+                // console.log("reject logging message")
                 this.setState({
                     errors: 'Error signing up! Try a different username',
                     username: '',

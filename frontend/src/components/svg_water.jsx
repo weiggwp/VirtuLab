@@ -2,19 +2,17 @@ import React from 'react'
 
 const SvgComponent =
     ({
+         id,
          style = {},
          className = '',
          fill = "#dee4e4",
-         // fill = 'blue',
-         fill_percent = 0,
+         equip ={},
+         pre_fill_percent = equip.getFillPercent(),
+         fill_percent = pre_fill_percent > 1 ? 1: pre_fill_percent,
+         degree = equip.rotate,
 
-         top_eclipse_color = "#ffffff",
-         // width = '100%',
-         // height = '100%',
          viewBox = "7 4 34 40",
          size = 100,
-         // height="150px",
-         // width="100px",
          y_top = 17.2,
          y_bot = 42.5,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
@@ -23,11 +21,14 @@ const SvgComponent =
 
      }) => (
         <svg
+            id={id+equip.name}
             style={style}
             width={size}
             height={size*1.5}
             viewBox={viewBox}
             className={className}
+            transform={"rotate("+degree+")"}
+
             // viewBox="0 0 48 48" height={200} width={200} {...props}
 
         >

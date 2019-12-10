@@ -1,4 +1,5 @@
 import React from 'react'
+import GetSVG from "../NameToSVGMappings";
 
 const SvgComponent =
     ({
@@ -6,15 +7,14 @@ const SvgComponent =
          style = {},
          className = '',
          fill = "white",
-         fill_percent = 0,
-         degree=0,
-         transform="rotate("+degree+")",
 
 
-         top_eclipse_color = "#ffffff",
-         // width = '100%',
-         // height = '100%',
-         // viewBox = "0 0 48 48",
+         equip ={},
+         pre_fill_percent = equip.getFillPercent(),
+         degree = equip.rotate,
+
+         fill_percent = (pre_fill_percent>1) ? 1: (pre_fill_percent<0) ? 0: pre_fill_percent,
+
          viewBox="13 13 20 20",
          size = 100,
          y_top = 20,
@@ -47,7 +47,7 @@ const SvgComponent =
             style={style}
             height={size*1.5}
             viewBox={viewBox}
-            transform={transform}
+            transform={"rotate("+degree+")"}
             className={className}
             // viewBox="0 0 48 48" height={200} width={200} {...props}
         >

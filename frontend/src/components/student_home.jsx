@@ -52,15 +52,15 @@ class student_home extends React.Component
         };
         var classArr=[];
         var classArray=[];
-        console.log("sending email of "+user.email)
+        // console.log("sending email of "+user.email)
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
-                console.log("email is " +this.props.email)
+                // console.log("email is " +this.props.email)
                 // console.log("resp is " +response.json())
 
-                console.log("resp is "+JSON.stringify(response))
+                // console.log("resp is "+JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -100,14 +100,14 @@ class student_home extends React.Component
             .then((response) => {
 
                 window.location.reload();
-                console.log("success!");
+                // console.log("success!");
             })
             .catch((error) => {
                     this.setState({
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
-                console.log(error.toString());
+                // console.log(error.toString());
 
                 ToastsStore.error("Course ID not found, or you\n are already enrolled in course.")
                 }
@@ -119,7 +119,7 @@ class student_home extends React.Component
 
     render() {
          if (this.state.loading_course){
-            console.log("loading classes", this.state.classes);
+            // console.log("loading classes", this.state.classes);
             this.updateClasses();
             return null;
 
@@ -127,7 +127,7 @@ class student_home extends React.Component
         }
         else
          {
-             console.log("classes is "+this.state.classes);
+             // console.log("classes is "+this.state.classes);
         return(
 
             <div>
