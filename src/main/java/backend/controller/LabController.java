@@ -533,17 +533,27 @@ public class LabController {
         if (optional.isPresent()) {
 
             Course course = optional.get();
+            boolean found=false;
+            System.out.println("course is "+course);
             long courseID = course.getCourseID();
             for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
                 if (userCourseLab.getLab().getLabID() == labID &&
                     userCourseLab.getCourse().getCourseID() == courseID &&
                         userCourseLab.getUser().getId() == userID) {
+                    found=true;
+                    if (userCourseLab.getComplete()==1)continue;
                     userCourseLab.setComplete(1);
+                    TimeZone.setDefault(TimeZone.getTimeZone("EST"));
+
+
+                    Date date2 = new Date();
                     userCourseLab.setSubmittedDate(new Date());
                 }
             }
-
             userService.save(user);
+        }
+        else{
+            System.out.println("NOT FOUND");
         }
         return new ResponseEntity(HttpStatus.OK);
     }
