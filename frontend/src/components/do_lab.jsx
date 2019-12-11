@@ -76,6 +76,7 @@ class DoLab extends React.Component {
             currContainer:undefined,
             reRender:false,
             testInt:1,
+            completed:false,
 
         };
 
@@ -323,7 +324,7 @@ class DoLab extends React.Component {
         console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
     setRedirectHome = () => {
-        if (!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
+        if ((!!this.state.completed)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
             return null;
         }
         this.setState({
@@ -962,14 +963,43 @@ class DoLab extends React.Component {
 
     arraysEqual(arr1,arr2){
          if (arr1.length!=arr2.length)return false;
+
+
+
+        let arr = []
+        for (let i = 0; i < arr1.length; i ++) {
+            arr.push(false)
+        }
+
+
          for (let i=0; i<arr1.length; i++){
-             if (arr1[i].name!=arr2[i].name||arr1[i].capacity!=arr2[i].capacity||arr1[i].weight!=arr2[i].weight)return false;
+             let item1 = arr1[i]
+             for (let j=0; j<arr1.length; j++) {
+                 let item2 = arr2[j]
+                 if (item1.name == item2.name && item1.weight == item2.weight && this.verifyAmounts(item1,item2)) {
+                     arr[i]=true;
+                 }
+             }
          }
-         return true;
+
+
+        let res = true
+        for (let i = 0; i < arr.length; i ++) {
+            console.log("first arr is "+arr[i])
+            res &= arr[i];
+        }
+
+        return res;
+
+
+        return true;
     }
 
     verifyAmounts(eq1, eq2){
          let grace = Math.min(eq2.capacity/10,5);
+         console.log("comparing")
+         console.log(eq1)
+         console.log(eq2)
          return Math.abs(eq1.amount-eq2.amount)<grace;
     }
 
@@ -1083,10 +1113,10 @@ class DoLab extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
             .then((response) => {
                 console.log("success!")
-
+                this.setState({completed:true})
             })
             .catch((error) => {
-                    alert("doot" + error)
+                    alert("Failed to complete lab: " + error)
 
                 }
             );
