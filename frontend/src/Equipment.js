@@ -1,8 +1,3 @@
-// import Workspace from "./Workspace.js";
-// Initializing a class definition
-
-
-import Glassware from "./Glassware";
 
 export default class Equipment {
 
@@ -25,16 +20,23 @@ export default class Equipment {
         this.left = 0;
         this.top = 0;
         this.size = size;
-        this.svgArgs = svgArgs;
+        this.rotate=0;
+        this.interacting=false;
     }
 
-    getSvgArgs(){
-        return "placeholder";
+    setInteracting(f)
+    {
+        this.interacting = f;
     }
+
 
     setColor(color)
     {
         this.color =color
+    }
+    setDegree(degree)
+    {
+        this.rotate=degree;
     }
 
     getAmount(){

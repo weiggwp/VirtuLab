@@ -1,6 +1,6 @@
 import Element from "./Element.js";
 import Glassware from "./Glassware";
-import Tool, {Scale} from "./Tool.js";
+import Tool, {Scale, BunsenBurner} from "./Tool.js";
 
 
 import water from "./Images/water.svg";
@@ -53,7 +53,6 @@ export default class EquipmentSet {
 
     setEquipmentList(list) {
         this.equipmentList = list;
-        console.log("loading equipment list in js ", list)
     }
 
     getEquipments() {
@@ -61,15 +60,15 @@ export default class EquipmentSet {
     }
 
     createFlasks() {
-        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 100),
-            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 125),
-            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 150),]
+        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 70),
+            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 85),
+            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 100),]
     }
 
     createCylinders() {
-        return [new Glassware("Graduated Cylinder", small_cylinder, 10, 25, 0, 70),
-            new Glassware("Graduated Cylinder", medium_cylinder, 25, 65, 0, 85),
-            new Glassware("Graduated Cylinder", large_cylinder, 50, 130, 0, 100),]
+        return [new Glassware("Graduated Cylinder", small_cylinder, 10, 25, 0, 40),
+            new Glassware("Graduated Cylinder", medium_cylinder, 25, 65, 0, 45),
+            new Glassware("Graduated Cylinder", large_cylinder, 50, 130, 0, 50),]
     }
 
     createBeakers() {
@@ -164,15 +163,14 @@ export default class EquipmentSet {
         };
 
         //solution and tool types are set in constructor, as they don't have nested def's
-        this.equipmentList['Tools'] = [new Tool('Bunsun Burner', bunsun_burner,215,'°C',200),
+        this.equipmentList['Tools'] = [new BunsenBurner('Bunsen Burner', bunsun_burner,215,'°C',100),
             new Scale('Scale', scale)];
 
         this.assignTypes();
-        console.log("equips",this.equipmentList)
     }
     assignTypes()
     {
-        var glass = this.equipmentList['Glassware'];
+        const glass = this.equipmentList['Glassware'];
         var solution = this.equipmentList['Solution']
         Object.keys(glass).map((elements,index)=>
             (

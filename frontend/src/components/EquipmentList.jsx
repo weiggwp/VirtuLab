@@ -3,7 +3,6 @@ import React from 'react';
 import '../stylesheets/account_settings.css';
 import '../stylesheets/student_home.css';
 import '../stylesheets/Equipments.css';
-import {Button} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -13,61 +12,51 @@ import {Equipment} from "./Equipment";
 
 import more from "../Images/more.jpg";
 
-import Collapsible from 'react-collapsible';
 import Accordion from "react-bootstrap/Accordion";
-import Glassware from "../Glassware.js";
 
+import {floatEqual} from "../clone"
 class EquipmentList extends React.Component
 
-    //equipments are draggable
 {
-    constructor(props)
-    {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
         super(props);
 
 
     }
 
-    handleOnClick=(e,equipment)=>
-    {
-        e.persist()
-        if(this.props.step===0)
-        {
+    handleOnClick = (e, equipment) => {
+        e.persist();
+        if (this.props.step === 0) {
             equipment.disabled = !equipment.disabled;
 
-            e.target.style.opacity=e.target.style.opacity==0.3?1:0.3;
+            // e.target.style.opacity = floatEqual(e.target.style.opacity,0.3) ? 1 : 0.3;
+            // console.log("op", e.target.style.opacity);
 
         }
 
-            this.props.handleAddEquipment(this.props.step,equipment)
+        this.props.handleAddEquipment(this.props.step, equipment)
 
 
-    }
+    };
 
-    createCollapsible(eventIndex,type,equipments)
-    {
+    createCollapsible(eventIndex, type, equipments) {
+        return (
+            <div style={{width: "100%"}}>
 
-        return(
-
-            <div style={{width:"100%"}}>
-
-                <Accordion.Toggle className={"row1 equipmentCollapsible"}  as={Card.Header} eventKey={eventIndex}>
+                <Accordion.Toggle className={"row1 equipmentCollapsible"} as={Card.Header} eventKey={eventIndex}>
 
 
-                        <div className={"column1"}>{type}</div>
-                        <img  className={"column2"} src={more} />
+                    <div className={"column1"}>{type}</div>
+                    <img className={"column2"} src={more} alt={"404"}/>
 
                 </Accordion.Toggle>
 
-                <Accordion.Collapse style={{width:"100%"}} eventKey={eventIndex}>
+                <Accordion.Collapse style={{width: "100%"}} eventKey={eventIndex}>
                     <div>
-                    {equipments.map((equipment) => (
-
-                        //,marginBottom:5 took out
-
+                        {equipments.map((equipment) => (
                             this.renderButton(equipment)
-
-                    ))}
+                        ))}
                     </div>
                 </Accordion.Collapse>
             </div>
@@ -75,23 +64,18 @@ class EquipmentList extends React.Component
 
         )
     }
-    renderButton(equipment)
-    {
-        const opacity= equipment.disabled?"0.3":"1";
-        const borderColor= equipment.disabled?"#C5C5C5":"blue";
 
-        if(!equipment.disabled || this.props.step===0)
-        {
-            return(
+    renderButton(equipment) {
+        const opacity = equipment.disabled ? "0.5" : "1";
+        const borderColor = equipment.disabled ? "#C5C5C5" : "blue";
 
+        if (!equipment.disabled || this.props.step === 0) {
+            return (
                 <button
+                    onClick={(e) => this.handleOnClick(e, equipment)}
 
-
-
-                        onClick={(e) => this.handleOnClick(e, equipment)}
-
-                        className={"equipment"}
-                        style={{borderColor:borderColor,opacity:{opacity}}}>
+                    className={"equipment"}
+                    style={{borderColor: borderColor, opacity: {opacity}}}>
 
                     <Equipment opacity={opacity} image={equipment.image} name={equipment.name} cap={equipment.capacity} description={equipment.toString()}/>
 
@@ -99,12 +83,12 @@ class EquipmentList extends React.Component
             )
         }
     }
-    renderArray(elementType)
-    {
-        //console.log("this.props is "+JSON.stringify(this.props) + "elementtype is " +elementType)
-        var solutions = this.props.set[elementType];//gives the list of solutions
 
-        return(
+
+    renderArray(elementType) {
+        const solutions = this.props.set[elementType];//gives the list of solutions
+
+        return (
             solutions.map((solution) => (
                 this.renderButton(solution)
 
@@ -114,95 +98,75 @@ class EquipmentList extends React.Component
 
     }
 
-    renderCollapsible(type,offset=0)
-    {
-        var equipment = this.props.set[type];
-        // for (var i in a_hashmap)
-        //     (
-        //         this.createCollapsible(index,glass,glassware[glass])
-        //     )
+    renderCollapsible(type, offset = 0) {
+        const equipment = this.props.set[type];
 
-        return(
-            Object.keys(equipment).map((elements,index)=>
+        return (
+            Object.keys(equipment).map((elements, index) =>
                 (
-
-                    this.createCollapsible(index+offset,elements,equipment[elements])
+                    this.createCollapsible(index + offset, elements, equipment[elements])
                 )
-
-
             )
-            )
+        )
 
 
     }
 
 
-
     render() {
-        // const beaker ="https://cdn4.iconfinder.com/data/icons/laboratory-4/58/9-512.png";
-        // const water ="./Images/water.svg";
-        // const flask ="https://cdn4.iconfinder.com/data/icons/medical-health-10/128/1-512.png";
+        return (
+            <Tabs
+                id={"noanim-tab-example"}
+                className={"equipmentListHeader"}
+                defaultActiveKey="Solutions"
+                transition={false}
+            >
 
-        // const cylinder="https://static.thenounproject.com/png/161931-200.png";
+                <Tab eventKey="Solutions"
+                     title={<div className={"equipmentTitle"}> Solutions </div>}
+                >
 
-        return(
+                    <div style={{overflowY: "scroll", height: "35vh"}}>
+                        <ButtonGroup vertical style={{width: "100%", backgroundColor: "transparent"}}>
 
-                <Tabs
-                    className={"equipmentListHeader"}
-                    defaultActiveKey="Solutions" transition={false} id="noanim-tab-example">
-
-                    <Tab eventKey="Solutions"
-                     title={
-                         <div className={"equipmentTitle"}>  Solutions </div>}>
-                    {/*{
-                             <div style={{display:"inline-block"}}>  Solutions <img src={solution} className={"images"} /></div>}*/}
-
-                        <div style={{ overflowY: "scroll",height:"35vh"}} >
-                             <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
-
-                                 <Accordion style={{width:"100%"}} defaultActiveKey="0">
-                                 {this.renderCollapsible('Solution')}
-                                 </Accordion>
+                            <Accordion style={{width: "100%"}} defaultActiveKey="0">
+                                {this.renderCollapsible('Solution')}
+                            </Accordion>
 
 
-
-                    </ButtonGroup>
-                        </div>
+                        </ButtonGroup>
+                    </div>
                 </Tab>
                 <Tab eventKey="Glassware" title={
-                    <div className={"equipmentTitle"}> Glassware </div>} >
-                    <div style={{ overflowY: "scroll",height:"35vh"}} >
-                    <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
+                    <div className={"equipmentTitle"}> Glassware </div>}>
+                    <div style={{overflowY: "scroll", height: "35vh"}}>
+                        <ButtonGroup vertical style={{width: "100%", backgroundColor: "transparent"}}>
 
-                        <Accordion style={{width:"100%"}} defaultActiveKey="0">
-                            {this.renderCollapsible('Glassware')}
-
-
-
-                        </Accordion>
+                            <Accordion style={{width: "100%"}} defaultActiveKey="0">
+                                {this.renderCollapsible('Glassware')}
 
 
+                            </Accordion>
 
-                    </ButtonGroup>
+
+                        </ButtonGroup>
                     </div>
 
                 </Tab>
                 <Tab eventKey="Tools" title={
-                    <div className={"equipmentTitle"}>  Tools</div>} >
+                    <div className={"equipmentTitle"}> Tools</div>}>
                     {/*<Sonnet />*/}
 
 
-                    <div style={{ overflowY: "scroll",height:"35vh"}} >
-                        <ButtonGroup vertical style={{width:"100%",backgroundColor:"transparent"}}>
+                    <div style={{overflowY: "scroll", height: "35vh"}}>
+                        <ButtonGroup vertical style={{width: "100%", backgroundColor: "transparent"}}>
                             {this.renderArray('Tools')}
-
 
 
                         </ButtonGroup>
                     </div>
                 </Tab>
             </Tabs>
-
 
 
         );

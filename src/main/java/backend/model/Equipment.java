@@ -19,6 +19,7 @@ public class Equipment {
 
     protected double capacity;
     protected int state;
+    private String chemProp;
 
     @ManyToOne
     protected Lab lab;

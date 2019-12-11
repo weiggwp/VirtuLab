@@ -141,7 +141,8 @@ function isComplete (stepnum,aa){
 const ChildComponent = props => <Nav.Item> <Nav.Link
     className={"step"}
     eventKey={props.number}
-    onClick={(e)=>(props.selectStep(e, props.number))}>
+    //onClick={(e)=>(props.selectStep(e, props.number))}
+>
     Step {props.number}
 </Nav.Link> </Nav.Item>;
 

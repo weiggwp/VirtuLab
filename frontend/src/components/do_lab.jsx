@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import icon from "../Images/v.jpg";
-
+import deepCloneWithType from "../clone";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
+import { confirmable } from 'react-confirm';
+import { createConfirmation } from 'react-confirm';
+import Dialog from 'react-bootstrap-dialog';
 import {
     Tab,
     Button,
@@ -65,10 +68,12 @@ class DoLab extends React.Component {
             lab_title:"Untitled Lab",
             equipments:[],
             input:0,
+            currentStepCopy:null,
             popoverWarning:"",
             slide:undefined,
             currContainer:undefined,
             reRender:false,
+            testInt:1,
 
         };
 
@@ -76,12 +81,20 @@ class DoLab extends React.Component {
         this.interaction_handler = this.interaction_handler.bind(this);
         this.handle_equip_delete = this.handle_equip_delete.bind(this);
         this.drop_handler = this.drop_handler.bind(this);
+        this.handleAction = this.handleAction.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.move_element = this.move_element.bind(this)
+        this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
         this.getInfo = this.getInfo.bind(this);
+        this.selectStep = this.selectStep.bind(this);
     }
+    selectStep(e,i){
+        this.setState({currentStep:i},
 
+        );
+
+    }
     getInfo(e,data)
     {
         const workspace_id = data.workspace_id;
@@ -102,106 +115,58 @@ class DoLab extends React.Component {
         this.forceUpdate()
     }
 
-    populateEquipmentSetup()
-    {
-        console.log("populating,state is ")
-        console.log(this.props.location.state.equipments)
-        var equipList = this.props.location.state.equipments;
-        if (equipList !== undefined&&equipList!=null)//opening a previously saved lab
-        {
-            console.log("equplist is "+JSON.stringify(equipList))
-            var result ={
-                'Solution': [],
-                'Tools': [],
-                'Glassware': {},
-
-            };
-            for (var i = 0; i < equipList.length; i++) {
-                var current = equipList[i];
-                if(current.disabled)
-                    console.log(current.name+" is disabled");
-                if(current.type==="Solution")
-                {
-                    equip = new Element(current.name, current.image, current.capacity,
-                        current.weight, current.state, current.svg, current.size,
-                    );
-                    console.log("equip is")
-                    console.log(equip)
-                    equip.setDisabled(current.disabled)
-                    result['Solution'].push(equip)
-                }
-                else if(current.type==='Tools')
-                {
-                    var equip =new Tool(current.name, current.image);
-                    console.log("equip is")
-                    console.log(equip)
-                    equip.setDisabled(current.disabled)
-                    result['Tools'].push(equip);
-                }
-                else {
-                    if(result['Glassware'][current.type]===undefined)
-                        result['Glassware'][current.type]=[]
-
-                    equip = new Glassware(current.name, current.image, current.capacity,
-                        current.weight,current.state,current.svg, current.size);
-                    equip.setDisabled(current.disabled)
-                    equip.setType(current.type)
-                    console.log("equip is")
-                    console.log(equip)
-                    result['Glassware'][current.type].push(equip);
-                }
-
-
-            }
-            console.log("current equipment set")
-            console.log(this.equipmentSet)
-            console.log("setting to new equipment set",result)
-            this.equipmentSet.setEquipmentList(result);
-
-        }
-    }
     populateStepEquipment(equipList)
     {
 
+        let equip;
         var result =[];
+        const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
+        const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
+
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-            console.log("current",current)
 
-            if(current.type==="Solution")
+
+
+            if(solutions.includes(current.type))
             {
                 equip = new Element(current.name, current.image, current.capacity,
-                    current.weight, current.state, current.svg, current.size,
+                    current.weight, current.state, current.size,current.chemProp,current.amount
                 );
+                // name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity
+                equip.setType(current.type);
                 equip.setDisabled(current.disabled)
-                equip.setLocation(current.x,current.y)
-                equip.setWeight(current.weight)
-                equip.setItems(current.items)
+                equip.setLocation(current.left,current.top)
+                equip.setColor(current.color)
+
                 result.push(equip)
-                console.log("equip",equip)
             }
-            else if(current.type==='Tools')
+            else if(!glassware.includes(current.type))
             {
-                var equip =new Tool(current.name, current.image);
+                equip = new Tool(current.name, current.image);
                 equip.setDisabled(current.disabled)
-                equip.setLocation(current.x,current.y)
+                equip.setLocation(current.left,current.top)
+                equip.setColor(current.color)
+
+
 
                 result.push(equip);
-                console.log("equip",equip)
 
             }
             else {
 
+
                 equip = new Glassware(current.name, current.image, current.capacity,
-                    current.weight,current.state,current.svg, current.size);
-                equip.setDisabled(current.disabled)
-                equip.setType(current.type)
-                equip.setLocation(current.x,current.y)
-                equip.setWeight(current.weight)
+                    current.weight,current.state, current.size,current.amount);
                 equip.setItems(current.items)
+                equip.setDisabled(current.disabled);
+                equip.setType(current.type);
+                equip.setLocation(current.left,current.top);
+                equip.setColor(current.color)
+
                 result.push(equip);
-                console.log("equip",equip)
+
 
             }
 
@@ -212,6 +177,72 @@ class DoLab extends React.Component {
 
 
     }
+    populateEquipmentSetup()
+    {
+        var equipList = this.props.location.state.equipments;
+        if (equipList !== undefined)//opening a previously saved lab
+        {
+            var result ={
+                'Solution': {},
+                'Tools': [],
+                'Glassware': {},
+
+            };
+
+            const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
+            const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
+
+            for (var i = equipList.length-1; i >=0; i--) {
+                var current = equipList[i];
+
+                if(solutions.includes(current.type))
+
+                {
+                    if(result['Solution'][current.type]===undefined)
+                        result['Solution'][current.type]=[]
+
+                    var equip = new Element(current.name, current.image, current.capacity,
+                        current.weight, current.state, current.size,current.chemProp,current.amount);
+
+                    equip.setType(current.type);
+                    equip.setDisabled(current.disabled)
+                    result['Solution'][current.type].push(equip)
+
+                }
+                else if(!glassware.includes(current.type))
+                {
+                    var equip =new Tool(current.name, current.image,current.weight);
+                    equip.setType(current.type);
+                    equip.setDisabled(current.disabled)
+                    result['Tools'].push(equip);
+                }
+                else {
+                    if(result['Glassware'][current.type]===undefined)
+                        result['Glassware'][current.type]=[]
+
+                    var equip = new Glassware(current.name, current.image, current.capacity,current.weight,1,current.size);
+                    equip.setDisabled(current.disabled)
+                    equip.setType(current.type)
+                    result['Glassware'][current.type].push(equip);
+                }
+
+
+
+            }
+            this.equipmentSet.setEquipmentList(result);
+
+        }
+    }
+
+    compare(a, b) {
+        if (a.stepNum > b.stepNum) return 1;
+        if (b.stepNum > a.stepNum) return -1;
+
+        return 0;
+    }
+
+
+
     populateSteps()
     {    console.log("populating,state is ")
         console.log(this.props.location.state.equipments)
@@ -221,26 +252,23 @@ class DoLab extends React.Component {
             //get steps from prop
             var step_list = this.props.location.state.steps;
             console.log((this.props.location.state.steps))
-            console.log("steplist is now "+JSON.stringify(this.state.steps))
+            step_list.sort(this.compare)
             //opening a previously saved lab
             if (step_list !== undefined)
             {
-                for (var i = 1; i <=step_list.length ; i++) {
-                    console.log("pushing instruction "+i+"="+JSON.stringify( step_list[i-1].instruction))
-                    this.state.steps.push(new Step(i, step_list[i-1].instruction));
-                    console.log("steplist is now "+JSON.stringify(this.state.steps))
-                    console.log("getting ")
-                    console.log(step_list[i-1].equipments)
+                for (var i = 1; i <step_list.length ; i++) {
+                    console.log("steplist["+i+"] = " );console.log(step_list[i]);
+                    this.state.steps.push(step_list[i]);
+
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i-1].equipments);
-                    console.log("got")
+
                     console.log(this.state.equipments[i])
 
                 }
 
             }
-            console.log("steplist is now "+JSON.stringify(this.state.steps))
+            console.log("ABC EQUI{S IS ")
             console.log(this.state.equipments)
-            console.log("populationg equipsetup!")
             this.populateEquipmentSetup();
 
             // alert("got here"+this.props.location.state.id);
@@ -293,6 +321,9 @@ class DoLab extends React.Component {
         console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
     setRedirectHome = () => {
+        if (!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
+            return null;
+        }
         this.setState({
             redirectHome: true
         })
@@ -300,14 +331,31 @@ class DoLab extends React.Component {
 
     setRestart = (step_id) => {
 
-        const temp = this.state.steps;
-        temp[step_id].workspace= new Workspace();
-        this.setState({
-            restart: true,      //should probably just be restarting a single step
-            steps: temp,
-            equipments:{},
 
-        });
+
+        if (!window.confirm("Are you sure you would like to restart this step?")){
+            return null;
+        }
+
+        console.log("steps is  ");
+        console.log(this.state.equipments);
+        console.log("current step is "+this.state.completedSteps)
+        let stepNum=this.state.completedSteps+1;
+        if (stepNum==1){
+            console.log(this.state.equipments);
+            this.state.equipments[1]=[]
+            this.setState({testInt:12}) // DONT DELETE, THE CODE DOESNT WORK WITHOUT IT IDK
+            this.render()
+            return null
+        }
+        console.log("copy is ");
+        console.log(this.state.currentStepCopy)
+        this.state.equipments[stepNum]=deepCloneWithType(this.state.currentStepCopy)
+        console.log("steps is  ");
+        console.log(this.state.equipments);
+        this.setState({testInt:12}) // DONT DELETE, THE CODE DOESNT WORK WITHOUT IT IDK
+        this.render()
+
     };
 
 
@@ -399,16 +447,16 @@ class DoLab extends React.Component {
                                 </Tooltip>
                             }
                         >
-                            <Link to="/create_lab">
-                                <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
-                            </Link>
+
+                            <Button onClick={this.setRestart} style={{backgroundColor: "black"}}>Restart</Button>
+
                         </OverlayTrigger>
 
 
                         {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
 
 
-                        <OverlayTrigger
+               {/*         <OverlayTrigger
                             overlay={
                                 <Tooltip>
                                     Trash selected item
@@ -416,10 +464,10 @@ class DoLab extends React.Component {
                             }
                         >
                             <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />
-                        </OverlayTrigger>
+                        </OverlayTrigger>*/}
 
 
-                        <OverlayTrigger
+                     {/*   <OverlayTrigger
                             overlay={
                                 <Tooltip>
                                     Save your edits
@@ -429,7 +477,7 @@ class DoLab extends React.Component {
                             <Image className={"save_image"} onClick={this.handleLabSave}
                                    src="https://cdn2.iconfinder.com/data/icons/web-application-icons-part-2/100/Artboard_73-512.png"
                                    rounded/>
-                        </OverlayTrigger>
+                        </OverlayTrigger>*/}
 
                         <OverlayTrigger
                             overlay={
@@ -438,11 +486,11 @@ class DoLab extends React.Component {
                                 </Tooltip>
                             }
                         >
-                            <Link to="/instructor_labs">
+
                                 <Image onClick={this.setRedirectHome} className={"config_image"}
                                        src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png"
                                        rounded/>
-                            </Link>
+
                         </OverlayTrigger>
 
 
@@ -535,7 +583,11 @@ class DoLab extends React.Component {
         const source = this.state.equipments[workspace_id1][eq_id1];
         const target = this.state.equipments[workspace_id2][eq_id2];
         const interactable = source.canInteract(target);
-
+        console.log("CALLED ")
+        console.log("source is ");
+        console.log(source);
+        console.log("target is ");
+        console.log(target);
         if(interactable){
             this.eq1 = source;
             this.eq2 = target;
@@ -543,9 +595,13 @@ class DoLab extends React.Component {
             this.target = target_ev;
             if(actions){
                 this.setState({showPopover:true});
+                this.forceUpdate()
             }
             else{
+                console.log("source is ");
+                console.log(source);
                 source.interact(target);
+                this.forceUpdate()
             }
         }
 
@@ -585,18 +641,30 @@ class DoLab extends React.Component {
 
     move_element(ev){
         const offset = ev.dataTransfer.getData("text/offset").split(',');
-        const dm = document.getElementById(ev.dataTransfer.getData("text/id"));
-        dm.style.left = (ev.clientX + parseInt(offset[0],10)) + 'px';
-        dm.style.top = (ev.clientY + parseInt(offset[1],10)) + 'px';
-        console.log("moving element ",dm.style.left)
-        console.log("moving element ",dm.style.top)
+        const source_dm = document.getElementById(ev.dataTransfer.getData("text/id"));
+        var x =(ev.clientX + parseInt(offset[0],10));
+        var y = (ev.clientY + parseInt(offset[1],10));
 
         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const workspace_dm = document.getElementById("workspace"+workspace_id);
+
+        const bounds = this.getBoundingXY(x,y,workspace_dm,source_dm);
+        x=bounds[0];
+        y=bounds[1];
+
+        source_dm.style.left = x + 'px';
+        source_dm.style.top = y + 'px';
+
+        console.log("client",ev.clientX,"x",x);
+        console.log("client",ev.clientY,"y",y);
+
+
+
         const equip_id = ev.dataTransfer.getData('text/equip_id');
 
         const source = this.state.equipments[workspace_id][equip_id];
-        source.setLocation((ev.clientX + parseInt(offset[0],10)),(ev.clientY + parseInt(offset[1],10)));
-        console.log("moving ",workspace_id,equip_id,source);
+        source.setLocation(x,y);
+        // console.log("moving ",workspace_id,equip_id,source);
     }
 
     dragover_handler(ev) {
@@ -627,6 +695,13 @@ class DoLab extends React.Component {
 
         this.setState({popoverWarning:msg},()=>(alert(msg)));
     };
+    handleAction(source, action,target,input){
+
+
+
+        source[action](target,parseFloat(input));
+        this.forceUpdate();
+    }
 
     popover(){
         const source = this.eq1;
@@ -642,7 +717,8 @@ class DoLab extends React.Component {
             if(actions){
 
                 actions.map((action)=>(
-                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, )}>{action}</Button>)
+                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>this.handleAction(source,action,target,this.state.input)}>{action}</Button>)
+
                     // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
                 ));
             }
@@ -708,6 +784,11 @@ class DoLab extends React.Component {
             </Overlay>
         )
     }
+
+    workSpacePaneRestart(i){
+        const equipments = this.state.equipments[i];
+    }
+
     workspacePane(){
         const workspaces = [];
 
@@ -727,7 +808,9 @@ class DoLab extends React.Component {
                     onDrop={this.drop_handler} onDragOver={this.dragover_handler}
                     style={{height:"100%"}}>
                     workspace for step {i}
-                    <div style={{height:"100%"}}>
+                    <div style={{height:"100%"}}
+                         id={"workspace"+i}
+                    >
 
                         {equipments.map((equipment,index) => (
 
@@ -737,7 +820,9 @@ class DoLab extends React.Component {
                                                  canInteract = {this.canInteract}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
+                                                 role="student"
                                                  move_element={this.move_element}
+                                                 adjust={this.adjust_interactive_element}
                                                  width={200} height={200}/>
 
                         ))
@@ -751,6 +836,7 @@ class DoLab extends React.Component {
                 </Tab.Pane>);
         }
         console.log("PUSHED!")
+        console.log(this.state.equipments)
         return(
             <Tab.Content style={{height:"100%"}}>
                 {workspaces}
@@ -830,13 +916,15 @@ class DoLab extends React.Component {
     };
      makeSlide(){
         var currslide =
-            <Slides id="slides"steps={this.state.steps}
+                <Slides id="slides"steps={this.state.steps}onSelect={this.selectStep}
                     completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
                             role={"student"}/>;
         this.setState({slide:currslide});
     }
     callbackFirstRender(){
          this.render();
+         console.log("NOW copy is "+this.state.currentStepCopy)
+         console.log(this.state.currentStepCopy)
         this.setState({reRender: false},this.callbackSecondRender)
     }
     callbackSecondRender(){
@@ -845,25 +933,57 @@ class DoLab extends React.Component {
     callback(){
          console.log("called back!")
         var currslide =
-            <Slides id="slides"steps={this.state.steps}
+            <Slides id="slides"steps={this.state.steps}onSelect={this.selectStep}
                     completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
                     role={"student"}/>;
         this.setState({slide:currslide});
+        console.log("completed steps is "+this.state.completedSteps);
+        console.log("steps is");
+        console.log(this.state.steps)
+        console.log("stepcopy is");
+        console.log(this.state.currentStepCopy)
+        console.log("should be ");
+        console.log(this.state.equipments[this.state.completedSteps+1])
+        console.log(this.state.equipments)
         ToastsStore.success("Step completed!")
-        this.setState({reRender: true},this.callbackFirstRender)
+
+        let cloneCopy;
+        cloneCopy=deepCloneWithType(this.state.equipments[this.state.completedSteps+1]);
+        console.log(cloneCopy)
+        console.log(this.state.equipments[this.state.completedSteps+1])
+        //this.state.equipments[this.state.completedSteps+1].push("test")
+        console.log(cloneCopy)
+        console.log(this.state.equipments[this.state.completedSteps+1])
+
+        this.setState({reRender: true,currentStepCopy:cloneCopy},this.callbackFirstRender)
 
     }
+
+
+    arraysEqual(arr1,arr2){
+         if (arr1.length!=arr2.length)return false;
+         for (let i=0; i<arr1.length; i++){
+             if (arr1[i].name!=arr2[i].name||arr1[i].capacity!=arr2[i].capacity||arr1[i].weight!=arr2[i].weight)return false;
+         }
+         return true;
+    }
+
     verifyStep( stepEquips,studentEquips) {
         let m = stepEquips.length;
         let n = studentEquips.length;
-        console.log("step equip is "+JSON.stringify(stepEquips))
-        console.log("verifying step, studentEquips = "+JSON.stringify(studentEquips));
+        console.log("step equip is ");console.log((stepEquips))
+        console.log("verifying step, studentEquips = ");console.log((studentEquips));
 
+        const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
+
+        let unused=[];
         let arr = []
         for (let i = 0; i < m; i ++) {
             arr.push(false)
         }
-
+        for (let i=0; i<n; i++){
+            unused.push(true);
+        }
         for (let i = 0; i < m; i ++) {
             let equip1 = stepEquips[i]
             for (let j = 0; j < n; j ++) {
@@ -872,24 +992,38 @@ class DoLab extends React.Component {
                 if (equip1.name === equip2.name &&
                     equip1.amount === equip2.amount
                     &&equip1.capacity==equip2.capacity
-                &&equip1.items==equip2.items) {
+                &&this.arraysEqual(equip1.items,equip2.items)&&unused[j]) {
                     arr[i] = true
+                    unused[j]=false;
+                    break;
                 }
+                if (solutions.includes(equip1.type)&&equip1.name === equip2.name ){
+                    arr[i] = true
+                    unused[j]=false;
+                    break;
+                }
+             /*   else if (equip1.items!=equip2.items){
+                    console.log("First items: ");console.log(equip1.items);
+                    console.log("second items: ");console.log(equip2.items);
+                }*/
+
             }
         }
 
         let res = true
         for (let i = 0; i < arr.length; i ++) {
+            console.log("first arr is "+arr[i])
             res &= arr[i];
         }
+
         return res;
 
     }
 
 
     completeStep  = (step_id) => {{
-        let currentStep = this.state.completedSteps+2;
-        console.log("all steps are "+JSON.stringify(this.state.steps))
+        let currentStep = this.state.completedSteps;
+        console.log("all steps are ");console.log(this.state.steps)
         console.log("currentstep is " +currentStep + "aka  "+ JSON.stringify(this.state.steps[currentStep-1]))
         console.log("equips is "+JSON.stringify(this.state.equipments[currentStep]))
         console.log(this.state.equipments)
@@ -903,12 +1037,13 @@ class DoLab extends React.Component {
             console.log("aaaa")
             return null;
         }
-        if (!this.verifyStep(this.state.equipments[currentStep],this.state.equipments[currentStep-1])){
+        if (!this.verifyStep(this.state.steps[currentStep].equipments,this.state.equipments[currentStep+1])){
             ToastsStore.error("Step failed. Try again.")
             console.log("no bueno")
             return null;
         }
-        if (currentStep+1>this.state.steps.length){
+        console.log("current step is "+currentStep + "steps.length is "+this.state.steps.length)
+        if (currentStep+2>this.state.steps.length){
             ToastsStore.success("Lab completed!")
             this.completeLab()
             return
@@ -932,7 +1067,7 @@ class DoLab extends React.Component {
             code:this.props.location.state.courseID,
 
         };
-        alert("courselab is "+JSON.stringify(courselab))
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -952,6 +1087,115 @@ class DoLab extends React.Component {
             );
     }
 
+    getBoundingXY(x,y,workspace_dm,source_dm)
+    {
+        const max_x = workspace_dm.getBoundingClientRect().width - source_dm.getBoundingClientRect().width;
+        const max_y = workspace_dm.getBoundingClientRect().height - source_dm.getBoundingClientRect().height;
+        x=x<0?0:x;
+        y=y<0?0:y;
+        x=x>max_x?max_x:x;
+        y=y>max_y?max_y:y;
+
+        return [x,y]
+    }
+
+    getDifference(original,after,value)
+    {
+        const difference = Math.abs(original-after)
+        if(difference!==value)
+            return value;
+        else
+            return difference;
+    }
+    adjust_interactive_element(ev,workspace,src_equip,target_equip){
+        const src_id = "workspace"+workspace+"equip"+src_equip;
+        const targ_id = "workspace"+workspace+"equip"+target_equip;
+        const workspace_id="workspace"+workspace;
+        console.log("workspace id " +workspace_id)
+        const src = this.state.equipments[workspace][src_equip];
+        const targ = this.state.equipments[workspace][target_equip];
+
+        const offset = ev.dataTransfer.getData("text/offset").split(',');
+
+        const src_element = document.getElementById(src_id);
+        const targ_element = document.getElementById(targ_id);
+        const workspace_element=document.getElementById(workspace_id)
+        console.log("workspace leemtn is ")
+        console.log(workspace_element)
+        var src_x=(ev.clientX + parseInt(offset[0],10));
+        var src_y=(ev.clientY + parseInt(offset[1],10));
+        console.log("unverified original",[src_x,src_y])
+        console.log(src_element,targ_element)
+
+        const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
+        src_x=verify[0];
+        src_y=verify[1];
+
+        var targ_x = targ.left;
+        var targ_y = targ.top;
+
+        if(Tool.prototype.isPrototypeOf(targ))
+        {
+
+
+            const src_height=src_element.getBoundingClientRect().height;
+            const targ_height =targ_element.getBoundingClientRect().height-(src.size/3*2);
+
+            //+src.size/2
+            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+
+            // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
+            // if(difference[1]!==targ_height)
+            // {
+            //     alert("moving scale up")
+            //     var targ_pos = this.getBoundingXY(src_x-difference[0],src_y+difference[1],workspace_element,targ_element);
+            // }
+            // else
+            var targ_pos = [targ_x,targ_y]
+
+            src.setInteracting(true);
+
+
+        }
+        else {
+
+            src.setDegree(45);
+            src.setInteracting(true);
+
+
+            const width = src_element.getBoundingClientRect().width / 4;
+            const height = src_element.getBoundingClientRect().height / 4;
+            console.log("src rect", src_element.getBoundingClientRect())
+            var src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
+
+            const difference = [this.getDifference(src_pos[0], src_x, width), this.getDifference(src_pos[1], src_y, height)];
+
+            console.log("original ", [src_x, src_y], "new ", src_pos, " difference ", difference)
+
+            var targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
+
+
+            //position moved back, meaning it went out of bounds
+            // if(src_y===src_pos[1])
+        }
+
+        targ_x=targ_pos[0]
+        targ_y=targ_pos[1]
+        src_x=src_pos[0];
+        src_y=src_pos[1];
+
+
+        //src move up, no need to reposition target
+
+        src_element.style.left=src_x+'px';
+        src_element.style.top=src_y+'px';
+        src.setLocation(src_x,src_y);
+
+        targ_element.style.left=targ_x+'px';
+        targ_element.style.top=targ_y+'px';
+        targ.setLocation(targ_x,targ_y);
+        // console.log("moving ",workspace_id,equip_id,source);
+    }
 
     render(){
 
@@ -963,7 +1207,12 @@ class DoLab extends React.Component {
 
             return null;
         }
-
+        if (this.state.redirectHome){
+            return <Redirect exact to={{
+                pathname: "/student_home",
+                
+            }}/>;
+        }
         if (this.state.reRender){
 
         console.log("steps is "+JSON.stringify(this.state.steps))

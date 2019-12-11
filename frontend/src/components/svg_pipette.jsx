@@ -6,11 +6,10 @@ const SvgComponent =
          style = {},
          className = '',
          fill = "white",
-         fill_percent = 0,
+         equip ={},
+         pre_fill_percent = equip.getFillPercent(),
+         fill_percent = (pre_fill_percent>1) ? 1: (pre_fill_percent<0) ? 0: pre_fill_percent,
 
-         // width = '100%',
-         // height = '100%',
-         // viewBox = "0 0 48 48",
          viewBox="18 -1 12 50",
          size = 100,
          y_top = 18.85,
@@ -22,7 +21,7 @@ const SvgComponent =
 
      }) => (
         <svg
-            id={id+"flask"}
+            id={id+equip.name}
             width={size}
             style={style}
             height={size*1.5}

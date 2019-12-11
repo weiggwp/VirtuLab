@@ -20,13 +20,10 @@ public class EquipmentDTO {
     private long y=0;
     private long size;
     private String color;
+    private String chemProp;
 
-    public long getSize() {
-        return size;
-    }
-
-    public void setSize(long size) {
-        this.size = size;
+    public String getChemProp() {
+        return chemProp;
     }
 
     @Override
@@ -45,7 +42,39 @@ public class EquipmentDTO {
                 ", y=" + y +
                 ", size=" + size +
                 ", color='" + color + '\'' +
+                ", chemProp='" + chemProp + '\'' +
                 '}';
+    }
+
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, long x, long y, long size, String color, String chemProp) {
+        this.name = name;
+        this.weight = weight;
+        this.amount = amount;
+        this.capacity = capacity;
+        this.temperature = temperature;
+        this.image = image;
+        this.items = items;
+        this.disabled = disabled;
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+        this.chemProp = chemProp;
+    }
+    public EquipmentDTO(){
+
+    }
+    public void setChemProp(String chemProp) {
+        this.chemProp = chemProp;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
     }
 
     public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, long x, long y, long size, String color) {

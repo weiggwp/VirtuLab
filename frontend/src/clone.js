@@ -33,7 +33,7 @@ export function deepClone(obj) {
     throw new Error("Unable to copy obj! Its type isn't supported.");
 }
 
-export default function deepCloneWithType(obj){
+export default function deepCloneWithType(obj,ignore=""){
 
     // Handle and null or undefined
     if (null == obj || "object" != typeof obj) return obj;
@@ -60,7 +60,8 @@ export default function deepCloneWithType(obj){
     // Handle Object
     if (obj instanceof Object) {
         for (const attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = deepClone(obj[attr]);
+            if(attr===ignore) continue;
+            if (obj.hasOwnProperty(attr)) copy[attr] = deepCloneWithType(obj[attr]);
         }
         return copy;
     }
@@ -72,4 +73,10 @@ export default function deepCloneWithType(obj){
     //     copy[key] = clone[key]
     // });
     // return copy;
+}
+
+export function floatEqual(a,b=0.0) {
+    const tolerance = Number.EPSILON;
+    return Math.abs(a - b) < tolerance;
+
 }
