@@ -78,7 +78,6 @@ class instructor_labs extends React.Component {
 
     handleCloneLab(lab){
 
-        // console.log(" lab is " +JSON.stringify(lab))
 
         let axiosConfig = {
             headers: {
@@ -123,7 +122,6 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
 
-                // console.log(JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -185,7 +183,6 @@ class instructor_labs extends React.Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'del_lab', labToDel, axiosConfig)
             .then((response) => {
-                //  console.log("success!")
                 this.render()
                 window.location.reload()
             })
@@ -225,7 +222,6 @@ class instructor_labs extends React.Component {
 
 
         }
-        console.log("instructor lab",lab.steps)
         // alert("lab id"+this.redirectEdit.id+" name: "+this.redirectEdit.name+" ");
 
         this.setState({
@@ -371,12 +367,6 @@ class instructor_labs extends React.Component {
         //axio sends message to backend to handle get_labs
         axios.post(GLOBALS.BASE_URL + 'get_labs',pageQuestDTO)
             .then((response) => {
-                console.log("get_labs return: ")
-                console.log(response.data)
-
-                console.log(response.data['totalElements'])
-                console.log(response.data['totalPages'])
-                console.log(response.data['labs'])
                 let totalPages = response.data['totalPages']
 
                 for (let i = 0; i < response.data['labs'].length; i ++) {
@@ -418,12 +408,6 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_labs', pageQuestDTO
         )
             .then((response) => {
-                console.log("get_labs return: ")
-                console.log(response.data)
-
-                console.log(response.data['totalElements'])
-                console.log(response.data['totalPages'])
-                console.log(response.data['labs'])
                 let totalPages = response.data['totalPages']
 
                 for (let i = 0; i < response.data['labs'].length; i++) {
@@ -470,12 +454,6 @@ class instructor_labs extends React.Component {
         //axio sends message to backend to handle get_labs
         axios.post(GLOBALS.BASE_URL + 'get_labs', pageQuestDTO)
             .then((response) => {
-                console.log("get_labs return: ")
-                console.log(response.data)
-
-                console.log(response.data['totalElements'])
-                console.log(response.data['totalPages'])
-                console.log(response.data['labs'])
                 let totalPages = response.data['totalPages']
 
                 for (let i = 0; i < response.data['labs'].length; i++) {
@@ -687,7 +665,6 @@ class instructor_labs extends React.Component {
             // }
 
 
-            console.log("redpubl is " +this.state.redirectPublish)
             return (
                 <div>
                     {this.renderRedirect()}

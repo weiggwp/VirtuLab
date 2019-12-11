@@ -73,7 +73,6 @@ class student_home extends React.Component
                 // this.render()
             })
             .catch((error) => {
-                console.log("err is"+error)
                 }
             );
     }
@@ -87,7 +86,6 @@ class student_home extends React.Component
             code: this.state.code,
             email: this.props.email
         };
-        console.log("course is "+JSON.stringify(course))
 
         let axiosConfig = {
             headers: {

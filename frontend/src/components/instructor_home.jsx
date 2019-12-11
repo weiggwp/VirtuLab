@@ -49,7 +49,6 @@ class instructor_home extends React.Component {
     };
 
     updateClasses(){
-        console.log("email is "+JSON.stringify(this.props))
         const user = {
             email: this.props.email
         };
@@ -60,7 +59,6 @@ class instructor_home extends React.Component {
 
             }
         };
-        console.log("email is " + this.props.email)
 
         var classArr=[];
         var classArray=[];
@@ -85,7 +83,6 @@ class instructor_home extends React.Component {
                 //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }
                 this.setState({classes:classArray,loading_course:false});
-                console.log("classes is "+JSON.stringify(this.state.classes))
             })
             .catch((error) => {
 
@@ -102,8 +99,6 @@ class instructor_home extends React.Component {
     render() {
 
         if (this.state.loading_course){
-            console.log("loading classes", this.state.classes);
-            console.log("role ios " +this.props.role)
             this.updateClasses();
             return null;
 

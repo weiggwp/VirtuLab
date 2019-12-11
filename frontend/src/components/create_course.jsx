@@ -52,7 +52,6 @@ export class create_course extends Component {
 
             })
             .catch((error) => {
-                    console.log("doot" + error)
                 }
             );
     }

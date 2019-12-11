@@ -28,7 +28,6 @@ class dolab extends React.Component {
     }
     completeLab(){
 
-        console.log("props is "+JSON.stringify(this.props))
         const lab = {
             labID:this.props.location.state.labID,
         }
@@ -40,7 +39,6 @@ class dolab extends React.Component {
             code:this.props.location.state.courseID,
 
         };
-        alert("courselab is "+JSON.stringify(courselab))
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -50,7 +48,6 @@ class dolab extends React.Component {
         };
         axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
             .then((response) => {
-                console.log("success!")
 
             })
             .catch((error) => {

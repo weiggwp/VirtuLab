@@ -93,7 +93,6 @@ class view_lab extends React.Component {
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-            console.log(i, current)
 
             if (solutions.includes(current.type)) {
                 equip = new Element(current.name, current.image, current.capacity,
@@ -578,10 +577,7 @@ class view_lab extends React.Component {
         )
     }
 
-    setPopoverWarningMsg(msg) {
-
-        this.setState({popoverWarning: msg}, () => (alert(msg)));
-    };
+    
 
     handleAction(source, action, target, input) {
 

@@ -29,8 +29,6 @@ class Droppable_course extends React.Component
             course_id: e.id,
             email: this.props.email
         };
-        console.log("course is "+ JSON.stringify(course))
-        alert(this.props.email)
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',

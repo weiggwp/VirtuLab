@@ -51,7 +51,6 @@ class Slides extends React.Component {
             this.setState({
                 active: this.state.curStep-1
             })
-            console.log(this.state.active,this.state.curStep-1)
 
 
         }

@@ -725,10 +725,7 @@ class create_lab extends React.Component {
             {equipments:temp}
         )
     }
-    setPopoverWarningMsg(msg){
-
-        this.setState({popoverWarning:msg},()=>(alert(msg)));
-    };
+    
 
     handleAction(source, action,target,input){
 

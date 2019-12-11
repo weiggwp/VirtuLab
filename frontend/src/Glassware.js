@@ -41,7 +41,6 @@ export default class Glassware extends Equipment{
         for (const [, item] of Object.entries(this.items)) {
             // out[key] = obj.output(obj.amount*percentage);
             // console.log("item",item);
-            alert(item);
             total+=item.getWeight();
         }
         // this.items.(function (item) {
