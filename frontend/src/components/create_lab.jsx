@@ -56,6 +56,7 @@ class create_lab extends React.Component {
         this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
+        this.colorRules={};
 
         this.state = {
             showPopover: false,
@@ -92,6 +93,7 @@ class create_lab extends React.Component {
         this.getInfo = this.getInfo.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
     }
+
     populateStepEquipment(equipList)
     {
 
@@ -164,7 +166,7 @@ class create_lab extends React.Component {
             const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
             const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
 
-            for (var i = equipList.length-1; i >0; i--) {
+            for (var i = equipList.length-1; i >=0; i--) {
                 var current = equipList[i];
                 if(solutions.includes(current.type))
                 {
@@ -686,6 +688,16 @@ class create_lab extends React.Component {
         this.forceUpdate();
     }
 
+
+    onHide=(source)=>
+    {
+        source.setDegree(0);
+
+        this.setState({ showPopover: false })
+    }
+
+
+
     popover(){
         const source = this.eq1;
         const target = this.eq2;
@@ -720,7 +732,7 @@ class create_lab extends React.Component {
             container={this.ref.current}
             containerPadding={20}
             rootClose={true}
-            onHide={() => this.setState({ showPopover: false })}
+            onHide={() => this.onHide(source)}
             style={{width:400}}
         >
             <Popover id="popover-contained" >
@@ -729,7 +741,7 @@ class create_lab extends React.Component {
                         <strong>Action</strong>
                     </div>
                     <div className={"col2"}>
-                        <a className="close" onClick={()=>this.setState({showPopover: false})}/>
+                        <a className="close" onClick={()=>this.onHide(source)}/>
                     </div>
                 </Popover.Title>
                 <Popover.Content>
@@ -918,9 +930,15 @@ class create_lab extends React.Component {
 
 
     selectStep(e,i){
-        this.setState({currentStep:i},
+        this.setState({
+                currentStep:i,
+
+
+
+            },
 
         );
+
 
     }
     render(){
@@ -1042,7 +1060,7 @@ class create_lab extends React.Component {
             const targ_height =targ_element.getBoundingClientRect().height-(src.size/3*2);
 
             //+src.size/2
-            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height),workspace_element,src_element);
 
             // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
             // if(difference[1]!==targ_height)

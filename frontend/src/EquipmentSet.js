@@ -56,9 +56,9 @@ export default class EquipmentSet {
     }
 
     createFlasks() {
-        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 70),
-            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 85),
-            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 100),]
+        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 60),
+            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 75),
+            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 80),]
     }
 
     createCylinders() {
