@@ -9,6 +9,7 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {ToastsStore} from "react-toasts";
 import {ColorPicker} from "./ColorPicker";
 import {empty} from "glamor";
+import Tool from "../Tool";
 
 let dragSrcEl = null;
 let counter =0;
@@ -173,23 +174,40 @@ class Draggable_equipment extends React.Component {
         const styles = {
             display:'none'
         }
+        if(Tool.prototype.isPrototypeOf(equip))
+        {
+
+            return styles
+
+        }
         const emptyStyles={}
         if(top)
         {
 
-            if(equip.rotate>0)
+            if(equip.interacting)
                 return emptyStyles;
             return styles;
         }
         else
         {
-            if(equip.rotate>0)
+            if(equip.interacting)
                 return styles;
             return emptyStyles;
 
         }
 
 
+    }
+
+    getInfo(equipment,string)
+    {
+        if(Tool.prototype.isPrototypeOf(equipment))
+        {
+
+            return " "
+
+        }
+        return string
     }
 
 
@@ -224,8 +242,8 @@ class Draggable_equipment extends React.Component {
                     >
 
                         <div className={"info"} style={top}>
-                            <p className="infoName" >{this.props.equipment.toString()}</p>
-                            <p className="infoState" >{this.props.equipment.toStateString()}</p>
+                            <p className="infoName" >{this.getInfo(this.props.equipment,this.props.equipment.toString())}</p>
+                            <p className="infoState" >{this.getInfo(this.props.equipment,this.props.equipment.toStateString())}</p>
                         </div>
 
                         <GetSVG
@@ -234,16 +252,14 @@ class Draggable_equipment extends React.Component {
                                 name={this.props.equipment.name}
                                 type={this.props.equipment.type}
                                 fill={this.getColor()}
-                                degree={this.props.equipment.rotate}
-                                fill_percent={equip.getFillPercent()}
                                 size={equip.size}
                                 onDrop={this.drop_handler}
                                 id={id}
                         />
 
                         <div className={"info"} style={bot}>
-                            <p className="infoName" >{this.props.equipment.toString()}</p>
-                            <p className="infoState" >{this.props.equipment.toStateString()}</p>
+                            <p className="infoName" >{this.getInfo(this.props.equipment,this.props.equipment.toString())}</p>
+                            <p className="infoState" >{this.getInfo(this.props.equipment,this.props.equipment.toStateString())}</p>
                         </div>
 
                     </div>

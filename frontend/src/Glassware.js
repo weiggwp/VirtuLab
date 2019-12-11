@@ -4,13 +4,18 @@ import {ToastsStore} from "react-toasts";
 
 export default class Glassware extends Equipment{
 
-    constructor(name,image, capacity,weight, state=0,size=100)
+    constructor(name,image, capacity,weight, state=0,size=100,amount=capacity)
     {
         super(name,image,weight,"Glassware",0,size);
         this.capacity=capacity;
+        this.amount=amount;
         // this.state_names= ["empty", "filled", "full"];
 
 
+    }
+    setItems(items)
+    {
+        this.items=items;
     }
     getAmount(){
 
@@ -208,7 +213,7 @@ export default class Glassware extends Equipment{
         if(target.name==="Scale")
         {
             target.value=this.getWeight();
-            alert(this.name +" is "+ target.value +"g.");
+            // alert(this.name +" is "+ target.value +"g.");
         }
         else
         {

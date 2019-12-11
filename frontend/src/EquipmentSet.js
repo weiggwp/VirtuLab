@@ -56,15 +56,15 @@ export default class EquipmentSet {
     }
 
     createFlasks() {
-        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 100),
-            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 125),
-            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 150),]
+        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 70),
+            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 85),
+            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 100),]
     }
 
     createCylinders() {
-        return [new Glassware("Graduated Cylinder", small_cylinder, 10, 25, 0, 70),
-            new Glassware("Graduated Cylinder", medium_cylinder, 25, 65, 0, 85),
-            new Glassware("Graduated Cylinder", large_cylinder, 50, 130, 0, 100),]
+        return [new Glassware("Graduated Cylinder", small_cylinder, 10, 25, 0, 40),
+            new Glassware("Graduated Cylinder", medium_cylinder, 25, 65, 0, 45),
+            new Glassware("Graduated Cylinder", large_cylinder, 50, 130, 0, 50),]
     }
 
     createBeakers() {

@@ -21,6 +21,12 @@ export default class Equipment {
         this.top = 0;
         this.size = size;
         this.rotate=0;
+        this.interacting=false;
+    }
+
+    setInteracting(f)
+    {
+        this.interacting = f;
     }
 
 

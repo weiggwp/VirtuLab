@@ -97,27 +97,31 @@ class create_lab extends React.Component {
 
             let equip;
         var result =[];
+        const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
+        const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
 
             for (var i = 0; i < equipList.length; i++) {
                 var current = equipList[i];
+                console.log(i,current)
 
-                if(current.type==="Solution")
+                if(solutions.includes(current.type))
                 {
                     equip = new Element(current.name, current.image, current.capacity,
-                        current.weight, current.state, current.size,
+                        current.weight, current.state, current.size,current.chemProp,current.amount
                     );
+                    // name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity
                     equip.setType(current.type);
                     equip.setDisabled(current.disabled)
-                    equip.setLocation(current.x,current.y)
+                    equip.setLocation(current.left,current.top)
                     equip.setColor(current.color)
 
                     result.push(equip)
                 }
-                else if(current.type==='Tools')
+                else if(!glassware.includes(current.type))
                 {
                     equip = new Tool(current.name, current.image);
                     equip.setDisabled(current.disabled)
-                    equip.setLocation(current.x,current.y)
+                    equip.setLocation(current.left,current.top)
                     equip.setColor(current.color)
 
 
@@ -127,10 +131,11 @@ class create_lab extends React.Component {
                 else {
 
                     equip = new Glassware(current.name, current.image, current.capacity,
-                        current.weight,current.state, current.size);
+                        current.weight,current.state, current.size,current.amount);
+                    equip.setItems(current.items)
                     equip.setDisabled(current.disabled);
                     equip.setType(current.type);
-                    equip.setLocation(current.x,current.y);
+                    equip.setLocation(current.left,current.top);
                     equip.setColor(current.color)
 
                     result.push(equip);
@@ -150,26 +155,34 @@ class create_lab extends React.Component {
         if (equipList !== undefined)//opening a previously saved lab
         {
             var result ={
-                'Solution': [],
+                'Solution': {},
                 'Tools': [],
                 'Glassware': {},
 
             };
-            for (var i = 0; i < equipList.length; i++) {
+
+            const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
+            const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
+
+            for (var i = equipList.length-1; i >0; i--) {
                 var current = equipList[i];
-                if(current.type==="Solution")
+                if(solutions.includes(current.type))
                 {
                     if(result['Solution'][current.type]===undefined)
                         result['Solution'][current.type]=[]
 
-                    var equip = new Element(current.name, current.image, current.capacity,current.weight,1,current.size);
+                    var equip = new Element(current.name, current.image, current.capacity,
+                        current.weight, current.state, current.size,current.chemProp,current.amount);
+
+                    equip.setType(current.type);
                     equip.setDisabled(current.disabled)
                     result['Solution'][current.type].push(equip)
 
                 }
-                else if(current.type==='Tools')
+                else if(!glassware.includes(current.type))
                 {
                     var equip =new Tool(current.name, current.image,current.weight);
+                    equip.setType(current.type);
                     equip.setDisabled(current.disabled)
                     result['Tools'].push(equip);
                 }
@@ -992,14 +1005,12 @@ class create_lab extends React.Component {
             return difference;
     }
 
-
     adjust_interactive_element(ev,workspace,src_equip,target_equip){
         const src_id = "workspace"+workspace+"equip"+src_equip;
         const targ_id = "workspace"+workspace+"equip"+target_equip;
         const workspace_id="workspace"+workspace;
 
         const src = this.state.equipments[workspace][src_equip];
-        src.setDegree(45);
         const targ = this.state.equipments[workspace][target_equip];
 
         const offset = ev.dataTransfer.getData("text/offset").split(',');
@@ -1010,7 +1021,9 @@ class create_lab extends React.Component {
 
         var src_x=(ev.clientX + parseInt(offset[0],10));
         var src_y=(ev.clientY + parseInt(offset[1],10));
-        console.log("unverified original",[src_x,src_y])
+        console.log("unverified original",[src_x,src_y]);
+
+        console.log(src_element,targ_element)
 
         const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
         src_x=verify[0];
@@ -1020,22 +1033,78 @@ class create_lab extends React.Component {
         var targ_y = targ.top;
 
 
-        const width = src_element.getBoundingClientRect().width/3;
-        const height =src_element.getBoundingClientRect().height/4;
-        console.log("src rect",src_element.getBoundingClientRect())
-        const src_pos = this.getBoundingXY(targ_x-width,targ_y-height,workspace_element,src_element);
 
-        const difference=[this.getDifference(src_pos[0],src_x,width),this.getDifference(src_pos[1],src_y,height)];
+        if(Tool.prototype.isPrototypeOf(targ))
+        {
+            const tartg_width = targ_element.getBoundingClientRect().width;
+            const tartg_height = targ_element.getBoundingClientRect().height;
+            // targ x and targ y is where we want the botton center of src to be
+            const targ_diff_center_x  = tartg_width * .45;
+            const targ_diff_center_y  = tartg_height * .35;
+             const targ_center_x = targ_x + targ_diff_center_x;
+             const targ_center_y = targ_y + targ_diff_center_y;
 
-        console.log("original ",[src_x,src_y],"new ",src_pos," difference ",difference)
+            const src_height = src_element.getBoundingClientRect().height;
+            const src_width = src_element.getBoundingClientRect().width;
 
-        const targ_pos = this.getBoundingXY(targ_x+difference[0],targ_y+difference[1],workspace_element,targ_element);
-        //position moved back, meaning it went out of bounds
-        // if(src_y===src_pos[1])
+
+            const x_diff = (src_width * .5);
+            const y_diff = (src_height * .9);
+
+            // console.log("src_pos_x",targ_x-x_diff,"src_pos_y",targ_y-y_diff);
+            // console.log("src_pos_x",targ_x,"src_pos_y",targ_y);
+            //+src.size/2
+            // var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            var src_pos = this.getBoundingXY(targ_center_x-x_diff,targ_center_y-y_diff, workspace_element,src_element);
+
+            // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
+            // if(difference[1]!==targ_height)
+            // {
+            //     alert("moving scale up")
+            //     var targ_pos = this.getBoundingXY(src_x-difference[0],src_y+difference[1],workspace_element,targ_element);
+            // }
+            // else
+            const new_src_x = src_pos[0];
+            const new_src_y = src_pos[1];
+            // console.log("src_pos_x new",new_src_x,"src_pos_y new ",new_src_y);
+            const new_targ_x = new_src_x+ x_diff -targ_diff_center_x;
+            const new_targ_y = new_src_y+y_diff - targ_diff_center_y;
+            // console.log("src_pos_x new",new_targ_x,"src_pos_y new ",new_targ_y);
+
+
+            var targ_pos = [new_targ_x,new_targ_y];
+
+            src.setInteracting(true);
+
+
+        }
+        else {
+
+            src.setDegree(45);
+            src.setInteracting(true);
+
+
+            const width = src_element.getBoundingClientRect().width / 4;
+            const height = src_element.getBoundingClientRect().height / 4;
+            console.log("src rect", src_element.getBoundingClientRect())
+            var src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
+
+            const difference = [this.getDifference(src_pos[0], src_x, width), this.getDifference(src_pos[1], src_y, height)];
+
+            console.log("original ", [src_x, src_y], "new ", src_pos, " difference ", difference)
+
+            var targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
+
+
+            //position moved back, meaning it went out of bounds
+            // if(src_y===src_pos[1])
+        }
+
             targ_x=targ_pos[0]
             targ_y=targ_pos[1]
             src_x=src_pos[0];
             src_y=src_pos[1];
+
 
             //src move up, no need to reposition target
 

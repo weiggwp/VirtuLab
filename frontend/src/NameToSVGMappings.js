@@ -46,7 +46,14 @@ export default function GetSVG(props) {
 
 
     return (
-        <Component fill={props.fill}  equip={props.equip} size={props.size} onDrop={props.onDrop} id={props.id}/>
-        //fill_percent={props.fill_percent}
+        <Component
+            fill={props.fill}
+            fill_percent={props.fill_percent}
+            size={props.size}
+            onDrop={props.onDrop}
+            id={props.id}
+            // degree={props.degree}
+            equip={props.equip}
+        />
     );
 }

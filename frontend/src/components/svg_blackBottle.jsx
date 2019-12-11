@@ -10,6 +10,8 @@ class SvgComponent extends Component {
 
     render() {
         const size= this.equip.size;
+        const degree = this.equip.rotate;
+
         const viewBox= "10 0 25 50";
         return (
             <svg
@@ -19,7 +21,8 @@ class SvgComponent extends Component {
                 height={size *48/36}
                 viewBox={viewBox}
                 className={this.props.className}
-                // viewBox="0 0 48 48" height={200} width={200} {...props}
+                transform={"rotate("+degree+")"}
+
             >
                 <path
                     d="M165.638-75.215c-6.918-.74-12.317-.084-14.73 1.73M172.374-73.587c-.764-.543-1.591-.83-3.001-1.033M172.71-72.965c-.959 3.431-19.619 3.88-21.853.23"
