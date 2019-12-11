@@ -735,7 +735,7 @@ class DoLab extends React.Component {
             if(actions){
 
                 actions.map((action)=>(
-                    buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>this.handleAction(source,action,target,this.state.input)}>{action}</Button>)
+                    buttonList.push(<button style={{width:"100%"}} variant="primary" size={'sm'} onClick={()=>this.handleAction(source,action,target,this.state.input)}>{action}</button>)
 
                     // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
                 ));

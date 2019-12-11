@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Col, Form, FormControl, Row} from "react-bootstrap";
 import axios from "axios";
 import GLOBALS from "../Globals";
+import '../stylesheets/account_settings.css';
 
 class Droppable_course extends React.Component
 {
@@ -74,17 +75,17 @@ class Droppable_course extends React.Component
                     {classes.map((classItem, index) => (
 
 
-                        <Row>
-                            <Col md={{span: 5, offset: 2}}>
-                                <h3 className={style}>{classItem.classname}</h3>
+                        <Row >
+                            <Col   md={{span: 5, offset: 2}}>
+                                <h3 className={"courseName"}>{classItem.classname}</h3>
                             </Col>
 
                             <Col md={{span: 1, offset: 0}}>
                                 <Form inline onSubmit={this.handleDropCourse.bind(null, {id: classItem.classID})}>
 
-                                    <Button className={"dropButton"} block bsSize="small" type="submit">
+                                    <button className={"dropButton"} block bsSize="small" type="submit">
                                         Drop Class
-                                    </Button>
+                                    </button>
                                 </Form>
 
                             </Col>
