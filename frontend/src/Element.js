@@ -106,7 +106,8 @@ export default class Element extends Equipment{
             amount=amount>target.amount?(target.capacity-target.amount):amount;
             warning=true;
             ToastsStore.warning(target.name+" is full")
-
+            target.amount=target.capacity;
+            return null;
 
         }
         if(amount>0)

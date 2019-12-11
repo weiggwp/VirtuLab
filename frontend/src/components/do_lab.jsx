@@ -47,6 +47,7 @@ import Tool from "../Tool";
 import Glassware from "../Glassware";
 import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
+import {EquipmentInfo} from "./EquipmentInfo";
 
 
 class DoLab extends React.Component {
@@ -100,24 +101,31 @@ class DoLab extends React.Component {
     }
     getInfo(e,data)
     {
+    //    alert("getting info, workspace id is ")
         const workspace_id = data.workspace_id;
         const eq_id = parseInt(data.equip_id);
-
+      //  alert("getting info, workspace id is " + workspace_id)
 
         const source = this.state.equipments[workspace_id][eq_id];
 
         this.setState({
             currentEquipment: source,
+            selectedStep: workspace_id,
             viewInfo:true
         }, () => {
-            console.log(this.state.currentEquipment)
-            console.log(this.state.viewInfo)
+            // console.log(this.state.currentEquipment)
+            // console.log(this.state.viewInfo)
 
         })
         // this.setViewInfo();
         this.forceUpdate()
     }
 
+    setViewInfo=()=>{
+        this.setState({
+            viewInfo: !this.state.viewInfo
+        })
+    }
     populateStepEquipment(equipList)
     {
 
@@ -562,8 +570,8 @@ class DoLab extends React.Component {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             console.log("i is "+i)
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
-
+               {/* <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>*/}
+                {this.getEquipmentTab(i)}
                 instruction for step {i} {this.instruction(i)}</Tab.Pane>);
         }
 
@@ -576,6 +584,21 @@ class DoLab extends React.Component {
         )
 
     }
+
+    getEquipmentTab(i)
+    {
+        //alert("i is " +i + " selcted step is "+this.state.selectedStep + " viewinfo is "+this.state.viewInfo)
+        if(this.state.viewInfo===true && i===this.state.selectedStep) {
+            return <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
+            alert("yar")
+        }
+        else
+            return  <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
+
+
+    }
+
+
 
     canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
@@ -708,7 +731,7 @@ class DoLab extends React.Component {
 
         console.log("HANDLING ACTION SOURCE IS "+source+"Action is "+action + " target is "+target + " input is "+input)
         source[action](target,parseFloat(input));
-        this.setState({input:1})
+        this.setState({input:1,showPopover:false})
         this.forceUpdate();
     }
 
@@ -817,7 +840,7 @@ class DoLab extends React.Component {
 
                             <Draggable_equipment wkspace_id={i} equip_id={index}
                                                  interation_handler= {this.interaction_handler}
-                                                 getInfo={this.getInfo}
+                                                 viewInfo={this.getInfo}
                                                  canInteract = {this.canInteract}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
