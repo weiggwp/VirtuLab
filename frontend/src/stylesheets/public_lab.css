@@ -11,3 +11,9 @@
     border-radius:2px;
     background-color: #5cab86;
 }
+
+.paginationItems
+{
+    display:inline-block;
+
+}

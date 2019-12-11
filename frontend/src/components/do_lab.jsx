@@ -4,9 +4,6 @@ import deepCloneWithType from "../clone";
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import { confirmable } from 'react-confirm';
-import { createConfirmation } from 'react-confirm';
-import Dialog from 'react-bootstrap-dialog';
 import { Drag } from "./testDrag";
 import {Expandable_Classes} from "./expandable_course";
 import {
@@ -526,6 +523,8 @@ class DoLab extends React.Component {
         )
     }
 
+
+
     setupInstruction(step,text)
     {
         return(
@@ -547,9 +546,6 @@ class DoLab extends React.Component {
         );
     }
 
-    addInstruction(){
-
-    }
     instructionPane()
     {
         const instructions = [];
@@ -563,7 +559,7 @@ class DoLab extends React.Component {
             instructions.push(<Tab.Pane eventKey={i}>
                 <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
 
-                instruction for step {i} {this.instruction(i)}</Tab.Pane>);
+                {this.setupInstruction(i,this.state.steps[i-1].instruction)}</Tab.Pane>);
         }
 
 
@@ -697,6 +693,20 @@ class DoLab extends React.Component {
 
     }
 
+    onHide=(source)=>
+    {
+        source.setDegree(0);
+        source.setInteracting(false);
+
+        this.setState({ showPopover: false })
+    }
+
+    hidePopOver=()=>
+    {
+        if(this.eq1!==undefined)
+            this.onHide(this.eq1)
+    }
+
 
     setPopoverWarningMsg(msg){
 
@@ -823,7 +833,9 @@ class DoLab extends React.Component {
                                                  role="student"
                                                  move_element={this.move_element}
                                                  adjust={this.adjust_interactive_element}
-                                                 width={200} height={200}/>
+                                                 width={200} height={200}
+                                                 hide={this.hidePopOver}/>
+
 
                         ))
                         }

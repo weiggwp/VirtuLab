@@ -127,7 +127,7 @@ class Statistics extends Component {
                             ]}
                             label={"Percent completed"}
                             labelStyle={{ color: 'black' }}
-                        />;
+                        />
                         <PieChart
                             data={[
                                 { title: 'Completed', value: 30, color: '#E38627' },

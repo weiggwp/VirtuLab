@@ -171,7 +171,7 @@ render() {
                     </Navbar.Collapse>
                 </Navbar>
 
-                <Button style={{backgroundColor: 'orange', color: "white"}}
+                <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
                         onClick={this.redirectstats}>
                     Statistics
                 </Button>

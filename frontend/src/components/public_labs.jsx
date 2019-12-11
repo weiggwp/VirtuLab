@@ -150,9 +150,7 @@ handlePage(event) {
 }
 
     handlePageFrontend(event) {
-        alert("handling page")
 
-        alert(event.target.id)
         let pageNum;
         pageNum = parseInt(event.target.id)
 
@@ -168,7 +166,7 @@ handlePage(event) {
 
     handleNext() {
 
-        if (this.state.currentPage <= this.state.totalPages) {
+        if (this.state.currentPage < this.state.totalPages) {
             let pageNum = this.state.currentPage + 1
             let itemsPerPage = this.state.perPage
             let startIndex = (pageNum - 1) * itemsPerPage
@@ -498,7 +496,7 @@ handleDrag(tag, currPos, newPos) {
         let items = [];
         for (let number = 1; number <= this.state.totalPages; number++) {
             items.push(
-                <Pagination.Item id={number} key={number} active={number === active}>
+                <Pagination.Item style={{display:"inline-block"}}id={number} key={number} active={number === active}>
                     {number}
                 </Pagination.Item>,
             );
@@ -569,7 +567,7 @@ handleDrag(tag, currPos, newPos) {
                     </Navbar>
                 </div>
                 {this.state.notFound}
-                <div>
+                <div style={{height:"60vh"}}>
                     {labs.map(lab => (
                         <div >
                             <Dropdown as={ButtonGroup} style={{width: "95%"}}
@@ -609,13 +607,13 @@ handleDrag(tag, currPos, newPos) {
 
                 </div>
 
-                <div>
-                    <Pagination onClick={this.handlePageFrontend}>{items}
+                <div style={{float:"right",marginRight:40}}>
+                    <Pagination className={"paginationItems"} onClick={this.handlePageFrontend}>{items}
 
 
                     </Pagination>
-                    <Pagination.Prev onClick={this.handlePrev}/>
-                    <Pagination.Next onClick={this.handleNext}/>
+                    <Pagination.Prev className={"paginationItems"} onClick={this.handlePrev}/>
+                    <Pagination.Next className={"paginationItems"} onClick={this.handleNext}/>
 
                 </div>
 

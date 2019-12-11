@@ -416,29 +416,6 @@ class view_lab extends React.Component {
         })
     };
 
-    instruction(index) {
-        //,width: '20rem' for div
-        return (
-            <div style={{padding: 10, height: '30vh'}}>
-
-                <textarea
-                    style={{
-                        resize: "none",
-                        height: "100%",
-                        width: "100%",
-                        borderStyle: "solid",
-                        borderWidth: 1,
-                        color: "black"
-                    }}
-                    placeholder="Input instruction for this step here"
-                    onChange={(e) => this.handleInstructionChange(e, index)}
-                    value={this.state.steps[index].instruction}
-                />
-
-            </div>
-
-        )
-    }
 
     setupInstruction(step, text) {
         return (
