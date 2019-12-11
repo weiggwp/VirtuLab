@@ -95,7 +95,7 @@ class Drag extends React.Component {
         //this.start = this.start / 2;
     }
     zoomOutBig() {
-        if(this.state.zoom<=0)
+        if(this.state.zoom<2)
             return
         let incValue=2;
         this.setState({ zoom: Math.round((this.state.zoom - incValue)*this.capacity)/this.capacity },()=>{

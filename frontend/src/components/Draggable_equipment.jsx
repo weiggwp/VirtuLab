@@ -221,6 +221,7 @@ class Draggable_equipment extends React.Component {
         const top = this.getDisplay(true,equip);
         const bot = this.getDisplay(false,equip);
         var draggable=this.props.draggable;
+
         if(draggable===undefined)
             draggable="true"
         // console.log(top,bot)

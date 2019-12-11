@@ -18,6 +18,8 @@ public class UserCourseLab {
     @JoinColumn(name = "id")
     private User user;
 
+
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "courseID")
@@ -30,6 +32,7 @@ public class UserCourseLab {
 
     private int grade;
     private int complete;
+    private Date submittedDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "userCourseLab", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -38,10 +41,19 @@ public class UserCourseLab {
     public UserCourseLab() {
     }
 
+    public Date getSubmittedDate() {
+        return submittedDate;
+    }
+
+    public void setSubmittedDate(Date submittedDate) {
+        this.submittedDate = submittedDate;
+    }
+
     public UserCourseLab(User user, Course course, Lab lab) {
         this.user = user;
         this.course = course;
         this.lab = lab;
+        submittedDate=new Date();
     }
 
     public UserCourseLab(User user, Course course, Lab lab, int grade, int complete, Date date) {

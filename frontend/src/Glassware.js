@@ -182,7 +182,9 @@ export default class Glassware extends Equipment{
             ToastsStore.warning(target.name+" is full");
 
             amount=parseFloat(amount)>target.amount?(target.capacity-target.amount):parseFloat(amount);
-
+            target.amount=target.capacity;
+            target.add_items(this.output(amount));
+            return null
         }
 
         if(amount>0){
