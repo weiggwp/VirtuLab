@@ -131,11 +131,9 @@ handlePage(event) {
 }
 
     handlePageFrontend(event) {
-        alert("handling page")
 
-        alert(event.target.id)
         let pageNum;
-        pageNum = parseInt(event.target.id)
+        pageNum = event
 
         let itemsPerPage = this.state.perPage
         let startIndex = (pageNum - 1) * itemsPerPage
@@ -143,13 +141,13 @@ handlePage(event) {
             current_page_labs: this.state.labs.slice(startIndex, startIndex + 3),
             currentPage: pageNum
         })
-        console.log("current page labs: " + this.state.current_page_labs)
+        // console.log("current page labs: " + this.state.current_page_labs)
 
     }
 
     handleNext() {
 
-        if (this.state.currentPage <= this.state.totalPages) {
+        if (this.state.currentPage < this.state.totalPages) {
             let pageNum = this.state.currentPage + 1
             let itemsPerPage = this.state.perPage
             let startIndex = (pageNum - 1) * itemsPerPage
@@ -391,6 +389,44 @@ handleDrag(tag, currPos, newPos) {
 
     }
 
+    pagination(c, m) {
+        let active = this.state.currentPage
+        var current = c,
+            last = m,
+            delta = 2,
+            left = current - delta,
+            right = current + delta + 1,
+            range = [],
+            rangeWithDots = [],
+            l;
+
+        for (let i = 1; i <= last; i++) {
+            if (i === 1 || i === last || i >= left && i < right) {
+                range.push(i);
+            }
+        }
+
+        for (let i of range) {
+            if (l) {
+                if (i - l === 2) {
+                    rangeWithDots.push(
+                        <Pagination.Item onClick={() => this.handlePageFrontend(l + 1)} id={l + 1} key={l + 1} active={l + 1 === active}>
+                            {l + 1}
+                        </Pagination.Item>);
+                } else if (i - l !== 1) {
+                    rangeWithDots.push(<Pagination.Ellipsis />);
+                }
+            }
+            rangeWithDots.push(
+                <Pagination.Item onClick={() => this.handlePageFrontend(i)} id={i} key={i} active={i === active}>
+                    {i}
+                </Pagination.Item>);
+            l = i;
+        }
+
+        return rangeWithDots;
+    }
+
 
 
 
@@ -403,15 +439,7 @@ handleDrag(tag, currPos, newPos) {
         // let labs = this.state.labs;
         let labs = this.state.current_page_labs;
 
-        let active = this.state.currentPage
-        let items = [];
-        for (let number = 1; number <= this.state.totalPages; number++) {
-            items.push(
-                <Pagination.Item id={number} key={number} active={number === active}>
-                    {number}
-                </Pagination.Item>,
-            );
-        }
+        let items = this.pagination(this.state.currentPage, this.state.totalPages)
 
         const paginationBasic = (
             <div>
@@ -494,12 +522,13 @@ handleDrag(tag, currPos, newPos) {
                 </div>
 
                 <div>
-                    <Pagination onClick={this.handlePageFrontend}>{items}
-
+                    <Pagination>
+                        <Pagination.Prev onClick={this.handlePrev}/>
+                        {items}
+                        <Pagination.Next onClick={this.handleNext}/>
 
                     </Pagination>
-                    <Pagination.Prev onClick={this.handlePrev}/>
-                    <Pagination.Next onClick={this.handleNext}/>
+
 
                 </div>
 
