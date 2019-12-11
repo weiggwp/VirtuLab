@@ -3,6 +3,7 @@ package backend.controller;
 
 import backend.dto.*;
 import backend.model.*;
+import backend.repository.LabRepository;
 import backend.repository.StepRepository;
 import backend.repository.UserRepository;
 import backend.service.*;
@@ -10,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,6 +70,9 @@ public class LabController {
 
     @Autowired
     StepRepository stepRepository;
+
+    @Autowired
+    LabRepository labRepository;
 
     EntityManager em;
 
@@ -156,21 +162,34 @@ public class LabController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
-    public ResponseEntity getLabs(@RequestBody UserDTO obj) {
+    public ResponseEntity getLabs(@RequestBody PageRequestDTO dto) {
+        System.out.println("LabController get_labs is called: ");
 
-
-        User user = userService.findByEmail(obj.getEmail_address());
-      //  System.out.println("getting lab for user : "+user);
-        if(user==null)
+        User user = userService.findByEmail(dto.getEmail());
+        if(user == null)
         {
-        //    System.out.println("user doesn't exist");
-
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<Lab> labs = user.getLabs();
+//        List<Lab> labs = user.getLabs();
 
+        int size = dto.getPerPage();
+        int pageNum = dto.getPageNum();
+        System.out.println(pageNum);
+        System.out.println(size);
 
+        Page<Lab> pageLabs = labService.pagePrivateLabs(user, pageNum - 1, size);
+//        System.out.println("TotalElements: " + pageLabs.getTotalElements());
+//        System.out.println("Total pages: " + pageLabs.getTotalPages());
 
+        List<Lab> labs = new ArrayList<>();
+        PageRequestDTO returnDTO = new PageRequestDTO();
+        for (Lab lab: pageLabs) {
+            labs.add(lab);
+            System.out.println(lab.getName());
+        }
+        returnDTO.setLabs(labs);
+        returnDTO.setTotalElements(pageLabs.getTotalElements());
+        returnDTO.setTotalPages(pageLabs.getTotalPages());
 
         if(labs!=null)
         {
@@ -193,7 +212,7 @@ public class LabController {
                 });
             }
 
-            return new ResponseEntity<>(user.getLabs(),HttpStatus.OK);
+            return new ResponseEntity<>(returnDTO, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
@@ -522,37 +541,37 @@ public class LabController {
         return null;
     }
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/page_lab_tags", method = RequestMethod.POST)
-    @ResponseBody
-    public HashMap<String, Object> pageByTags(@RequestBody PageRequestDTO pageRequestDTO) {
-        try {
-            System.out.println("pageDTO: "+ pageRequestDTO);
-            int page = pageRequestDTO.getPageNum() - 1;
-            int size = pageRequestDTO.getPerPage();
-            Page<Lab> pageLab= labService.pageLabsByTags(page, size);
-            pageLab.forEach(lab -> System.out.println(lab));
-            int totalPages = pageLab.getTotalPages();
-            long totalElements = pageLab.getTotalElements();
-
-            System.out.println("totalPages: " + totalPages);
-            System.out.println("totalElements: " + totalElements);
-
-
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("labs", pageLab);
-            map.put("totalPages", totalPages);
-
-            return map;
-
-//            return new ResponseEntity(HttpStatus.OK);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-
-        }
-        return null;
-    }
+//    @CrossOrigin(origins = "*")
+//    @RequestMapping(value = "/page_private_lab", method = RequestMethod.POST)
+//    @ResponseBody
+//    public HashMap<String, Object> pageAllLabs(@RequestBody PageRequestDTO pageRequestDTO) {
+//        try {
+//            System.out.println("pageDTO: "+ pageRequestDTO);
+//            int page = pageRequestDTO.getPageNum() - 1;
+//            int size = pageRequestDTO.getPerPage();
+//            Page<Lab> pageLab= labService.pageLabsByTags(page, size);
+//            pageLab.forEach(lab -> System.out.println(lab));
+//            int totalPages = pageLab.getTotalPages();
+//            long totalElements = pageLab.getTotalElements();
+//
+//            System.out.println("totalPages: " + totalPages);
+//            System.out.println("totalElements: " + totalElements);
+//
+//
+//            HashMap<String, Object> map = new HashMap<>();
+//            map.put("labs", pageLab);
+//            map.put("totalPages", totalPages);
+//
+//            return map;
+//
+////            return new ResponseEntity(HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//
+//        }
+//        return null;
+//    }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/set_completion", method = RequestMethod.POST)
