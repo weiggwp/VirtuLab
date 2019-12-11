@@ -108,6 +108,7 @@ class view_lab_course extends React.Component
         axios.post(GLOBALS.BASE_URL + 'get_students', course, axiosConfig)
             .then((response) => {
                 console.log("resp is "+JSON.stringify(response))
+                console.log(response)
                 for (let i=0; i<response.data.length; i++){
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
                         completed:"N/A"};
