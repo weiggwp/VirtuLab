@@ -461,6 +461,10 @@ public class LabController {
             Lab realLab = labService.findByLabID(labDTO.getLabID());
 //            System.out.println("Mapped lab to "+realLab);
             List<Step> steps = realLab.getSteps();
+            List<Equipment> equips = new LinkedList<>();
+            for (Equipment equip: realLab.getEquipments()){
+                equips.add(equip.clone());
+            }
             List<Step> listClone = new ArrayList<>();
             for (Step step: steps) {
                 Step clone = step.clone();
@@ -468,10 +472,11 @@ public class LabController {
                 listClone.add(clone);
             }
             Lab labClone = realLab.clone(listClone);
+            labClone.setEquipments(equips);
             if (labDTO.getCreator()!=null){
                 labClone.setCreator(labDTO.getCreator());
             }
-//            System.out.println("clone is " +labClone+ " lab is "+realLab);
+
             long returnid = labService.createNewLab(labClone);
             User instructor = userService.findByEmail(labClone.getCreator());
             instructor.getLabs().add(labClone);
@@ -543,8 +548,10 @@ public class LabController {
             for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
                 if (userCourseLab.getLab().getLabID() == labID &&
                     userCourseLab.getCourse().getCourseID() == courseID &&
-                        userCourseLab.getUser().getId() == userID)
-                    userCourseLab.setComplete(1 );
+                        userCourseLab.getUser().getId() == userID) {
+                    userCourseLab.setComplete(1);
+                    userCourseLab.setSubmittedDate(new Date());
+                }
             }
 
             userService.save(user);

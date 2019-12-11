@@ -517,21 +517,6 @@ class view_lab extends React.Component {
     }
 
     handle_equip_delete(e, data) {
-
-        const workspace_id = data.workspace_id;
-        const eq_id = parseInt(data.equip_id);
-
-        // console.log(data);
-        let temp = this.state.equipments;
-        // delete temp[workspace_id][eq_id];
-        // console.log(temp[workspace_id][1]);
-        // console.log(temp);
-
-        const removed = temp[workspace_id].splice(eq_id, 1);
-
-        this.setState({equipments: temp});
-        // console.log(removed);
-        // console.log(temp);
     }
 
 

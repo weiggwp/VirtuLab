@@ -44,6 +44,7 @@ import Tool from "../Tool";
 import Glassware from "../Glassware";
 import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
+import {EquipmentInfo} from "./EquipmentInfo";
 
 
 class DoLab extends React.Component {
@@ -73,6 +74,7 @@ class DoLab extends React.Component {
             currContainer:undefined,
             reRender:false,
             testInt:1,
+            completed:false,
 
 
             curStep: 0,
@@ -166,24 +168,31 @@ class DoLab extends React.Component {
 
     getInfo(e,data)
     {
+    //    alert("getting info, workspace id is ")
         const workspace_id = data.workspace_id;
         const eq_id = parseInt(data.equip_id);
-
+      //  alert("getting info, workspace id is " + workspace_id)
 
         const source = this.state.equipments[workspace_id][eq_id];
 
         this.setState({
             currentEquipment: source,
+            selectedStep: workspace_id,
             viewInfo:true
         }, () => {
-            console.log(this.state.currentEquipment)
-            console.log(this.state.viewInfo)
+            // console.log(this.state.currentEquipment)
+            // console.log(this.state.viewInfo)
 
         })
         // this.setViewInfo();
         this.forceUpdate()
     }
 
+    setViewInfo=()=>{
+        this.setState({
+            viewInfo: !this.state.viewInfo
+        })
+    }
     populateStepEquipment(equipList)
     {
 
@@ -390,7 +399,7 @@ class DoLab extends React.Component {
         console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
     setRedirectHome = () => {
-        if (!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
+        if ((!!this.state.completed)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
             return null;
         }
         this.setState({
@@ -620,9 +629,11 @@ class DoLab extends React.Component {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
             console.log("i is "+i)
             instructions.push(<Tab.Pane eventKey={i}>
-                <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
+                {this.getEquipmentTab(i)}
 
-                {this.setupInstruction(i,this.state.steps[i-1].instruction)}</Tab.Pane>);
+            </Tab.Pane>);
+               {/* <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>*/}
+
         }
 
 
@@ -634,6 +645,23 @@ class DoLab extends React.Component {
         )
 
     }
+
+    getEquipmentTab(i)
+    {
+        //alert("i is " +i + " selcted step is "+this.state.selectedStep + " viewinfo is "+this.state.viewInfo)
+        if(this.state.viewInfo===true && i===this.state.selectedStep) {
+            return <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
+        }
+        else
+            return  <div>
+                <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
+                {this.setupInstruction(i,this.state.steps[i-1].instruction)}
+        </div>
+
+
+    }
+
+
 
     canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
@@ -780,7 +808,7 @@ class DoLab extends React.Component {
 
         console.log("HANDLING ACTION SOURCE IS "+source+"Action is "+action + " target is "+target + " input is "+input)
         source[action](target,parseFloat(input));
-        this.setState({input:1})
+        this.setState({input:1,showPopover:false})
         this.forceUpdate();
     }
 
@@ -828,7 +856,7 @@ class DoLab extends React.Component {
                 container={this.ref.current}
                 containerPadding={20}
                 rootClose={true}
-               // onHide={() => this.setState({ showPopover: false })}
+                onHide={() => this.onHide(source)}
                 style={{width:900}}
             >
                 <Popover id="popover-contained" >
@@ -837,7 +865,7 @@ class DoLab extends React.Component {
                             <strong>Action</strong>
                         </div>
                         <div className={"col2"}>
-                            <a className="close" onClick={()=>this.setState({showPopover: false})}/>
+                            <a className="close" onClick={()=>this.onHide(source)}/>
                         </div>
 
                         {<Drag  incValue={incRate} capacity={capacity}handleChange={this.handleInputChange}/>}
@@ -889,7 +917,7 @@ class DoLab extends React.Component {
 
                             <Draggable_equipment wkspace_id={i} equip_id={index}
                                                  interation_handler= {this.interaction_handler}
-                                                 getInfo={this.getInfo}
+                                                 viewInfo={this.getInfo}
                                                  canInteract = {this.canInteract}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
@@ -1012,23 +1040,12 @@ class DoLab extends React.Component {
                     completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
                     role={"student"}/>;
         this.setState({slide:currslide});
-        console.log("completed steps is "+this.state.completedSteps);
-        console.log("steps is");
-        console.log(this.state.steps)
-        console.log("stepcopy is");
-        console.log(this.state.currentStepCopy)
-        console.log("should be ");
-        console.log(this.state.equipments[this.state.completedSteps+1])
-        console.log(this.state.equipments)
+
         ToastsStore.success("Step completed!")
 
         let cloneCopy;
         cloneCopy=deepCloneWithType(this.state.equipments[this.state.completedSteps+1]);
-        console.log(cloneCopy)
-        console.log(this.state.equipments[this.state.completedSteps+1])
-        //this.state.equipments[this.state.completedSteps+1].push("test")
-        console.log(cloneCopy)
-        console.log(this.state.equipments[this.state.completedSteps+1])
+
 
         this.setState({reRender: true,currentStepCopy:cloneCopy},this.callbackFirstRender)
 
@@ -1037,14 +1054,43 @@ class DoLab extends React.Component {
 
     arraysEqual(arr1,arr2){
          if (arr1.length!=arr2.length)return false;
+
+
+
+        let arr = []
+        for (let i = 0; i < arr1.length; i ++) {
+            arr.push(false)
+        }
+
+
          for (let i=0; i<arr1.length; i++){
-             if (arr1[i].name!=arr2[i].name||arr1[i].capacity!=arr2[i].capacity||arr1[i].weight!=arr2[i].weight)return false;
+             let item1 = arr1[i]
+             for (let j=0; j<arr1.length; j++) {
+                 let item2 = arr2[j]
+                 if (item1.name == item2.name && item1.weight == item2.weight && this.verifyAmounts(item1,item2)) {
+                     arr[i]=true;
+                 }
+             }
          }
-         return true;
+
+
+        let res = true
+        for (let i = 0; i < arr.length; i ++) {
+            console.log("first arr is "+arr[i])
+            res &= arr[i];
+        }
+
+        return res;
+
+
+        return true;
     }
 
     verifyAmounts(eq1, eq2){
          let grace = Math.min(eq2.capacity/10,5);
+         console.log("comparing")
+         console.log(eq1)
+         console.log(eq2)
          return Math.abs(eq1.amount-eq2.amount)<grace;
     }
 
@@ -1158,10 +1204,10 @@ class DoLab extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
             .then((response) => {
                 console.log("success!")
-
+                this.setState({completed:true})
             })
             .catch((error) => {
-                    alert("doot" + error)
+                    alert("Failed to complete lab: " + error)
 
                 }
             );
@@ -1191,7 +1237,7 @@ class DoLab extends React.Component {
         const src_id = "workspace"+workspace+"equip"+src_equip;
         const targ_id = "workspace"+workspace+"equip"+target_equip;
         const workspace_id="workspace"+workspace;
-        console.log("workspace id " +workspace_id)
+
         const src = this.state.equipments[workspace][src_equip];
         const targ = this.state.equipments[workspace][target_equip];
 
@@ -1200,11 +1246,11 @@ class DoLab extends React.Component {
         const src_element = document.getElementById(src_id);
         const targ_element = document.getElementById(targ_id);
         const workspace_element=document.getElementById(workspace_id)
-        console.log("workspace leemtn is ")
-        console.log(workspace_element)
+
         var src_x=(ev.clientX + parseInt(offset[0],10));
         var src_y=(ev.clientY + parseInt(offset[1],10));
-        console.log("unverified original",[src_x,src_y])
+        console.log("unverified original",[src_x,src_y]);
+
         console.log(src_element,targ_element)
 
         const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
@@ -1214,15 +1260,42 @@ class DoLab extends React.Component {
         var targ_x = targ.left;
         var targ_y = targ.top;
 
+
+
         if(Tool.prototype.isPrototypeOf(targ))
         {
 
+            const tartg_width = targ_element.getBoundingClientRect().width;
+            const tartg_height = targ_element.getBoundingClientRect().height;
+            // targ x and targ y is where we want the botton center of src to be
 
-            const src_height=src_element.getBoundingClientRect().height;
-            const targ_height =targ_element.getBoundingClientRect().height-(src.size/3*2);
+            let targ_diff_center_x = 0;
+            let targ_diff_center_y = 0;
 
-            //+src.size/2
-            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            if(targ.name==="Scale"){
+                targ_diff_center_x  = tartg_width * .45;
+                targ_diff_center_y  = tartg_height * .35;
+
+
+            }
+            else if (targ.name==="Bunsen Burner"){
+                targ_diff_center_x = tartg_width * .5;
+                targ_diff_center_y = tartg_height * .1;
+
+            }
+
+            const targ_center_x = targ_x + targ_diff_center_x;
+            const targ_center_y = targ_y + targ_diff_center_y;
+
+            const src_height = src_element.getBoundingClientRect().height;
+            const src_width = src_element.getBoundingClientRect().width;
+
+
+            const x_diff = (src_width * .5);
+            const y_diff = (src_height * .9);
+
+            // var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            var src_pos = this.getBoundingXY(targ_center_x-x_diff,targ_center_y-y_diff, workspace_element,src_element);
 
             // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
             // if(difference[1]!==targ_height)
@@ -1231,7 +1304,15 @@ class DoLab extends React.Component {
             //     var targ_pos = this.getBoundingXY(src_x-difference[0],src_y+difference[1],workspace_element,targ_element);
             // }
             // else
-            var targ_pos = [targ_x,targ_y]
+            const new_src_x = src_pos[0];
+            const new_src_y = src_pos[1];
+            // console.log("src_pos_x new",new_src_x,"src_pos_y new ",new_src_y);
+            const new_targ_x = new_src_x+ x_diff -targ_diff_center_x;
+            const new_targ_y = new_src_y+y_diff - targ_diff_center_y;
+            // console.log("src_pos_x new",new_targ_x,"src_pos_y new ",new_targ_y);
+
+
+            var targ_pos = [new_targ_x,new_targ_y];
 
             src.setInteracting(true);
 
@@ -1276,7 +1357,6 @@ class DoLab extends React.Component {
         targ.setLocation(targ_x,targ_y);
         // console.log("moving ",workspace_id,equip_id,source);
     }
-
     render(){
 
         if(!this.state.lab_loaded)

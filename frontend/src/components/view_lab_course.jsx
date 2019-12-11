@@ -105,12 +105,17 @@ class view_lab_course extends React.Component
         console.log("state is "+JSON.stringify(this.props.location.state))
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'get_students', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_completion', course, axiosConfig)
             .then((response) => {
                 console.log("resp is "+JSON.stringify(response))
+                console.log(response)
                 for (let i=0; i<response.data.length; i++){
+                    let comp= "N/A";
+                    if (response.data[i].completed==1){
+                        comp="Yes"
+                    }
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
-                        completed:"N/A"};
+                        completed:comp};
                 }
                 let date =new Date(this.props.location.state.due_date);
                 console.log("date is " +date)
@@ -128,6 +133,7 @@ class view_lab_course extends React.Component
             })
             .catch((error) => {
                 console.log("beep")
+                console.log(error)
                 for (let i=0; i<4; i++){
                     studentList[i]={name:"yeet",email:"yeetmail",completed:"N/A"};
                 }
