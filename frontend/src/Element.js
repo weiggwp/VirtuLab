@@ -6,13 +6,16 @@ import {ToastsStore} from "react-toasts";
 import deepCloneWithType from "./clone"
 
 export default class Element extends Equipment{
-    constructor(name, image ,capacity, weight, state=1,size=100, equipmentID, amount)
+
+    constructor(name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity)
     {
-        super(name,image,weight,"Solution",0,size,equipmentID, amount);
-        this.amount=capacity;
+        super(name,image,weight,"Solution",0,size);
+        this.amount=amount;
         this.capacity=capacity;
         this.image=image;
         this.state=state;
+        this.chemProp=chemProp;
+        // console.log("creating ",chemProp)
         this.state_names= ["solid", "liquid", "gas"];
 
     }
@@ -74,10 +77,10 @@ export default class Element extends Equipment{
     }
     pour(target,amount,callback=null)
     {
-        console.log(amount);
+        // console.log(amount);
         amount=amount>this.amount?this.amount:amount;
 
-        console.log(amount);
+        // console.log(amount);
 
         var warning = false;
         var warning_msg = target.name+" is full.";
@@ -97,7 +100,7 @@ export default class Element extends Equipment{
 
         if(amount+target.amount>=target.capacity)
         {
-            console.log("target", target);
+            // console.log("target", target);
             //cannot pour anymore
             amount=amount>target.amount?(target.capacity-target.amount):amount;
             warning=true;
@@ -110,8 +113,8 @@ export default class Element extends Equipment{
 
             target.add_item(this.output(amount));
             target.amount += amount;
-            console.log("target");
-            console.log(target);
+            // console.log("target");
+            // console.log(target);
             // if(!callback){
             //     callback("Poured "+amount+" ml of "+this.name + " into " + target.name);
             // }
@@ -132,8 +135,12 @@ export default class Element extends Equipment{
 
     }
 
+
     toString()
     {
-        return this.capacity+" mL "+this.name;
+        if(this.chemProp)
+            return this.name+" ("+this.chemProp+")"
+
+        return this.name;
     }
 }

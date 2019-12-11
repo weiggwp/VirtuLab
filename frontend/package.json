@@ -25,12 +25,15 @@
     "react-editable-label": "^1.0.1",
     "react-inline-svg": "^1.1.0",
     "react-minimal-pie-chart": "^5.0.2",
+    "react-native": "^0.61.5",
     "react-notifications": "^1.4.3",
     "react-notifications-component": "^2.2.3",
     "react-scripts": "3.2.0",
     "react-tag-input": "^6.4.1",
     "react-toasts": "^3.0.6",
-    "reactcss": "^1.2.3",
+
+    "reactcss": "latest",
+
     "svg-inline-react": "^3.2.0"
   },
   "scripts": {

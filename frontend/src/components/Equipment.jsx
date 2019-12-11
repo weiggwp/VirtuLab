@@ -1,5 +1,6 @@
 import React from 'react'
-import {Image, Nav} from "react-bootstrap";
+import {Button, Image, Nav} from "react-bootstrap";
+// import { StyleSheet, Platform, View, Text } from 'react-native';
 
 
 class Equipment extends React.Component{
@@ -21,6 +22,31 @@ class Equipment extends React.Component{
             items:{},
         }
     }
+    getSubscript(string){
+    // {
+    //     <View style={styles.MainContainer}>
+    //
+    //         <View style={{flexDirection: 'row'}}>
+    //
+    //             string.map((letter)=>(
+    //
+    //                 if(letter
+    //
+    //
+    //             ));
+    //
+    //             <Text style={{fontSize: 20, lineHeight: 30, color: '#000'}}>A</Text>
+    //
+    //             <Text style={{fontSize: 11, lineHeight: 18, color: '#000'}}>2</Text>
+    //
+    //             <Text style={{fontSize: 20, lineHeight: 30, color: '#000'}}>+</Text>
+    //
+    //             <Text style={{fontSize: 20, lineHeight: 30, color: '#000'}}>B</Text>
+    //
+    //             <Text style={{fontSize: 11, lineHeight: 18, color: '#000'}}>2</Text>
+    //
+    //         </View>
+    }
     render()
     {
         return (
@@ -28,14 +54,16 @@ class Equipment extends React.Component{
 
                 style={{
 
-                    cursor: 'move',
+                    float:"left",
                     opacity:this.props.opacity,
                 }}
             >
-                <Image  style={{height:"6.6vh",width:"6vh",display:"inline-block"}}
+                <Image  style={{opacity:this.props.opacity,height:"6.6vh",width:"6vh",display:"inline-block"}}
                        src={this.props.image}
                       rounded/>
-                {this.props.description}
+
+                {/*{this.props.description}*/}
+                <div style={{opacity:this.props.opacity,display:"inline-block"}} dangerouslySetInnerHTML={{ __html: this.props.description}}/>
 
             </div>
         )

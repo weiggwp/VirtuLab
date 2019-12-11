@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 export default function StickyHeadTable(props) {
     const columns = props.columns;
     const rows = props.rows;
+    console.log(rows)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(3);
 

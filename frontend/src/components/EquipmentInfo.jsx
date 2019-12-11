@@ -1,5 +1,6 @@
 import React from 'react'
 import {Image, Nav} from "react-bootstrap";
+import Element from "../Element.js";
 import more from "../Images/more1.png";
 import Accordion from "react-bootstrap/Accordion";
 import '../stylesheets/Equipments.css';
@@ -29,13 +30,15 @@ class EquipmentInfo extends React.Component{
     createTableData() {
 
         const equipment = this.props.equipment;
-        const name = equipment.name;
         const result=[];
 
-        if(equipment.type==="Solution")
+        if(Element.prototype.isPrototypeOf(equipment) )
         {
+            const name=equipment.chemProp===undefined?"Distilled Water":equipment.chemProp;
+
             const amount = equipment.amount;
-            console.log(name+amount);
+
+            // console.log(element+amount);
 
 
             return [{name,amount}]

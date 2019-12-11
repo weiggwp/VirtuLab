@@ -69,7 +69,7 @@ class instructor_labs extends React.Component {
 
     handleCloneLab(lab){
 
-        console.log(" lab is " +JSON.stringify(lab))
+        // console.log(" lab is " +JSON.stringify(lab))
 
         let axiosConfig = {
             headers: {
@@ -114,7 +114,7 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
 
-                console.log(JSON.stringify(response))
+                // console.log(JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -328,10 +328,10 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_labs',user
         )
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 for (let i=0; i<response.data.length; i++){
                     labs[i]=response.data[i]
-                    console.log("lab " + i + " is " +JSON.stringify(labs[i]))
+                    // console.log("lab " + i + " is " +JSON.stringify(labs[i]))
                 }
 
                 this.setState({labs:labs,loading_labs:false});

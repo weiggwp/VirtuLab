@@ -21,10 +21,61 @@ public class EquipmentDTO {
     @JsonProperty("top")
     private int y=0;
 
-    private long size;
+    private int size;
     private String color;
+    private String chemProp;
 
-    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, int x, int y, long size, String color) {
+
+    public String getChemProp() {
+        return chemProp;
+    }
+
+    @Override
+    public String toString() {
+        return "EquipmentDTO{" +
+                "name='" + name + '\'' +
+                ", weight=" + weight +
+                ", amount=" + amount +
+                ", capacity=" + capacity +
+                ", temperature=" + temperature +
+                ", image='" + image + '\'' +
+                ", items=" + items +
+                ", disabled=" + disabled +
+                ", type='" + type + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", size=" + size +
+                ", color='" + color + '\'' +
+                ", chemProp='" + chemProp + '\'' +
+                '}';
+    }
+
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature,
+                        String image, List<EquipmentDTO> items, boolean disabled, String type, int x, int y,
+                        int size, String color, String chemProp) {
+        this.name = name;
+        this.weight = weight;
+        this.amount = amount;
+        this.capacity = capacity;
+        this.temperature = temperature;
+        this.image = image;
+        this.items = items;
+        this.disabled = disabled;
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+        this.chemProp = chemProp;
+    }
+
+    public void setChemProp(String chemProp) {
+        this.chemProp = chemProp;
+    }
+
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature,
+                        String image, List<EquipmentDTO> items, boolean disabled, String type,
+                        int x, int y, int size, String color) {
         this.name = name;
         this.weight = weight;
         this.amount = amount;
@@ -46,7 +97,7 @@ public class EquipmentDTO {
         return size;
     }
 
-    public void setSize(long size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
@@ -155,23 +206,4 @@ public class EquipmentDTO {
         this.y = y;
     }
 
-    @Override
-    public String toString() {
-        return "EquipmentDTO{" +
-                "EquipmentID=" + EquipmentID +
-                ", name='" + name + '\'' +
-                ", weight=" + weight +
-                ", amount=" + amount +
-                ", capacity=" + capacity +
-                ", temperature=" + temperature +
-                ", image='" + image + '\'' +
-                ", items=" + items +
-                ", disabled=" + disabled +
-                ", type='" + type + '\'' +
-                ", x=" + x +
-                ", y=" + y +
-                ", size=" + size +
-                ", color='" + color + '\'' +
-                '}';
-    }
 }
