@@ -1036,11 +1036,26 @@ class create_lab extends React.Component {
 
         if(Tool.prototype.isPrototypeOf(targ))
         {
+
             const tartg_width = targ_element.getBoundingClientRect().width;
             const tartg_height = targ_element.getBoundingClientRect().height;
             // targ x and targ y is where we want the botton center of src to be
-            const targ_diff_center_x  = tartg_width * .45;
-            const targ_diff_center_y  = tartg_height * .35;
+
+            let targ_diff_center_x = 0;
+            let targ_diff_center_y = 0;
+
+            if(targ.name==="Scale"){
+                 targ_diff_center_x  = tartg_width * .45;
+                 targ_diff_center_y  = tartg_height * .35;
+
+
+            }
+            else if (targ.name==="Bunsen Burner"){
+                targ_diff_center_x = tartg_width * .5;
+                targ_diff_center_y = tartg_height * .1;
+
+            }
+
              const targ_center_x = targ_x + targ_diff_center_x;
              const targ_center_y = targ_y + targ_diff_center_y;
 
