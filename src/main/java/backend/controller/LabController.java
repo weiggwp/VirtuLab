@@ -537,8 +537,10 @@ public class LabController {
             for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
                 if (userCourseLab.getLab().getLabID() == labID &&
                     userCourseLab.getCourse().getCourseID() == courseID &&
-                        userCourseLab.getUser().getId() == userID)
-                    userCourseLab.setComplete(1 );
+                        userCourseLab.getUser().getId() == userID) {
+                    userCourseLab.setComplete(1);
+                    userCourseLab.setSubmittedDate(new Date());
+                }
             }
 
             userService.save(user);
