@@ -104,15 +104,15 @@ class create_lab extends React.Component {
         const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
 
 
+
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-
-
 
                 if(solutions.includes(current.type))
                 {
                     equip = new Element(current.name, current.image, current.capacity,
                         current.weight, current.state, current.size,current.chemProp,current.amount
+
                     );
                     // name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity
                     equip.setType(current.type);
@@ -339,6 +339,10 @@ class create_lab extends React.Component {
 
         ));
 
+        this.setState({
+            steps: this.state.steps
+        })
+
         // console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
@@ -353,13 +357,10 @@ class create_lab extends React.Component {
             lab_name: this.state.lab_title,
             author: this.props.email,
 
-            steps: this.state.steps,
+            stepsDTO: this.state.steps,
             equipments: this.equipmentSet.getJSONList(),
             // lastModified: new Date(),
         };
-        console.log(lab)
-        // console.log("lab.lastModified", lab.lastModified);
-
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -369,13 +370,13 @@ class create_lab extends React.Component {
 
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
+
                 this.setState({save_success: true});
                 // console.log("id is "+response.data);
                 if(this.state.lab_id===0)  //only if not set
                     this.setState({lab_id:response.data});
 
 
-                // console.log("response: ", response);
             })
             .catch((error) => {
                     this.setState({
@@ -433,20 +434,6 @@ class create_lab extends React.Component {
                                    src={"https://cdn0.iconfinder.com/data/icons/basic-ui-elements-plain/461/012_restart-512.png"}
                                    rounded />
                         </OverlayTrigger>
-
-
-                        {/*<Image onClick={this.finishSelectEquipment} className={"buttons"} src={"https://icon-library.net/images/finished-icon/finished-icon-21.jpg"} />*/}
-
-
-                        {/*<OverlayTrigger*/}
-                        {/*    overlay={*/}
-                        {/*        <Tooltip>*/}
-                        {/*            Trash selected item*/}
-                        {/*        </Tooltip>*/}
-                        {/*    }*/}
-                        {/*>*/}
-                        {/*    <Image className={"buttons"} src={"https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png"} />*/}
-                        {/*</OverlayTrigger>*/}
 
 
                         <OverlayTrigger
@@ -691,6 +678,7 @@ class create_lab extends React.Component {
         }
 
 
+
         const temp = deepCloneWithType(this.state.equipments);
 
         //right now temp is filled with image sources of equipments
@@ -816,7 +804,7 @@ class create_lab extends React.Component {
     }
     workspacePane(){
         const workspaces = [];
-
+        console.log("workspacePane")
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}>
             <span>workspace for step {0}</span>
@@ -825,6 +813,7 @@ class create_lab extends React.Component {
         console.log("pushing")
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
+
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             console.log("equip is ")
             console.log(equipments)
@@ -899,9 +888,72 @@ class create_lab extends React.Component {
         )
     }
 
+    handleDelChild = (curStep) => {
+        console.log("in create ",curStep)
+
+        /* should probably toast a error msg, step 0 can't be removed */
+        if (curStep === 0) {
+            return
+        }
+        curStep = parseInt(curStep)
+        let newSteps= []
+        let steps = this.state.steps
+        console.log("old steps",steps)
+        newSteps[0] = steps[0]
+        let newEquips=[[]]
+
+
+        if(this.state.step_num<2)
+        {
+            //do nothing
+            console.log("do nothing")
+
+
+            this.setState({
+                steps: newSteps,
+                step_num: 0,
+                equipments:newEquips
+            })
+        }
+        else
+        {
+            let equips = this.state.equipments
+            for (let i = 1; i < equips.length; i ++) {
+                if (i === curStep)
+                    continue;
+                else
+                    newEquips.push(equips[i])
+            }
+
+            for (let i = 1; i < steps.length; i ++) {
+                steps[i].setEquipments(this.state.equipments[i])
+                if (i === curStep)
+                    continue;
+                else if(i > curStep) {
+                    steps[i].setStepNum(i - 1)
+                    newSteps.push(steps[i])
+                } else {
+                    newSteps.push(steps[i])
+                }
+            }
+
+
+            this.setState({
+                steps: newSteps,
+                step_num: this.state.step_num - 1,
+                equipments:newEquips
+            })
+        }
+        console.log("new steps",this.state.steps," total:",this.state.step_num)
+
+
+
+    }
+
     handleAddChild = () => {
         // adding a new step
         this.state.steps.push(new Step(this.state.steps.length,""));
+
 
         var temp = this.state.equipments;
         //right now temp is filled with image sources of equipments
@@ -912,11 +964,11 @@ class create_lab extends React.Component {
                 step_num: this.state.step_num + 1,
                 equipments:temp
 
-
             }
         );
 
     };
+
     handlInstructionUpdate = () => {
         this.setState({
             //add a new step to steps[]
@@ -934,7 +986,6 @@ class create_lab extends React.Component {
     createNewEquipment(equipment)
     {
         return deepCloneWithType(equipment);
-
     }
 
     handleAddEquipment= (step,equipment) =>
@@ -987,6 +1038,9 @@ class create_lab extends React.Component {
             this.populateSteps();
             return null;
         }
+
+        let size = this.state.steps.length - 1
+
         return(
             <div >
 
@@ -1003,8 +1057,11 @@ class create_lab extends React.Component {
                                     slide_num={this.state.step_num}
                                     addChild={this.handleAddChild}
                                     onSelect={this.selectStep}
+                                    delChild={this.handleDelChild}
                                     hidden={false}
                             />
+
+
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                             {this.instructionPane()}

@@ -1,13 +1,12 @@
 package backend.controller;
 
 
-import backend.dto.CourseDTO;
-import backend.dto.LabDTO;
-import backend.dto.StepDTO;
-import backend.dto.UserDTO;
+import backend.dto.*;
 import backend.model.*;
 import backend.repository.UserRepository;
 import backend.service.CourseService;
+import backend.service.UserCourseLabService;
+import backend.service.UserCourseLabStepService;
 import backend.service.UserCourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,10 @@ public class CourseController {
     UserRepository userRepository;
     @Autowired
     UserCourseService userCourseService;
+    @Autowired
+    UserCourseLabService userCourseLabService;
+    @Autowired
+    UserCourseLabStepService userCourseLabStepService;
 
     @Autowired
     ModelMapper modelMapper;
@@ -250,8 +253,10 @@ public class CourseController {
         try {
             Optional<Course> optional = courseService.
                     findCourseByNameOrCode(courseDto.getCode(),0);
+            if(!optional.isPresent())  return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
             Course course = optional.get();
             System.out.println(course);
+            long courseID = course.getCourseID();
 //            Course course = getCourses(courseDto);
             String email = courseDto.getEmail();
             User user = userRepository.findByEmail(email);
@@ -275,12 +280,30 @@ public class CourseController {
 
             List<UserCourseLab> userCourseLabList = user.getUserCourseLabList();
             for (CourseLab courseLab: course.getCourseLabList()) {
+
                 Lab lab = courseLab.getLab();
                 System.out.println(lab);
-                userCourseLabList.add(new UserCourseLab(user, course, lab));
+                if (!userCourseLabService.exists(user, course, lab)) {
+                    UserCourseLab userCourseLab = new UserCourseLab(user, course, lab);
+                    userCourseLabList.add(userCourseLab);
+                }
             }
             System.out.println("b4");
             userRepository.save(user);
+
+            for (UserCourseLab userCourseLab: course.getUserCourseLabList()) {
+                Lab lab = userCourseLab.getLab();
+                for (Step step: lab.getSteps()) {
+                    if (!userCourseLabStepService.exists(userCourseLab, step)) {
+                        UserCourseLabStep userCourseLabStep = new UserCourseLabStep();
+                        userCourseLabStep.setStep(step);
+                        userCourseLabStep.setUserCourseLab(userCourseLab);
+                        userCourseLab.getUserCourseLabStepList().add(userCourseLabStep);
+                        userCourseLabStepService.save(userCourseLabStep);
+                    }
+                }
+
+            }
             System.out.println("enrolling!");
             return new ResponseEntity(courseName, HttpStatus.OK);
         }
@@ -336,8 +359,8 @@ public class CourseController {
                 if (userCourseLab.getUser().getId() == user.getId() &&
                         userCourseLab.getCourse().getCourseID() == courseID){
                     it.remove();
+                    userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
                 }
-
             }
 
 
@@ -432,6 +455,37 @@ public class CourseController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/set_tries", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity setTriesPerStep(@RequestBody UserCourseLabStepDTO userCourseLabStepDTO) {
+        System.out.println("CourseController setTriesPerStep: ");
+
+        String email = userCourseLabStepDTO.getEmail();
+        long labID = userCourseLabStepDTO.getLabID();
+        long courseID = userCourseLabStepDTO.getCourseID();
+        long stepID = userCourseLabStepDTO.getStepID();
+        int tries = userCourseLabStepDTO.getTries();
+
+        User user = userRepository.findByEmail(email);
+        long id = user.getId();
+
+        for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
+            if (userCourseLab.getUser().getId() == user.getId() &&
+                userCourseLab.getCourse().getCourseID() == courseID &&
+                userCourseLab.getLab().getLabID() == labID) {
+                for (UserCourseLabStep userCourseLabStep: userCourseLab.getUserCourseLabStepList()) {
+                    if (userCourseLabStep.getStep().getStepID() == stepID) {
+                        userCourseLabStep.setTriesPerStep(tries);
+                        userCourseLabStepService.save(userCourseLabStep);
+                    }
+                }
+            }
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 
 

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class EquipmentDTO {
+
+    private long EquipmentID;
     private String name;
     private double weight;
     private double amount;
@@ -15,12 +17,14 @@ public class EquipmentDTO {
     private boolean disabled;
     private String type;
     @JsonProperty("left")
-    private long x=0;
+    private int x=0;
     @JsonProperty("top")
-    private long y=0;
-    private long size;
+    private int y=0;
+
+    private int size;
     private String color;
     private String chemProp;
+
 
     public String getChemProp() {
         return chemProp;
@@ -46,7 +50,9 @@ public class EquipmentDTO {
                 '}';
     }
 
-    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, long x, long y, long size, String color, String chemProp) {
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature,
+                        String image, List<EquipmentDTO> items, boolean disabled, String type, int x, int y,
+                        int size, String color, String chemProp) {
         this.name = name;
         this.weight = weight;
         this.amount = amount;
@@ -69,15 +75,9 @@ public class EquipmentDTO {
         this.chemProp = chemProp;
     }
 
-    public long getSize() {
-        return size;
-    }
-
-    public void setSize(long size) {
-        this.size = size;
-    }
-
-    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature, String image, List<EquipmentDTO> items, boolean disabled, String type, long x, long y, long size, String color) {
+    public EquipmentDTO(String name, double weight, double amount, long capacity, double temperature,
+                        String image, List<EquipmentDTO> items, boolean disabled, String type,
+                        int x, int y, int size, String color) {
         this.name = name;
         this.weight = weight;
         this.amount = amount;
@@ -93,12 +93,29 @@ public class EquipmentDTO {
         this.color = color;
     }
 
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public long getEquipmentID() {
+        return EquipmentID;
+    }
+
+    public void setEquipmentID(long equipmentID) {
+        EquipmentID = equipmentID;
+    }
+
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
+
     }
 
     public String getName() {
@@ -157,7 +174,7 @@ public class EquipmentDTO {
         this.items = items;
     }
 
-    public boolean isDisabled() {
+    public boolean getDisabled() {
         return disabled;
     }
 
@@ -173,19 +190,20 @@ public class EquipmentDTO {
         this.type = type;
     }
 
-    public long getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(long x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public long getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(long y) {
+    public void setY(int y) {
         this.y = y;
     }
+
 }

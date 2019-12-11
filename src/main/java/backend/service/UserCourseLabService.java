@@ -37,4 +37,16 @@ public class UserCourseLabService {
         return userCourseLabRepository.findAllByLab(lab);
     }
 
+    public void delAssociateion(long userCourseLabID) {
+        userCourseLabRepository.deleteById(userCourseLabID);
+    }
+
+    public void save(UserCourseLab userCourseLab) {
+        userCourseLabRepository.save(userCourseLab);
+    }
+
+    public boolean exists(User user, Course course, Lab lab){
+        return (userCourseLabRepository.existsByUserAndAndCourseAndAndLab(user, course, lab));
+    }
+
 }

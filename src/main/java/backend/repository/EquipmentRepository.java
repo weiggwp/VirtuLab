@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface EquipmentRepository extends CrudRepository<Equipment, Long> {
 
     Iterable<Equipment> findAllByLab(Lab lab);
+
+
 }

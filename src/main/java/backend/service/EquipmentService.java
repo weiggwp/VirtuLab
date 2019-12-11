@@ -17,6 +17,10 @@ public class EquipmentService {
         equipmentRepository.save(equipment);
     }
 
+    public Equipment findById(long id) {
+        return equipmentRepository.findById(id).get();
+    }
+
     public void deleteAll() { equipmentRepository.deleteAll(); }
 
     public void deleteById(long id) {equipmentRepository.deleteById(id);}

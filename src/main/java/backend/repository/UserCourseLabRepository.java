@@ -21,4 +21,7 @@ public interface UserCourseLabRepository extends CrudRepository<UserCourseLab, L
     List<UserCourseLab> findAllByLab(Lab lab);
 
     List<UserCourseLab> findAllByUser(User user);
+
+    boolean existsByUserAndAndCourseAndAndLab(User user, Course course, Lab lab);
+
 }

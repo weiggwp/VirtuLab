@@ -32,6 +32,7 @@ public class LabDTO {
     @JsonProperty("complete")
     private boolean complete;
 
+
     public String getDescription() {
         return description;
     }

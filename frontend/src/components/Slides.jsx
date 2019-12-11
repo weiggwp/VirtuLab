@@ -18,7 +18,8 @@ class Slides extends React.Component {
             // numChildren: props.slide_num,
             // addChild: props.addChild,
             curStep: 0,
-            delFun: this.props.delChild
+            delFun: this.props.delChild,
+            active:0
         }
 
         this.handleDelButton = this.handleDelButton.bind(this);
@@ -38,12 +39,25 @@ class Slides extends React.Component {
 
     handleOnSelectedKey(selectedKey){
         this.setState({
-            curStep: selectedKey
+            curStep: selectedKey,
+            active:selectedKey,
         })
     }
 
     handleDelButton() {
         this.state.delFun(this.state.curStep)
+        if(this.state.active>0)
+        {
+            this.setState({
+                active: this.state.curStep-1
+            })
+            console.log(this.state.active,this.state.curStep-1)
+
+
+        }
+        this.forceUpdate()
+
+
         // alert("HI")
     }
 
@@ -85,17 +99,28 @@ class Slides extends React.Component {
                                 style={{width:"100%",backgroundColor:"transparent",borderStyle:"none"}}
                                 variant="flat" >
 
-
                             <Image className="add"
-                                   src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png"
+                                   src="https://img.icons8.com/cotton/2x/plus.png"
                                    rounded/>
 
                             <span style={{float:"right",marginTop:8,color:"white",fontWeight:"bold"}} >Add</span>
+                    </button>
+                </div>
+                    <div  style={{width:"100%",display:this.isHidden()}} onClick={this.handleDelButton}>
+                        <button className="newButton"
+                                style={{width:"100%",backgroundColor:"transparent",borderStyle:"none"}}
+                                variant="flat" >
 
+                            <Image className="add"
+                                   src="https://img.icons8.com/cotton/2x/minus.png"
+                                   rounded/>
+
+                            <span style={{float:"right",marginTop:8,color:"white",fontWeight:"bold"}} >Delete</span>
                         </button>
                     </div>
 
-                    <Nav variant="pills" className="flex-column">
+
+                    <Nav activeKey={this.state.active} variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
                         {children}
                     </Nav>
                 </div>
@@ -106,39 +131,6 @@ class Slides extends React.Component {
 
 }
 
-// const ParentComponent = props => (
-//     //<div style={{height:"5vh",display:"inline",overflowX:"scroll"}}>
-//     <div >
-//         {/*tyle={{overflowY:"scroll"}}>*/}
-//         <div>
-//             <a href="#" onClick={props.addChild}>
-//                 <Image  className="add" src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />
-//                 Add new
-//             </a>
-//         </div>
-//
-//         {/*<Container style={{overflowY:"scroll",height:"100%"}}>*/}
-//             {/*<Row style={{overflowX:"scroll",height:"7vh",marginTop:"5px"}}>*/}
-//             {/*    <div id="children-pane" style={{width:"35vh",marginTop:"5px"}}>*/}
-//         <div >
-//
-//             {/*<ButtonToolbar>*/}
-//                 <ToggleButtonGroup vertical className={"Btn-Blue-BG"} type="radio" name="options" >
-//                     {/*<ToggleButton value={1} className={"Btn-Blue-BG togglebutton btn-info"}>{"Step 1"}</ToggleButton>*/}
-//                     {/*<ToggleButton value={2} className={"Btn-Blue-BG togglebutton btn-info"}>{"Step 2"}</ToggleButton>*/}
-//
-//                     {props.children}
-//
-//                 </ToggleButtonGroup>
-//             {/*</ButtonToolbar>*/}
-//         </div>
-//                 {/*</div>*/}
-//             {/*</Row>*/}
-//         {/*</Container>*/}
-//
-//     </div>
-//     // </div>
-// );
 
 function isComplete (stepnum,aa){
     if (stepnum==1)

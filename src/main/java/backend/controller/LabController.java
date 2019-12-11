@@ -3,10 +3,15 @@ package backend.controller;
 
 import backend.dto.*;
 import backend.model.*;
+import backend.repository.LabRepository;
+import backend.repository.StepRepository;
+import backend.repository.UserRepository;
 import backend.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -44,6 +49,21 @@ public class LabController {
     @Autowired
     EquipmentService equipmentService;
 
+    @Autowired
+    UserCourseLabService userCourseLabService;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserCourseLabStepService userCourseLabStepService;
+
+    @Autowired
+    StepRepository stepRepository;
+
+    @Autowired
+    LabRepository labRepository;
+
     EntityManager em;
 
     ModelMapper modelMapper = new ModelMapper();
@@ -53,8 +73,8 @@ public class LabController {
     @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
     public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
 
-       // System.out.println("lab Controller is called: save_lab");
-        System.out.println(labDTO);
+        // System.out.println("lab Controller is called: save_lab");
+//        System.out.println(labDTO);
         Lab existing = labService.findByLabID(labDTO.getLabID());
 
 
@@ -71,7 +91,6 @@ public class LabController {
 
         List<Equipment> equipments = mapEquipmentDTO(labDTO.getEquipments());
 
-        System.out.println(equipments);
 
         long returnid = -1;
         if (existing != null)
@@ -85,14 +104,14 @@ public class LabController {
 
         }
         else {
-         //   System.out.println("lab does not exist, creating new lab");
-          //  System.out.println("lab is "+labDTO);
+            //   System.out.println("lab does not exist, creating new lab");
+            //  System.out.println("lab is "+labDTO);
             Lab lab = modelMapper.map(labDTO, Lab.class);
             lab.setSteps(steps);
             lab.setEquipments(equipments);
             lab.setOpen(0);
             returnid = labService.createNewLab(lab);
-          //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
+            //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
             //System.out.println("return id is "+returnid);
             User instructor = userService.findByEmail(labDTO.getCreator());
 
@@ -108,9 +127,11 @@ public class LabController {
     {
         List<Equipment> equipments = new ArrayList<>();
         for (EquipmentDTO dto: DTO) {
-            Equipment equipment = modelMapper.map(dto, Equipment.class);
-            equipmentService.saveEquipment(equipment);
-            equipments.add(equipment);
+//            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            Equipment equipment1 = new Equipment();
+            copyVals(equipment1, dto);
+            equipmentService.saveEquipment(equipment1);
+            equipments.add(equipment1);
         }
         return equipments;
     }
@@ -129,36 +150,52 @@ public class LabController {
         });
     }
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/get_lab", method = RequestMethod.POST)
-    public ResponseEntity getLab(@RequestBody LabDTO labDTO) {
-
-        Lab lab = labService.findByLabID(labDTO.getLabID());
-        sort_steps(lab.getSteps());
-
-        return new ResponseEntity<>(lab ,HttpStatus.OK);
 
 
+    private void copyVals(Equipment equip, EquipmentDTO dto) {
+        equip.setX(dto.getX());
+        equip.setY(dto.getY());
+        equip.setCapacity(dto.getCapacity());
+        equip.setAmount(dto.getAmount());
+        equip.setWeight(dto.getWeight());
+        equip.setName(dto.getName());
+        equip.setImage(dto.getImage());
+        equip.setType(dto.getType());
+        equip.setDisabled(dto.getDisabled());
+        equip.setSize(dto.getSize());
+        equip.setColor(dto.getColor());
     }
-
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
-    public ResponseEntity getLabs(@RequestBody UserDTO obj) {
+    public ResponseEntity getLabs(@RequestBody PageRequestDTO dto) {
+        System.out.println("LabController get_labs is called: ");
 
-
-        User user = userService.findByEmail(obj.getEmail_address());
-      //  System.out.println("getting lab for user : "+user);
-        if(user==null)
+        User user = userService.findByEmail(dto.getEmail());
+        if(user == null)
         {
-        //    System.out.println("user doesn't exist");
-
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<Lab> labs = user.getLabs();
+//        List<Lab> labs = user.getLabs();
 
+        int size = dto.getPerPage();
+        int pageNum = dto.getPageNum();
+//        System.out.println(pageNum);
+//        System.out.println(size);
 
+        Page<Lab> pageLabs = labService.pagePrivateLabs(user, pageNum - 1, size);
+//        System.out.println("TotalElements: " + pageLabs.getTotalElements());
+//        System.out.println("Total pages: " + pageLabs.getTotalPages());
 
+        List<Lab> labs = new ArrayList<>();
+        PageRequestDTO returnDTO = new PageRequestDTO();
+        for (Lab lab: pageLabs) {
+            labs.add(lab);
+//            System.out.println(lab.getName());
+        }
+        returnDTO.setLabs(labs);
+        returnDTO.setTotalElements(pageLabs.getTotalElements());
+        returnDTO.setTotalPages(pageLabs.getTotalPages());
 
         if(labs!=null)
         {
@@ -167,7 +204,7 @@ public class LabController {
                 sort_steps(lab.getSteps());
             }
 
-            return new ResponseEntity<>(user.getLabs(),HttpStatus.OK);
+            return new ResponseEntity<>(returnDTO, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
@@ -182,7 +219,7 @@ public class LabController {
             if (labs.get(i).getOpen() > 0){
                 ret.add(labs.get(i));
             }
-            System.out.println("Lab: "+labs.get(i));
+//            System.out.println("Lab: "+labs.get(i));
         }
         return new ResponseEntity(ret,HttpStatus.OK);
     }
@@ -204,7 +241,7 @@ public class LabController {
                 for (int j=0; j<labDTO.getTags().size(); j++){
                     if (labs.get(i).getTags().contains(labDTO.getTags().get(j))){
                         ret.add(labs.get(i));
-                        System.out.println("Lab: "+labs.get(i));
+//                        System.out.println("Lab: "+labs.get(i));
                         break;
                     }
                 }
@@ -220,9 +257,9 @@ public class LabController {
     @RequestMapping(value = "/publish_lab", method = RequestMethod.POST)
     public ResponseEntity publishLab(@RequestBody LabDTO labDTO){
         try {
-            System.out.println("lab is "+labDTO);
+//            System.out.println("lab is "+labDTO);
             Lab lab = labService.findByLabID(labDTO.getLabID());
-            System.out.println("lab is "+lab);
+//            System.out.println("lab is "+lab);
             if (lab.getOpen()==1){
                 lab.setOpen(0);
                 lab.setDescription("");
@@ -232,7 +269,7 @@ public class LabController {
             }
             lab.setOpen(1);
             User user = userService.findByEmail(labDTO.getCreator());
-            System.out.println("user is " +user.getFirstName()+user.getLastName());
+//            System.out.println("user is " +user.getFirstName()+user.getLastName());
           //  lab.setCreator(user.getFirstName()+" "+user.getLastName());
             lab.setDescription(labDTO.getDescription());
             lab.setTags(labDTO.getTags());
@@ -297,30 +334,16 @@ public class LabController {
     @RequestMapping(value = "/add_lab_class", method = RequestMethod.POST)
     public ResponseEntity addLabToClass(@RequestBody CourseDTO courseDTO) {
         try {
-            System.out.println("CALLING ADD LAB CLASS");
-            System.out.println("course dto is "+courseDTO);
+//            System.out.println("CALLING ADD LAB CLASS");
+//            System.out.println("course dto is "+courseDTO);
             courseDTO.setCode(courseDTO.getCourseNumber());
-
-//            Optional<Course> optcourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
-//            Course course = optcourse.get();
-//            System.out.println("course found was "+course);
-//            Lab lab = courseDTO.getLabs().get(0);
-//
-//            for (int i=0; i<course.getLabs().size(); i++)
-//                if (course.getLabs().get(i).getLabID()==lab.getLabID())
-//                return new ResponseEntity(HttpStatus.NOT_FOUND);
-//
-//            course.addLab(lab);
-//            courseService.addCourse(course);
-//            System.out.println("course dto is "+courseDTO+ " lab is " + lab);
-//            return new ResponseEntity(HttpStatus.OK);
 
             long courseID = courseDTO.getCourseID();
             Optional<Course> optionalCourse = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(),0);
             if (optionalCourse.isPresent()) {
 
                 Course course = optionalCourse.get();
-                System.out.println(course);
+//                System.out.println(course);
                 Lab lab = courseDTO.getLabs().get(0);
 
                 // check if lab is already in the course
@@ -333,7 +356,7 @@ public class LabController {
                 courseLab.setCourse(course);
                 courseLab.setLab(lab);
                 courseLab.setDate(courseDTO.getDate());
-                System.out.println(courseLab);
+//                System.out.println(courseLab);
                 course.getCourseLabList().add(courseLab);
                 lab.getCourseLabList().add(courseLab);
 //                courseLabService.saveOrUpdate(courseLab);
@@ -343,16 +366,32 @@ public class LabController {
                 for(UserCourse userCourse: course.getUserCourseList()){
                     User user = userCourse.getUser();
                     if(user.getRole().toLowerCase().equals("student")) {
-                        user.getUserCourseLabList().add(new UserCourseLab(user, course, lab));
+                        if (!userCourseLabService.exists(user, course, lab)) {
+                            UserCourseLab userCourseLab = new UserCourseLab(user, course, lab);
+                            user.getUserCourseLabList().add(userCourseLab);
+                        }
                         userService.save(user);
                     }
                 }
 
-                System.out.println("LEAVING ADD LAB CLASS");
+                for (UserCourseLab userCourseLab: course.getUserCourseLabList()) {
+                    Lab l = userCourseLab.getLab();
+                    for (Step step: l.getSteps()) {
+                        if (!userCourseLabStepService.exists(userCourseLab, step)) {
+                            UserCourseLabStep userCourseLabStep = new UserCourseLabStep();
+                            userCourseLabStep.setStep(step);
+                            userCourseLabStep.setUserCourseLab(userCourseLab);
+                            userCourseLab.getUserCourseLabStepList().add(userCourseLabStep);
+                            userCourseLabStepService.save(userCourseLabStep);
+                        }
+                    }
+                }
+
+//                System.out.println("LEAVING ADD LAB CLASS");
                 return new ResponseEntity(HttpStatus.OK);
 
             }
-            System.out.println("LEAVING ADD LAB CLASS");
+//            System.out.println("LEAVING ADD LAB CLASS");
             return new ResponseEntity(HttpStatus.OK);
 
         }
@@ -367,20 +406,34 @@ public class LabController {
     @RequestMapping(value = "/del_lab", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity drop(@RequestBody LabDTO labDTO) {
-        System.out.println("Lab Controller del operation: ");
-        System.out.println("lab to del: " + labDTO);
+//        System.out.println("Lab Controller del operation: ");
+//        System.out.println("lab to del: " + labDTO);
 
         long labID = labDTO.getLabID();
         String email = labDTO.getEmail();
 
         User user = userService.findByEmail(email);
-        System.out.println(user);
+//        System.out.println(user);
 
         Optional<Lab> optional = labService.findLabByLabID(labID);
         if (optional.isPresent()) {
-            System.out.println("take out lab");
+//            System.out.println("take out lab");
             Lab lab = optional.get();
             lab.removeLab(); // remove the rows in association table
+
+
+            List<UserCourseLab> userCourseLabList = new ArrayList<>(lab.getUserCourseLabList());
+            for (Iterator<UserCourseLab> it = userCourseLabList.iterator(); it.hasNext();) {
+                UserCourseLab userCourseLab = it.next();
+//                System.out.println("hi " + userCourseLab.getLab().getName());
+                if (userCourseLab.getUser().getId() == user.getId() &&
+                        userCourseLab.getLab().getLabID() == labID){
+                    it.remove();
+                    userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
+                }
+                labService.saveLab(lab);
+            }
+
 //            System.out.println(lab.getCourses());
 //            lab.getCourses().clear();
 //            labService.saveLab(lab);
@@ -389,11 +442,8 @@ public class LabController {
 //            em.getTransaction().commit();
 
             user.getLabs().remove(lab);
+            labService.deleteById(labID);
         }
-
-
-        labService.deleteById(labID);
-
 
 
 
@@ -407,9 +457,9 @@ public class LabController {
     @RequestMapping(value = "/clone_lab", method = RequestMethod.POST)
     public ResponseEntity cloneLab(@RequestBody LabDTO labDTO) {
         try {
-            System.out.println("received lab was "+labDTO);
+//            System.out.println("received lab was "+labDTO);
             Lab realLab = labService.findByLabID(labDTO.getLabID());
-            System.out.println("Mapped lab to "+realLab);
+//            System.out.println("Mapped lab to "+realLab);
             List<Step> steps = realLab.getSteps();
             List<Step> listClone = new ArrayList<>();
             for (Step step: steps) {
@@ -421,13 +471,13 @@ public class LabController {
             if (labDTO.getCreator()!=null){
                 labClone.setCreator(labDTO.getCreator());
             }
-            System.out.println("clone is " +labClone+ " lab is "+realLab);
+//            System.out.println("clone is " +labClone+ " lab is "+realLab);
             long returnid = labService.createNewLab(labClone);
             User instructor = userService.findByEmail(labClone.getCreator());
             instructor.getLabs().add(labClone);
             userService.save(instructor);
-            System.out.println("saved "+labService.findByLabID(returnid)+
-                    " user is "+userService.findByEmail(realLab.getCreator()));
+//            System.out.println("saved "+labService.findByLabID(returnid)+
+//                    " user is "+userService.findByEmail(realLab.getCreator()));
             return new ResponseEntity(returnid,HttpStatus.OK);
         }
         catch (Exception e){
@@ -445,7 +495,7 @@ public class LabController {
     @ResponseBody
     public HashMap<String, Object> getPageLab(@RequestBody PageRequestDTO pageRequestDTO) {
         try {
-            System.out.println("pageDTO: "+ pageRequestDTO);
+//            System.out.println("pageDTO: "+ pageRequestDTO);
             int page = pageRequestDTO.getPageNum() - 1;
             int size = pageRequestDTO.getPerPage();
             Page<Lab> pageLab= labService.pageAllPublicLabs(page, size);
@@ -453,40 +503,8 @@ public class LabController {
             int totalPages = pageLab.getTotalPages();
             long totalElements = pageLab.getTotalElements();
 
-            System.out.println("totalPages: " + totalPages);
-            System.out.println("totalElements: " + totalElements);
-
-
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("labs", pageLab);
-            map.put("totalPages", totalPages);
-
-            return map;
-
-//            return new ResponseEntity(HttpStatus.OK);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-
-        }
-        return null;
-    }
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/page_lab_tags", method = RequestMethod.POST)
-    @ResponseBody
-    public HashMap<String, Object> pageByTags(@RequestBody PageRequestDTO pageRequestDTO) {
-        try {
-            System.out.println("pageDTO: "+ pageRequestDTO);
-            int page = pageRequestDTO.getPageNum() - 1;
-            int size = pageRequestDTO.getPerPage();
-            Page<Lab> pageLab= labService.pageLabsByTags(page, size);
-            pageLab.forEach(lab -> System.out.println(lab));
-            int totalPages = pageLab.getTotalPages();
-            long totalElements = pageLab.getTotalElements();
-
-            System.out.println("totalPages: " + totalPages);
-            System.out.println("totalElements: " + totalElements);
+//            System.out.println("totalPages: " + totalPages);
+//            System.out.println("totalElements: " + totalElements);
 
 
             HashMap<String, Object> map = new HashMap<>();
@@ -534,10 +552,23 @@ public class LabController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-
-
-
-
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/get_lab", method = RequestMethod.POST)
+    public ResponseEntity getLab(@RequestBody LabDTO labDTO) {
+        try {
+            System.out.println("lab is " + labDTO);
+            Optional<Lab> optional = labService.findLabByLabID(labDTO.getLabID());
+            if (optional.isPresent()) {
+                Lab lab = optional.get();
+                sort_steps(lab.getSteps());
+                return new ResponseEntity(lab, HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+        }
+        catch (Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

@@ -6,7 +6,7 @@ import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav, Tooltip, OverlayTrigger} from 'react-bootstrap';
+import {Button, Image, Navbar, NavItem, InputGroup, Nav, Tooltip, OverlayTrigger, Pagination} from 'react-bootstrap';
 
 
 import image from '../Images/lab_promo.png'
@@ -54,10 +54,18 @@ class instructor_labs extends React.Component {
             edit_lab:false,
             view_lab:false,
             publish_lab:false,
+            totalPages: 1,
+            currentPage: 1,
+            perPage: 8,
 
 
 
         };
+        this.updateLabs = this.updateLabs.bind(this);
+        this.handleFirstPage = this.handleFirstPage.bind(this);
+        this.handleLastPage = this.handleLastPage.bind(this);
+        this.handleNextPage = this.handleNextPage.bind(this);
+        this.handlePrevPage = this.handlePrevPage.bind(this);
     }
 
     publishMessage(lab){
@@ -331,11 +339,26 @@ class instructor_labs extends React.Component {
             .then((response) => {
 
 
+
+
+
             })
     };
-    updateLabs(){
-        const user = {
-            email: this.props.email
+    updateLabs(page) {
+
+        if (page === undefined) page = 1
+        page = Number(page)
+        var page = page
+
+        // this causes a infinite looping i don't know why, frontend crashes
+        // this.setState({
+        //     currentPage: page
+        // })
+
+        const pageQuestDTO = {
+            email: this.props.email,
+            pageNum: page,
+            perPage: this.state.perPage,
         };
         let axiosConfig = {
             headers: {
@@ -345,18 +368,27 @@ class instructor_labs extends React.Component {
             }
         };
         var labs=[];
-
-        //axio sends message to backend to handle authentication
-        axios.post(GLOBALS.BASE_URL + 'get_labs',user
-        )
+        //axio sends message to backend to handle get_labs
+        axios.post(GLOBALS.BASE_URL + 'get_labs',pageQuestDTO)
             .then((response) => {
-                // console.log(response.data);
-                for (let i=0; i<response.data.length; i++){
-                    labs[i]=response.data[i]
-                    // console.log("lab " + i + " is " +JSON.stringify(labs[i]))
+                console.log("get_labs return: ")
+                console.log(response.data)
+
+                console.log(response.data['totalElements'])
+                console.log(response.data['totalPages'])
+                console.log(response.data['labs'])
+                let totalPages = response.data['totalPages']
+
+                for (let i = 0; i < response.data['labs'].length; i ++) {
+                    labs[i]=response.data['labs'][i]
                 }
 
-                this.setState({labs:labs,loading_labs:false});
+                this.setState({
+                    labs: labs,
+                    loading_labs: false,
+                    totalPages: totalPages,
+                    currentPage: page
+                });
             })
             .catch((error) => {
                 console.log("error retrieving labs");
@@ -364,15 +396,243 @@ class instructor_labs extends React.Component {
             );
     }
 
+    handleFirstPage = () => {
+        this.setState({
+            currentPage: 1
+        })
+
+        const pageQuestDTO = {
+            email: this.props.email,
+            pageNum: 1,
+            perPage: this.state.perPage,
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var labs = [];
+        //axio sends message to backend to handle get_labs
+        axios.post(GLOBALS.BASE_URL + 'get_labs', pageQuestDTO
+        )
+            .then((response) => {
+                console.log("get_labs return: ")
+                console.log(response.data)
+
+                console.log(response.data['totalElements'])
+                console.log(response.data['totalPages'])
+                console.log(response.data['labs'])
+                let totalPages = response.data['totalPages']
+
+                for (let i = 0; i < response.data['labs'].length; i++) {
+                    labs[i] = response.data['labs'][i]
+                }
+
+                this.setState({
+                    labs: labs,
+                    loading_labs: false,
+                    totalPages: totalPages,
+                });
+            })
+            .catch((error) => {
+                    console.log("error retrieving labs");
+                }
+            );
+    }
+
+    handleNextPage() {
+
+        if (this.state.currentPage >= this.state.totalPages)
+            return
+
+        let nextPage = this.state.currentPage + 1
+
+        const pageQuestDTO = {
+            email: this.props.email,
+            pageNum: nextPage,
+            perPage: this.state.perPage,
+        };
+
+        this.setState({
+            currentPage: nextPage
+        })
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var labs = [];
+        //axio sends message to backend to handle get_labs
+        axios.post(GLOBALS.BASE_URL + 'get_labs', pageQuestDTO)
+            .then((response) => {
+                console.log("get_labs return: ")
+                console.log(response.data)
+
+                console.log(response.data['totalElements'])
+                console.log(response.data['totalPages'])
+                console.log(response.data['labs'])
+                let totalPages = response.data['totalPages']
+
+                for (let i = 0; i < response.data['labs'].length; i++) {
+                    labs[i] = response.data['labs'][i]
+                }
+
+                this.setState({
+                    labs: labs,
+                    loading_labs: false,
+                    totalPages: totalPages
+                });
+            })
+            .catch((error) => {
+                    console.log("error retrieving labs");
+                }
+            );
+    }
+
+    handlePrevPage = () => {
+
+        if (this.state.currentPage <= 1)
+            return
+
+        let prevPage = this.state.currentPage - 1
+
+        const pageQuestDTO = {
+            email: this.props.email,
+            pageNum: prevPage,
+            perPage: this.state.perPage,
+            currentPage: prevPage
+        };
+
+        this.setState({
+            currentPage: prevPage
+        })
+
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var labs = [];
+        //axio sends message to backend to handle get_labs
+        axios.post(GLOBALS.BASE_URL + 'get_labs', pageQuestDTO)
+            .then((response) => {
+
+                let totalPages = response.data['totalPages']
+
+                for (let i = 0; i < response.data['labs'].length; i++) {
+                    labs[i] = response.data['labs'][i]
+                }
+
+                this.setState({
+                    labs: labs,
+                    loading_labs: false,
+                    totalPages: totalPages
+                });
+            })
+            .catch((error) => {
+                    console.log("error retrieving labs");
+                }
+            );
+
+    }
+    handleLastPage = () => {
+        this.setState({
+            currentPage: this.state.totalPages
+        })
+
+        const pageQuestDTO = {
+            email: this.props.email,
+            pageNum: this.state.totalPages,
+            perPage: this.state.perPage,
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'responseType': 'json'
+            }
+        };
+        var labs = [];
+        //axio sends message to backend to handle get_labs
+        axios.post(GLOBALS.BASE_URL + 'get_labs', pageQuestDTO
+        )
+            .then((response) => {
+
+                let totalPages = response.data['totalPages']
+
+                for (let i = 0; i < response.data['labs'].length; i++) {
+                    labs[i] = response.data['labs'][i]
+                }
+
+                this.setState({
+                    labs: labs,
+                    loading_labs: false,
+                    totalPages: totalPages
+                });
+            })
+            .catch((error) => {
+                    console.log("error retrieving labs");
+                }
+            );
+    }
+
+
+    pagination(c, m) {
+        let active = this.state.currentPage
+        var current = c,
+            last = m,
+            delta = 2,
+            left = current - delta,
+            right = current + delta + 1,
+            range = [],
+            rangeWithDots = [],
+            l;
+
+        for (let i = 1; i <= last; i++) {
+            if (i === 1 || i === last || i >= left && i < right) {
+                range.push(i);
+            }
+        }
+
+        for (let i of range) {
+            if (l) {
+                if (i - l === 2) {
+                    rangeWithDots.push(
+                        <Pagination.Item style={{display:"inline-block"}} onClick={() => this.updateLabs(l + 1)} id={l + 1} key={l + 1} active={l + 1 === active}>
+                            {l + 1}
+                        </Pagination.Item>);
+                } else if (i - l !== 1) {
+                    rangeWithDots.push(<Pagination.Ellipsis />);
+                }
+            }
+            rangeWithDots.push(
+                <Pagination.Item style={{display:"inline-block"}} onClick={() => this.updateLabs(i)} id={i} key={i} active={i === active}>
+                    {i}
+                </Pagination.Item>);
+            l = i;
+        }
+
+        return rangeWithDots;
+    }
+
+
     render() {
         let labs = this.state.labs;
         let classes=this.state.classes;
+
         if (this.state.loading_labs){
-            this.updateClasses()
+            // update classes is not needed?
+            // this.updateClasses()
             this.updateLabs();
             return null;
-
-
         }
         if (this.state.edit_lab){
 
@@ -413,6 +673,20 @@ class instructor_labs extends React.Component {
 
         }
         else {
+
+            let items = this.pagination(this.state.currentPage, this.state.totalPages)
+
+            // let active = this.state.currentPage
+            // let items = []
+            // for (let number = 1; number <= this.state.totalPages; number ++) {
+            //     items.push(
+            //         <Pagination.Item onClick={() => this.updateLabs(number)} id={number} key={number} active={number === active}>
+            //             {number}
+            //         </Pagination.Item>
+            //     );
+            // }
+
+
             console.log("redpubl is " +this.state.redirectPublish)
             return (
                 <div>
@@ -458,7 +732,7 @@ class instructor_labs extends React.Component {
                                 </Nav>
                             </Navbar>
                         </div>
-                        <div>
+                        <div style={{height:"65vh"}}>
                             {labs.map(lab => (
                                 <div style={{
                                     textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
@@ -469,16 +743,7 @@ class instructor_labs extends React.Component {
 
                                         <Dropdown as={ButtonGroup} style={{width: "100%"}}
                                                   class={"dropdown-menu-right dropdown-button-drop-right"}>
-                                            {/*    <Button variant="info" style={{width:"90%"}} style={{textAlign:"left"}}disabled>*/}
-                                            {/*        <div >*/}
-                                            {/*        {lab.name}     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>*/}
-                                            {/*        /!*{"Author: " + lab.author}*!/*/}
-                                            {/*        /!*<br/>*!/*/}
-                                            {/*        /!*{"Description: " + lab.description}*!/*/}
-                                            {/*        /!*<br/>*!/*/}
-                                            {/*        /!*{"Keywords: " + lab.keywords}*!/*/}
-                                            {/*        </div>*/}
-                                            {/*    </Button>*/}
+
 
                                             <Dropdown.Toggle style={{textAlign: "left",height:"50px"}} variant="info">
                                                 {lab.name}
@@ -542,7 +807,16 @@ class instructor_labs extends React.Component {
                         </div>
                         {/*{<Expandable_Classes style={"settingsH3"}/>}*/}
 
+                        <div class="d-flex justify-content-center">
+                            <Pagination >
+                                <Pagination.First style={{display:"inline-block"}} onClick={() => this.handleFirstPage()}/>
+                                <Pagination.Prev style={{display:"inline-block"}} onClick={() => this.handlePrevPage()}/>
+                                {items}
+                                <Pagination.Next style={{display:"inline-block"}} onClick={() => this.handleNextPage()}/>
+                                <Pagination.Last style={{display:"inline-block"}} onClick={() => this.handleLastPage()}/>
+                            </Pagination>
 
+                        </div>
                     </div>
                 </div>
 

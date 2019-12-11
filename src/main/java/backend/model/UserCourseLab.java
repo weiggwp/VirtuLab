@@ -3,7 +3,9 @@ package backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "user_course_lab_association")
 public class UserCourseLab {
@@ -28,6 +30,10 @@ public class UserCourseLab {
 
     private int grade;
     private int complete;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "userCourseLab", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UserCourseLabStep> userCourseLabStepList = new ArrayList<>();
 
     public UserCourseLab() {
     }
@@ -86,8 +92,19 @@ public class UserCourseLab {
         this.complete = complete;
     }
 
-    public void setComplete(boolean complete) {
-        complete = complete;
+    public long getUserCourseLabID() {
+        return userCourseLabID;
     }
 
+    public void setUserCourseLabID(long userCourseLabID) {
+        this.userCourseLabID = userCourseLabID;
+    }
+
+    public List<UserCourseLabStep> getUserCourseLabStepList() {
+        return userCourseLabStepList;
+    }
+
+    public void setUserCourseLabStepList(List<UserCourseLabStep> userCourseLabStepList) {
+        this.userCourseLabStepList = userCourseLabStepList;
+    }
 }
