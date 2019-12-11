@@ -255,7 +255,6 @@ class create_lab extends React.Component {
     populateSteps()
     {
 
-        console.log("populating,state is ")
        // console.log(this.props.location.state.equipments)
         //if not new lab, load old lab
         if(this.props.location.state!==undefined){

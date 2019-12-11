@@ -42,14 +42,12 @@ class Droppable_course extends React.Component
 
                     this.render()
                     window.location.reload();
-                console.log("success!");
             })
             .catch((error) => {
                     this.setState({
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
-                    console.log("failure...");
                     //    this.render()
                     //  window.location.reload();
 
@@ -64,8 +62,6 @@ class Droppable_course extends React.Component
     {
         let style = this.props.style;
         let classes = this.props.classes;
-        console.log("classes is " + JSON.stringify(classes));
-        console.log("classes is " +classes+",len is "+classes.length);
 
             return (
 
