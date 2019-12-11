@@ -2,30 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2af1113-ab67-47b1-a879-069b387891ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/CourseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/controller/LabController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/CourseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/CourseDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/LabDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/LabDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/dto/UserDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Course.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Lab.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Lab.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/Step.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/Step.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/model/UserCourse.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/model/UserCourse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/repository/LabRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/repository/LabRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/CourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/CourseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/LabService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/backend/service/UserCourseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/controller/LabController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/controller/LabController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/EquipmentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/EquipmentDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/LabDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/LabDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/dto/StepDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/dto/StepDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/Equipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/Equipment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/model/Step.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/model/Step.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,11 +70,6 @@
       </set>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-10" />
-    <option name="width" value="1522" />
-    <option name="height" value="1952" />
-  </component>
   <component name="ProjectId" id="1TU8LioHaQL9ykFv7k6Yg7MWb90" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
@@ -100,6 +80,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AETest" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -228,6 +209,13 @@
       <workItem from="1573673679694" duration="5361000" />
       <workItem from="1573869121635" duration="521000" />
       <workItem from="1574644853039" duration="13123000" />
+      <workItem from="1574798052955" duration="2204000" />
+      <workItem from="1574830506594" duration="74000" />
+      <workItem from="1575072927230" duration="4329000" />
+      <workItem from="1575304777793" duration="4608000" />
+      <workItem from="1575491081235" duration="15150000" />
+      <workItem from="1575567083613" duration="20459000" />
+      <workItem from="1575650499941" duration="806000" />
     </task>
     <servers />
   </component>

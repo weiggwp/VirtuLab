@@ -116,47 +116,47 @@ class Draggable_equipment extends React.Component {
         // console.log(dm);
         dm.style.border = "";
         dm.style.opacity = '1.0';
-         //ev is target
-         const workspace_id = ev.dataTransfer.getData('text/workspace_id');
-         const equip_id = ev.dataTransfer.getData('text/equip_id');
-         // Don't do anything if dropping the same column we're dragging.
-         //dragSrcEl is equipment.js source object
-         if (dragSrcEl !== this &&
-             this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
-             //first src, second target
+        //ev is target
+        const workspace_id = ev.dataTransfer.getData('text/workspace_id');
+        const equip_id = ev.dataTransfer.getData('text/equip_id');
+        // Don't do anything if dropping the same column we're dragging.
+        //dragSrcEl is equipment.js source object
+        if (dragSrcEl !== this &&
+            this.props.canInteract(workspace_id, equip_id, this.props.wkspace_id, this.props.equip_id,)) {
+            //first src, second target
 
 
-             // this.props.move_element(ev);
-             this.props.adjust(ev,workspace_id,equip_id,this.props.equip_id);
+            // this.props.move_element(ev);
+            this.props.adjust(ev,workspace_id,equip_id,this.props.equip_id);
 
-             this.props.interation_handler(
-                 ev.target,
-                 workspace_id, equip_id,
-                 this.props.wkspace_id, this.props.equip_id,
-             );
+            this.props.interation_handler(
+                ev.target,
+                workspace_id, equip_id,
+                this.props.wkspace_id, this.props.equip_id,
+            );
 
 
-         }
-         else if (dragSrcEl === this){
-             // console.log(ev)
-             const offset = ev.dataTransfer.getData("text/offset").split(',');
-             // console.log("offset",offset)
-             //can drop on top of itself but within bounds
-             const x = ev.clientX + parseInt(offset[0],10);
-             const y = ev.clientY + parseInt(offset[1],10);
-             // console.log("moving myself to ",x,y)
-             if(x>=0 && y>=0)
+        }
+        else if (dragSrcEl === this){
+            // console.log(ev)
+            const offset = ev.dataTransfer.getData("text/offset").split(',');
+            // console.log("offset",offset)
+            //can drop on top of itself but within bounds
+            const x = ev.clientX + parseInt(offset[0],10);
+            const y = ev.clientY + parseInt(offset[1],10);
+            // console.log("moving myself to ",x,y)
+            if(x>=0 && y>=0)
                 this.props.move_element(ev);
-             else
-             {
-                 dm.style.left = '0 px';
-                 dm.style.top = '0 px';
-             }
-         }
-         else{
-             ToastsStore.error("Not interactable")
+            else
+            {
+                dm.style.left = '0 px';
+                dm.style.top = '0 px';
+            }
+        }
+        else{
+            ToastsStore.error("Not interactable")
 
-         }
+        }
 
         return false;
 
@@ -222,10 +222,18 @@ class Draggable_equipment extends React.Component {
         var draggable=this.props.draggable;
         if(draggable===undefined)
             draggable="true"
+        // console.log(top,bot)
+        var colorPicker=null;
+
         const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
         const disable=!draggable;
 
-        console.log(equip);
+        if (this.props.role==undefined||this.props.role==null||this.props.role!="student"){
+            colorPicker=
+                <div disabled={disable} style={{width:"100%"}}>
+                    <ColorPicker setColor={this.setColor}/>
+                </div>
+        }
         return (
             <div>
                 <ContextMenuTrigger id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}
@@ -243,7 +251,7 @@ class Draggable_equipment extends React.Component {
                          style={{position:"absolute",
                              left:equip.left,
                              top:equip.top,
-                             }}
+                         }}
                     >
 
                         <div className={"info"} style={top}>
@@ -253,14 +261,14 @@ class Draggable_equipment extends React.Component {
 
                         <GetSVG
 
-                                equip={this.props.equipment}
-                                name={this.props.equipment.name}
-                                type={this.props.equipment.type}
-                                fill={this.getColor()}
-                                // degree={this.props.equipment.rotate}
-                                size={equip.size}
-                                onDrop={this.drop_handler}
-                                id={id}
+                            equip={this.props.equipment}
+                            name={this.props.equipment.name}
+                            type={this.props.equipment.type}
+                            fill={this.getColor()}
+                            // degree={this.props.equipment.rotate}
+                            size={equip.size}
+                            onDrop={this.drop_handler}
+                            id={id}
                         />
 
                         <div className={"info"} style={bot}>
@@ -274,9 +282,8 @@ class Draggable_equipment extends React.Component {
 
                 <ContextMenu id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}>
 
-                    <div disabled={disable} style={{width:"100%"}}>
-                        <ColorPicker setColor={this.setColor}/>
-                    </div>
+
+                    {colorPicker}
                     <MenuItem disabled={disable} data={{workspace_id: this.props.wkspace_id, equip_id: this.props.equip_id}}
                               onClick={this.props.handle_equip_delete}>
                         Delete

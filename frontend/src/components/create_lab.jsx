@@ -98,14 +98,16 @@ class create_lab extends React.Component {
     populateStepEquipment(equipList)
     {
 
-            let equip;
+        let equip;
         var result =[];
         const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
         const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
 
-            for (var i = 0; i < equipList.length; i++) {
-                var current = equipList[i];
-                console.log(i,current)
+
+        for (var i = 0; i < equipList.length; i++) {
+            var current = equipList[i];
+
+
 
                 if(solutions.includes(current.type))
                 {
@@ -128,10 +130,12 @@ class create_lab extends React.Component {
                     equip.setColor(current.color)
 
 
-                    result.push(equip);
 
-                }
-                else {
+                result.push(equip);
+
+            }
+            else {
+
 
                     equip = new Glassware(current.name, current.image, current.capacity,
                         current.weight,current.state, current.size,current.amount);
@@ -143,12 +147,13 @@ class create_lab extends React.Component {
 
                     result.push(equip);
 
-                }
-
 
             }
 
-            return result;
+
+        }
+
+        return result;
 
 
     }
@@ -169,7 +174,9 @@ class create_lab extends React.Component {
 
             for (var i = equipList.length-1; i >=0; i--) {
                 var current = equipList[i];
+
                 if(solutions.includes(current.type))
+
                 {
                     if(result['Solution'][current.type]===undefined)
                         result['Solution'][current.type]=[]
@@ -200,6 +207,7 @@ class create_lab extends React.Component {
                 }
 
 
+
             }
             this.equipmentSet.setEquipmentList(result);
 
@@ -208,6 +216,9 @@ class create_lab extends React.Component {
 
     populateSteps()
     {
+
+        console.log("populating,state is ")
+       // console.log(this.props.location.state.equipments)
         //if not new lab, load old lab
         if(this.props.location.state!==undefined){
 
@@ -326,14 +337,14 @@ class create_lab extends React.Component {
         this.state.steps.map((step,index)=>(
             step.setEquipments(this.state.equipments[index])
 
-            ));
+        ));
 
         // console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
 
 
     handleLabSave = (e) => {
-     // alert("saving " +this.state.lab_id)
+        // alert("saving " +this.state.lab_id)
         this.setStepsEquips()
         const lab = {
             labID: this.state.lab_id,
@@ -346,7 +357,7 @@ class create_lab extends React.Component {
             equipments: this.equipmentSet.getJSONList(),
             // lastModified: new Date(),
         };
-
+        console.log(lab)
         // console.log("lab.lastModified", lab.lastModified);
 
         let axiosConfig = {
@@ -420,7 +431,7 @@ class create_lab extends React.Component {
                             <Image className={"restart_image"}
                                    onClick={this.setRestart}
                                    src={"https://cdn0.iconfinder.com/data/icons/basic-ui-elements-plain/461/012_restart-512.png"}
-                            rounded />
+                                   rounded />
                         </OverlayTrigger>
 
 
@@ -537,6 +548,7 @@ class create_lab extends React.Component {
             <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
+
             "Click on equipments you would like to disable for the duration of the lab (click again to unselect). "
             + "Right click on a equipment to remove liquids, change fill color, view info, delete equipment ") }</Tab.Pane>);
 
@@ -551,6 +563,7 @@ class create_lab extends React.Component {
 
             </Tab.Pane>);
             }
+
 
 
         return(
@@ -653,6 +666,9 @@ class create_lab extends React.Component {
         // console.log(data);
     }
     handleInputChange(e){
+        console.log("e is abc123")
+        console.log(e.target.value)
+        console.log()
         this.setState({input: e.target.value},);
 
     }
@@ -729,7 +745,7 @@ class create_lab extends React.Component {
                 actions.map((action)=>(
                     buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>this.handleAction(source,action,target,this.state.input)}>{action}</Button>)
 
-                // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
+                    // buttonList.push(<Button variant="primary" size={'sm'} onClick={()=>source[action](target,this.state.input, this.setPopoverWarningMsg)}>{action}</Button>)
                 ));
             }
             else{
@@ -740,6 +756,7 @@ class create_lab extends React.Component {
 
 
         return(
+
         <Overlay
             show={this.state.showPopover}
             target={this.target}
@@ -760,6 +777,7 @@ class create_lab extends React.Component {
                     </div>
                 </Popover.Title>
                 <Popover.Content>
+
 
                         <div className="arrowBox">
                             <form className="form-inline" role="form" onSubmit={this.handleSubmit}>
@@ -791,9 +809,9 @@ class create_lab extends React.Component {
                             {/*<span id="transferFeedback" className="transferFeedback"*/}
                             {/*      style="display:none;color:white"></span>*/}
                         </div>
-                </Popover.Content>
-            </Popover>
-        </Overlay>
+                    </Popover.Content>
+                </Popover>
+            </Overlay>
         )
     }
     workspacePane(){
@@ -804,10 +822,12 @@ class create_lab extends React.Component {
             <span>workspace for step {0}</span>
             <ToastsContainer store={ToastsStore}/>
         </Tab.Pane>);
-
+        console.log("pushing")
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
+            console.log("equip is ")
+            console.log(equipments)
             workspaces.push(
                 <Tab.Pane
                     eventKey={i}
@@ -817,8 +837,8 @@ class create_lab extends React.Component {
                     <div>
                         {/*<span style={{left:"50%"}}>workspace for step {i}</span>*/}
 
-                    <NavDropdown title="Import from" id="nav-dropdown"
-                                 style={{float:"right",display:"inline-block",width:"240px"}}>
+                        <NavDropdown title="Import from" id="nav-dropdown"
+                                     style={{float:"right",display:"inline-block",width:"240px"}}>
 
                             <form style={{height:"40px",display:"inline-block",background: "rgba(255, 0, 0, 0.1);"}} role="form" onSubmit={(e)=>this.handleImport(e,i)}>
                                 <span style={{marginLeft:10}}>Step</span>
@@ -838,36 +858,38 @@ class create_lab extends React.Component {
                             </form>
 
 
-                    </NavDropdown>
+                        </NavDropdown>
                     </div>
-                <div
-                    style={{height:"100%"}}
-                    id={"workspace"+i}
-                >
+                    <div
+                        style={{height:"100%"}}
+                        id={"workspace"+i}
+                    >
 
-                    {equipments.map((equipment,index) => (
-
+                        {equipments.map((equipment,index) => (
                         <Draggable_equipment wkspace_id={i} equip_id={index}
                                              interation_handler= {this.interaction_handler}
                                              viewInfo={this.getInfo}
                                              canInteract = {this.canInteract}
                                              handle_equip_delete={this.handle_equip_delete}
                                              equipment={equipment}
+                                             role="instructor"
                                              move_element={this.move_element}
                                              adjust={this.adjust_interactive_element}
                                              width={200} height={200}
                                              hide={this.hidePopOver}
                         />
 
-                    ))
-                    }
-
-                    {this.popover()}
 
 
-                    <ToastsContainer store={ToastsStore}/>
-                </div>
-            </Tab.Pane>);
+                        ))
+                        }
+
+                        {this.popover()}
+
+
+                        <ToastsContainer store={ToastsStore}/>
+                    </div>
+                </Tab.Pane>);
         }
 
         return(
@@ -886,12 +908,12 @@ class create_lab extends React.Component {
         temp[this.state.step_num+1]=deepCloneWithType(temp[this.state.step_num]);
 
         this.setState({
-            //add a new step to steps[]
-            step_num: this.state.step_num + 1,
-            equipments:temp
+                //add a new step to steps[]
+                step_num: this.state.step_num + 1,
+                equipments:temp
 
 
-        }
+            }
         );
 
     };
@@ -985,7 +1007,7 @@ class create_lab extends React.Component {
                             />
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
-                                {this.instructionPane()}
+                            {this.instructionPane()}
                         </Col>
 
                         <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >

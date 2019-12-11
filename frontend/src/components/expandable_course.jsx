@@ -47,6 +47,7 @@ class Expandable_Classes extends React.Component
 
     render()
     {
+
         let style = this.props.style;
         let classes = this.props.classes;
         let expand = "https://www.materialui.co/materialIcons/navigation/expand_less_black_192x192.png";

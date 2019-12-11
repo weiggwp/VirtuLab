@@ -62,7 +62,9 @@ public class EquipmentDTO {
         this.color = color;
         this.chemProp = chemProp;
     }
+    public EquipmentDTO(){
 
+    }
     public void setChemProp(String chemProp) {
         this.chemProp = chemProp;
     }

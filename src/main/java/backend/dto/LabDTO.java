@@ -1,5 +1,7 @@
 package backend.dto;
 
+import backend.model.Equipment;
+import backend.model.Step;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
@@ -22,8 +24,13 @@ public class LabDTO {
     private String description;
     @JsonProperty("email")
     private String email;
+    @NotNull
+    @NotEmpty
+    private List<StepDTO> stepsDTO;
 
     private Date date;
+    @JsonProperty("complete")
+    private boolean complete;
 
     public String getDescription() {
         return description;
@@ -40,7 +47,6 @@ public class LabDTO {
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
-
 
 
     public String getEmail() {
@@ -68,12 +74,13 @@ public class LabDTO {
     @NotEmpty
     @JsonProperty("author")
     private String creator;
-//    @NotNull
+    //    @NotNull
 //    @NotEmpty
 //    private String password;
     @NotNull
     @NotEmpty
-    private List<StepDTO> steps;
+    @JsonProperty("steps")
+    private List<Step> steps;
     @JsonProperty("open")
     private int open;
 
@@ -83,9 +90,17 @@ public class LabDTO {
 
 
     private List<EquipmentDTO> equipments;
-
+    private List<Equipment> returnEquips;
     public List<EquipmentDTO> getEquipments() {
         return equipments;
+    }
+
+    public List<Equipment> getReturnEquips() {
+        return returnEquips;
+    }
+
+    public void setReturnEquips(List<Equipment> returnEquips) {
+        this.returnEquips = returnEquips;
     }
 
     public void setEquipments(List<EquipmentDTO> equipments) {
@@ -127,12 +142,20 @@ public class LabDTO {
         this.creator = creator;
     }
 
-    public List<StepDTO> getSteps() {
+    public @NotNull @NotEmpty List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<StepDTO> steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     private String tagString(){
@@ -159,6 +182,15 @@ public class LabDTO {
                 ", steps=" + steps +
                 ", equipments=" + equipments+
                 ", isPublic=" + open +
+                ", completed=" + complete +
                 '}';
+    }
+
+    public List<StepDTO> getStepsDTO() {
+        return stepsDTO;
+    }
+
+    public void setStepsDTO(List<StepDTO> stepsDTO) {
+        this.stepsDTO = stepsDTO;
     }
 }

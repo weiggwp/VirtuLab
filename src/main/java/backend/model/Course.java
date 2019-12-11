@@ -26,6 +26,9 @@ public class Course {
     @OneToMany(mappedBy = "course", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CourseLab> courseLabList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UserCourseLab> userCourseLabList = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(name = "course_lab", joinColumns = {@JoinColumn(name = "courseID")},
                 inverseJoinColumns = {@JoinColumn(name = "labID")})
@@ -146,6 +149,14 @@ public class Course {
 
     public void setCourseLabList(List<CourseLab> courseLabList) {
         this.courseLabList = courseLabList;
+    }
+
+    public List<UserCourseLab> getUserCourseLabList() {
+        return userCourseLabList;
+    }
+
+    public void setUserCourseLabList(List<UserCourseLab> userCourseLabList) {
+        this.userCourseLabList = userCourseLabList;
     }
 
     //

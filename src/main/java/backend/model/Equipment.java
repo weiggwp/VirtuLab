@@ -198,4 +198,5 @@ public class Equipment {
         this.disabled = disabled;
     }
 
+
 }

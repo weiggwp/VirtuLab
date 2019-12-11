@@ -8,11 +8,12 @@ import InstructorHome from './components/instructor_home.jsx';
 import InstructorLabs from './components/instructor_labs.jsx';
 import PublicLab from './components/public_labs.jsx';
 import CreateCourse from './components/create_course.jsx';
-import DoLab from './components/student_lab.jsx';
+import DoLab from './components/do_lab.jsx';
 import CreateLab from './components/create_lab.jsx';
 import Statistics from './components/Statistics.jsx';
 import View from './components/view_lab.jsx';
 import test_draggable from './components/testDrag.jsx';
+import { Drag }  from './components/testDrag.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
 
@@ -33,7 +34,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Login} />
 
-              <Route exact path="/test" component={test_draggable} />
+              <Route exact path="/test" component={Drag} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/forgot_password" component={forgot_password} />

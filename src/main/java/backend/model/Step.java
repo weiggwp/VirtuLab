@@ -1,5 +1,7 @@
 package backend.model;
 
+import backend.dto.StepDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,12 @@ public class Step {
 
     public void setInstruction(String instruction) {
         this.instruction = instruction;
+    }
+
+    public StepDTO dtoClone(){
+        StepDTO s= new StepDTO((int)stepNum,instruction);
+        s.setStepID(stepID);
+        return s;
     }
 
     @Override

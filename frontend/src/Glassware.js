@@ -217,6 +217,7 @@ export default class Glassware extends Equipment{
         }
         else
         {
+
             target.value=this.temperature;
         }
 

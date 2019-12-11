@@ -1,6 +1,7 @@
 import InstructorHeader from "./instructorHeader";
 import {Button, Col, Container, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import Redirect from "react-router-dom/es/Redirect";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import React from "react";
@@ -24,6 +25,7 @@ class view_lab_course extends React.Component
             loaded: false,
             students:[],
             due_date: "",
+            redirectStat: false,
         }
 
     }
@@ -108,7 +110,7 @@ class view_lab_course extends React.Component
                 console.log("resp is "+JSON.stringify(response))
                 for (let i=0; i<response.data.length; i++){
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
-                    completed:"N/A"};
+                        completed:"N/A"};
                 }
                 let date =new Date(this.props.location.state.due_date);
                 console.log("date is " +date)
@@ -137,8 +139,18 @@ class view_lab_course extends React.Component
             );
     }
 
+    redirectstats=()=>{
+        this.setState({
+            redirectStat: true
+        })
+
+    }
 render() {
 
+
+    if (this.state.redirectStat) {
+        return <Redirect exact to='/statistics' />
+    }
 
     if (this.state.loaded==false){
         this.getStudents();
@@ -159,6 +171,10 @@ render() {
                     </Navbar.Collapse>
                 </Navbar>
 
+                <Button style={{backgroundColor: 'orange', color: "white"}}
+                        onClick={this.redirectstats}>
+                    Statistics
+                </Button>
 
                 <div>
                     <div>
@@ -242,7 +258,10 @@ render() {
 
 
                 </div>
+
             </div>
+
+
 
 
         )

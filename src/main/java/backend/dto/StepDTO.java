@@ -10,6 +10,12 @@ public class StepDTO {
     @NotEmpty
     private int stepNum;
 
+    @NotNull
+    @NotEmpty
+    private String instruction;
+    private long stepID;
+
+
     public List<EquipmentDTO> getEquipments() {
         return equipments;
     }
@@ -18,15 +24,14 @@ public class StepDTO {
         this.equipments = equipments;
     }
 
-    @NotNull
-    @NotEmpty
-    private String instruction;
 
     @NotNull
     @NotEmpty
     private List<EquipmentDTO> equipments;
     public StepDTO(){}
-
+    public void setStepID(long stepID){
+        this.stepID=stepID;
+    }
     public int getStepNum() {
         return stepNum;
     }

@@ -46,8 +46,10 @@ export default class Element extends Equipment{
         else if(amount>=this.amount){
             amount = this.amount;
         }
+
         clone.amount=parseFloat(amount);
         this.amount-=amount;
+
 
         return clone;
     }

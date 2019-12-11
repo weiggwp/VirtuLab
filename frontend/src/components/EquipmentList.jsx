@@ -84,6 +84,7 @@ class EquipmentList extends React.Component
         }
     }
 
+
     renderArray(elementType) {
         const solutions = this.props.set[elementType];//gives the list of solutions
 

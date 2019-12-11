@@ -506,7 +506,7 @@ class instructor_labs extends React.Component {
 
 
 
-                                                <Dropdown class={"dropdown-item"}
+                                          {/*      <Dropdown class={"dropdown-item"}
                                                                eventKey="5">Assign {classes.map(classItem => (
 
                                                     <Dropdown.Item class={"dropdown-item"} onClick=
@@ -516,7 +516,7 @@ class instructor_labs extends React.Component {
 
                                                 ))}
 
-                                                </Dropdown>
+                                                </Dropdown>*/}
 
 
 

@@ -11,15 +11,16 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 
 import { Line } from 'rc-progress';
 
-class test extends React.Component {
+class Drag extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             zoom: 1
         };
         this.t = undefined;
-        this.start = 100;
-
+        this.start = this.props.capacity;
+        this.capacity=this.props.capacity;
+        this.capacitySet=false;
         this.onMouseDown = this.onMouseDown.bind(this);
         this.repeat = this.repeat.bind(this);
         this.zoom = this.zoom.bind(this);
@@ -29,11 +30,16 @@ class test extends React.Component {
         this.zoomOutRepeat = this.zoomOutRepeat.bind(this);
         this.zoomOutDown = this.zoomOutDown.bind(this);
 
+        this.zoomOutBig=this.zoomOutBig.bind(this);
+        this.zoomOutRepeatBig = this.zoomOutRepeatBig.bind(this);
+        this.zoomOutDownBig = this.zoomOutDownBig.bind(this);
+
         this.onMouseUp = this.onMouseUp.bind(this);
     }
 
     // ZOOM IN
     onMouseDown() {
+
         this.repeat();
     }
 
@@ -44,9 +50,17 @@ class test extends React.Component {
     }
 
     zoom() {
-        if(this.state.zoom>=100)
+        if(this.state.zoom>=this.state.capacity)
             return
-        this.setState({ zoom: Math.round((this.state.zoom + 0.2)*100)/100  });
+        let incValue=.2;
+        if (this.props.incValue!=undefined){
+            incValue=this.props.incValue;
+        }
+        console.log("inc value is "+incValue+ " zoom is "+this.state.zoom)
+        this.setState({ zoom: Math.round((this.state.zoom + incValue)*this.capacity)/this.capacity },()=>{
+            this.props.handleChange(this.state.zoom)
+        });
+
     }
 
     // ZOOM OUT
@@ -54,35 +68,62 @@ class test extends React.Component {
     zoomOut() {
         if(this.state.zoom<=0)
             return
-        this.setState({ zoom: Math.round((this.state.zoom - 0.2)*100)/100  });
+        let incValue=.2;
+        this.setState({ zoom: Math.round((this.state.zoom - incValue)*this.capacity)/this.capacity },()=>{
+            this.props.handleChange(this.state.zoom)
+        });
     }
 
     zoomOutRepeat() {
         this.zoomOut();
-        this.t = setTimeout(this.zoomOutRepeat, this.start);
-        this.start = this.start / 2;
+       // this.t = setTimeout(this.zoomOutRepeat, this.start);
+        //this.start = this.start / 2;
     }
 
     zoomOutDown(e) {
         e.preventDefault();
         this.zoomOutRepeat();
-    }
 
+    }
+    zoomOutDownBig(e) {
+        e.preventDefault();
+        this.zoomOutRepeatBig();
+
+    }
+    zoomOutRepeatBig() {
+        this.zoomOutBig();
+        // this.t = setTimeout(this.zoomOutRepeat, this.start);
+        //this.start = this.start / 2;
+    }
+    zoomOutBig() {
+        if(this.state.zoom<=0)
+            return
+        let incValue=2;
+        this.setState({ zoom: Math.round((this.state.zoom - incValue)*this.capacity)/this.capacity },()=>{
+            this.props.handleChange(this.state.zoom)
+        });
+    }
     // STOP ZOOMING
     onMouseUp() {
+
         clearTimeout(this.t);
-        this.start = 100;
+        this.start = this.capacity
     }
 
     render() {
+            if (this.start==undefined){
+                this.start=this.props.capacity;
+                this.capacity=this.props.capacity;
+            }
+        console.log("capacity is "+this.capacity+ " zoom is "+this.state.zoom)
         return (
             <div className="zoomControl">
                 <div
                     className="zoom"
 
                 >
-                    <Line percent={this.state.zoom} strokeWidth="1" strokeColor="#25cfcc" />
-                    {this.state.zoom}
+                    <Line percent={this.state.zoom*100/this.capacity} strokeWidth="1" strokeColor="#25cfcc" />
+                    {this.state.zoom} mL
                 </div>
 
 
@@ -100,8 +141,15 @@ class test extends React.Component {
                 >
                     -
                 </button>
+                <button
+                    className="zoomOut"
+                    onMouseUp={this.onMouseUp}
+                    onMouseDown={this.zoomOutDownBig}
+                >
+                    --
+                </button>
             </div>
         );
     }
 }
-export default test;
+export {Drag};

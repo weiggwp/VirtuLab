@@ -73,7 +73,7 @@ class student_home extends React.Component
                 // this.render()
             })
             .catch((error) => {
-                //console.log(error)
+                console.log("err is"+error)
                 }
             );
     }
@@ -82,16 +82,18 @@ class student_home extends React.Component
     handleAddCourse = (e) => {
         e.preventDefault();
 
+        //alert(this.state.code)
         const course = {
-            course_number: this.state.code,
+            code: this.state.code,
             email: this.props.email
         };
-
+        console.log("course is "+JSON.stringify(course))
 
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
+
             }
         };
         //axio sends message to backend to handle authentication
@@ -115,6 +117,9 @@ class student_home extends React.Component
 
     };
 
+    handleCheckBox = () => {
+        this.updateClasses()
+    }
 
 
     render() {
@@ -168,7 +173,7 @@ class student_home extends React.Component
                         <Nav >
                             <label className="contain">
                                 Show Completed Labs
-                                <input type="checkbox"/>
+                                <input type="checkbox" onClick={this.handleCheckBox}/>
                                 <span className="checkmark">
 
                                     </span>

@@ -4,8 +4,12 @@ import Tool, {Scale, BunsenBurner} from "./Tool.js";
 
 
 import water from "./Images/water.svg";
+
+
 import flame from "./Images/2500mLBottle.svg";
 import indicator from "./Images/100mLBottle_black.svg";
+
+
 
 import small_flask from "./Images/250mLFlask.svg";
 
@@ -73,6 +77,7 @@ export default class EquipmentSet {
             new Glassware("Beaker", large_beaker, 1000, 400, 0, 100),]
     }
 
+
     createVolumetricFlasks() {
         return [new Glassware("Volumetric Flask", small_volFlask, 100, 50, 0, 70),
             new Glassware("Volumetric Flask", medium_volFlask, 250, 125, 0, 85),
@@ -138,6 +143,7 @@ export default class EquipmentSet {
 
 
     populateList() {
+
         this.equipmentList['Solution'] = {
             'General': this.createGeneral(),
             'Stock Solutions':this.createStockSolutions(),
@@ -146,6 +152,7 @@ export default class EquipmentSet {
             'Indicators':this.createIndicators()
 
         };
+
 
         this.equipmentList['Glassware'] = {
             'Titration Flasks': this.createFlasks(),
@@ -171,8 +178,10 @@ export default class EquipmentSet {
                     equipment.setType(elements)
 
 
+
                 ))
             )
+
         );
 
         Object.keys(solution).map((elements,index)=>
@@ -200,6 +209,7 @@ export default class EquipmentSet {
         return this.getFlatList();
     }
 
+
     getFlatList()
     {
 
@@ -218,6 +228,7 @@ export default class EquipmentSet {
                     result.push(equipment)
 
 
+
                 ))
             ))
 
@@ -231,15 +242,24 @@ export default class EquipmentSet {
                 ))
             ))
 
+
         this.equipmentList['Tools'].map((equipment) => (
             result.push(equipment)
 
 
-        ));
+        ))
         return result;
     }
 
 
+
+
+
+
+
+
+
+
+
+
 }
-
-
