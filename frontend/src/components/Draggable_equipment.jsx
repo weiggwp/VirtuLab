@@ -40,7 +40,7 @@ class Draggable_equipment extends React.Component {
     {
         this.setState({ color: color });
         this.props.equipment.color=color;
-        this.props.addColorChangeRule(this.props.equipment, color);
+        // this.props.addColorChangeRule(this.props.equipment, color);
     };
 
     getColor()
