@@ -38,7 +38,6 @@ class view_lab_course extends React.Component
     };
     handleChangeDueDate = (e)=>{
         e.preventDefault();
-        console.log(this.state.due_date)
 
 
     }
@@ -82,7 +81,6 @@ class view_lab_course extends React.Component
 
 
     getStudents(){
-        console.log()
         let labs =[];
         const lab = {
             labID:this.props.location.state.labID
@@ -102,21 +100,15 @@ class view_lab_course extends React.Component
         };
 
         var studentList=[];
-        console.log("state is "+JSON.stringify(this.props.location.state))
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_students', course, axiosConfig)
             .then((response) => {
-                console.log("resp is "+JSON.stringify(response))
                 for (let i=0; i<response.data.length; i++){
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
                         completed:"N/A"};
                 }
                 let date =new Date(this.props.location.state.due_date);
-                console.log("date is " +date)
-
-             //   date.setDate(date.getDate()-1);
-                console.log("date is " +date)
                 this.setState({
                    loaded: true,
                     students:studentList,
@@ -127,7 +119,6 @@ class view_lab_course extends React.Component
 
             })
             .catch((error) => {
-                console.log("beep")
                 for (let i=0; i<4; i++){
                     studentList[i]={name:"yeet",email:"yeetmail",completed:"N/A"};
                 }

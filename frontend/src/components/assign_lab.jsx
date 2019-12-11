@@ -46,7 +46,6 @@ export class assign_lab extends Component {
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
 
-                console.log(JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -59,7 +58,6 @@ export class assign_lab extends Component {
                     classArray[i]={classname:response.data[i].course_name,classID:response.data[i].course_id,
                         clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
 
-                       console.log("response is " +JSON.stringify(response.data[i]))
                 }
                 this.setState({classes:classArray,loading_course:false});
             })
@@ -81,7 +79,6 @@ export class assign_lab extends Component {
                     lab_loaded: true,
                     classes: this.props.location.state.courses
                 }, () => {
-                    console.log(this.state.lab_id);
 
                 }
             )
@@ -110,9 +107,7 @@ export class assign_lab extends Component {
         }
 
         for (let i=0; i<this.state.classes.length; i++){
-            console.log("classname is " +this.state.classes[i].classname+  " current is "+this.state.selected_course_name.value )
             if (this.state.classes[i].classname==this.state.selected_course_name.value) {
-                console.log("copying "+JSON.stringify(this.state.classes[i]))
                 this.state.course_code=this.state.classes[i].accessCode;
                 break;
             }
@@ -193,7 +188,6 @@ export class assign_lab extends Component {
         return lis;
     }
     handleDateChange = date => {
-        console.log("doot" + date)
         this.setState({
             due_date: date
 
@@ -217,7 +211,6 @@ export class assign_lab extends Component {
             return null;
         }
         else  if (this.state.loading_course){
-            console.log("loading classes", this.state.classes);
             this.updateClasses();
             return null;
 

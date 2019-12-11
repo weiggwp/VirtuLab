@@ -30,7 +30,6 @@ class ColorPicker extends React.Component{
 
 
     handleChangeComplete = (color,event) => {
-        console.log(color.hex,event)
         this.setState({ background: color.hex });
     };
 
@@ -72,7 +71,6 @@ class ColorPicker extends React.Component{
                 },
             },
         });
-        // alert(this.props.equipment.image);
         return (
             <div
 

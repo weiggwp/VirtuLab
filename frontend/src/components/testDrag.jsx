@@ -56,7 +56,6 @@ class Drag extends React.Component {
         if (this.props.incValue!=undefined){
             incValue=this.props.incValue;
         }
-        console.log("inc value is "+incValue+ " zoom is "+this.state.zoom)
         this.setState({ zoom: Math.round((this.state.zoom + incValue)*this.capacity)/this.capacity },()=>{
             this.props.handleChange(this.state.zoom)
         });
@@ -115,7 +114,6 @@ class Drag extends React.Component {
                 this.start=this.props.capacity;
                 this.capacity=this.props.capacity;
             }
-        console.log("capacity is "+this.capacity+ " zoom is "+this.state.zoom)
         return (
             <div className="zoomControl">
                 <div

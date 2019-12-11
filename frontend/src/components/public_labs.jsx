@@ -95,9 +95,7 @@ class public_labs extends React.Component {
 
 
 
-handleSelect(page) {
-        alert(page)
-}
+
 
 
 handlePage(event) {
@@ -125,8 +123,6 @@ handlePage(event) {
         .then((response) => {
             // alert(response)
             let numPages = response.data["totalPages"]
-            // console.log(response.data['totalPages']) // number of pages needed
-            // console.log(response.data['labs']['content']) //this is the list
 
             this.setState({
                 totalPages: numPages
@@ -160,7 +156,6 @@ handlePage(event) {
             current_page_labs: this.state.labs.slice(startIndex, startIndex + 3),
             currentPage: pageNum
         })
-        // console.log("current page labs: " + this.state.current_page_labs)
 
     }
 
@@ -231,7 +226,6 @@ handleFieldChange = (e, field) => {
         description:"",
         tags: tags,
     }
-    // console.log("tags are " +this.state.tags +" + lab is " +JSON.stringify(tags))
     let axiosConfig = {
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -246,7 +240,6 @@ handleFieldChange = (e, field) => {
     // 'aws_website:8080/userPost'
     axios.post(GLOBALS.BASE_URL + 'get_matching_public_labs', lab, axiosConfig)
         .then((response) => {
-            // console.log("resp is " +response.json())
           //  alert("data is "+JSON.stringify(response))
             if (response.data.length==0){
                 this.state.notFound="No matching labs found.";
@@ -263,7 +256,6 @@ handleFieldChange = (e, field) => {
                     description: response.data[i].description};
 
             }
-            // console.log("AAA classarray is "+classArray);
             let totalPages = Math.ceil(labArray.length / this.state.perPage);
             this.setState({labs:labArray,
                         loading_labs:false,
@@ -272,7 +264,6 @@ handleFieldChange = (e, field) => {
 
         })
         .catch((error) => {
-                alert(error +" is the error")
             }
         );
 }
@@ -300,19 +291,16 @@ handleFieldChange = (e, field) => {
             .then((response) => {
 
                 const data = response.data;
-                console.log("data",response.data)
                 this.setState(
                     {
                         viewLab:{id:data.labID,name:data.name,equipments:data.equipments,steps:data.steps},
                         viewing:true
                     }
                 )
-                console.log(this.state.viewLab)
 
 
             })
             .catch((error) => {
-                    console.log("doot" + error)
                 this.setState(
                     {
                         viewing:false
@@ -327,7 +315,6 @@ handleFieldChange = (e, field) => {
 
     handleCloneLab(lab){
 
-        console.log(" lab is " +JSON.stringify(lab))
 
         let axiosConfig = {
             headers: {
@@ -352,7 +339,6 @@ handleFieldChange = (e, field) => {
 
             })
             .catch((error) => {
-                    console.log("doot" + error)
                 }
             );
     }
@@ -416,8 +402,6 @@ handleDrag(tag, currPos, newPos) {
         axios.post(GLOBALS.BASE_URL + 'get_public_labs',  axiosConfig)
             .then((response) => {
                 this.state.notFound="";
-                // console.log("resp is " +response.json())
-                console.log("data is "+JSON.stringify(response))
 
 
                 for (let i=0; i<response.data.length; i++){
@@ -426,7 +410,6 @@ handleDrag(tag, currPos, newPos) {
                         keywords:response.data[i].tags,description:response.data[i].description};
 
                 }
-                // console.log("AAA classarray is "+classArray);
                 let totalPages = Math.ceil(labArray.length / this.state.perPage);
                 this.setState({labs:labArray,loading_labs:false, totalPages: totalPages,
                             current_page_labs: labArray.slice(0, 3)});
@@ -434,24 +417,20 @@ handleDrag(tag, currPos, newPos) {
 
             })
             .catch((error) => {
-                console.log(error +" is the error")
                 }
             );
 
         axios.post(GLOBALS.BASE_URL + 'get_tags',  axiosConfig)
             .then((response) => {
                 let suggestionArray=[];
-                console.log("data is "+JSON.stringify(response))
                 for (let k=0; k<response.data.length; k++){
                     suggestionArray[k]=       { id: response.data[k], text: response.data[k] };
 
 
                 }
-                console.log("suggestion array is " +suggestionArray)
                 const temp = [       { id: 'Acids', text: 'Acids' },
                     { id: 'Mixtures', text: 'Mixtures' },
                     { id: 'Decomposition', text: 'Decomposition' },]
-                console.log("temp is " +temp)
                 this.setState({suggestions:suggestionArray});
 
 
@@ -460,7 +439,6 @@ handleDrag(tag, currPos, newPos) {
 
             })
             .catch((error) => {
-                    console.log(error +" is the error")
                 }
             );
 

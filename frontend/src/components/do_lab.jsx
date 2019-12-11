@@ -176,8 +176,6 @@ class DoLab extends React.Component {
             currentEquipment: source,
             viewInfo:true
         }, () => {
-            console.log(this.state.currentEquipment)
-            console.log(this.state.viewInfo)
 
         })
         // this.setViewInfo();
@@ -313,34 +311,27 @@ class DoLab extends React.Component {
 
 
     populateSteps()
-    {    console.log("populating,state is ")
-        console.log(this.props.location.state.equipments)
+    {    
         //if not new lab, load old lab
         if(this.props.location.state!==undefined){
 
             //get steps from prop
             var step_list = this.props.location.state.steps;
-            console.log((this.props.location.state.steps))
             step_list.sort(this.compare)
             //opening a previously saved lab
             if (step_list !== undefined)
             {
                 for (var i = 1; i <step_list.length ; i++) {
-                    console.log("steplist["+i+"] = " );console.log(step_list[i]);
                     this.state.steps.push(step_list[i]);
 
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i-1].equipments);
 
-                    console.log(this.state.equipments[i])
 
                 }
 
             }
-            console.log("ABC EQUI{S IS ")
-            console.log(this.state.equipments)
             this.populateEquipmentSetup();
 
-            // alert("got here"+this.props.location.state.id);
 
 
             this.setState(
@@ -350,9 +341,6 @@ class DoLab extends React.Component {
                     lab_title:this.props.location.state.name,
                     lab_loaded: true,
                 }, () => {
-                    // console.log(this.state.lab_id);
-                    // console.log(this.state.lab_title);
-                    // console.log(this.state.steps);
                 }
             )
             //this.setStepsEquips()
@@ -372,14 +360,10 @@ class DoLab extends React.Component {
     }
     setStepsEquips()
     {
-        console.log("YERR CURRENT EQUP IS "+JSON.stringify(this.state.equipments))
 
         let i=0;
         for (i=0; i<this.state.steps.length; i++){
-            console.log("this step is "+JSON.stringify(this.state.steps[i]));
-            console.log("this equip is "+this.state.equipments[i+1])
             this.state.steps[i].setEquipments(this.state.equipments[i-1])
-            console.log("now this step is "+JSON.stringify(this.state.steps[i]));
         }
       /*  this.state.steps.map((step,index)=>(
 
@@ -387,7 +371,6 @@ class DoLab extends React.Component {
 
         ));*/
 
-        console.log("populated equipment set in steps in setStepsEquips" ,this.state.steps);
     }
     setRedirectHome = () => {
         if (!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
@@ -406,22 +389,14 @@ class DoLab extends React.Component {
             return null;
         }
 
-        console.log("steps is  ");
-        console.log(this.state.equipments);
-        console.log("current step is "+this.state.completedSteps)
         let stepNum=this.state.completedSteps+1;
         if (stepNum==1){
-            console.log(this.state.equipments);
             this.state.equipments[1]=[]
             this.setState({testInt:12}) // DONT DELETE, THE CODE DOESNT WORK WITHOUT IT IDK
             this.render()
             return null
         }
-        console.log("copy is ");
-        console.log(this.state.currentStepCopy)
         this.state.equipments[stepNum]=deepCloneWithType(this.state.currentStepCopy)
-        console.log("steps is  ");
-        console.log(this.state.equipments);
         this.setState({testInt:12}) // DONT DELETE, THE CODE DOESNT WORK WITHOUT IT IDK
         this.render()
 
@@ -457,9 +432,7 @@ class DoLab extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'get_lab', lab, axiosConfig)
             .then((response) => {
                 // TODO: pull the lab
-                console.log("The lab is: ")
                 let theLab = response.data
-                console.log(theLab)
 
                 this.setState({
                     lab: theLab
@@ -569,7 +542,6 @@ class DoLab extends React.Component {
 
     instruction(index)
     {
-       // console.log("index is "+index)
         //,width: '20rem' for div
         return(
             <div style={{padding: 10,height:'30vh'}}>
@@ -615,10 +587,8 @@ class DoLab extends React.Component {
         // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
-        //console.log("state is "+JSON.stringify(this.state))
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
-            console.log("i is "+i)
             instructions.push(<Tab.Pane eventKey={i}>
                 <EquipmentList set={this.equipmentSet.getEquipments()} step={i+1} handleAddEquipment={this.handleAddEquipment}/>
 
@@ -644,11 +614,6 @@ class DoLab extends React.Component {
         const source = this.state.equipments[workspace_id1][eq_id1];
         const target = this.state.equipments[workspace_id2][eq_id2];
         const interactable = source.canInteract(target);
-        console.log("CALLED ")
-        console.log("source is ");
-        console.log(source);
-        console.log("target is ");
-        console.log(target);
         if(interactable){
             this.eq1 = source;
             this.eq2 = target;
@@ -659,8 +624,6 @@ class DoLab extends React.Component {
                 this.forceUpdate()
             }
             else{
-                console.log("source is ");
-                console.log(source);
                 source.interact(target);
                 this.forceUpdate()
             }
@@ -675,17 +638,12 @@ class DoLab extends React.Component {
         const workspace_id = data.workspace_id;
         const eq_id = parseInt(data.equip_id);
 
-        console.log(data);
         let temp = this.state.equipments;
         // delete temp[workspace_id][eq_id];
-        console.log(temp[workspace_id][1]);
-        // console.log(temp);
 
         const removed = temp[workspace_id].splice(eq_id,1);
 
         this.setState({equipments: temp});
-        console.log(removed);
-        console.log(temp);
     }
 
 
@@ -716,8 +674,6 @@ class DoLab extends React.Component {
         source_dm.style.left = x + 'px';
         source_dm.style.top = y + 'px';
 
-        console.log("client",ev.clientX,"x",x);
-        console.log("client",ev.clientY,"y",y);
 
 
 
@@ -725,7 +681,6 @@ class DoLab extends React.Component {
 
         const source = this.state.equipments[workspace_id][equip_id];
         source.setLocation(x,y);
-        // console.log("moving ",workspace_id,equip_id,source);
     }
 
     dragover_handler(ev) {
@@ -742,16 +697,11 @@ class DoLab extends React.Component {
         const source = this.eq1;
         const target = this.eq2;
         const actions = source.getActions(target);
-        console.log(e);
 
         const data = new FormData(e.target);
-        console.log(data);
     }
     handleInputChange=(e)=>{
-        console.log("e is abc123")
-        console.log(e)
         this.setState({input: e},()=>{
-            console.log("input is now "+e)
         });
 
     }
@@ -771,14 +721,10 @@ class DoLab extends React.Component {
     }
 
 
-    setPopoverWarningMsg(msg){
-
-        this.setState({popoverWarning:msg},()=>(alert(msg)));
-    };
+    
     handleAction(source, action,target,input){
 
 
-        console.log("HANDLING ACTION SOURCE IS "+source+"Action is "+action + " target is "+target + " input is "+input)
         source[action](target,parseFloat(input));
         this.setState({input:1})
         this.forceUpdate();
@@ -809,15 +755,12 @@ class DoLab extends React.Component {
         }
         if (target==undefined)return null
         const overflow_msg = "Target Vessels will Overflow. Your Desired volume has not been completely transferred.";
-        console.log("target is ")
-        console.log(target)
         let incRate =.2
         if (target!==undefined)
          incRate =target.capacity/100;
         let capacity=100;
         if (target!==undefined)
             capacity=target.capacity
-        console.log("capacity is "+capacity +" target is "+target)
 
         return(
 
@@ -867,13 +810,9 @@ class DoLab extends React.Component {
 
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         //workspaces.push(<Tab.Pane eventKey={0}> workspace for step {0} </Tab.Pane>);
-        console.log("equips is ")
-        console.log(this.state.equipments)
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
             if (equipments==undefined)break;
-            console.log("equip is ")
-            console.log(equipments)
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
             workspaces.push(
                 <Tab.Pane
@@ -910,8 +849,6 @@ class DoLab extends React.Component {
                     </div>
                 </Tab.Pane>);
         }
-        console.log("PUSHED!")
-        console.log(this.state.equipments)
         return(
             <Tab.Content style={{height:"100%"}}>
                 {workspaces}
@@ -946,7 +883,6 @@ class DoLab extends React.Component {
     handleSelectEquipment=(equipment)=>
     {
         equipment.disabled = !equipment.disabled;
-        alert(equipment.name+" "+equipment.disabled)
 
 
     };
@@ -962,7 +898,6 @@ class DoLab extends React.Component {
         // var image = equipment;
 
         const current = this.state.equipments;
-        console.log("current is "+JSON.stringify(current )+"step is "+JSON.stringify(step))
         if (this.state.equipments[0]==null){
             this.state.equipments[0]=[]
         }
@@ -983,11 +918,9 @@ class DoLab extends React.Component {
                 {
                     equipments:current
                 }, () => {
-                    console.log(this.state.equipments)
                 }
             )
         }
-        console.log("now current is "+JSON.stringify(current )+"step is "+JSON.stringify(step))
     };
      makeSlide(){
         var currslide =
@@ -998,38 +931,23 @@ class DoLab extends React.Component {
     }
     callbackFirstRender(){
          this.render();
-         console.log("NOW copy is "+this.state.currentStepCopy)
-         console.log(this.state.currentStepCopy)
         this.setState({reRender: false},this.callbackSecondRender)
     }
     callbackSecondRender(){
          this.render()
     }
     callback(){
-         console.log("called back!")
         var currslide =
             <Slides id="slides"steps={this.state.steps}onSelect={this.selectStep}
                     completedSteps={this.state.completedSteps} slide_num={this.state.step_num} addChild={this.handleAddChild}
                     role={"student"}/>;
         this.setState({slide:currslide});
-        console.log("completed steps is "+this.state.completedSteps);
-        console.log("steps is");
-        console.log(this.state.steps)
-        console.log("stepcopy is");
-        console.log(this.state.currentStepCopy)
-        console.log("should be ");
-        console.log(this.state.equipments[this.state.completedSteps+1])
-        console.log(this.state.equipments)
+        
         ToastsStore.success("Step completed!")
 
         let cloneCopy;
         cloneCopy=deepCloneWithType(this.state.equipments[this.state.completedSteps+1]);
-        console.log(cloneCopy)
-        console.log(this.state.equipments[this.state.completedSteps+1])
-        //this.state.equipments[this.state.completedSteps+1].push("test")
-        console.log(cloneCopy)
-        console.log(this.state.equipments[this.state.completedSteps+1])
-
+        
         this.setState({reRender: true,currentStepCopy:cloneCopy},this.callbackFirstRender)
 
     }
@@ -1051,8 +969,6 @@ class DoLab extends React.Component {
     verifyStep( stepEquips,studentEquips) {
         let m = stepEquips.length;
         let n = studentEquips.length;
-        console.log("step equip is ");console.log((stepEquips))
-        console.log("verifying step, studentEquips = ");console.log((studentEquips));
 
         const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
 
@@ -1083,8 +999,6 @@ class DoLab extends React.Component {
                     break;
                 }
              /*   else if (equip1.items!=equip2.items){
-                    console.log("First items: ");console.log(equip1.items);
-                    console.log("second items: ");console.log(equip2.items);
                 }*/
 
             }
@@ -1092,7 +1006,6 @@ class DoLab extends React.Component {
 
         let res = true
         for (let i = 0; i < arr.length; i ++) {
-            console.log("first arr is "+arr[i])
             res &= arr[i];
         }
 
@@ -1103,39 +1016,28 @@ class DoLab extends React.Component {
 
     completeStep  = (step_id) => {{
         let currentStep = this.state.completedSteps;
-        console.log("all steps are ");console.log(this.state.steps)
-        console.log("currentstep is " +currentStep + "aka  "+ JSON.stringify(this.state.steps[currentStep-1]))
-        console.log("equips is "+JSON.stringify(this.state.equipments[currentStep]))
-        console.log(this.state.equipments)
+        
         if (this.state.equipments[0]==null){
           this.state.equipments[0]=[]
         }
-        console.log(this.state.equipments)
-        //console.log("num equips is "+this.state.equipments[currentStep].length)
         if (this.state.equipments[currentStep]==null){
             ToastsStore.error("Step failed. Try again.")
-            console.log("aaaa")
             return null;
         }
         if (!this.verifyStep(this.state.steps[currentStep].equipments,this.state.equipments[currentStep+1])){
             ToastsStore.error("Step failed. Try again.")
-            console.log("no bueno")
             return null;
         }
-        console.log("current step is "+currentStep + "steps.length is "+this.state.steps.length)
         if (currentStep+2>this.state.steps.length){
             ToastsStore.success("Lab completed!")
             this.completeLab()
             return
         }
         this.setState({completedSteps: this.state.completedSteps + 1},this.callback)
-        console.log("completed")
-        console.log("all equips is "+JSON.stringify(this.state.equipments))
     }};
 
     completeLab(){
 
-        console.log("props is "+JSON.stringify(this.props))
         const lab = {
             labID:this.props.location.state.labID,
         }
@@ -1157,11 +1059,9 @@ class DoLab extends React.Component {
         };
         axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
             .then((response) => {
-                console.log("success!")
 
             })
             .catch((error) => {
-                    alert("doot" + error)
 
                 }
             );
@@ -1191,7 +1091,6 @@ class DoLab extends React.Component {
         const src_id = "workspace"+workspace+"equip"+src_equip;
         const targ_id = "workspace"+workspace+"equip"+target_equip;
         const workspace_id="workspace"+workspace;
-        console.log("workspace id " +workspace_id)
         const src = this.state.equipments[workspace][src_equip];
         const targ = this.state.equipments[workspace][target_equip];
 
@@ -1200,12 +1099,8 @@ class DoLab extends React.Component {
         const src_element = document.getElementById(src_id);
         const targ_element = document.getElementById(targ_id);
         const workspace_element=document.getElementById(workspace_id)
-        console.log("workspace leemtn is ")
-        console.log(workspace_element)
         var src_x=(ev.clientX + parseInt(offset[0],10));
         var src_y=(ev.clientY + parseInt(offset[1],10));
-        console.log("unverified original",[src_x,src_y])
-        console.log(src_element,targ_element)
 
         const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
         src_x=verify[0];
@@ -1245,12 +1140,10 @@ class DoLab extends React.Component {
 
             const width = src_element.getBoundingClientRect().width / 4;
             const height = src_element.getBoundingClientRect().height / 4;
-            console.log("src rect", src_element.getBoundingClientRect())
             var src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
 
             const difference = [this.getDifference(src_pos[0], src_x, width), this.getDifference(src_pos[1], src_y, height)];
 
-            console.log("original ", [src_x, src_y], "new ", src_pos, " difference ", difference)
 
             var targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
 
@@ -1274,14 +1167,12 @@ class DoLab extends React.Component {
         targ_element.style.left=targ_x+'px';
         targ_element.style.top=targ_y+'px';
         targ.setLocation(targ_x,targ_y);
-        // console.log("moving ",workspace_id,equip_id,source);
     }
 
     render(){
 
         if(!this.state.lab_loaded)
         {
-            console.log("popualtign steps")
             this.populateSteps();
             this.makeSlide()
 
@@ -1295,11 +1186,7 @@ class DoLab extends React.Component {
         }
         if (this.state.reRender){
 
-        console.log("steps is "+JSON.stringify(this.state.steps))
         let x=this.state.completedSteps+1
-        console.log("slides is "+(this.state.slide))
-        console.log("x is "+x)
-            console.log("FORCING, equips is" +this.state.equipments)
         let container= <Tab.Container id="steps" activeKey={x}>
             <Row>
                 <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
@@ -1333,11 +1220,7 @@ class DoLab extends React.Component {
     }
         else{
 
-            console.log("steps is "+JSON.stringify(this.state.steps))
             let x=this.state.completedSteps+1
-            console.log("slides is "+(this.state.slide))
-            console.log("x is "+x)
-            console.log("not forcing it this time!"+this.state.equipments)
 
             let container= <Tab.Container id="steps" defaultActiveKey={x}>
                 <Row>

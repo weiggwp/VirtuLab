@@ -42,20 +42,17 @@ export class account_settings extends Component {
         }
         if(this.state.new_password.length<=3)
         {
-            //console.log("pass is "+this.state.password)
             this.setState({
                 errors: 'Error: Password must be at least 4 characters.',
 
             });
             return;
         }
-        console.log("emails "+this.props.email)
         const user = {
             email: this.props.email,
             password: this.state.old_password,
             role:this.state.new_password
         };
-        console.log("emails "+user.email)
 
         let axiosConfig = {
             headers: {
@@ -110,7 +107,6 @@ export class account_settings extends Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_courses', user, axiosConfig)
             .then((response) => {
-                // console.log("resp is " +response.json())
 
                 for (let i=0; i<response.data.length; i++){
                     classArr[i]=response.data[i]
@@ -123,14 +119,11 @@ export class account_settings extends Component {
                         clicked:false};
 
                 }
-                // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
-                    console.log("error is "+error)
                 }
             );
-        console.log("yeet")
     }
 
 
@@ -142,7 +135,6 @@ export class account_settings extends Component {
                 return <Redirect exact to="/instructor_home" />
         }
         else if (this.state.loading_course){
-            // console.log("loading classes", this.state.classes);
             this.updateClasses();
             return null;
 
@@ -151,7 +143,6 @@ export class account_settings extends Component {
 
         else
         {const errorMessage = this.state.errors;
-            // console.log("loaded classes", this.state.classes);
 
             return (
                 <div>

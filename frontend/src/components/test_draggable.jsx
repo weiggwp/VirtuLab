@@ -43,7 +43,6 @@ class test_draggable extends React.Component{
     dragEnter=(event)=>{
         // alert("entering")
 
-        alert("entering")
         event.target.style.border = "3px dotted red";
         event.target.style.cursor="copy";
 

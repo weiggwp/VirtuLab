@@ -81,7 +81,6 @@ export class publish_lab extends Component {
                     lab_id: this.props.location.state.id,
                     lab_loaded: true,
                 }, () => {
-                    console.log(this.state.lab_id);
 
                 }
             )
@@ -135,7 +134,6 @@ export class publish_lab extends Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'publish_lab', labpub, axiosConfig)
             .then((response) => {
-                console.log("success!")
                 this.setState({
                     redirectDone: true
                 })
@@ -143,7 +141,6 @@ export class publish_lab extends Component {
                 this.render()
             })
             .catch((error) => {
-                    console.log("doot" + error)
 
                 }
             );

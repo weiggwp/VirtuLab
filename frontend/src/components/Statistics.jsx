@@ -66,7 +66,6 @@ class Statistics extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'lab_stats', course, axiosConfig)
             .then((response) => {
-                console.log(response)
 
                 let arr = response.data
                 this.setState({
