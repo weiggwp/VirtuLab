@@ -184,6 +184,7 @@ export default class Glassware extends Equipment{
 
             amount=parseFloat(amount)>target.amount?(target.capacity-target.amount):parseFloat(amount);
             target.amount=target.capacity;
+            target.add_items(this.output(amount));
             return null
         }
 
