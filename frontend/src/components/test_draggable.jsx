@@ -129,7 +129,6 @@ class test_draggable extends React.Component{
     }
     onDragOver=(event)=>{
 
-        alert("dragging over")
     }
 
 //                defaultPosition={{x:this.props.x,y:this.props.y}}>

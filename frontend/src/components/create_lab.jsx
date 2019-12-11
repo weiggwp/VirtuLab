@@ -690,9 +690,6 @@ class create_lab extends React.Component {
         // console.log(data);
     }
     handleInputChange(e){
-        console.log("e is abc123")
-        console.log(e.target.value)
-        console.log()
         this.setState({input: e.target.value},);
 
     }

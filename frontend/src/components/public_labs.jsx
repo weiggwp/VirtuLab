@@ -104,7 +104,6 @@ handlePage(event) {
         currentPage: Number(event.target.id)
     })
 
-    alert(event.target.id)
     let pageNum = event.target.id
     let pagingReq = {
         pageNum: pageNum,
