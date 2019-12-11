@@ -3,6 +3,7 @@ package backend.controller;
 
 import backend.dto.*;
 import backend.model.*;
+import backend.repository.StepRepository;
 import backend.repository.UserRepository;
 import backend.service.*;
 import org.modelmapper.ModelMapper;
@@ -64,6 +65,9 @@ public class LabController {
     @Autowired
     UserCourseLabStepService userCourseLabStepService;
 
+    @Autowired
+    StepRepository stepRepository;
+
     EntityManager em;
 
     ModelMapper modelMapper = new ModelMapper();
@@ -71,43 +75,40 @@ public class LabController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
-    public ResponseEntity<Lab> saveLab(@RequestBody LabDTO labDTO) {
+    public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
 
-       // System.out.println("lab Controller is called: save_lab");
+        // System.out.println("lab Controller is called: save_lab");
         System.out.println(labDTO);
         Lab existing = labService.findByLabID(labDTO.getLabID());
+
+
+        List<Step> steps = new ArrayList<>();
+        for (StepDTO dto: labDTO.getStepsDTO()) {
+            Step step = new Step();
+            step.setStepNum(dto.getStepNum());
+            step.setInstruction(dto.getInstruction());
+            step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
+            stepService.addStep(step);
+            steps.add(step);
+        }
+
+
+        List<Equipment> equipments = mapEquipmentDTO(labDTO.getEquipments());
+
 
         long returnid = -1;
         if (existing != null)
         {
-            /* modifying existing lab */
             existing.setName(labDTO.getName());
 
             existing.setLastModified(labDTO.getLastModified());
-            /* match the lab equipments */
-            mergeLabEquips(labDTO.getEquipments(), existing.getEquipments());
-            /* match the step equipments */
-            mergeStep(labDTO.getStepsDTO(), existing.getSteps());
-
-//          existing.setEquipments(equipments);
+            existing.setSteps(steps);
+            existing.setEquipments(equipments);
             labService.saveLab(existing);
-
-            return new ResponseEntity<Lab>(existing, HttpStatus.OK);
 
         }
         else {
-            List<Step> steps = new ArrayList<>();
-            for (StepDTO dto: labDTO.getStepsDTO()) {
-                Step step = new Step();
-                step.setStepNum(dto.getStepNum());
-                step.setInstruction(dto.getInstruction());
-                step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
-                stepService.addStep(step);
-                steps.add(step);
-            }
-
-            List<Equipment> equipments = mapEquipmentDTO(labDTO.getEquipments());
-            //  System.out.println("lab does not exist, creating new lab");
+            //   System.out.println("lab does not exist, creating new lab");
             //  System.out.println("lab is "+labDTO);
             Lab lab = modelMapper.map(labDTO, Lab.class);
             lab.setSteps(steps);
@@ -115,141 +116,28 @@ public class LabController {
             lab.setOpen(0);
             returnid = labService.createNewLab(lab);
             //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
-            //  System.out.println("return id is "+returnid);
+            //System.out.println("return id is "+returnid);
             User instructor = userService.findByEmail(labDTO.getCreator());
 
             instructor.getLabs().add(lab);
             userService.save(instructor);
-            return new ResponseEntity<Lab>(lab, HttpStatus.OK);
         }
 
-//
-//        return new ResponseEntity<>(returnid, HttpStatus.OK);
+
+        return new ResponseEntity<>(returnid, HttpStatus.OK);
     }
 
-    private void mergeStep(List<StepDTO> stepsDTO, List<Step> steps){
-
-        steps.sort(new Comparator<Step>() {
-            @Override
-            public int compare(Step o1, Step o2) {
-                if (o1.getStepNum() > o2.getStepNum()) return 1;
-                else if (o1.getStepNum() < o2.getStepNum()) return -1;
-                return 0;
-            }
-        });
-
-        stepsDTO.sort(new Comparator<StepDTO>() {
-            @Override
-            public int compare(StepDTO o1, StepDTO o2) {
-                if (o1.getStepNum() > o2.getStepNum()) return 1;
-                else if (o1.getStepNum() < o2.getStepNum()) return -1;
-                return 0;
-            }
-        });
-
-        /* update all the existing steps */
-        for (int i = 0; i < steps.size(); i ++) {
-            Step step = steps.get(i);
-            StepDTO dto = stepsDTO.get(i);
-            System.out.println(step);
-            System.out.println(dto);
-            System.out.println(step.getStepID() == dto.getStepID());
-
-            step.setStepNum(dto.getStepNum());
-            step.setInstruction(dto.getInstruction());
-
-            List<Equipment> stepEquips = step.getEquipments();
-            List<EquipmentDTO> equipsDTO = dto.getEquipments();
-            mergeStepEquips(equipsDTO, stepEquips, step);
+    private List<Equipment> mapEquipmentDTO(List<EquipmentDTO> DTO)
+    {
+        List<Equipment> equipments = new ArrayList<>();
+        for (EquipmentDTO dto: DTO) {
+//            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            Equipment equipment1 = new Equipment();
+            copyVals(equipment1, dto);
+            equipmentService.saveEquipment(equipment1);
+            equipments.add(equipment1);
         }
-
-        /* new steps added */
-        if (stepsDTO.size() + 1 > steps.size()) {
-            for (int i = steps.size(); i < stepsDTO.size(); i ++) {
-                System.out.println("new step " + stepsDTO.get(i).getStepNum());
-                StepDTO dto = stepsDTO.get(i);
-                Step step = new Step();
-                step.setStepNum(dto.getStepNum());
-                step.setInstruction(dto.getInstruction());
-                step.setEquipments(mapEquipmentDTO(dto.getEquipments()));
-                stepService.addStep(step);
-                steps.add(step);
-            }
-        }
-    }
-
-    private void mergeStepEquips(List<EquipmentDTO> equipsDTO, List<Equipment> stepEquips, Step step) {
-        for (int i = 0; i < equipsDTO.size(); i ++) {
-            boolean newEquip = true;
-            for (int j = 0; j < stepEquips.size(); j ++) {
-                Equipment equip = stepEquips.get(j);
-                EquipmentDTO dto = equipsDTO.get(i);
-//                System.out.println(equip.getEquipmentID());
-//                System.out.println(dto.getEquipmentID());
-                /* same ID, same equip get the state of the dto */
-                //equip.getEquipmentID() == dto.getEquipmentID()
-                System.out.println(equip.getEquipmentID() + " == " + dto.getEquipmentID());
-                System.out.println(equip.getEquipmentID() == dto.getEquipmentID());
-                if (equip.getEquipmentID() == dto.getEquipmentID()) {
-                    System.out.println("same equip");
-                    newEquip = false;
-                    copyVals(equip, dto);
-                    equipmentService.saveEquipment(equip);
-                    // TODO: copy the items (i.e. water, alcohol, or other valid liquids)
-                }
-
-            }
-            if (newEquip) {
-                System.out.println("new equip in step: creating creating equip");
-                Equipment equipment = modelMapper.map(equipsDTO.get(i), Equipment.class);
-                step.getEquipments().add(equipment);
-            }
-        }
-    }
-
-//    private void mergeStepEquips2(List<EquipmentDTO> equipsDTO, List<Equipment> stepEquips, Step step) {
-//        for (int i = 0; i < stepEquips.size(); i ++) {
-//            boolean drop = true;
-//            for (int j = 0; j < equipsDTO.size(); j ++) {
-//                Equipment equip = stepEquips.get(i);
-//                EquipmentDTO dto = equipsDTO.get(j);
-////                System.out.println(equip.getEquipmentID());
-////                System.out.println(dto.getEquipmentID());
-//                //equip.getEquipmentID() == dto.getEquipmentID()
-//                System.out.println(equip.getEquipmentID() + " == " + dto.getEquipmentID());
-//                System.out.println(equip.getEquipmentID() == dto.getEquipmentID());
-//                if (equip.getEquipmentID() == dto.getEquipmentID()) {
-//                    System.out.println("same equip");
-//                    drop = false;
-//                    // TODO: copy the items (i.e. water, alcohol, or other valid liquids)
-//                }
-//
-//            }
-//            if (drop) {
-//                System.out.println("equip no longer exists in step: ");
-//                for (int k = 0; k < stepEquips.size(); k ++) {
-//                    if (stepEquips.get(i).getEquipmentID() ==)
-//                }
-//                equipmentService.deleteById();
-//            }
-//        }
-//    }
-
-    private void mergeLabEquips(List<EquipmentDTO> equipsDTO, List<Equipment> currentEquips) {
-        for (int i = 0; i < equipsDTO.size(); i ++) {
-            for (int j = 0; j < currentEquips.size(); j ++) {
-                Equipment equip = currentEquips.get(i);
-                EquipmentDTO dto = equipsDTO.get(j);
-//                System.out.println(dto);
-//                System.out.println(equip.getEquipmentID());
-
-
-                /* same ID, same equip get the state of the dto */
-                if (equip.getEquipmentID() == dto.getEquipmentID()) {
-                    copyVals(equip, dto);
-                }
-            }
-        }
+        return equipments;
     }
 
     private void copyVals(Equipment equip, EquipmentDTO dto) {
@@ -262,19 +150,9 @@ public class LabController {
         equip.setImage(dto.getImage());
         equip.setType(dto.getType());
         equip.setDisabled(dto.getDisabled());
+        equip.setSize(dto.getSize());
+        equip.setColor(dto.getColor());
     }
-
-    private List<Equipment> mapEquipmentDTO(List<EquipmentDTO> DTO)
-    {
-        List<Equipment> equipments = new ArrayList<>();
-        for (EquipmentDTO dto: DTO) {
-            Equipment equipment = modelMapper.map(dto, Equipment.class);
-            equipmentService.saveEquipment(equipment);
-            equipments.add(equipment);
-        }
-        return equipments;
-    }
-
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)

@@ -28,7 +28,7 @@ public class Equipment {
     private double amount;
     private double temperature;
     private String image;
-    @OneToMany(cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Equipment> items = new ArrayList<>();
 
     private boolean disabled;

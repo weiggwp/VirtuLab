@@ -43,6 +43,10 @@ class Step {
     setCompletedTrue(){
         this.completed=true;
     }
+
+    setStepNum(stepNum) {
+        this.stepNum = stepNum
+    }
     // updateInstruction(stepNum,value)
     // {
     //     // alert("updating instruction at stepNum"+stepNum+" with value: "+value);

@@ -48,6 +48,8 @@ class Slides extends React.Component {
         return (
 
             <div>
+
+                <Button onClick={() => this.handleDelButton()}> BT DEL</Button>
                 <div style={{width:"100%"}} onClick={this.props.addChild} >
                     <button className="newButton" style={{width:"100%",backgroundColor:"transparent",borderStyle:"none"}}  variant="flat" >
 

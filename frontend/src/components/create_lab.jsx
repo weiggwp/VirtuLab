@@ -346,38 +346,44 @@ class create_lab extends React.Component {
 
         axios.post(GLOBALS.BASE_URL + 'save_lab', lab, axiosConfig)
             .then((response) => {
-                this.setState({save_success: true});
-                let strLab = JSON.stringify(response.data)
-                let l = JSON.parse(strLab)
 
-                // if(this.state.lab_id===0)  //only if not set
-                console.log(this.state.steps)
-                // for (let i = 1; i < this.state.steps.length; i ++) {
-                //     for (let j = 1; j < this.state.steps[i].equipments.length; j ++) {
+                this.setState({save_success: true});
+                // console.log("id is "+response.data);
+                if(this.state.lab_id===0)  //only if not set
+                    this.setState({lab_id:response.data});
+
+                // this.setState({save_success: true});
+                // let strLab = JSON.stringify(response.data)
+                // let l = JSON.parse(strLab)
                 //
+                // // if(this.state.lab_id===0)  //only if not set
+                // console.log(this.state.steps)
+                // // for (let i = 1; i < this.state.steps.length; i ++) {
+                // //     for (let j = 1; j < this.state.steps[i].equipments.length; j ++) {
+                // //
+                // //     }
+                // // }
+                // console.log("========================")
+                // let temp = this.state.steps
+                // console.log(temp.length)
+                // for (let i = 0; i < temp.length; i ++) {
+                //     temp[i].stepID = l['steps'][i].stepID
+                //     for (let j = 0; j < temp[i].equipments.length; j ++) {
+                //         temp[i].equipments[j].equipmentID = l['steps'][i].equipments[j].equipmentID
                 //     }
                 // }
-                console.log("========================")
-                let temp = this.state.steps
-                console.log(temp.length)
-                for (let i = 0; i < temp.length; i ++) {
-                    temp[i].stepID = l['steps'][i].stepID
-                    for (let j = 0; j < temp[i].equipments.length; j ++) {
-                        temp[i].equipments[j].equipmentID = l['steps'][i].equipments[j].equipmentID
-                    }
-                }
-                console.log("========================")
-                console.log(temp)
-
-
-                this.setState({
-                    lab_id: l['labID'],
-                    steps: temp,
-                    // need to assign stepIDs here and equipmentIDs inside each of the step here.
-                    // react setState doesn't perform state change if the thing u want to change is nested
-                })
-
-                console.log(this.state.steps)
+                // console.log("========================")
+                // console.log(temp)
+                //
+                //
+                // this.setState({
+                //     lab_id: l['labID'],
+                //     steps: temp,
+                //     // need to assign stepIDs here and equipmentIDs inside each of the step here.
+                //     // react setState doesn't perform state change if the thing u want to change is nested
+                // })
+                //
+                // console.log(this.state.steps)
 
 
 
@@ -873,23 +879,44 @@ class create_lab extends React.Component {
         if (curStep === 0) {
             return
         }
-
         curStep = parseInt(curStep)
         alert("perform del: step " + curStep)
+        console.log("----------------------------------------------------------")
         console.log(this.state.steps)
         let newSteps= []
         let steps = this.state.steps
         newSteps[0] = steps[0]
-        for (let i = 1; i < steps.length; i ++) {
+
+
+        let equips = this.state.equipments
+        let newEquips = [[]]
+        for (let i = 1; i < equips.length; i ++) {
             if (i === curStep)
                 continue;
             else
-                newSteps.push(steps[i])
+                newEquips.push(equips[i])
         }
+
+        console.log("new equips",newEquips)
+        for (let i = 1; i < steps.length; i ++) {
+            steps[i].setEquipments(this.state.equipments[i])
+            if (i === curStep)
+                continue;
+            else if(i > curStep) {
+                steps[i].setStepNum(i - 1)
+                newSteps.push(steps[i])
+                console.log(steps[i],"at step",i)
+            } else {
+                newSteps.push(steps[i])
+            }
+        }
+
         console.log(newSteps)
+        console.log("----------------------------------------------------------")
         this.setState({
             steps: newSteps,
-            step_num: curStep - 1 // after del the selectedStep, should highlight the previous step
+            step_num: this.state.step_num - 1,
+            equipments:newEquips
         })
 
     }
@@ -994,7 +1021,7 @@ class create_lab extends React.Component {
                             {/*<Slides slide_num={size} addChild={this.handleAddChild} delChild={this.handleDelChild}/>*/}
 
 
-                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild} onSelect={this.selectStep}/>
+                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild} onSelect={this.selectStep} delChild={this.handleDelChild}/>
 
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >

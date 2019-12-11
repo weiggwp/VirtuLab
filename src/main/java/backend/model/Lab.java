@@ -26,11 +26,11 @@ public class Lab {
     private String creator;
     private Date lastModified;
     private ArrayList<String> tags=new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "lab_step", joinColumns = {@JoinColumn(name = "stepID")})
     private List<Step> steps = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List <Equipment> equipments = new ArrayList<>();
 
     public List<Equipment> getEquipments() {
