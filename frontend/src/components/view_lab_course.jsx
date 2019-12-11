@@ -108,7 +108,13 @@ class view_lab_course extends React.Component
                 for (let i=0; i<response.data.length; i++){
                     let comp= "N/A";
                     if (response.data[i].completed==1){
-                        comp="Yes"
+                        if (response.data[i].dateCompleted==null){
+                            comp="Completed, date unavailable"
+                        }
+                        else comp=response.data[i].dateCompleted.substring(0,10) + ", "+response.data[i].dateCompleted.substring(11,19)
+                        console.log("date is ")
+                        console.log(response.data[i])
+                        console.log(response.data[i].dateCompleted)
                     }
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
                         completed:comp};

@@ -112,6 +112,7 @@ public class StatController {
         String code = courseDTO.getCode();
 //        long courseID = courseDTO.getCourseID();
         long courseID = 9;
+        long labID=courseDTO.getLabs().get(0).getLabID();
         System.out.println("coursedto is "+courseDTO);
         Optional<Course> optional = courseService.findCourseByNameOrCode(courseDTO.getCourseNumber(), 0);
         List<User> students = new LinkedList<>();
@@ -125,7 +126,8 @@ public class StatController {
             int n = 0;
             for (UserCourseLab userCourseLab : list) {
 //                System.out.println(userCourseLab);
-                if (userCourseLab.getUser().getRole().toLowerCase().equals("student")) {
+                if (userCourseLab.getUser().getRole().toLowerCase().equals("student")&&
+                        userCourseLab.getLab().getLabID()==labID) {
                     boolean toAdd=true;
                     for (User existingStudents: students){
                         if (existingStudents.getEmail().equals(userCourseLab.getUser().getEmail())){
