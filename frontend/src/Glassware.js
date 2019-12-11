@@ -131,16 +131,16 @@ export default class Glassware extends Equipment{
      */
     canInteract(target)
     {
-        var noHeatTypes=['Volumetric Flask','Pipette','Graduated Cylinder'];
+        var noHeatTypes=['Volumetric Flasks','Pipettes','Graduated Cylinders'];
         if(Glassware.prototype.isPrototypeOf(target) )
         {
             return target.name !== 'Pipette';
         }
         if(target.name==="Scale")
             return true;
-        if(target.name==="Bunsun Burner")
+        if(target.name==="Bunsen Burner")
         {
-            return !(this.name in noHeatTypes);
+            return !(noHeatTypes.includes(this.type));
         }
 
         return false;

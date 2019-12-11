@@ -38,9 +38,10 @@ class Draggable_equipment extends React.Component {
 
     setColor=(color)=>
     {
-        this.setState({ color: color })
-        this.props.equipment.color=color
-    }
+        this.setState({ color: color });
+        this.props.equipment.color=color;
+        // this.props.addColorChangeRule(this.props.equipment, color);
+    };
 
     getColor()
     {
@@ -260,22 +261,19 @@ class Draggable_equipment extends React.Component {
                         </div>
 
                         <GetSVG
-
-                            equip={this.props.equipment}
-                            name={this.props.equipment.name}
-                            type={this.props.equipment.type}
-                            fill={this.getColor()}
-                            // degree={this.props.equipment.rotate}
-                            size={equip.size}
-                            onDrop={this.drop_handler}
-                            id={id}
+                                equip={this.props.equipment}
+                                name={this.props.equipment.name}
+                                type={this.props.equipment.type}
+                                fill={this.getColor()}
+                                size={equip.size}
+                                onDrop={this.drop_handler}
+                                id={id}
                         />
 
                         <div className={"info"} style={bot}>
                             <p className="infoName" >{this.getInfo(this.props.equipment,this.props.equipment.toString())}</p>
                             <p className="infoState" >{this.getInfo(this.props.equipment,this.props.equipment.toStateString())}</p>
                         </div>
-
 
                     </div>
                 </ContextMenuTrigger>

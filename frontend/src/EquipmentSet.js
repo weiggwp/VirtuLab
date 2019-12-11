@@ -7,6 +7,7 @@ import water from "./Images/water.svg";
 
 
 import flame from "./Images/2500mLBottle.svg";
+import no_flame from "./Images/2500mLBottleNonSticker.svg";
 import indicator from "./Images/100mLBottle_black.svg";
 
 
@@ -104,19 +105,19 @@ export default class EquipmentSet {
     }
     createAcids()
     {
-        return [new Element("3M HBr", small_flask, 250, 1.49, 1,100,"Hydrobromic Acid",100),
-            new Element("3M HCI",small_flask,250,1.18,1,130,"Hydrochloric Acid",100),
-            new Element("3M H\u2082SO\u2084",small_flask,250,1.83,1,100,"Sulfuric Acid",100),
-            new Element("3M HNO\u2083",small_flask,250,1.51,1,100,"Nitric Acid",100),
-            new Element("3M H\u2083PO\u2084",small_flask,250,1.87,1,100,"Phosphoric Acid",100)
+        return [new Element("3M HBr", no_flame, 250, 1.49, 1,100,"Hydrobromic Acid",100),
+            new Element("3M HCI",no_flame,250,1.18,1,130,"Hydrochloric Acid",100),
+            new Element("3M H\u2082SO\u2084",no_flame,250,1.83,1,100,"Sulfuric Acid",100),
+            new Element("3M HNO\u2083",no_flame,250,1.51,1,100,"Nitric Acid",100),
+            new Element("3M H\u2083PO\u2084",no_flame,250,1.87,1,100,"Phosphoric Acid",100)
             ]
     }
 
     createBases()
     {
         return [
-            new Element("3M NaOH", small_flask, 250, 1.515, 1,100,"Sodium Hydroxide",100),
-            new Element("3M NH\u2083",small_flask,250,0.68,1,100,'Ammonia',100)
+            new Element("3M NaOH", no_flame, 250, 1.515, 1,100,"Sodium Hydroxide",100),
+            new Element("3M NH\u2083",no_flame,250,0.68,1,100,'Ammonia',100)
         ]
     }
 
@@ -124,7 +125,7 @@ export default class EquipmentSet {
     {
         return[
             new Element("Distilled Water", water, 3000, 1, 1, 130),
-            new Element("1M C\u2086H\u2081\u2082O\u2086", small_flask, 250, 1.56, 1, 100,"Glucose Solution",100)
+            new Element("1M C\u2086H\u2081\u2082O\u2086", no_flame, 250, 1.56, 1, 100,"Glucose Solution",100)
 
         ]
     }

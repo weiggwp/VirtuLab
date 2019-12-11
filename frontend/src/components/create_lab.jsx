@@ -46,7 +46,7 @@ import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EditableLabel from "./EditableLabel";
-import deepCloneWithType from "../clone"
+import deepCloneWithType, {floatEqual, sortArrayByAttr} from "../clone"
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -57,6 +57,7 @@ class create_lab extends React.Component {
         this.target = null;
         this.ref = React.createRef();
         this.colorRules={};
+        this.rules = {};
 
         this.state = {
             showPopover: false,
@@ -95,6 +96,43 @@ class create_lab extends React.Component {
         this.hidePopOver=this.hidePopOver.bind(this);
     }
 
+        // this.addColorChangeRule = this.addColorChangeRule.bind(this);
+        // this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
+
+    // addColorChangeRule(eq,color){
+    //
+    //     const items = sortArrayByAttr(eq.items);
+    //
+    //     const sorted_names = items.map((item) =>item.name);
+    //     const amounts = items.map((item) =>item.amount);
+    //
+    //     this.rules[sorted_names] = {"amounts":amounts,"color":color};
+    // }
+
+    // checkColorChangeRule(eq){
+    //     const items = sortArrayByAttr(eq.items);
+    //     const sorted_names = items.map((item) =>item.name);
+    //     const amounts = items.map((item) =>item.amount);
+    //     console.log("items",items,
+    //         "this.rules",this.rules[sorted_names]);
+    //     const marchingRule = this.rules[sorted_names];
+    //     if(marchingRule){
+    //         console.log("rule found","amounts",amounts, "sorted_names", sorted_names );
+    //         const rule_amounts = marchingRule.amounts;
+    //
+    //         if(amounts.length !== rule_amounts.length ){
+    //             return false;
+    //         }
+    //
+    //         for(let i=0;i<amounts.length; i++ ){
+    //             if(! floatEqual(amounts[i], rule_amounts[i], rule_amounts[i]*.1 )){
+    //                 return false;
+    //             }
+    //         }
+    //         return this.rules[sorted_names]["color"];
+    //     }
+    //     return false;
+    // }
     populateStepEquipment(equipList)
     {
 
@@ -694,9 +732,14 @@ class create_lab extends React.Component {
 
     handleAction(source, action,target,input){
 
-
-
         source[action](target,parseFloat(input));
+
+        // let color = this.checkColorChangeRule(target);
+        // console.log("color",color);
+        // alert(color);
+        // if (color){
+        //     target.color = color;
+        // }
         this.forceUpdate();
     }
 
@@ -810,13 +853,10 @@ class create_lab extends React.Component {
             <span>workspace for step {0}</span>
             <ToastsContainer store={ToastsStore}/>
         </Tab.Pane>);
-        console.log("pushing")
         for (let i = 1; i <= this.state.step_num; i += 1) {
             const equipments = this.state.equipments[i];
 
             // workspaces.push(<Tab.Pane eventKey={i}> {this.state.steps[i].workspace} </Tab.Pane>);
-            console.log("equip is ")
-            console.log(equipments)
             workspaces.push(
                 <Tab.Pane
                     eventKey={i}
@@ -867,6 +907,9 @@ class create_lab extends React.Component {
                                              width={200} height={200}
                                              hide={this.hidePopOver}
                         />
+
+                                             // addColorChangeRule={this.addColorChangeRule}
+
 
 
 
@@ -965,6 +1008,7 @@ class create_lab extends React.Component {
                 equipments:temp
 
             }
+
         );
 
     };
@@ -1143,7 +1187,8 @@ class create_lab extends React.Component {
 
         var src_x=(ev.clientX + parseInt(offset[0],10));
         var src_y=(ev.clientY + parseInt(offset[1],10));
-        console.log("unverified original",[src_x,src_y])
+        console.log("unverified original",[src_x,src_y]);
+
         console.log(src_element,targ_element)
 
         const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
@@ -1153,15 +1198,42 @@ class create_lab extends React.Component {
         var targ_x = targ.left;
         var targ_y = targ.top;
 
+
+
         if(Tool.prototype.isPrototypeOf(targ))
         {
 
+            const tartg_width = targ_element.getBoundingClientRect().width;
+            const tartg_height = targ_element.getBoundingClientRect().height;
+            // targ x and targ y is where we want the botton center of src to be
 
-            const src_height=src_element.getBoundingClientRect().height;
-            const targ_height =targ_element.getBoundingClientRect().height-(src.size/3*2);
+            let targ_diff_center_x = 0;
+            let targ_diff_center_y = 0;
 
-            //+src.size/2
-            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height),workspace_element,src_element);
+            if(targ.name==="Scale"){
+                 targ_diff_center_x  = tartg_width * .45;
+                 targ_diff_center_y  = tartg_height * .35;
+
+
+            }
+            else if (targ.name==="Bunsen Burner"){
+                targ_diff_center_x = tartg_width * .5;
+                targ_diff_center_y = tartg_height * .1;
+
+            }
+
+             const targ_center_x = targ_x + targ_diff_center_x;
+             const targ_center_y = targ_y + targ_diff_center_y;
+
+            const src_height = src_element.getBoundingClientRect().height;
+            const src_width = src_element.getBoundingClientRect().width;
+
+
+            const x_diff = (src_width * .5);
+            const y_diff = (src_height * .9);
+
+            // var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            var src_pos = this.getBoundingXY(targ_center_x-x_diff,targ_center_y-y_diff, workspace_element,src_element);
 
             // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
             // if(difference[1]!==targ_height)
@@ -1170,7 +1242,15 @@ class create_lab extends React.Component {
             //     var targ_pos = this.getBoundingXY(src_x-difference[0],src_y+difference[1],workspace_element,targ_element);
             // }
             // else
-                 var targ_pos = [targ_x,targ_y]
+            const new_src_x = src_pos[0];
+            const new_src_y = src_pos[1];
+            // console.log("src_pos_x new",new_src_x,"src_pos_y new ",new_src_y);
+            const new_targ_x = new_src_x+ x_diff -targ_diff_center_x;
+            const new_targ_y = new_src_y+y_diff - targ_diff_center_y;
+            // console.log("src_pos_x new",new_targ_x,"src_pos_y new ",new_targ_y);
+
+
+            var targ_pos = [new_targ_x,new_targ_y];
 
             src.setInteracting(true);
 

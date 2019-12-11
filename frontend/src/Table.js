@@ -59,12 +59,14 @@ export default function StickyHeadTable(props) {
                 </Table>
             </div>
             <TablePagination
-                style={{fontSize:"8px"}}
-                rowsPerPageOptions={[3, 4,5]}
+
+                style={{fontSize:12}}
+                labelDisplayedRows={({ from, to, count }) => ` ${from}-${to} of ${count} rows`}
+                labelRowsPerPage={""}
+                rowsPerPageOptions={[]}
                 component="div"
                 count={rows.length}
-                rowsPerPage={rowsPerPage}
-                labelRowsPerPage = ""
+                rowsPerPage={5}
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}

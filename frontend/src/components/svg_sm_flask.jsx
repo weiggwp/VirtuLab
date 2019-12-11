@@ -8,7 +8,6 @@ const SvgComponent =
          className = '',
          fill = "white",
 
-
          equip ={},
          pre_fill_percent = equip.getFillPercent(),
          degree = equip.rotate,
