@@ -4,6 +4,7 @@ import Redirect from "react-router-dom/es/Redirect";
 import {Button} from "react-bootstrap";
 import GLOBALS from "../Globals";
 import axios from 'axios';
+import '../stylesheets/banner.css';
 
 class InstructorHeader extends React.Component {
 
@@ -89,8 +90,9 @@ class InstructorHeader extends React.Component {
     {
         return(
 
-            <Button style={{backgroundColor: "white", color: "black", float:"right"}}
-                    onClick={this.handleLogout}>
+            <Button
+                    onClick={this.handleLogout}
+                    className={"logout"}>
                 Logout
             </Button>
         );

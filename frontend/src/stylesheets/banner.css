@@ -20,3 +20,12 @@
 
 
 }
+.logout
+{
+    background-color: white;
+    color: black;
+    float:right;
+}
+.logout:hover{
+    background-color: #f14f4b;
+}

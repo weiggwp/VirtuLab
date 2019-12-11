@@ -2,6 +2,7 @@ import icon from "../Images/v.jpg";
 import React from "react";
 import Redirect from "react-router-dom/es/Redirect";
 import {Button} from "react-bootstrap";
+import '../stylesheets/banner.css';
 
 class StudentHeader extends React.Component {
 
@@ -83,7 +84,8 @@ class StudentHeader extends React.Component {
         return(
 
             <Button style={{backgroundColor: "white", color: "black", float:"right"}}
-                    onClick={this.handleLogout}>
+                    onClick={this.handleLogout}
+                    className={"logout"}>
                 Logout
             </Button>
         );

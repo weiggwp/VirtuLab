@@ -6,8 +6,23 @@ import {Redirect, Link} from 'react-router-dom';
 import '../stylesheets/Login.css';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_home.css';
+import '../stylesheets/public_lab.css';
 import icon from '../Images/v.jpg';
-import {Button, Image, Navbar, NavItem, InputGroup, Nav, NavDropdown, Row, Col, FormGroup, PageItem, Pagination} from 'react-bootstrap';
+import {
+    Button,
+    Image,
+    Navbar,
+    NavItem,
+    InputGroup,
+    Nav,
+    NavDropdown,
+    Row,
+    Col,
+    FormGroup,
+    PageItem,
+    Pagination,
+    Tooltip, OverlayTrigger
+} from 'react-bootstrap';
 
 import {Expandable_Classes} from "./expandable_course";
 import Card from "react-bootstrap/Card";
@@ -16,6 +31,8 @@ import GLOBALS from "../Globals";
 import InstructorHeader from "./instructorHeader";
 import {WithContext as ReactTags} from "react-tag-input";
 import Dropdown from "react-bootstrap/Dropdown";
+import {ToastsContainer, ToastsStore} from "react-toasts";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 class PublicLab {
     constructor(id, name, author, keywords, description) {
@@ -58,7 +75,9 @@ class public_labs extends React.Component {
                     "Anonymous",
                     "Beaker, Chemicals, Solution, Reaction",
                     "Student will learn how to use mix solution with different concentrations"),
-            ]
+            ],
+            viewLab:undefined,
+            viewing:false,
 
 
         };
@@ -74,6 +93,7 @@ class public_labs extends React.Component {
 handleSelect(page) {
         alert(page)
 }
+
 
 handlePage(event) {
     this.setState({
@@ -121,6 +141,18 @@ handleDelete(i) {
     });
 }
 handleAddition(tag) {
+
+        if(tag.text.toString().length>=20)
+        {
+            ToastsStore.error("Please Limit tag length to less than 20 characters")
+            return
+        }
+        if(this.state.tags.length>=5)
+        {
+            ToastsStore.error("Please Limit to less than 5 tags")
+            return
+        }
+
     this.setState(state => ({ tags: [...state.tags, tag] }));
 }
 handleFieldChange = (e, field) => {
@@ -138,7 +170,7 @@ handleFieldChange = (e, field) => {
         description:"",
         tags: tags,
     }
-    console.log("tags are " +this.state.tags +" + lab is " +JSON.stringify(tags))
+    // console.log("tags are " +this.state.tags +" + lab is " +JSON.stringify(tags))
     let axiosConfig = {
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -176,6 +208,52 @@ handleFieldChange = (e, field) => {
         );
 }
 
+
+
+    handleViewLab(lab){
+
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        const labpub= {
+            labID: lab.lab_id,
+
+        };
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'get_lab', labpub, axiosConfig)
+            .then((response) => {
+
+                const data = response.data;
+                console.log("data",response.data)
+                this.setState(
+                    {
+                        viewLab:{id:data.labID,name:data.name,equipments:data.equipments,steps:data.steps},
+                        viewing:true
+                    }
+                )
+                console.log(this.state.viewLab)
+
+
+            })
+            .catch((error) => {
+                    console.log("doot" + error)
+                this.setState(
+                    {
+                        viewing:false
+                    }
+                )
+                }
+            );
+
+
+    }
 
 
     handleCloneLab(lab){
@@ -325,6 +403,18 @@ handleDrag(tag, currPos, newPos) {
             this.updateLabs();
             return null;
         }
+        if(this.state.viewing)
+        {
+            return <Redirect exact to={{
+                pathname: "/view_lab",
+                state: {
+                    id:this.state.viewLab.id,
+                    name:this.state.viewLab.name,
+                    steps:this.state.viewLab.steps,
+                    equipments:this.state.viewLab.equipments
+                },
+            }}/>;
+        }
         let labs = this.state.labs;
 
         let active = this.state.currentPage
@@ -366,14 +456,22 @@ handleDrag(tag, currPos, newPos) {
 
 
                 <div>
-                    <Navbar style={{backgroundColor: "lightgray", marginLeft: 40, marginRight: 40}}
+                    <Navbar style={{backgroundColor: "lightgray", height:40,marginLeft: 40, marginRight: 40}}
                             className={"justify-content-between"}>
                         <Navbar.Brand href="instructor_home"> </Navbar.Brand>
                         <Nav>
-                            <h3 className="accountH3">Search: Press enter to add tag,
-                                then submit to look for labs with those tags.&nbsp;</h3>
-                            <form onSubmit={this.handleSubmit}>
-                            <FormGroup controlId="formBasicText" bsSize="large">
+                            <h3 className="accountH3">&nbsp;</h3>
+
+                            <OverlayTrigger
+                                overlay={
+                                    <Tooltip>
+                                        Search: Press enter to add tag,
+                                        then submit to look for labs with those tags.
+                                    </Tooltip>
+                                }
+                            >
+                            <form onSubmit={this.handleSubmit} style={{marginTop:5}}>
+                            <FormGroup controlId="formBasicText" className={"tag"} >
 
                                 <ReactTags tags={this.state.tags}
                                            suggestions={this.state.suggestions}
@@ -383,8 +481,10 @@ handleDrag(tag, currPos, newPos) {
                                 />
 
                             </FormGroup>
-                           <input type="submit" value="Submit" />
+                           <input className="submit" type="submit" value="Search" />
                             </form>
+                            </OverlayTrigger>
+
                         </Nav>
                         <Nav>
                             <Image onClick={this.setRedirectAcct} className={"config_image"}
@@ -396,21 +496,36 @@ handleDrag(tag, currPos, newPos) {
                 {this.state.notFound}
                 <div>
                     {labs.map(lab => (
-                        <div style={{
-                            textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
-                            borderStyle: "dashed", borderWidth: 1
-                        }}>
-                            <h4>{lab.name}</h4>
-                            {"Author: " + lab.author}
-                            <br/>
-                            {"Description: " + lab.description}
-                            <br/>
-                            {"Keywords: " + lab.keywords}
-                            <br/>
-                            <Button  onClick=
-                                         {() => this.handleCloneLab(lab)} style={{backgroundColor: "#e88f65ff"}}
-                                     variant="primary">Clone Lab</Button>
+                        <div >
+                            <Dropdown as={ButtonGroup} style={{width: "95%"}}
+                                      class={"dropdown-menu-right dropdown-button-drop-right"}>
+
+                            <Dropdown.Toggle className={"public_lab"} variant="info">
+                                <h4>{lab.name}</h4>
+                                {"Author: " + lab.author}
+                                <br/>
+                                {"Description: " + lab.description}
+                                <br/>
+                                {"Keywords: " + lab.keywords}
+                                <br/>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu class="dropdown-menu">
+                                <Dropdown.Item class={"dropdown-item"}
+                                               onClick=
+                                                   {() => this.handleViewLab(lab)}
+                                               eventKey="1">View</Dropdown.Item>
+
+                                <Dropdown.Item onClick=
+                                                   {() => this.handleCloneLab(lab)} class={"dropdown-item"} eventKey="2">Clone</Dropdown.Item>
+
+
+                                {/*<Dropdown.Divider />*/}
+
+                            </Dropdown.Menu>
+                        </Dropdown>
                         </div>
+
+
 
 
                     ))}
@@ -427,6 +542,8 @@ handleDrag(tag, currPos, newPos) {
                     </Pagination>
 
                 </div>
+
+                <ToastsContainer store={ToastsStore}/>
 
 
 

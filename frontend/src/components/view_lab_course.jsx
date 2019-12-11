@@ -41,7 +41,7 @@ class view_lab_course extends React.Component
 
     }
     handleChangeDate= (e) =>{
-        alert("date is "+this.state.due_date)
+        // alert("date is "+this.state.due_date)
         e.preventDefault();
         let labs =[];
         const lab = {

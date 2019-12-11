@@ -5,28 +5,18 @@ import backend.dto.*;
 import backend.model.*;
 import backend.service.*;
 import org.modelmapper.ModelMapper;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import backend.service.CourseService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @CrossOrigin(origins = "*")
@@ -124,8 +114,32 @@ public class LabController {
         }
         return equipments;
     }
+    public void sort_steps(List<Step> steps)
+    {
+        Collections.sort(steps, (o1, o2) -> {
+            long first = o1.getStepNum();
+            long second = o2.getStepNum();
+            if(first>second)
+                return 1;
+            else {
+                if (first == second)
+                    return 0;
+                return -1;
+            }
+        });
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/get_lab", method = RequestMethod.POST)
+    public ResponseEntity getLab(@RequestBody LabDTO labDTO) {
+
+        Lab lab = labService.findByLabID(labDTO.getLabID());
+        sort_steps(lab.getSteps());
+
+        return new ResponseEntity<>(lab ,HttpStatus.OK);
 
 
+    }
 
 
     @CrossOrigin(origins = "*")
@@ -150,21 +164,7 @@ public class LabController {
         {
             for (Lab lab : labs)
             {
-                Collections.sort(lab.getSteps(), new Comparator<Step>() {
-                    @Override
-                    public int compare(Step o1, Step o2) {
-                        long first = o1.getStepNum();
-                        long second = o2.getStepNum();
-                        if(first>second)
-                            return 1;
-                        else {
-                            if (first == second)
-                                return 0;
-                            return -1;
-                        }
-                    }
-
-                });
+                sort_steps(lab.getSteps());
             }
 
             return new ResponseEntity<>(user.getLabs(),HttpStatus.OK);
@@ -424,6 +424,9 @@ public class LabController {
         }
 
     }
+
+
+
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/page_lab", method = RequestMethod.POST)

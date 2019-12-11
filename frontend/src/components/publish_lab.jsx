@@ -41,10 +41,17 @@ export class publish_lab extends Component {
     }
     handleAddition(tag) {
         //console.log("tag is "+JSON.stringify(tag))
-        if (tag.text.length>40){
-            ToastsStore.error("Tag is too long.")
+        if(tag.text.toString().length>=20)
+        {
+            ToastsStore.error("Please Limit tag length to less than 20 characters")
+            return
         }
-        else
+        if(this.state.tags.length>=5)
+        {
+            ToastsStore.error("Please Limit to less than 5 tags")
+            return
+        }
+
             this.setState(state => ({ tags: [...state.tags, tag] }));
     }
     handleFieldChange = (e, field) => {
@@ -95,7 +102,7 @@ export class publish_lab extends Component {
     handlePublishLabPage= (e) =>{
         if (this.state.description.length>50){
 
-            ToastsStore.error("Description is too long.")
+            ToastsStore.error("Please limit description to less than 50 characters.")
 
         }
         e.preventDefault();
@@ -172,6 +179,14 @@ setRedirectAcct = (e)=>{
             </div>
         )
     }
+    handleInstructionChange=(e)=>
+    {
+        this.setState(
+            {
+                description:e.target.value
+            }
+        )
+    }
 
     render() {
         if (this.state.redirectAcc) {
@@ -210,20 +225,22 @@ setRedirectAcct = (e)=>{
 
                                 <h3 className="accountH3">Description</h3>
 
-                                <FormGroup controlId="formBasicText" bsSize="large">
-                                    <FormControl
-                                        autoFocus
-                                        type="text"
+                                <div style={{padding: 10,height:'15vh'}}>
 
-                                        onChange={(e) => this.handleFieldChange(e, 'description')}
-                                        required
-                                    />
-                                </FormGroup>
+                                <textarea
+                                    style={{marginLeft:10,resize:"none",height:"100%",width:"100%",borderStyle:"solid",borderWidth:1,color:"black"}}
+                                    placeholder="Brifly describe your quality lab in less than 50 characters"
+                                    onChange={(e) => this.handleInstructionChange(e)}
+                                    value={this.state.description}
+                                />
+
+                                </div>
                                 <ToastsContainer store={ToastsStore}/>
                                 <h3 className="accountH3">Tags</h3>
                                 <FormGroup controlId="formBasicText" bsSize="large">
 
-                                    <ReactTags tags={this.state.tags}
+                                    <ReactTags
+                                        tags={this.state.tags}
                                                suggestions={this.state.suggestions}
                                                handleDelete={this.handleDelete}
                                                handleAddition={this.handleAddition}

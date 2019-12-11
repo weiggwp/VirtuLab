@@ -217,6 +217,7 @@ class instructor_labs extends React.Component {
 
 
         }
+        console.log("instructor lab",lab.steps)
         // alert("lab id"+this.redirectEdit.id+" name: "+this.redirectEdit.name+" ");
 
         this.setState({
