@@ -7,6 +7,8 @@ import '../stylesheets/create_lab.css';
 import { confirmable } from 'react-confirm';
 import { createConfirmation } from 'react-confirm';
 import Dialog from 'react-bootstrap-dialog';
+import { Drag } from "./testDrag";
+import {Expandable_Classes} from "./expandable_course";
 import {
     Tab,
     Button,
@@ -686,10 +688,15 @@ class DoLab extends React.Component {
         const data = new FormData(e.target);
         console.log(data);
     }
-    handleInputChange(e){
-        this.setState({input: e.target.value},);
+    handleInputChange=(e)=>{
+        console.log("e is abc123")
+        console.log(e)
+        this.setState({input: e},()=>{
+            console.log("input is now "+e)
+        });
 
     }
+
 
     setPopoverWarningMsg(msg){
 
@@ -698,8 +705,9 @@ class DoLab extends React.Component {
     handleAction(source, action,target,input){
 
 
-
+        console.log("HANDLING ACTION SOURCE IS "+source+"Action is "+action + " target is "+target + " input is "+input)
         source[action](target,parseFloat(input));
+        this.setState({input:1})
         this.forceUpdate();
     }
 
@@ -726,10 +734,20 @@ class DoLab extends React.Component {
                 source.interact(target);
             }
         }
+        if (target==undefined)return null
         const overflow_msg = "Target Vessels will Overflow. Your Desired volume has not been completely transferred.";
-
+        console.log("target is ")
+        console.log(target)
+        let incRate =.2
+        if (target!==undefined)
+         incRate =target.capacity/100;
+        let capacity=100;
+        if (target!==undefined)
+            capacity=target.capacity
+        console.log("capacity is "+capacity +" target is "+target)
 
         return(
+
             <Overlay
                 show={this.state.showPopover}
                 target={this.target}
@@ -737,48 +755,30 @@ class DoLab extends React.Component {
                 container={this.ref.current}
                 containerPadding={20}
                 rootClose={true}
-                onHide={() => this.setState({ showPopover: false })}
-                style={{width:400}}
+               // onHide={() => this.setState({ showPopover: false })}
+                style={{width:900}}
             >
                 <Popover id="popover-contained" >
-                    <Popover.Title >
+                    <Popover.Title  style={{width:150}}>
                         <div className={"col1"}>
                             <strong>Action</strong>
                         </div>
                         <div className={"col2"}>
                             <a className="close" onClick={()=>this.setState({showPopover: false})}/>
                         </div>
+
+                        {<Drag  incValue={incRate} capacity={capacity}handleChange={this.handleInputChange}/>}
+                        <div>
+                            {buttonList}
+
+
+                        </div>
+
                     </Popover.Title>
                     <Popover.Content>
+                        <drag>
 
-                        <div className="arrowBox">
-                            <form className="form-inline" role="form" onSubmit={this.handleSubmit}>
-                                <FormGroup controlId="popover_input">
-                                    <FormControl
-                                        // style={{height: 60}}
-                                        style={{width:150}}
-                                        autoFocus
-                                        type="number"
-                                        placeholder="Volume (mL)"
-                                        onChange={(e) => this.handleInputChange(e)}
-                                        required
-                                    />
-                                </FormGroup>
-
-
-                                <div>
-                                    {buttonList}
-                                </div>
-                            </form>
-                            <div className="transferVessels" >
-                                From <strong>{source_name}</strong> to <strong>{target_name}</strong>
-                            </div>
-                            <div id="transferInputWarning" className="inputWarning" style={{display:null}}>
-                                {this.state.popoverWarning}
-                            </div>
-                            {/*<span id="transferFeedback" className="transferFeedback"*/}
-                            {/*      style="display:none;color:white"></span>*/}
-                        </div>
+                        </drag>
                     </Popover.Content>
                 </Popover>
             </Overlay>
@@ -968,6 +968,11 @@ class DoLab extends React.Component {
          return true;
     }
 
+    verifyAmounts(eq1, eq2){
+         let grace = Math.min(eq2.capacity/10,5);
+         return Math.abs(eq1.amount-eq2.amount)<grace;
+    }
+
     verifyStep( stepEquips,studentEquips) {
         let m = stepEquips.length;
         let n = studentEquips.length;
@@ -990,7 +995,7 @@ class DoLab extends React.Component {
                 let equip2 = studentEquips[j]
                 /* check for same type equipment and same volume, amount */
                 if (equip1.name === equip2.name &&
-                    equip1.amount === equip2.amount
+                    this.verifyAmounts(equip1,equip2)
                     &&equip1.capacity==equip2.capacity
                 &&this.arraysEqual(equip1.items,equip2.items)&&unused[j]) {
                     arr[i] = true
@@ -1210,7 +1215,7 @@ class DoLab extends React.Component {
         if (this.state.redirectHome){
             return <Redirect exact to={{
                 pathname: "/student_home",
-                
+
             }}/>;
         }
         if (this.state.reRender){

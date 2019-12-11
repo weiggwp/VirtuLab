@@ -5,102 +5,151 @@ import Draggable from "react-draggable";
 import reactCSS from 'reactcss'
 import '../stylesheets/create_lab.css';
 import { ReactComponent as Example } from '../Images/water.svg';
-import water from '../Images/water.svg';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import {ChromePicker, PhotoshopPicker, SketchPicker} from 'react-color'
-let dragSrcEl = null;
+import { useEffect, useState, useRef } from 'react';
 
-class test extends React.Component{
+import ProgressBar from "react-bootstrap/ProgressBar";
+
+import { Line } from 'rc-progress';
+
+class Drag extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            background:"#dee4e4",
-            displayColorPicker: false,
-            presetColors:["#dee4e4"]
-
+            zoom: 1
         };
+        this.t = undefined;
+        this.start = this.props.capacity;
+        this.capacity=this.props.capacity;
+        this.capacitySet=false;
+        this.onMouseDown = this.onMouseDown.bind(this);
+        this.repeat = this.repeat.bind(this);
+        this.zoom = this.zoom.bind(this);
+
+        // this.onMouseUp = this.onMouseUp.bind(this)
+        this.zoomOut = this.zoomOut.bind(this);
+        this.zoomOutRepeat = this.zoomOutRepeat.bind(this);
+        this.zoomOutDown = this.zoomOutDown.bind(this);
+
+        this.zoomOutBig=this.zoomOutBig.bind(this);
+        this.zoomOutRepeatBig = this.zoomOutRepeatBig.bind(this);
+        this.zoomOutDownBig = this.zoomOutDownBig.bind(this);
+
+        this.onMouseUp = this.onMouseUp.bind(this);
+    }
+
+    // ZOOM IN
+    onMouseDown() {
+
+        this.repeat();
+    }
+
+    repeat() {
+        this.zoom();
+        this.t = setTimeout(this.repeat, this.start);
+        this.start = this.start / 2;
+    }
+
+    zoom() {
+        if(this.state.zoom>=this.state.capacity)
+            return
+        let incValue=.2;
+        if (this.props.incValue!=undefined){
+            incValue=this.props.incValue;
+        }
+        console.log("inc value is "+incValue+ " zoom is "+this.state.zoom)
+        this.setState({ zoom: Math.round((this.state.zoom + incValue)*this.capacity)/this.capacity },()=>{
+            this.props.handleChange(this.state.zoom)
+        });
 
     }
-    handleClick = () => {
-        this.setState({ displayColorPicker: !this.state.displayColorPicker })
-    };
 
-    handleClose = () => {
-        this.setState({ displayColorPicker: false })
-    };
+    // ZOOM OUT
 
-    handleChange = (color) => {
-        this.setState({ color: color.hex })
-    };
-
-
-    handleChangeComplete = (color,event) => {
-        console.log(color.hex,event)
-        this.setState({ background: color.hex });
-    };
-
-
-
-
-
-
-//color=default color
-    render() {
-        const styles = reactCSS({
-            'default': {
-                color: {
-                    width: '36px',
-                    height: '14px',
-                    borderRadius: '2px',
-                    background: this.state.color,
-                    color: "black",
-                    textShadow: "2px 2px #ffff",
-                },
-                swatch: {
-                    padding: '5px',
-                    background: '#fff',
-                    borderRadius: '1px',
-                    boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-                    display: 'inline-block',
-                    cursor: 'pointer',
-                },
-                popover: {
-                    position: 'absolute',
-                    zIndex: '2',
-                },
-                cover: {
-                    position: 'fixed',
-                    top: '0px',
-                    right: '0px',
-                    bottom: '0px',
-                    left: '0px',
-                },
-            },
+    zoomOut() {
+        if(this.state.zoom<=0)
+            return
+        let incValue=.2;
+        this.setState({ zoom: Math.round((this.state.zoom - incValue)*this.capacity)/this.capacity },()=>{
+            this.props.handleChange(this.state.zoom)
         });
-        // alert(this.props.equipment.image);
+    }
+
+    zoomOutRepeat() {
+        this.zoomOut();
+       // this.t = setTimeout(this.zoomOutRepeat, this.start);
+        //this.start = this.start / 2;
+    }
+
+    zoomOutDown(e) {
+        e.preventDefault();
+        this.zoomOutRepeat();
+
+    }
+    zoomOutDownBig(e) {
+        e.preventDefault();
+        this.zoomOutRepeatBig();
+
+    }
+    zoomOutRepeatBig() {
+        this.zoomOutBig();
+        // this.t = setTimeout(this.zoomOutRepeat, this.start);
+        //this.start = this.start / 2;
+    }
+    zoomOutBig() {
+        if(this.state.zoom<=0)
+            return
+        let incValue=2;
+        this.setState({ zoom: Math.round((this.state.zoom - incValue)*this.capacity)/this.capacity },()=>{
+            this.props.handleChange(this.state.zoom)
+        });
+    }
+    // STOP ZOOMING
+    onMouseUp() {
+
+        clearTimeout(this.t);
+        this.start = this.capacity
+    }
+
+    render() {
+            if (this.start==undefined){
+                this.start=this.props.capacity;
+                this.capacity=this.props.capacity;
+            }
+        console.log("capacity is "+this.capacity+ " zoom is "+this.state.zoom)
         return (
-            <div
+            <div className="zoomControl">
+                <div
+                    className="zoom"
 
-            >
-
-                    <div style={ styles.swatch } onClick={ this.handleClick }>
-                        <div style={ styles.color } >
-                            hello
-                            </div>
-                    </div>
-                    { this.state.displayColorPicker ? <div style={ styles.popover }>
-                        <div style={ styles.cover } onClick={ this.handleClose }/>
-                        <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
-                    </div> : null }
+                >
+                    <Line percent={this.state.zoom*100/this.capacity} strokeWidth="1" strokeColor="#25cfcc" />
+                    {this.state.zoom} mL
+                </div>
 
 
-
-
+                <button
+                    className="zoomIn"
+                    onMouseUp={this.onMouseUp}
+                    onMouseDown={this.onMouseDown}
+                >
+                    +
+                </button>
+                <button
+                    className="zoomOut"
+                    onMouseUp={this.onMouseUp}
+                    onMouseDown={this.zoomOutDown}
+                >
+                    -
+                </button>
+                <button
+                    className="zoomOut"
+                    onMouseUp={this.onMouseUp}
+                    onMouseDown={this.zoomOutDownBig}
+                >
+                    --
+                </button>
             </div>
-
-
-        )
+        );
     }
 }
-
-export default test;
+export {Drag};

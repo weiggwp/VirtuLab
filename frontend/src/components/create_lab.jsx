@@ -56,6 +56,7 @@ class create_lab extends React.Component {
         this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
+        this.colorRules={};
 
         this.state = {
             showPopover: false,
@@ -92,6 +93,7 @@ class create_lab extends React.Component {
         this.getInfo = this.getInfo.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
     }
+
     populateStepEquipment(equipList)
     {
 
@@ -655,6 +657,9 @@ class create_lab extends React.Component {
         // console.log(data);
     }
     handleInputChange(e){
+        console.log("e is abc123")
+        console.log(e.target.value)
+        console.log()
         this.setState({input: e.target.value},);
 
     }
@@ -698,6 +703,16 @@ class create_lab extends React.Component {
         this.forceUpdate();
     }
 
+
+    onHide=(source)=>
+    {
+        source.setDegree(0);
+
+        this.setState({ showPopover: false })
+    }
+
+
+
     popover(){
         const source = this.eq1;
         const target = this.eq2;
@@ -725,26 +740,28 @@ class create_lab extends React.Component {
 
 
         return(
-            <Overlay
-                show={this.state.showPopover}
-                target={this.target}
-                placement="bottom"
-                container={this.ref.current}
-                containerPadding={20}
-                rootClose={true}
-                onHide={() => this.setState({ showPopover: false })}
-                style={{width:400}}
-            >
-                <Popover id="popover-contained" >
-                    <Popover.Title >
-                        <div className={"col1"}>
-                            <strong>Action</strong>
-                        </div>
-                        <div className={"col2"}>
-                            <a className="close" onClick={()=>this.setState({showPopover: false})}/>
-                        </div>
-                    </Popover.Title>
-                    <Popover.Content>
+
+        <Overlay
+            show={this.state.showPopover}
+            target={this.target}
+            placement="bottom"
+            container={this.ref.current}
+            containerPadding={20}
+            rootClose={true}
+            onHide={() => this.onHide(source)}
+            style={{width:400}}
+        >
+            <Popover id="popover-contained" >
+                <Popover.Title >
+                    <div className={"col1"}>
+                        <strong>Action</strong>
+                    </div>
+                    <div className={"col2"}>
+                        <a className="close" onClick={()=>this.onHide(source)}/>
+                    </div>
+                </Popover.Title>
+                <Popover.Content>
+
 
                         <div className="arrowBox">
                             <form className="form-inline" role="form" onSubmit={this.handleSubmit}>
@@ -934,9 +951,15 @@ class create_lab extends React.Component {
 
 
     selectStep(e,i){
-        this.setState({currentStep:i},
+        this.setState({
+                currentStep:i,
+
+
+
+            },
 
         );
+
 
     }
     render(){
@@ -1058,7 +1081,7 @@ class create_lab extends React.Component {
             const targ_height =targ_element.getBoundingClientRect().height-(src.size/3*2);
 
             //+src.size/2
-            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height),workspace_element,src_element);
 
             // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
             // if(difference[1]!==targ_height)
