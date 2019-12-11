@@ -12,7 +12,7 @@ export default function StickyHeadTable(props) {
     const rows = props.rows;
     console.log(rows)
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -33,7 +33,7 @@ export default function StickyHeadTable(props) {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth,fontSize:12}}
+                                    style={{ width:20,fontSize:12}}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -59,11 +59,12 @@ export default function StickyHeadTable(props) {
                 </Table>
             </div>
             <TablePagination
-                style={{fontSize:12}}
-                rowsPerPageOptions={[3, 5, 7]}
+                style={{fontSize:"8px"}}
+                rowsPerPageOptions={[3, 4,5]}
                 component="div"
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
+                labelRowsPerPage = ""
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}

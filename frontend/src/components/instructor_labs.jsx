@@ -52,6 +52,7 @@ class instructor_labs extends React.Component {
             labs:[],
             loading_labs:true,
             edit_lab:false,
+            view_lab:false,
             publish_lab:false,
 
 
@@ -202,6 +203,26 @@ class instructor_labs extends React.Component {
             redirectLabCreation: true
         })
     };
+
+    handleViewLab(lab)
+    {
+
+
+        this.redirectEdit={
+            id:lab.labID,
+            name:lab.name,
+            steps:lab.steps,
+            equipments:lab.equipments
+
+
+
+        }
+        // alert("lab id"+this.redirectEdit.id+" name: "+this.redirectEdit.name+" ");
+
+        this.setState({
+            view_lab:true
+        })
+    }
     handleEditLab(lab)
     {
 
@@ -366,6 +387,20 @@ class instructor_labs extends React.Component {
 
 
         }
+        if (this.state.view_lab){
+
+            return <Redirect exact to={{
+                pathname: "/view_lab",
+                state: {
+                    id:this.redirectEdit.id,
+                    name:this.redirectEdit.name,
+                    steps:this.redirectEdit.steps,
+                    equipments:this.redirectEdit.equipments
+                },
+            }}/>;
+
+
+        }
         if (this.state.publish_lab){
             return <Redirect exact to={{
                 pathname: "/publish_lab",
@@ -444,11 +479,14 @@ class instructor_labs extends React.Component {
                                             {/*        </div>*/}
                                             {/*    </Button>*/}
 
-                                            <Dropdown.Toggle style={{textAlign: "left",}} variant="info">
+                                            <Dropdown.Toggle style={{textAlign: "left",height:"50px"}} variant="info">
                                                 {lab.name}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu class="dropdown-menu">
-                                                <Dropdown.Item class={"dropdown-item"} eventKey="1">View</Dropdown.Item>
+                                                <Dropdown.Item class={"dropdown-item"}
+                                                               onClick=
+                                                                   {() => this.handleViewLab(lab)}
+                                                               eventKey="1">View</Dropdown.Item>
 
                                                 <Dropdown.Item onClick=
                                                                    {() => this.handleEditLab(lab)} class={"dropdown-item"} eventKey="2">Edit</Dropdown.Item>

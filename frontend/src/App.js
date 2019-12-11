@@ -11,6 +11,7 @@ import CreateCourse from './components/create_course.jsx';
 import DoLab from './components/student_lab.jsx';
 import CreateLab from './components/create_lab.jsx';
 import Statistics from './components/Statistics.jsx';
+import View from './components/view_lab.jsx';
 import test_draggable from './components/testDrag.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
@@ -48,6 +49,7 @@ class App extends Component {
               <PrivateRoute exact path="/publish_lab" role="instructor" component={publish_lab} />
               <PrivateRoute exact path="/assign_lab" role="instructor" component={assign_lab} />
               <PrivateRoute exact path="/view_lab_course" role="instructor" component={view_lab_course} />
+              <PrivateRoute exact path="/view_lab" role="instructor" component={View} />
             </Switch>
           </div>
         </Router>

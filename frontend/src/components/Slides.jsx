@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
+import Tool from "../Tool";
 
 
 class Slides extends React.Component {
@@ -19,6 +20,17 @@ class Slides extends React.Component {
         }
     };
 
+    isHidden()
+    {
+        if(this.props.hidden)
+        {
+
+            return "none"
+
+        }
+        return ""
+    }
+
     render (){
         const children = [];
         //onSelect={this.props.onSelect}
@@ -28,9 +40,12 @@ class Slides extends React.Component {
             children.push(<ChildComponent key={i} number={i} selectStep={this.props.onSelect}/>);
         }
 
+
+
+
         return (
             <div>
-                <div style={{width:"100%"}} onClick={this.props.addChild} >
+                <div  style={{width:"100%",display:this.isHidden()}} onClick={this.props.addChild} >
                     <button className="newButton" style={{width:"100%",backgroundColor:"transparent",borderStyle:"none"}}  variant="flat" >
 
                         <Image  className="add"  src="https://secure.webtoolhub.com/static/resources/icons/set114/28bdd2bd.png" rounded />

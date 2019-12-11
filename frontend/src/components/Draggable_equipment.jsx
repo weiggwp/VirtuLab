@@ -52,6 +52,7 @@ class Draggable_equipment extends React.Component {
     dragStart_handler = (ev) => {
         // calculate the offset of the mouse pointer from the left and top of the element and passes it in the dataTransfer
         const style = window.getComputedStyle(ev.target, null);
+        this.props.hide();
         // console.log(style.getPropertyValue("left"));
         const left = (parseInt(style.getPropertyValue("left"), 10) - ev.clientX);
         const top = (parseInt(style.getPropertyValue("top"), 10) - ev.clientY);
@@ -218,8 +219,12 @@ class Draggable_equipment extends React.Component {
         const equip = this.props.equipment;
         const top = this.getDisplay(true,equip);
         const bot = this.getDisplay(false,equip);
-        // console.log(top,bot)
+        var draggable=this.props.draggable;
+        if(draggable===undefined)
+            draggable="true"
         const id = "workspace"+this.props.wkspace_id+"equip"+this.props.equip_id;
+        const disable=!draggable;
+
         console.log(equip);
         return (
             <div>
@@ -229,7 +234,7 @@ class Draggable_equipment extends React.Component {
 
                     <div id={id}
                          className={"workspace_equip"}
-                         draggable="true"
+                         draggable={draggable}
                          onDragStart={this.dragStart_handler}
                          onDrop={this.drop_handler}
                          onDragOver={this.dragover_handler}
@@ -269,15 +274,15 @@ class Draggable_equipment extends React.Component {
 
                 <ContextMenu id={"trigger" + this.props.wkspace_id + "," + this.props.equip_id}>
 
-                    <div style={{width:"100%"}}>
+                    <div disabled={disable} style={{width:"100%"}}>
                         <ColorPicker setColor={this.setColor}/>
                     </div>
-                    <MenuItem data={{workspace_id: this.props.wkspace_id, equip_id: this.props.equip_id}}
+                    <MenuItem disabled={disable} data={{workspace_id: this.props.wkspace_id, equip_id: this.props.equip_id}}
                               onClick={this.props.handle_equip_delete}>
                         Delete
                     </MenuItem>
 
-                    <MenuItem data={{foo: 'bar'}} onClick={this.handleClick}>
+                    <MenuItem disabled={disable} data={{foo: 'bar'}} onClick={this.handleClick}>
                         Remove Containing Elements
                     </MenuItem>
                     <MenuItem divider/>

@@ -92,6 +92,7 @@ class create_lab extends React.Component {
         this.selectStep = this.selectStep.bind(this);
         this.getInfo = this.getInfo.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
+        this.hidePopOver=this.hidePopOver.bind(this);
     }
 
     populateStepEquipment(equipList)
@@ -260,7 +261,7 @@ class create_lab extends React.Component {
 
         //TODO:autosave commented out for testing purposes
         //autosave
-        // this.handleLabSave()
+        this.handleLabSave()
         this.setState({
             redirectHome: true
         })
@@ -544,7 +545,11 @@ class create_lab extends React.Component {
             instructions.push(<Tab.Pane eventKey={i}>
 
                 {this.getEquipmentTab(i)}
-                <span>instruction for step {i} </span>{this.instruction(i)}</Tab.Pane>);
+                {/*<span>instruction for step {i} </span>*/}
+                {/*{this.instruction(i)}*/}
+
+
+            </Tab.Pane>);
             }
 
 
@@ -563,9 +568,12 @@ class create_lab extends React.Component {
         if(this.state.viewInfo===true && i===this.state.selectedStep)
             return  <EquipmentInfo getEquipments={this.setViewInfo} equipment={this.state.currentEquipment}/>
         else
-            return  <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
+            return  <div>
+                <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
-
+                <span>instruction for step {i} </span>
+                {this.instruction(i)}
+            </div>
     }
 
     canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
@@ -692,8 +700,15 @@ class create_lab extends React.Component {
     onHide=(source)=>
     {
         source.setDegree(0);
+        source.setInteracting(false);
 
         this.setState({ showPopover: false })
+    }
+
+    hidePopOver=()=>
+    {
+        if(this.eq1!==undefined)
+            this.onHide(this.eq1)
     }
 
 
@@ -840,7 +855,9 @@ class create_lab extends React.Component {
                                              equipment={equipment}
                                              move_element={this.move_element}
                                              adjust={this.adjust_interactive_element}
-                                             width={200} height={200}/>
+                                             width={200} height={200}
+                                             hide={this.hidePopOver}
+                        />
 
                     ))
                     }
@@ -960,7 +977,12 @@ class create_lab extends React.Component {
                         <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
                             {/*{this.slides()}*/}
                             {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
-                            <Slides slide_num={this.state.step_num} addChild={this.handleAddChild} onSelect={this.selectStep}/>
+                            <Slides
+                                    slide_num={this.state.step_num}
+                                    addChild={this.handleAddChild}
+                                    onSelect={this.selectStep}
+                                    hidden={false}
+                            />
                         </Col>
                         <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                                 {this.instructionPane()}
