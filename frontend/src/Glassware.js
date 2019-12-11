@@ -4,7 +4,7 @@ import {ToastsStore} from "react-toasts";
 
 export default class Glassware extends Equipment{
 
-    constructor(name,image, capacity,weight, state=0,size=100,amount=capacity)
+    constructor(name,image, capacity,weight, state=0,size=100,amount=0)
     {
         super(name,image,weight,"Glassware",0,size);
         this.capacity=capacity;

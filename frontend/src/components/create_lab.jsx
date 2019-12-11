@@ -46,7 +46,7 @@ import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EditableLabel from "./EditableLabel";
-import deepCloneWithType from "../clone"
+import deepCloneWithType, {floatEqual, sortArrayByAttr} from "../clone"
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -56,6 +56,7 @@ class create_lab extends React.Component {
         this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
+        this.rules = {};
 
         this.state = {
             showPopover: false,
@@ -91,6 +92,43 @@ class create_lab extends React.Component {
         this.selectStep = this.selectStep.bind(this);
         this.getInfo = this.getInfo.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
+        this.addColorChangeRule = this.addColorChangeRule.bind(this);
+        this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
+    }
+
+    addColorChangeRule(eq,color){
+
+        const items = sortArrayByAttr(eq.items);
+
+        const sorted_names = items.map((item) =>item.name);
+        const amounts = items.map((item) =>item.amount);
+
+        this.rules[sorted_names] = {"amounts":amounts,"color":color};
+    }
+
+    checkColorChangeRule(eq){
+        const items = sortArrayByAttr(eq.items);
+        const sorted_names = items.map((item) =>item.name);
+        const amounts = items.map((item) =>item.amount);
+        console.log("items",items,
+            "this.rules",this.rules[sorted_names]);
+        const marchingRule = this.rules[sorted_names];
+        if(marchingRule){
+            console.log("rule found","amounts",amounts, "sorted_names", sorted_names );
+            const rule_amounts = marchingRule.amounts;
+
+            if(amounts.length !== rule_amounts.length ){
+                return false;
+            }
+
+            for(let i=0;i<amounts.length; i++ ){
+                if(! floatEqual(amounts[i], rule_amounts[i], rule_amounts[i]*.1 )){
+                    return false;
+                }
+            }
+            return this.rules[sorted_names]["color"];
+        }
+        return false;
     }
     populateStepEquipment(equipList)
     {
@@ -680,9 +718,14 @@ class create_lab extends React.Component {
 
     handleAction(source, action,target,input){
 
-
-
         source[action](target,parseFloat(input));
+
+        let color = this.checkColorChangeRule(target);
+        console.log("color",color);
+        alert(color);
+        if (color){
+            target.color = color;
+        }
         this.forceUpdate();
     }
 
@@ -828,7 +871,9 @@ class create_lab extends React.Component {
                                              equipment={equipment}
                                              move_element={this.move_element}
                                              adjust={this.adjust_interactive_element}
+                                             addColorChangeRule={this.addColorChangeRule}
                                              width={200} height={200}/>
+
 
                     ))
                     }

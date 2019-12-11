@@ -75,8 +75,22 @@ export default function deepCloneWithType(obj,ignore=""){
     // return copy;
 }
 
-export function floatEqual(a,b=0.0) {
-    const tolerance = Number.EPSILON;
+export function floatEqual(a,b=0.0,tolerance = Number.EPSILON) {
     return Math.abs(a - b) < tolerance;
+}
 
+
+export function sortArrayByAttr(arr, attr, returnAttrList=null){
+    function compare( a, b, attr ) {
+        if ( a[attr] < b[attr] ){
+            return -1;
+        }
+        if ( a[attr] > b[attr] ){
+            return 1;
+        }
+        return 0;
+    }
+    arr.sort( compare );
+
+    return arr;
 }
