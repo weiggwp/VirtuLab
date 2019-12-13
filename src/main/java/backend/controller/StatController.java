@@ -62,13 +62,15 @@ public class StatController {
     @ResponseBody
     public ResponseEntity courseStats(@RequestBody CourseDTO courseDTO) {
         System.out.println("StatController course stats: ");
+        System.out.println("courseDTO :" + courseDTO);
 
         double[] res = new double[3];
         String code = courseDTO.getCode();
-//        long courseID = courseDTO.getCourseID();
-        long courseID = 9;
+        long courseID = courseDTO.getCourseID();
 
-        Optional<Course> optional = courseService.findCourseById(courseID);
+        Optional<Course> optional = courseService.findCourseByNameOrCode("ZtI1",0);
+        Optional<Course> optional1 = courseService.findCourseById(courseID);
+
         if (optional.isPresent()) {
             Course course = optional.get();
             List<UserCourseLab> list = userCourseLabService.findAllByCourse(course);
@@ -94,10 +96,11 @@ public class StatController {
             System.out.println(res[0]);
             System.out.println(res[1]);
 
-
+            System.out.println("Exit StatsController: ");
             return new ResponseEntity(res, HttpStatus.OK);
         }
         res[1] = 100;
+        System.out.println("Exit StatsController2: ");
         return new ResponseEntity(res, HttpStatus.NOT_FOUND);
     }
 

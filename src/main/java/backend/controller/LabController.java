@@ -100,6 +100,7 @@ public class LabController {
             existing.setLastModified(labDTO.getLastModified());
             existing.setSteps(steps);
             existing.setEquipments(equipments);
+            existing.setLastModified(new Date());
             labService.saveLab(existing);
 
         }
@@ -110,6 +111,7 @@ public class LabController {
             lab.setSteps(steps);
             lab.setEquipments(equipments);
             lab.setOpen(0);
+            lab.setLastModified(new Date());
             returnid = labService.createNewLab(lab);
             //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
             //System.out.println("return id is "+returnid);
