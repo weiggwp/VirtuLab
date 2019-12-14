@@ -1,49 +1,37 @@
-import React, {Component} from 'react';
+import React from 'react';
 import icon from "../Images/v.jpg";
 
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
 import '../stylesheets/create_lab.css';
-import {PhotoshopPicker, SketchPicker} from 'react-color'
 import {
     Tab,
     Button,
     Col,
-    Container,
     FormGroup,
     Image,
     Nav,
     Navbar,
     Row,
-    InputGroup,
     FormControl,
     Card,
     OverlayTrigger, Tooltip,
     Overlay, Popover
 } from "react-bootstrap";
-import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
-import {Instruction} from "./instruction";
-// import {Workspace} from "./Droppable_space";
 import Step from "../Step.js";
 import {Slides} from "./Slides";
-// import EditableLabel from 'react-editable-label';
 import {EquipmentList} from "./EquipmentList";
 import {EquipmentInfo} from "./EquipmentInfo";
 import EquipmentSet from "../EquipmentSet.js";
 
 import axios from "axios";
 import GLOBALS from "../Globals";
-import Draggable from 'react-draggable';
-import {Equipment} from "./Equipment";
 import {Draggable_equipment} from "./Draggable_equipment";
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import Element from "../Element";
-import water from "../Images/water.svg";
 import Tool from "../Tool";
 import Glassware from "../Glassware";
-import small_volFlask from "../Images/100mLVolumetricFlask.svg";
-import Workspace from "../Workspace"
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EditableLabel from "./EditableLabel";
 import deepCloneWithType, {floatEqual, sortArrayByAttr} from "../clone"
@@ -57,6 +45,8 @@ class create_lab extends React.Component {
         this.target = null;
         this.ref = React.createRef();
         this.rules = {};
+        this.interaction_map = {};
+
 
         this.state = {
             showPopover: false,
@@ -92,6 +82,7 @@ class create_lab extends React.Component {
         this.selectStep = this.selectStep.bind(this);
         this.getInfo = this.getInfo.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
+        this.popOff = this.popOff.bind(this);
         // this.addColorChangeRule = this.addColorChangeRule.bind(this);
         // this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
     }
@@ -130,6 +121,20 @@ class create_lab extends React.Component {
     //     }
     //     return false;
     // }
+
+    popOff(workspace_id, eq_id){
+        let old_tartget = this.interaction_map[[workspace_id+","+eq_id]];
+        if (old_tartget[0].name==="Scale"){
+
+            this.state.equipments[workspace_id][old_tartget[2]].value = 0;
+            this.state.equipments[workspace_id][old_tartget[2]].items = [];
+
+            this.forceUpdate();
+
+
+        }
+
+    }
     populateStepEquipment(equipList)
     {
 
@@ -618,6 +623,12 @@ class create_lab extends React.Component {
             this.eq1 = source;
             this.eq2 = target;
             let actions = source.getActions(target);
+
+            //dec 11
+            if(target.name ==="Scale"){
+                this.interaction_map[workspace_id1+","+eq_id1] = [target,workspace_id2,eq_id2];
+            }
+
             this.target = target_ev;
             if(actions){
                 this.setState({showPopover:true});
@@ -625,6 +636,8 @@ class create_lab extends React.Component {
             }
             else{
                 source.interact(target);
+                target.items = [source];
+
                 this.forceUpdate()
             }
         }
@@ -749,7 +762,7 @@ class create_lab extends React.Component {
                 ));
             }
             else{
-                source.interact(target);
+                // source.interact(target);
             }
         }
         const overflow_msg = "Target Vessels will Overflow. Your Desired volume has not been completely transferred.";
@@ -872,6 +885,8 @@ class create_lab extends React.Component {
                                              move_element={this.move_element}
                                              adjust={this.adjust_interactive_element}
                                              // addColorChangeRule={this.addColorChangeRule}
+                                             interaction_map = {this.interaction_map}
+                                             popOff = {this.popOff}
                                              width={200} height={200}/>
 
 
@@ -1051,6 +1066,8 @@ class create_lab extends React.Component {
     }
 
     adjust_interactive_element(ev,workspace,src_equip,target_equip){
+        let targ_pos;
+        let src_pos;
         const src_id = "workspace"+workspace+"equip"+src_equip;
         const targ_id = "workspace"+workspace+"equip"+target_equip;
         const workspace_id="workspace"+workspace;
@@ -1115,7 +1132,7 @@ class create_lab extends React.Component {
             // console.log("src_pos_x",targ_x,"src_pos_y",targ_y);
             //+src.size/2
             // var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
-            var src_pos = this.getBoundingXY(targ_center_x-x_diff,targ_center_y-y_diff, workspace_element,src_element);
+            src_pos = this.getBoundingXY(targ_center_x - x_diff, targ_center_y - y_diff, workspace_element, src_element);
 
             // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
             // if(difference[1]!==targ_height)
@@ -1132,7 +1149,7 @@ class create_lab extends React.Component {
             // console.log("src_pos_x new",new_targ_x,"src_pos_y new ",new_targ_y);
 
 
-            var targ_pos = [new_targ_x,new_targ_y];
+            targ_pos = [new_targ_x, new_targ_y];
 
             src.setInteracting(true);
 
@@ -1146,22 +1163,22 @@ class create_lab extends React.Component {
 
             const width = src_element.getBoundingClientRect().width / 4;
             const height = src_element.getBoundingClientRect().height / 4;
-            console.log("src rect", src_element.getBoundingClientRect())
-            var src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
+            // console.log("src rect", src_element.getBoundingClientRect());
+            src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
 
             const difference = [this.getDifference(src_pos[0], src_x, width), this.getDifference(src_pos[1], src_y, height)];
 
-            console.log("original ", [src_x, src_y], "new ", src_pos, " difference ", difference)
+            // console.log("original ", [src_x, src_y], "new ", src_pos, " difference ", difference)
 
-            var targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
+            targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
 
 
             //position moved back, meaning it went out of bounds
             // if(src_y===src_pos[1])
         }
 
-            targ_x=targ_pos[0]
-            targ_y=targ_pos[1]
+            targ_x=targ_pos[0];
+            targ_y=targ_pos[1];
             src_x=src_pos[0];
             src_y=src_pos[1];
 

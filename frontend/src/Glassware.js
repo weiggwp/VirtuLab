@@ -213,13 +213,19 @@ export default class Glassware extends Equipment{
         if(target.name==="Scale")
         {
             target.value=this.getWeight();
-            // alert(this.name +" is "+ target.value +"g.");
         }
         else
         {
             target.value=this.temperature;
         }
 
+    }
+
+    detach(target)
+    {
+        if(target.name==="Scale"){
+            target.value = 0;
+        }
     }
     toString()
     {

@@ -71,6 +71,11 @@ export class Scale extends Tool{
     {
         return " "
     }
+    setValue(v){
+        this.value = v;
+    }
+
+
 
 
 

@@ -67,6 +67,13 @@ class Draggable_equipment extends React.Component {
         dragSrcEl = this;
         this.html = ev.target;
 
+        //pop off old equip
+        const key = this.props.wkspace_id +","+this.props.equip_id;
+        if(key in this.props.interaction_map){
+            console.log("eq was interacting");
+            this.props.popOff( this.props.wkspace_id, this.props.equip_id);
+        }
+
         ev.dataTransfer.effectAllowed = 'move';
     };
     dragEnter_handler = (ev) => {
