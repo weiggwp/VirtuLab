@@ -6,6 +6,7 @@ import backend.model.UserCourseLab;
 import backend.model.UserCourseLabStep;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserCourseLabStepRepository extends CrudRepository<UserCourseLabStep, Long> {
@@ -13,6 +14,10 @@ public interface UserCourseLabStepRepository extends CrudRepository<UserCourseLa
     Optional<UserCourseLabStep> findByUserCourseLabAndStep(UserCourseLab userCourseLab, Step step);
 
     boolean existsByUserCourseLabAndStep(UserCourseLab userCourseLab, Step step);
+
+    int countUserCourseLabStepByStep(Step step);
+
+    List<UserCourseLabStep> findAllByStep(Step step);
 
 
 }

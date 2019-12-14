@@ -4,6 +4,7 @@ import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
 import {Droppable_course} from './droppable_course.jsx'
+import {ToastsContainer, ToastsStore} from "react-toasts";
 import axios from "axios";
 import GLOBALS from "../Globals";
 
@@ -48,10 +49,15 @@ export class create_course extends Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'create_course', course, axiosConfig)
             .then((response) => {
-
+                if (response.data !== null)
+                    ToastsStore.success("Created a Course")
+                else {
+                    ToastsStore.error("Make the name is unique");
+                }
 
             })
             .catch((error) => {
+                ToastsStore.error("Error in Creating a New Course")
                 }
             );
     }
@@ -148,6 +154,8 @@ export class create_course extends Component {
                         </div>
 
                     </div>
+
+                    <ToastsContainer store={ToastsStore} />
 
 
                 </div>

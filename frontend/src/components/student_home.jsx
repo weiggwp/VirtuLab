@@ -98,9 +98,9 @@ class student_home extends React.Component
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'enroll',course,axiosConfig)
             .then((response) => {
-
+                ToastsStore.success("Enrollment success")
                 window.location.reload();
-                // console.log("success!");
+
             })
             .catch((error) => {
                     this.setState({

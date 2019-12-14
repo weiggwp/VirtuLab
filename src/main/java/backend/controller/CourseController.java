@@ -55,12 +55,12 @@ public class CourseController {
         User user = userRepository.findByEmail(email);
         Map<String, Object>  map = new HashMap<>();
         /* In DB, reject request to add course*/
-        for (int i=0; i<user.getUserCourseList().size(); i++)
-       if (user.getUserCourseList().get(i).getCourse().getCourseName().equals(courseDTO.getCourseName())) {
-            map.put("msg", ERRMSG);
-            System.out.println("Instructors must have unique coursenames");
-            return null;
-        }
+//        for (int i=0; i<user.getUserCourseList().size(); i++)
+//       if (user.getUserCourseList().get(i).getCourse().getCourseName().equals(courseDTO.getCourseName())) {
+//            map.put("msg", ERRMSG);
+//            System.out.println("Instructors must have unique coursenames");
+//            return null;
+//        }
        // System.out.println("Store to DB");
 
         /* convert DTO to entity, add to DB */
@@ -485,6 +485,8 @@ public class CourseController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
 
 
 

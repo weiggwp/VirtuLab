@@ -413,6 +413,8 @@ class create_lab extends React.Component {
                 if(this.state.lab_id===0)  //only if not set
                     this.setState({lab_id:response.data});
 
+                ToastsStore.success("Lab is saved")
+
 
             })
             .catch((error) => {

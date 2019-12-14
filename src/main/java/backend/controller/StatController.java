@@ -1,14 +1,11 @@
 package backend.controller;
 
 import backend.dto.CourseDTO;
+import backend.dto.LabDTO;
 import backend.dto.UserDTO;
-import backend.model.Course;
-import backend.model.User;
-import backend.model.UserCourse;
-import backend.model.UserCourseLab;
-import backend.service.CourseService;
-import backend.service.UserCourseLabService;
-import backend.service.UserService;
+import backend.model.*;
+import backend.repository.UserCourseLabStepRepository;
+import backend.service.*;
 import backend.util.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +32,12 @@ public class StatController {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    LabService labService;
+
+    @Autowired
+    UserCourseLabStepRepository userCourseLabStepRepository;
 
 //    @CrossOrigin(origins = "*")
 //    @RequestMapping(value = "/student_complete_rate", method = RequestMethod.POST)
@@ -158,6 +162,63 @@ public class StatController {
         System.out.println("returning null");
         return new ResponseEntity(HttpStatus.NOT_FOUND);
 
+    }
+
+
+    /* We should know which step has most tries, so we know that step has problem */
+    /* find all tries, find each stepTries over allTries */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/step_stats", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity stepStats(@RequestBody LabDTO labDTO) {
+        System.out.println("StatController course stats: ");
+        System.out.println("labDTO :" + labDTO);
+
+        long labID = labDTO.getLabID();
+
+        Optional<Lab> optional = labService.findLabByLabID(labID);
+
+        if (optional.isPresent()) {
+            Lab lab = optional.get();
+            List<Step> steps = lab.getSteps();
+            System.out.println("steps size is:" + steps.size());
+            double[] triesPerStep = new double[steps.size()];
+            int total = 0;
+            int cnt = 0;
+            int totalTries = 0;
+            for (int i = 0; i < steps.size(); i ++) {
+                Step step = steps.get(i);
+                total += userCourseLabStepRepository.countUserCourseLabStepByStep(step);
+                List<UserCourseLabStep> userCourseLabSteps = userCourseLabStepRepository.findAllByStep(step);
+                cnt = 0;
+                for (int j = 0; j < userCourseLabSteps.size(); j ++) {
+                    int tries = userCourseLabSteps.get(j).getTriesPerStep();
+                    cnt += tries;
+                    totalTries += tries;
+                }
+                triesPerStep[i] = cnt;
+            }
+
+            if (totalTries <= 0) {
+                double[] res = new double[1];
+                res[0] = 100;
+                return new ResponseEntity(res, HttpStatus.OK);
+            }
+
+            double[] res = new double[steps.size()];
+            double stepTries;
+            for (int i = 0; i < res.length; i ++) {
+                stepTries = triesPerStep[i];
+                res[i] = stepTries / totalTries;
+            }
+
+            System.out.println("Exit StatsController: ");
+            return new ResponseEntity(res, HttpStatus.OK);
+        }
+        double[] res = new double[1];
+        res[0] = 100;
+        System.out.println("Exit StatsController2: ");
+        return new ResponseEntity(res, HttpStatus.NOT_FOUND);
     }
 
 }

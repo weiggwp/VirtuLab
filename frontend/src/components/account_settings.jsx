@@ -7,6 +7,7 @@ import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";
 import InstructorHeader from "./instructorHeader";
+import {ToastsStore, ToastsContainer} from "react-toasts";
 
 export class account_settings extends Component {
     constructor(props) {
@@ -66,7 +67,7 @@ export class account_settings extends Component {
             .then((response) => {
                 localStorage.setItem('token', response.data["token"]);
                 // alert(response.data["role"])
-
+                ToastsStore.info("password changed")
                 this.setState({
                     errors: 'Password Successfully changed!',
 
@@ -276,7 +277,7 @@ export class account_settings extends Component {
 
 
 
-
+                    <ToastsContainer store={ToastsStore} />
 
                 </div>
             );

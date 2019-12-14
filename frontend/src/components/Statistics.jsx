@@ -12,6 +12,7 @@ class Statistics extends Component {
         super(props);
         this.state = {
 
+            courseID: props.courseID,
             numOfStudents: 0,
             completePercentage: 0,
             incompletePercentage: 0,
@@ -19,8 +20,12 @@ class Statistics extends Component {
             completed: 75,
             noRetries:25,
 
+            stepsArr: [],
+
             data: [ true, false, false, false ]
         };
+        this.computeStats() // for completion
+        this.computeStepStats()
     }
     banner() {
         return (
@@ -51,10 +56,11 @@ class Statistics extends Component {
     }
 
 
-    computeStats = () => {
+    computeStats() {
 
         const course = {
             email: this.props.email,
+            courseID: this.state.courseID
         };
 
         let axiosConfig = {
@@ -66,7 +72,7 @@ class Statistics extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'lab_stats', course, axiosConfig)
             .then((response) => {
-
+                alert("came back")
                 let arr = response.data
                 this.setState({
                     numOfStudents: arr[2],
@@ -75,18 +81,75 @@ class Statistics extends Component {
                 })
             })
             .catch((error) => {
+                console.log(error)
 
                 }
             );
 
     }
 
+    computeStepStats() {
+        const course = {
+            email: this.props.email,
+            labID: 9610
+        };
 
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
 
+        axios.post(GLOBALS.BASE_URL + 'step_stats', course, axiosConfig)
+            .then((response) => {
+                alert("yo step_stats")
+                let arr = response.data
+                this.setState({
+                    stepsArr: arr
+                })
+                console.log("steps stats")
+                console.log(arr)
+            })
+            .catch((error) => {
+                    console.log(error)
+
+                }
+            );
+    }
+
+//     data={[
+//             { title: 'step1', value: 20, color: '#E38627' },
+// { title: 'step2', value: 25, color: '#C13C37' },
+// { title: 'step3', value: 25, color: '#f3b2a3' }
+//
+// ]}
+    formatStepStats(arr){
+
+        let items = []
+        if (arr.length === 1 && arr[0] === 100) {
+            let color='#' + parseInt(Math.random() * 0xffffff).toString(16)
+            items.push({
+                title: "perfect",
+                value: 100,
+                color: color
+            })
+            return items
+        }
+
+        for (let i = 0; i < arr.length; i ++) {
+            let color='#' + parseInt(Math.random() * 0xffffff).toString(16)
+            items.push({
+                title: 'step' + (i + 1),
+                value: arr[i],
+                color: color
+            })
+        }
+        return items
+    }
 
     render() {
-        this.computeStats()
-
+        let stepData = this.formatStepStats(this.state.stepsArr)
 
 
         const { completed,noRetries} = this.state;
@@ -105,7 +168,6 @@ class Statistics extends Component {
         percentCompleted = Math.round(parseFloat(completed) / total * 100);
         percentNoRetries = Math.round(parseFloat(noRetries) / total * 100);
 
-
         return (
             <div className="charts">
                 {this.banner()}
@@ -119,9 +181,10 @@ class Statistics extends Component {
                     <div className="row" style={{marginRight:50}}>
 
                         <PieChart
+                            labelPosition={50}
                             data={[
-                                { title: 'Completed', value: this.state.completePercentage, color: '#2246c7' },
-                                { title: 'Incompletes', value: this.state.incompletePercentage, color: '#408fff' },
+                                { title: 'Completed', value: this.state.completePercentage, color: '#E38627', label: "Completed" },
+                                { title: 'Incompletes', value: this.state.incompletePercentage, color: '#C13C37', label: "Incomplete" },
 
                             ]}
                             label={"Percent completed"}
@@ -138,12 +201,13 @@ class Statistics extends Component {
                             labelStyle={{ color: 'black' }}
                         />;
                         <PieChart
-                            data={[
-                                { title: 'step1', value: 20, color: '#E38627' },
-                                { title: 'step2', value: 25, color: '#C13C37' },
-                                { title: 'step3', value: 25, color: '#f3b2a3' }
-
-                            ]}
+                            // data={[
+                            //     { title: 'step1', value: 20, color: '#E38627' },
+                            //     { title: 'step2', value: 25, color: '#C13C37' },
+                            //     { title: 'step3', value: 25, color: '#f3b2a3' }
+                            //
+                            // ]}
+                            data={stepData}
                             label={"Retries per instruction"}
                             labelStyle={{ color: 'black' }}
                         />;

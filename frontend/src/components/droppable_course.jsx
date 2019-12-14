@@ -3,6 +3,7 @@ import {Button, Col, Form, FormControl, Row} from "react-bootstrap";
 import axios from "axios";
 import GLOBALS from "../Globals";
 import '../stylesheets/account_settings.css';
+import {ToastsStore} from "react-toasts";
 
 class Droppable_course extends React.Component
 {
@@ -39,15 +40,18 @@ class Droppable_course extends React.Component
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'drop', course, axiosConfig)
             .then((response) => {
-
+                ToastsStore.success("Course is dropped")
                     this.render()
                     window.location.reload();
+
+
             })
             .catch((error) => {
                     this.setState({
                         errors: 'Error! No course found with the code.',
                         code: '',
                     });
+                    ToastsStore.error("Error in dropping")
                     //    this.render()
                     //  window.location.reload();
 

@@ -7,7 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import React from "react";
 import axios from "axios";
 import GLOBALS from "../Globals";
-import {ToastsStore} from "react-toasts";
+import {ToastsStore, ToastsContainer} from "react-toasts";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 class view_lab_course extends React.Component
@@ -26,6 +26,7 @@ class view_lab_course extends React.Component
             students:[],
             due_date: "",
             redirectStat: false,
+            courseID: this.props.location.state.courseID,
         }
 
     }
@@ -64,6 +65,7 @@ class view_lab_course extends React.Component
         };
         axios.post(GLOBALS.BASE_URL + 'set_date', course, axiosConfig)
             .then((response) => {
+                ToastsStore.success("new date has been set.")
                 this.setState({
                     redirect: true
                 })
@@ -142,7 +144,7 @@ class view_lab_course extends React.Component
             );
     }
 
-    redirectstats=()=>{
+    redirectstats(){
         this.setState({
             redirectStat: true
         })
@@ -152,7 +154,7 @@ render() {
 
 
     if (this.state.redirectStat) {
-        return <Redirect exact to='/statistics' />
+        return <Redirect exact to='/statistics' courseID={this.props.location.state.courseID}/>
     }
 
     if (this.state.loaded==false){
@@ -175,7 +177,7 @@ render() {
                 </Navbar>
 
                 <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
-                        onClick={this.redirectstats}>
+                        onClick={() => this.redirectstats()}>
                     Statistics
                 </Button>
 
@@ -258,7 +260,7 @@ render() {
 
                     </div>
                     {/*{<Expandable_Classes style={"settingsH3"}/>}*/}
-
+                    <ToastsContainer store={ToastsStore} />
 
                 </div>
 
