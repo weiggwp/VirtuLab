@@ -1,6 +1,8 @@
 import React from "react";
 import {Image, Nav} from "react-bootstrap";
 import '../stylesheets/slides.css';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -46,14 +48,8 @@ class Slides extends React.Component {
 
     handleDelButton() {
         this.state.delFun(this.state.curStep)
-        if(this.state.active>0)
-        {
-            this.setState({
-                active: this.state.curStep-1
-            })
 
 
-        }
         this.forceUpdate()
 
 

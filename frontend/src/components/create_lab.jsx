@@ -311,6 +311,7 @@ class create_lab extends React.Component {
         //TODO:autosave commented out for testing purposes
         //autosave
         this.handleLabSave()
+        ToastsStore.warning("auto saved lab progress");
         this.setState({
             redirectHome: true
         })
@@ -724,6 +725,15 @@ class create_lab extends React.Component {
         this.setState(
             {equipments:temp}
         )
+        if(temp[step].length===0)
+        {
+            ToastsStore.warning("Imported from an empty step")
+
+        }
+        else
+        {
+            ToastsStore.success("Imported step ",this.state.importStep)
+        }
     }
     
 
