@@ -341,13 +341,13 @@ displayStep(i){
 
 
                                     <Dropdown.Item onClick=
-                                                       {() => this.displayBar(0)}>"Average attempts"</Dropdown.Item>
+                                                       {() => this.displayBar(0)}>Average attempts</Dropdown.Item>
                                 <Dropdown.Item onClick=
-                                                   {() => this.displayBar(1)}>"Median attempts"</Dropdown.Item>
+                                                   {() => this.displayBar(1)}>Median attempts</Dropdown.Item>
                                 <Dropdown.Item onClick=
-                                                   {() => this.displayBar(2)}>"Max attempts"</Dropdown.Item>
+                                                   {() => this.displayBar(2)}>Max attempts</Dropdown.Item>
                                 <Dropdown.Item onClick=
-                                                   {() => this.displayBar(3)}>"Minimum attempts"</Dropdown.Item>
+                                                   {() => this.displayBar(3)}>Minimum attempts</Dropdown.Item>
 
                             </Dropdown.Menu>
                         </Dropdown>

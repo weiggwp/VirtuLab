@@ -52,8 +52,11 @@ class Lab extends React.Component
             return null;
         } else if (this.state.renderStudent) {
             console.log("complete is "+this.props.complete)
+            console.log("steps are ")
+            console.log(this.props.steps,)
             return <Redirect exact to={{
                 pathname: '/do_lab',
+
                 state: {
                     labID: this.props.labID,
                     lab_name:this.props.lab_name,

@@ -68,6 +68,8 @@ class student_home extends React.Component
                         clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
 
                 }
+                console.log("class arr is ");
+                console.log(classArray)
                 // console.log("AAA classarray is "+classArray);
                 this.setState({classes:classArray,loading_course:false});
                 // this.render()

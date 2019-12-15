@@ -174,7 +174,8 @@ class DoLab extends React.Component {
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-
+            console.log("current is");
+            console.log(current)
 
 
             if(solutions.includes(current.type))
@@ -298,13 +299,18 @@ class DoLab extends React.Component {
 
             //get steps from prop
             var step_list = this.props.location.state.steps;
+            console.log("steplist is");
+            console.log(step_list)
             step_list.sort(this.compare)
+            console.log("steplist is");
+            console.log(step_list)
             //opening a previously saved lab
             if (step_list !== undefined)
             {
                 for (var i = 1; i <step_list.length ; i++) {
                     this.state.steps.push(step_list[i]);
-
+                    console.log("pushed");
+                    console.log(step_list[i])
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i-1].equipments);
 
 
@@ -433,16 +439,14 @@ class DoLab extends React.Component {
     toolbar()
     {
         {
+            console.log("props is ");
+            console.log(this.props.location.state.lab_name)
             return (
                 <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
                     <Nav>
-                        <EditableLabel labelClass="lab_title_label" inputClass="lab_title_input"
-                                       initialValue={this.state.lab_title}
-                                       save={value => {
-                                           this.setState({lab_title:value});}
-                                       }
-                        />
+                        {this.props.location.state.lab_name}
+
                     </Nav>
 
                     <Nav>
