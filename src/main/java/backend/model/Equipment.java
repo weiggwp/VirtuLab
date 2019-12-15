@@ -28,6 +28,8 @@ public class Equipment {
     protected double weight;
 
     private double amount;
+
+
     private double temperature;
     private String image;
     @OneToMany(cascade = CascadeType.PERSIST)
@@ -131,6 +133,14 @@ public class Equipment {
         return capacity;
     }
 
+
+    public String getChemProp() {
+        return chemProp;
+    }
+
+    public void setChemProp(String chemProp) {
+        this.chemProp = chemProp;
+    }
     public void setCapacity(double capacity) {
         this.capacity = capacity;
     }

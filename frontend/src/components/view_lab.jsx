@@ -82,6 +82,7 @@ class view_lab extends React.Component {
         this.handleAction = this.handleAction.bind(this);
         this.selectStep = this.selectStep.bind(this);
         this.getInfo = this.getInfo.bind(this);
+        this.update=this.update.bind(this);
     }
 
     populateStepEquipment(equipList) {
@@ -435,6 +436,10 @@ class view_lab extends React.Component {
 
         );
     }
+    update=()=>
+    {
+        this.forceUpdate()
+    }
 
 
     instructionPane() {
@@ -444,8 +449,11 @@ class view_lab extends React.Component {
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
 
-            <EquipmentList step={0} set={this.equipmentSet.getEquipments()}
-                           handleAddEquipment={this.handleAddEquipment}/>
+            <EquipmentList
+                update={this.update}
+                step={0}
+                set={this.equipmentSet.getEquipments()}
+                handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0, "This is the setup stage. " +
                 "Click on equipments you would like to disable for the duration of the lab (click again to unselect). "

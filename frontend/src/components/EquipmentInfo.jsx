@@ -34,7 +34,8 @@ class EquipmentInfo extends React.Component{
 
         if(Element.prototype.isPrototypeOf(equipment) )
         {
-            const name=equipment.chemProp===undefined?"Distilled Water":equipment.chemProp;
+            const notDefined = equipment.chemProp===undefined||equipment.chemProp===null;
+            const name=notDefined?"Distilled Water":equipment.chemProp;
 
             const amount = equipment.amount;
 
@@ -49,8 +50,9 @@ class EquipmentInfo extends React.Component{
 
             var element;
             for (element = 0; element < items.length; element++) {
+                const notDefined = items[element].chemProp===undefined||items[element].chemProp===null;
+                const name=notDefined?"Distilled Water":items[element].chemProp;
 
-                const name = items[element].chemProp===undefined?"Distilled Water":items[element].chemProp;
                 const amount= items[element].amount;
 
                 result.push({ name,amount })
