@@ -1,6 +1,8 @@
 import React from "react";
 import {Image, Nav} from "react-bootstrap";
 import '../stylesheets/slides.css';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -19,7 +21,6 @@ class Slides extends React.Component {
             // addChild: props.addChild,
             curStep: 0,
             delFun: this.props.delChild,
-            active:0
         }
 
         this.handleDelButton = this.handleDelButton.bind(this);
@@ -40,20 +41,14 @@ class Slides extends React.Component {
     handleOnSelectedKey(selectedKey){
         this.setState({
             curStep: selectedKey,
-            active:selectedKey,
         })
+        this.props.onSelect(selectedKey)
     }
 
     handleDelButton() {
         this.state.delFun(this.state.curStep)
-        if(this.state.active>0)
-        {
-            this.setState({
-                active: this.state.curStep-1
-            })
 
 
-        }
         this.forceUpdate()
 
 
@@ -119,7 +114,7 @@ class Slides extends React.Component {
                     </div>
 
 
-                    <Nav activeKey={this.state.active} variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
+                    <Nav variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
                         {children}
                     </Nav>
                 </div>

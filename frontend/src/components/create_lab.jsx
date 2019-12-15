@@ -81,9 +81,10 @@ class create_lab extends React.Component {
         this.move_element = this.move_element.bind(this);
         this.selectStep = this.selectStep.bind(this);
         this.getInfo = this.getInfo.bind(this);
-        this.adjust_interactive_element = this.adjust_interactive_element.bind(this);
         this.popOff = this.popOff.bind(this);
-        this.hidePopOver = this.hidePopOver.bind(this);
+        this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
+        this.hidePopOver=this.hidePopOver.bind(this);
+        this.update=this.update.bind(this);
         // this.addColorChangeRule = this.addColorChangeRule.bind(this);
         // this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
     }
@@ -133,52 +134,60 @@ class create_lab extends React.Component {
 
             this.forceUpdate();
 
-
         }
-
     }
 
-    populateStepEquipment(equipList) {
+    populateStepEquipment(equipList)
+    {
 
         let equip;
-        var result = [];
-        const solutions = ['General', 'Acids', 'Indicators', 'Bases', 'Stock Solutions'];
-        const glassware = ['Titration Flasks', 'Graduated Cylinders', "Beakers", "Volumetric Flasks", "Pipettes"];
+        var result =[];
+        const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
+        const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
+
 
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
+            console.log("current",current)
 
-            if (solutions.includes(current.type)) {
+            if(solutions.includes(current.type))
+            {
                 equip = new Element(current.name, current.image, current.capacity,
-                    current.weight, current.state, current.size, current.chemProp, current.amount
+                    current.weight, current.state, current.size,current.chemProp,current.amount
+
                 );
                 // name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity
                 equip.setType(current.type);
-                equip.setDisabled(current.disabled);
-                equip.setLocation(current.left, current.top);
-                equip.setColor(current.color);
+                equip.setDisabled(current.disabled)
+                equip.setLocation(current.left,current.top)
+                equip.setColor(current.color)
+
 
                 result.push(equip)
-            } else if (!glassware.includes(current.type)) {
+            }
+            else if(!glassware.includes(current.type))
+            {
                 equip = new Tool(current.name, current.image);
-                equip.setDisabled(current.disabled);
-                equip.setLocation(current.left, current.top);
-                equip.setColor(current.color);
+                equip.setDisabled(current.disabled)
+                equip.setLocation(current.left,current.top)
+                equip.setColor(current.color)
+
 
 
                 result.push(equip);
 
-            } else {
+            }
+            else {
 
 
                 equip = new Glassware(current.name, current.image, current.capacity,
-                    current.weight, current.state, current.size, current.amount);
-                equip.setItems(current.items);
+                    current.weight,current.state, current.size,current.amount);
+                equip.setItems(current.items)
                 equip.setDisabled(current.disabled);
                 equip.setType(current.type);
-                equip.setLocation(current.left, current.top);
-                equip.setColor(current.color);
+                equip.setLocation(current.left,current.top);
+                equip.setColor(current.color)
 
                 result.push(equip);
 
@@ -244,8 +253,6 @@ class create_lab extends React.Component {
     }
 
     populateSteps() {
-
-        // console.log(this.props.location.state.equipments)
         //if not new lab, load old lab
         if (this.props.location.state !== undefined) {
 
@@ -297,6 +304,7 @@ class create_lab extends React.Component {
         //TODO:autosave commented out for testing purposes
         //autosave
         this.handleLabSave();
+        ToastsStore.warning("auto saved lab progress");
         this.setState({
             redirectHome: true
         })
@@ -329,20 +337,19 @@ class create_lab extends React.Component {
         this.forceUpdate()
     }
 
+    update=()=>
+    {
+        this.forceUpdate()
+    }
+
     setRestart = () => {
 
         // console.log(this.state.equipments)
         const temp = this.state.steps;
-        const temp_equip = this.state.equipments;
-        temp_equip[this.state.currentStep] = [];
+        this.state.equipments[this.state.currentStep]=[];
+        this.forceUpdate();
 
-        this.setState({
-            // restart: true,      //should probably just be restarting a single step
-            temp_equip,
-
-        });
     };
-
 
     banner() {
         return (
@@ -395,8 +402,9 @@ class create_lab extends React.Component {
 
                 this.setState({save_success: true});
                 // console.log("id is "+response.data);
-                if (this.state.lab_id === 0)  //only if not set
-                    this.setState({lab_id: response.data});
+                if(this.state.lab_id===0)  //only if not set
+                    this.setState({lab_id:response.data});
+                ToastsStore.success("lab saved successfully")
 
 
             })
@@ -404,6 +412,7 @@ class create_lab extends React.Component {
                     this.setState({
                         errors: 'Saving error',
                     });
+                    ToastsStore.error("Error saving lab")
                 }
             );
     };
@@ -549,22 +558,21 @@ class create_lab extends React.Component {
         );
     }
 
-
-    instructionPane() {
+    instructionPane()
+    {
         const instructions = [];
         // instructions.push(<Tab.Pane eventKey={0}> {this.state.steps[0].instruction} </Tab.Pane>);
         //the zeroth get a different handler - enable disable
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
 
-            <EquipmentList step={0} set={this.equipmentSet.getEquipments()}
-                           handleAddEquipment={this.handleAddEquipment}/>
+            <EquipmentList step={0} update={this.update} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
-            {this.setupInstruction(0, "This is the setup stage. " +
+            {this.setupInstruction(0,"This is the setup stage. " +
 
                 "Click on equipments you would like to disable for the duration of the lab (click again to unselect). "
-                + "Right click on a equipment to remove liquids, change fill color, view info, delete equipment ")}
-        </Tab.Pane>);
+                + "For convenience, you may also click on the checkmarks next to equipment types to enable/disable a whole category of equipments."
+                +"Right click on a equipment to remove liquids, change fill color, view info, delete equipment ") }</Tab.Pane>);
 
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
@@ -579,8 +587,9 @@ class create_lab extends React.Component {
         }
 
 
-        return (
-            <Tab.Content>
+
+        return(
+            <Tab.Content >
 
                 {instructions}
             </Tab.Content>
@@ -597,7 +606,7 @@ class create_lab extends React.Component {
                 <EquipmentList style={{height: "8vh"}} set={this.equipmentSet.getEquipments()} step={i}
                                handleAddEquipment={this.handleAddEquipment}/>
 
-                <span>instruction for step {i} </span>
+                <span style={{fontFamily:"monospace",fontSize:14}}>Instruction for step {i} </span>
                 {this.instruction(i)}
             </div>
     }
@@ -685,10 +694,8 @@ class create_lab extends React.Component {
         const data = new FormData(e.target);
         // console.log(data);
     }
-
-    handleInputChange(e) {
+    handleInputChange(e){
         this.setState({input: e.target.value},);
-
     }
 
     handleImportChange(e) {
@@ -713,6 +720,15 @@ class create_lab extends React.Component {
         this.setState(
             {equipments: temp}
         )
+        if(temp[step].length===0)
+        {
+            ToastsStore.warning("Imported from an empty step")
+
+        }
+        else
+        {
+            ToastsStore.success("Imported step ",this.state.importStep)
+        }
     }
 
 
@@ -928,8 +944,6 @@ class create_lab extends React.Component {
 
         if (this.state.step_num < 2) {
             //do nothing
-            console.log("do nothing");
-
 
             this.setState({
                 steps: newSteps,
@@ -964,7 +978,6 @@ class create_lab extends React.Component {
                 equipments: newEquips
             })
         }
-        console.log("new steps", this.state.steps, " total:", this.state.step_num)
 
 
     };
@@ -1031,7 +1044,7 @@ class create_lab extends React.Component {
     };
 
 
-    selectStep(e, i) {
+    selectStep(i){
         this.setState({
                 currentStep: i,
 
@@ -1113,6 +1126,7 @@ class create_lab extends React.Component {
         var src_y = (ev.clientY + parseInt(offset[1], 10));
         console.log("unverified original", [src_x, src_y]);
 
+
         // verify src is within bound
         const verify = this.getBoundingXY(src_x, src_y, workspace_element, src_element);
         src_x = verify[0];
@@ -1134,7 +1148,7 @@ class create_lab extends React.Component {
 
             if (targ.name === "Scale") {
                 targ_diff_center_x = tartg_width * .45;
-                targ_diff_center_y = tartg_height * .25;
+                targ_diff_center_y = tartg_height * .35;
 
 
             } else if (targ.name === "Bunsen Burner") {
@@ -1261,13 +1275,14 @@ class create_lab extends React.Component {
         src_element.style.left = src_x + 'px';
         src_element.style.top = src_y + 'px';
         src.setLocation(src_x, src_y);
-        src_element.zIndex = 100;
+        // src_element.zIndex = 100;
         targ_element.style.left = targ_x + 'px';
         targ_element.style.top = targ_y + 'px';
         targ.setLocation(targ_x, targ_y);
-        targ_element.zIndex = -1;
 
-        console.log("src.zIndex ", src.zIndex, "targ.zIndex", targ.zIndex);
+        src_element.style.zIndex = 1;
+
+        console.log("src.zIndex ", src_element, "targ.zIndex", targ_element.zIndex);
     }
 
     render() {
