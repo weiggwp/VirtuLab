@@ -3,11 +3,9 @@ package backend.controller;
 
 import backend.dto.*;
 import backend.model.*;
+import backend.repository.LabRepository;
 import backend.repository.UserRepository;
-import backend.service.CourseService;
-import backend.service.UserCourseLabService;
-import backend.service.UserCourseLabStepService;
-import backend.service.UserCourseService;
+import backend.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +37,13 @@ public class CourseController {
     UserCourseLabService userCourseLabService;
     @Autowired
     UserCourseLabStepService userCourseLabStepService;
+
+
+    @Autowired
+    LabService labService;
+
+    @Autowired
+    LabRepository labRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -180,11 +185,17 @@ public class CourseController {
                 labDTO.setCreator(lab.getCreator());
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
-                ArrayList<StepDTO> stepDTOList = new ArrayList<>();
-                for (Step step : lab.getSteps()){
-                    stepDTOList.add(new StepDTO());
+
+                Optional<Lab> optional = labService.findLabByLabID(labDTO.getLabID());
+                if (optional.isPresent()) {
+                    labDTO.setSteps(optional.get().getSteps());
+
                 }
-                labDTO.setSteps(lab.getSteps());
+                else{
+                    System.out.println("couldnt find lab with id "+labDTO.getLabID());
+                }
+
+
                 labDTO.setReturnEquips(lab.getEquipments());
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
                     System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
@@ -460,24 +471,32 @@ public class CourseController {
     @RequestMapping(value = "/set_tries", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity setTriesPerStep(@RequestBody UserCourseLabStepDTO userCourseLabStepDTO) {
-        System.out.println("CourseController setTriesPerStep: ");
+        System.out.println("CourseController setTriesPerStep: " + userCourseLabStepDTO.getCourseCode() + " labid is " +
+                userCourseLabStepDTO.getLabID()+ " userid is " +userCourseLabStepDTO.getEmail() + "step id is " +userCourseLabStepDTO.getStepID());
 
         String email = userCourseLabStepDTO.getEmail();
         long labID = userCourseLabStepDTO.getLabID();
-        long courseID = userCourseLabStepDTO.getCourseID();
+        long courseID = (courseService.findCourseByNameOrCode(userCourseLabStepDTO.getCourseCode(),0)).get().getCourseID();
+
+        System.out.println("course id is "+courseID);
+
         long stepID = userCourseLabStepDTO.getStepID();
-        int tries = userCourseLabStepDTO.getTries();
+        //int tries = userCourseLabStepDTO.getTries();
 
         User user = userRepository.findByEmail(email);
         long id = user.getId();
 
         for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
+            System.out.println("lab is"+userCourseLab.getLab().getLabID());
             if (userCourseLab.getUser().getId() == user.getId() &&
                 userCourseLab.getCourse().getCourseID() == courseID &&
                 userCourseLab.getLab().getLabID() == labID) {
+
                 for (UserCourseLabStep userCourseLabStep: userCourseLab.getUserCourseLabStepList()) {
+                    System.out.println("step is" +userCourseLabStep.getStep().getStepID());
                     if (userCourseLabStep.getStep().getStepID() == stepID) {
-                        userCourseLabStep.setTriesPerStep(tries);
+                        userCourseLabStep.setTriesPerStep(userCourseLabStep.getTriesPerStep()+1);
+                        System.out.println("Now tries is "+ userCourseLabStep.getTriesPerStep());
                         userCourseLabStepService.save(userCourseLabStep);
                     }
                 }

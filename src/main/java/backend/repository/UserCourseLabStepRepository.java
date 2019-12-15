@@ -1,9 +1,6 @@
 package backend.repository;
 
-import backend.model.Step;
-import backend.model.UserCourse;
-import backend.model.UserCourseLab;
-import backend.model.UserCourseLabStep;
+import backend.model.*;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -20,4 +17,5 @@ public interface UserCourseLabStepRepository extends CrudRepository<UserCourseLa
     List<UserCourseLabStep> findAllByStep(Step step);
 
 
+    List<UserCourseLabStep> findAll();
 }

@@ -10,6 +10,8 @@ public class UserCourseLabStep {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userCourseLabStepID;
 
+
+
     @ManyToOne
     @JoinColumn(name = "userCourseLabID")
     private UserCourseLab userCourseLab;

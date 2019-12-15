@@ -73,10 +73,10 @@ public class LabController {
     @RequestMapping(value = "/save_lab", method = RequestMethod.POST)
     public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
 
-         System.out.println("lab Controller is called: save_lab");
-        System.out.println(labDTO);
-        Lab existing = labService.findByLabID(labDTO.getLabID());
+        // System.out.println("lab Controller is called: save_lab");
 //        System.out.println(labDTO);
+        Lab existing = labService.findByLabID(labDTO.getLabID());
+
 
         List<Step> steps = new ArrayList<>();
         for (StepDTO dto: labDTO.getStepsDTO()) {
@@ -129,9 +129,11 @@ public class LabController {
     {
         List<Equipment> equipments = new ArrayList<>();
         for (EquipmentDTO dto: DTO) {
-            Equipment equipment = modelMapper.map(dto, Equipment.class);
-            equipmentService.saveEquipment(equipment);
-            equipments.add(equipment);
+//            Equipment equipment = modelMapper.map(dto, Equipment.class);
+            Equipment equipment1 = new Equipment();
+            copyVals(equipment1, dto);
+            equipmentService.saveEquipment(equipment1);
+            equipments.add(equipment1);
         }
         return equipments;
     }
@@ -587,5 +589,9 @@ public class LabController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+
+
+
+
 
 }

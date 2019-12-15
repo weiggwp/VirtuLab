@@ -21,6 +21,16 @@ public class UserCourseLabStepDTO {
     @NotNull
     private int tries;
 
+    private String courseCode;
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
     public UserCourseLabStepDTO() {
     }
 

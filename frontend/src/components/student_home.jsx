@@ -86,11 +86,16 @@ class student_home extends React.Component
                     }
                     classesWithIncompletesOnly[i]['labs'] = filter
                 }
+
                 console.log(classesWithIncompletesOnly)
                 console.log("----------------------------------------------------")
 
 
 
+
+
+                console.log("class arr is ");
+                console.log(classArray)
 
                 // console.log("AAA classarray is "+classArray);
                 this.setState({
@@ -184,7 +189,7 @@ class student_home extends React.Component
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Signed in as: SummerBagel
+                            Signed in as: {this.props.email}
                         {/*    <a href="#login"> </a>*/}
                         </Navbar.Text>
                     </Navbar.Collapse>
