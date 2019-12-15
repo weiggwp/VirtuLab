@@ -10,9 +10,8 @@ import TablePagination from "@material-ui/core/TablePagination";
 export default function StickyHeadTable(props) {
     const columns = props.columns;
     const rows = props.rows;
-    console.log(rows)
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -33,7 +32,7 @@ export default function StickyHeadTable(props) {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth,fontSize:12}}
+                                    style={{ width:20,fontSize:12}}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -59,6 +58,7 @@ export default function StickyHeadTable(props) {
                 </Table>
             </div>
             <TablePagination
+
                 style={{fontSize:12}}
                 labelDisplayedRows={({ from, to, count }) => ` ${from}-${to} of ${count} rows`}
                 labelRowsPerPage={""}

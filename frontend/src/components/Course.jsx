@@ -66,7 +66,8 @@ class Course extends React.Component {
                         {this.props.class.labs.map(classItem => (
                             <Lab role={this.props.role}courseID={this.props.courseID}
                                  labID={classItem.labID}style={this.props.style} lab_name={classItem.lab_name}
-                                 due_date={classItem.date}
+                                    steps={classItem.steps} equipments={classItem.returnEquips}
+                                 due_date={classItem.date} complete={classItem.complete}
                                     />
 
 

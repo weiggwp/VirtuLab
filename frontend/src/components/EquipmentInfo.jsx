@@ -50,7 +50,7 @@ class EquipmentInfo extends React.Component{
             var element;
             for (element = 0; element < items.length; element++) {
 
-                const name = items[element].name;
+                const name = items[element].chemProp===undefined?"Distilled Water":items[element].chemProp;
                 const amount= items[element].amount;
 
                 result.push({ name,amount })

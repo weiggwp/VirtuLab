@@ -14,7 +14,7 @@ import React from "react";
 export default function GetSVG(props) {
     const mappings = {
         "Water":Watersvg,
-        "Glucose Solution":Small_flask_svg,
+        "Glucose Solution":svg_bottle,
         "Acids":svg_bottle,
         "Bases":svg_bottle,
         "Titration Flasks":Small_flask_svg,

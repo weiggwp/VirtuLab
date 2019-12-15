@@ -4,10 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 //@AllArgsConstructor
 //@NoArgsConstructor
@@ -25,16 +22,36 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+
+    public Date getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(Date dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
     private String password;
     private String role;
     private boolean isStudent;
+    private int completed;
+    private Date dateCompleted;
 
+    public int getCompleted() {
+        return completed;
+    }
 
-//    @ManyToMany(cascade = CascadeType.PERSIST)
+    public void setCompleted(int completed) {
+        this.completed = completed;
+    }
+    //    @ManyToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "user_course",
 //            joinColumns = {@JoinColumn(name = "id")},
 //            inverseJoinColumns = {@JoinColumn(name = "courseID")})
 //    private List<Course> courses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UserCourseLab> userCourseLabList = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -151,6 +168,14 @@ public class User {
         this.userCourseList = userCourseList;
     }
 
+    public List<UserCourseLab> getUserCourseLabList() {
+        return userCourseLabList;
+    }
+
+    public void setUserCourseLabList(List<UserCourseLab> userCourseLabList) {
+        this.userCourseLabList = userCourseLabList;
+    }
+
     public boolean isStudent() {
         System.out.println(this.role);
         return "student".equals(this.role);
@@ -186,7 +211,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", isStudent=" + isStudent +
-                ", userCourseList=" + userCourseList +
+//                ", userCourseList=" + userCourseList +
                 ", labs=" + labs +
                 ", roles=" + roles +
                 '}';

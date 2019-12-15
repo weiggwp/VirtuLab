@@ -38,7 +38,6 @@ class forgot_password extends Component {
             // confirm_password:this.state.confirm_password,
         };
         // alert(user.isStudent);
-        console.log(JSON.stringify(user));
 
         let axiosConfig = {
             headers: {
@@ -59,7 +58,6 @@ class forgot_password extends Component {
 
             },
             (error) => {
-                console.log(error);
                 this.setState({
                     confirmation: "We could not find that e-mail address.",
 

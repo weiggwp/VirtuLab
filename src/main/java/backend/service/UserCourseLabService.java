@@ -9,6 +9,7 @@ import backend.repository.UserCourseLabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,4 +24,29 @@ public class UserCourseLabService {
                         findUserCourseLabByUserAndCourseAndLab(user, course, lab);
         return optional;
     }
+
+    public List<UserCourseLab> findAllByUser(User user) {
+        return userCourseLabRepository.findAllByUser(user);
+    }
+
+    public List<UserCourseLab> findAllByCourse(Course course) {
+        return userCourseLabRepository.findAllByCourse(course);
+    }
+
+    public List<UserCourseLab> findAllByUser(Lab lab) {
+        return userCourseLabRepository.findAllByLab(lab);
+    }
+
+    public void delAssociateion(long userCourseLabID) {
+        userCourseLabRepository.deleteById(userCourseLabID);
+    }
+
+    public void save(UserCourseLab userCourseLab) {
+        userCourseLabRepository.save(userCourseLab);
+    }
+
+    public boolean exists(User user, Course course, Lab lab){
+        return (userCourseLabRepository.existsByUserAndAndCourseAndAndLab(user, course, lab));
+    }
+
 }

@@ -4,8 +4,13 @@ import Tool, {Scale, BunsenBurner} from "./Tool.js";
 
 
 import water from "./Images/water.svg";
-import flame from "./Images/2500mLBottleNonSticker.svg";
+
+
+import flame from "./Images/2500mLBottle.svg";
+import no_flame from "./Images/2500mLBottleNonSticker.svg";
 import indicator from "./Images/100mLBottle_black.svg";
+
+
 
 import small_flask from "./Images/250mLFlask.svg";
 
@@ -56,9 +61,9 @@ export default class EquipmentSet {
     }
 
     createFlasks() {
-        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 70),
-            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 85),
-            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 100),]
+        return [new Glassware("Erlenmeyer Flask", small_flask, 250, 100, 0, 60),
+            new Glassware("Erlenmeyer Flask", medium_flask, 500, 200, 0, 75),
+            new Glassware("Erlenmeyer Flask", large_flask, 1000, 400, 0, 80),]
     }
 
     createCylinders() {
@@ -72,6 +77,7 @@ export default class EquipmentSet {
             new Glassware("Beaker", medium_beaker, 600, 200, 0, 85),
             new Glassware("Beaker", large_beaker, 1000, 400, 0, 100),]
     }
+
 
     createVolumetricFlasks() {
         return [new Glassware("Volumetric Flask", small_volFlask, 100, 50, 0, 70),
@@ -99,19 +105,27 @@ export default class EquipmentSet {
     }
     createAcids()
     {
-        return [new Element("3M HBr", small_flask, 250, 1.49, 1,100,"Hydrobromic Acid",100),
-            new Element("3M HCI",small_flask,250,1.18,1,130,"Hydrochloric Acid",100),
-            new Element("3M H\u2082SO\u2084",small_flask,250,1.83,1,100,"Sulfuric Acid",100),
-            new Element("3M HNO\u2083",small_flask,250,1.51,1,100,"Nitric Acid",100),
-            new Element("3M H\u2083PO\u2084",small_flask,250,1.87,1,100,"Phosphoric Acid",100)
+
+        return [new Element("3M HBr",// name
+            no_flame, // image
+            250, // capacity
+            1.49, // weight
+            1, // state
+            75, //size
+            "Hydrobromic Acid",
+            ),
+            new Element("3M HCI",no_flame,250,1.18,1,75,"Hydrochloric Acid"),
+            new Element("3M H\u2082SO\u2084",no_flame,250,1.83,1,75,"Sulfuric Acid"),
+            new Element("3M HNO\u2083",no_flame,250,1.51,1,75,"Nitric Acid"),
+            new Element("3M H\u2083PO\u2084",no_flame,250,1.87,1,75,"Phosphoric Acid")
             ]
     }
 
     createBases()
     {
         return [
-            new Element("3M NaOH", small_flask, 250, 1.515, 1,100,"Sodium Hydroxide",100),
-            new Element("3M NH\u2083",small_flask,250,0.68,1,100,'Ammonia',100)
+            new Element("3M NaOH", no_flame, 250, 1.515, 1,75,"Sodium Hydroxide"),
+            new Element("3M NH\u2083",no_flame,250,0.68,1,75,'Ammonia')
         ]
     }
 
@@ -119,18 +133,20 @@ export default class EquipmentSet {
     {
         return[
             new Element("Distilled Water", water, 3000, 1, 1, 130),
-            new Element("1M C\u2086H\u2081\u2082O\u2086", small_flask, 250, 1.56, 1, 100,"Glucose Solution",100)
+            new Element("1M C\u2086H\u2081\u2082O\u2086", no_flame, 250, 1.56, 1, 75,"Glucose Solution",)
 
         ]
     }
 
     createIndicators()
     {
+        const size = 75;
+
         return [
-            new Element("Methyl Orange",indicator,100,1,1,100),
-            new Element("Methyl Red",indicator,100,1,1,100),
-            new Element("Phenolphthalein",indicator,100,1,1,100),
-            new Element("Bromocresol Green",indicator,100,1,1,100),
+            new Element("Methyl Orange",indicator,100,1,1,size),
+            new Element("Methyl Red",indicator,100,1,1,size),
+            new Element("Phenolphthalein",indicator,100,1,1,size),
+            new Element("Bromocresol Green",indicator,100,1,1,size),
 
 
         ]
@@ -138,6 +154,7 @@ export default class EquipmentSet {
 
 
     populateList() {
+
         this.equipmentList['Solution'] = {
             'General': this.createGeneral(),
             'Stock Solutions':this.createStockSolutions(),
@@ -146,6 +163,7 @@ export default class EquipmentSet {
             'Indicators':this.createIndicators()
 
         };
+
 
         this.equipmentList['Glassware'] = {
             'Titration Flasks': this.createFlasks(),
@@ -171,8 +189,10 @@ export default class EquipmentSet {
                     equipment.setType(elements)
 
 
+
                 ))
             )
+
         );
 
         Object.keys(solution).map((elements,index)=>
@@ -200,6 +220,7 @@ export default class EquipmentSet {
         return this.getFlatList();
     }
 
+
     getFlatList()
     {
 
@@ -218,6 +239,7 @@ export default class EquipmentSet {
                     result.push(equipment)
 
 
+
                 ))
             ))
 
@@ -231,15 +253,24 @@ export default class EquipmentSet {
                 ))
             ))
 
+
         this.equipmentList['Tools'].map((equipment) => (
             result.push(equipment)
 
 
-        ));
+        ))
         return result;
     }
 
 
+
+
+
+
+
+
+
+
+
+
 }
-
-

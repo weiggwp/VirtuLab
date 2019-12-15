@@ -56,3 +56,22 @@
 
 }
 
+.courseName
+{
+    color:black;
+    text-align:left;
+    font-family:arial regular;
+    font-size:16px;
+    background-color: #84aac2;
+
+    margin: auto;
+    padding: 10px;
+}
+
+.DropRow
+{
+    background-color: #c3b0d6;
+
+}
+
+

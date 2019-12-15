@@ -6,6 +6,7 @@ import {ToastsStore} from "react-toasts";
 import deepCloneWithType from "./clone"
 
 export default class Element extends Equipment{
+
     constructor(name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity)
     {
         super(name,image,weight,"Solution",0,size);
@@ -46,8 +47,10 @@ export default class Element extends Equipment{
         else if(amount>=this.amount){
             amount = this.amount;
         }
+
         clone.amount=parseFloat(amount);
         this.amount-=amount;
+
 
         return clone;
     }
@@ -104,7 +107,9 @@ export default class Element extends Equipment{
             amount=amount>target.amount?(target.capacity-target.amount):amount;
             warning=true;
             ToastsStore.warning(target.name+" is full")
-
+            target.amount=target.capacity;
+            target.add_item(this.output(amount));
+            return null;
 
         }
         if(amount>0)

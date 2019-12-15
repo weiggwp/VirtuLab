@@ -3,6 +3,7 @@ package backend.service;
 import backend.dto.LabDTO;
 
 import backend.model.Lab;
+import backend.model.User;
 import backend.repository.LabRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +54,17 @@ public class LabService {
         return pageLab;
     }
 
+    public Page<Lab> pageLabsByTags(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        ArrayList<String> list = new ArrayList<>();
+        list.add("rr");
+        Page<Lab> pageLab = labRepository.findByTagsIn(list, pageable);
+        return pageLab;
+    }
+
+//    public Page<Lab> pageLab
+
+
 
     public Optional<Lab> findLabByLabID(long id) { return labRepository.findLabByLabID(id); }
     public long createNewLab(Lab lab){
@@ -69,6 +83,13 @@ public class LabService {
         }
         labRepository.save(lab);
     }
+
+    public Page<Lab> pagePrivateLabs(User user, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Lab> pageLabs = labRepository.findBy(user, pageable);
+        return pageLabs;
+    }
+
 
 
 

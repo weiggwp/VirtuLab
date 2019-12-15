@@ -1,9 +1,9 @@
 
 export default class Equipment {
 
+
     constructor(name,image,weight, type,state=0,size=100,svgArgs ={})
     {
-
         this.name = name;
         this.color="#dee4e4";   //default clear color
         this.type = "water";
@@ -52,9 +52,18 @@ export default class Equipment {
         this.left=x;
         this.top=y;
     }
+
+    setItems(item){
+        this.items=item;
+    }
+    setWeight(weight) {
+        this.weight = weight;
+    }
+
     setType(type)
     {
         this.type =type;
+
     }
 
 

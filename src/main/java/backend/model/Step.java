@@ -1,7 +1,10 @@
 package backend.model;
 
+import backend.dto.StepDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -27,8 +30,19 @@ public class Step {
 //    @JoinColumn(name="labID")
 //    private Lab lab;
 
+    public Step(long stepNum, String instruction, List<Equipment> equipments){
+            this.stepNum=stepNum;
+            this.instruction=instruction;
+            this.equipments=equipments;
+    }
+
     public Step clone(){
-        return new Step(stepNum,instruction);
+        LinkedList<Equipment> equipClone = new LinkedList<>();
+        for (Equipment equip : equipments){
+            equipClone.add(equip.clone());
+        }
+
+        return new Step(stepNum,instruction,equipClone);
     }
 
     public long getStepID() {
@@ -61,6 +75,12 @@ public class Step {
 
     public void setInstruction(String instruction) {
         this.instruction = instruction;
+    }
+
+    public StepDTO dtoClone(){
+        StepDTO s= new StepDTO((int)stepNum,instruction);
+        s.setStepID(stepID);
+        return s;
     }
 
     @Override

@@ -64,7 +64,6 @@ class signup extends Component {
             // confirm_password:this.state.confirm_password,
         };
         // alert(user.isStudent);
-        console.log(user);
 
         let axiosConfig = {
             headers: {
@@ -84,7 +83,6 @@ class signup extends Component {
                 this.setState({ redirect: true });
             },
             (error) => {
-                console.log(error);
                 this.setState({
 
                     errors: "There is already an account registered with that e-mail address.",

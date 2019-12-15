@@ -1,12 +1,12 @@
 package backend.controller;
 
 
-import backend.dto.CourseDTO;
-import backend.dto.LabDTO;
-import backend.dto.UserDTO;
+import backend.dto.*;
 import backend.model.*;
 import backend.repository.UserRepository;
 import backend.service.CourseService;
+import backend.service.UserCourseLabService;
+import backend.service.UserCourseLabStepService;
 import backend.service.UserCourseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,10 @@ public class CourseController {
     UserRepository userRepository;
     @Autowired
     UserCourseService userCourseService;
+    @Autowired
+    UserCourseLabService userCourseLabService;
+    @Autowired
+    UserCourseLabStepService userCourseLabStepService;
 
     @Autowired
     ModelMapper modelMapper;
@@ -117,15 +121,20 @@ public class CourseController {
     public ResponseEntity<List<User>> getStudents(@RequestBody CourseDTO courseDTO) {
         System.out.println("course is "+courseDTO);
         List<UserCourse> userCourses = userCourseService.getAllUserCourses();
+        System.out.println("course is "+courseDTO);
         List<User> students = new LinkedList<>();
+        System.out.println("course is "+courseDTO);
         for (UserCourse userCourse: userCourses){
-              //  System.out.println("coursecode is " +userCourse.getCourse().getAccessCode());
+                System.out.println("coursecode is " +userCourse.getCourse().getAccessCode());
             if (userCourse.getCourse().getAccessCode().equals(courseDTO.getCourseNumber())){
-             //   System.out.println("adding " +userCourse.getUser());
+                System.out.println("adding " +userCourse.getUser());
                 if (userCourse.getUser().getRole().toLowerCase().equals("student"))
+                    System.out.println("A");
                     students.add(userCourse.getUser());
+                System.out.println("B");
             }
         }
+        System.out.println("returning...");
         return new ResponseEntity(students, HttpStatus.OK);
     }
 
@@ -136,7 +145,7 @@ public class CourseController {
     public ResponseEntity<List<Course>> getAllCourse(@RequestBody CourseDTO courseDTO) {
         System.out.println("Course Controller called: get_courses");
         Map<String, Object> map = new HashMap<>();
-     //   System.out.println(courseDTO);
+        System.out.println(courseDTO);
         String email = courseDTO.getEmail();
         User user = userRepository.findByEmail(email);
 
@@ -171,6 +180,26 @@ public class CourseController {
                 labDTO.setCreator(lab.getCreator());
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
+                ArrayList<StepDTO> stepDTOList = new ArrayList<>();
+                for (Step step : lab.getSteps()){
+                    stepDTOList.add(new StepDTO());
+                }
+                labDTO.setSteps(lab.getSteps());
+                labDTO.setReturnEquips(lab.getEquipments());
+                for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
+                    System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
+                        +"\ncourse id is "+userCourseLab.getCourse().getCourseID()+
+                            "\nlab id is "+ userCourseLab.getLab().getLabID()+"\ncomplete is "+userCourseLab.getComplete()+"\n");
+                    if (user.getId() == userCourseLab.getUser().getId() &&
+                        course.getCourseID() == userCourseLab.getCourse().getCourseID() &&
+                        lab.getLabID() == userCourseLab.getLab().getLabID()) {
+                        /* hard code every completion to true for testing, uncomment next line after testing */
+                        //labDTO.setComplete(true);
+                       labDTO.setComplete(userCourseLab.getComplete() == 1);
+                    }
+
+                }
+                System.out.println("adding DTO " +labDTO);
                 labs.add(labDTO);
             }
 
@@ -190,34 +219,100 @@ public class CourseController {
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity enroll(@RequestBody CourseDTO courseDto) {
-    //    System.out.println("course is is " +courseDto.toString());
+        System.out.println("course is is " +courseDto.toString());
 
         String courseName="";
         String  labName="";
 
             courseName = "Introduction to General Chemistry| Fall 2019";
             labName="Chem I Lab";
+//        try {
+//            Course course = getCourses(courseDto);
+//            String email = courseDto.getEmail();
+//            User user = userRepository.findByEmail(email);
+//            System.out.println("user is " + user);
+//            for (int i=0; i<user.getUserCourseList().size(); i++)
+//            if (user.getUserCourseList().get(i).getCourse().equals(course)){
+//                return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
+//            }
+//            Lab lab = new Lab(6 ,labName);
+//            course.addLab(lab);
+//            UserCourse usercourse = new UserCourse(user.getId(),user,course);
+//            userCourseService.saveUserCourse(usercourse);
+//            System.out.println("enrolling!");
+////        return "redirect:/login";
+//            return new ResponseEntity(courseName, HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//           // e.printStackTrace();
+//            return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
+//        }
+
+        System.out.println("CourseController: student enrolls a course");
+        System.out.println(courseDto);
         try {
-            Course course = getCourses(courseDto);
+            Optional<Course> optional = courseService.
+                    findCourseByNameOrCode(courseDto.getCode(),0);
+            if(!optional.isPresent())  return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
+            Course course = optional.get();
+            System.out.println(course);
+            long courseID = course.getCourseID();
+//            Course course = getCourses(courseDto);
             String email = courseDto.getEmail();
             User user = userRepository.findByEmail(email);
             System.out.println("user is " + user);
-            for (int i=0; i<user.getUserCourseList().size(); i++)
-            if (user.getUserCourseList().get(i).getCourse().equals(course)){
-                return new ResponseEntity("already enrolled",HttpStatus.NOT_FOUND);
+
+            /* reject if student in already in course */
+            for (UserCourse userCourse: user.getUserCourseList()) {
+                Course c = userCourse.getCourse();
+                if (c.getAccessCode().equals(course.getAccessCode())){
+                    return new ResponseEntity("already enrolled", HttpStatus.NOT_FOUND);
+                }
             }
-            Lab lab = new Lab(6 ,labName);
-            course.addLab(lab);
-            UserCourse usercourse = new UserCourse(user.getId(),user,course);
+//            for (int i=0; i<user.getUserCourseList().size(); i++) {
+//                if (user.getUserCourseList().get(i).getCourse().equals(course)) {
+//                    return new ResponseEntity("already enrolled", HttpStatus.NOT_FOUND);
+//                }
+//            }
+
+            UserCourse usercourse = new UserCourse(user.getId(), user, course);
             userCourseService.saveUserCourse(usercourse);
+
+            List<UserCourseLab> userCourseLabList = user.getUserCourseLabList();
+            for (CourseLab courseLab: course.getCourseLabList()) {
+
+                Lab lab = courseLab.getLab();
+                System.out.println(lab);
+                if (!userCourseLabService.exists(user, course, lab)) {
+                    UserCourseLab userCourseLab = new UserCourseLab(user, course, lab);
+                    userCourseLabList.add(userCourseLab);
+                }
+            }
+            System.out.println("b4");
+            userRepository.save(user);
+
+            for (UserCourseLab userCourseLab: course.getUserCourseLabList()) {
+                Lab lab = userCourseLab.getLab();
+                for (Step step: lab.getSteps()) {
+                    if (!userCourseLabStepService.exists(userCourseLab, step)) {
+                        UserCourseLabStep userCourseLabStep = new UserCourseLabStep();
+                        userCourseLabStep.setStep(step);
+                        userCourseLabStep.setUserCourseLab(userCourseLab);
+                        userCourseLab.getUserCourseLabStepList().add(userCourseLabStep);
+                        userCourseLabStepService.save(userCourseLabStep);
+                    }
+                }
+
+            }
             System.out.println("enrolling!");
-//        return "redirect:/login";
             return new ResponseEntity(courseName, HttpStatus.OK);
         }
         catch (Exception e){
-           // e.printStackTrace();
+//            System.out.println(e.printStackTrace());
+            e.printStackTrace();
             return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
         }
+
     }
 
 
@@ -258,6 +353,17 @@ public class CourseController {
                 }
 
             }
+
+            for (Iterator<UserCourseLab> it = user.getUserCourseLabList().iterator(); it.hasNext();) {
+                UserCourseLab userCourseLab = it.next();
+                if (userCourseLab.getUser().getId() == user.getId() &&
+                        userCourseLab.getCourse().getCourseID() == courseID){
+                    it.remove();
+                    userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
+                }
+            }
+
+
 //            course.getUserCourseList().remove(del);
             userRepository.save(user);
 
@@ -349,6 +455,37 @@ public class CourseController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/set_tries", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity setTriesPerStep(@RequestBody UserCourseLabStepDTO userCourseLabStepDTO) {
+        System.out.println("CourseController setTriesPerStep: ");
+
+        String email = userCourseLabStepDTO.getEmail();
+        long labID = userCourseLabStepDTO.getLabID();
+        long courseID = userCourseLabStepDTO.getCourseID();
+        long stepID = userCourseLabStepDTO.getStepID();
+        int tries = userCourseLabStepDTO.getTries();
+
+        User user = userRepository.findByEmail(email);
+        long id = user.getId();
+
+        for (UserCourseLab userCourseLab: user.getUserCourseLabList()) {
+            if (userCourseLab.getUser().getId() == user.getId() &&
+                userCourseLab.getCourse().getCourseID() == courseID &&
+                userCourseLab.getLab().getLabID() == labID) {
+                for (UserCourseLabStep userCourseLabStep: userCourseLab.getUserCourseLabStepList()) {
+                    if (userCourseLabStep.getStep().getStepID() == stepID) {
+                        userCourseLabStep.setTriesPerStep(tries);
+                        userCourseLabStepService.save(userCourseLabStep);
+                    }
+                }
+            }
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 
 

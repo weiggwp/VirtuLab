@@ -2,6 +2,7 @@ import icon from "../Images/v.jpg";
 import React from "react";
 import Redirect from "react-router-dom/es/Redirect";
 import {Button} from "react-bootstrap";
+import '../stylesheets/banner.css';
 
 class StudentHeader extends React.Component {
 
@@ -15,59 +16,15 @@ class StudentHeader extends React.Component {
             redirectLab: true
         })
     }
-    renderRedirectLab = () => {
-        if (this.state.redirectLab) {
-            return <Redirect to='/student_labs' />
-        }
-    }
-    renderCourseButton =(currentTab) =>{
-        if( currentTab==="Courses") {
-            return (
 
-                <Button onClick={this.setRedirectCourse} >
-                    Courses
-                </Button>
 
-            );
-        }
-        else{
-            return (
 
-                <Button onClick={this.setRedirectCourse} className="lowlight" >
-                    Courses
-                </Button>
-            )
-        }
-    };
-    renderLabButton =(currentTab) =>{
-        if( currentTab ==="Labs") {
-            return (
-
-                <Button onClick={this.setRedirectLab} >
-                    Labs
-                </Button>
-
-            );
-        }
-        else{
-            return (
-
-                <Button onClick={this.setRedirectLab} className="lowlight">
-                    Labs
-                </Button>
-            )
-        }
-    };
     setRedirectCourse = () => {
         this.setState({
             redirectCourse: true
         })
     }
-    renderRedirectCourse = () => {
-        if (this.state.redirectCourse) {
-            return <Redirect to='/student_home' />
-        }
-    }
+
     handleLogout = (e) => {
         this.setState({
             loggedOut:true
@@ -83,7 +40,8 @@ class StudentHeader extends React.Component {
         return(
 
             <Button style={{backgroundColor: "white", color: "black", float:"right"}}
-                    onClick={this.handleLogout}>
+                    onClick={this.handleLogout}
+                    className={"logout"}>
                 Logout
             </Button>
         );
@@ -101,14 +59,14 @@ class StudentHeader extends React.Component {
                 <img src={icon} alt="icon" width="30px" height="30px"/>
                 <i >VirtuLab</i>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {this.renderRedirectCourse()}
-                {this.renderCourseButton(this.props.currentTab)}
+                {/*{this.renderRedirectCourse()}*/}
+                {/*{this.renderCourseButton(this.props.currentTab)}*/}
                 {/*<label onClick={this.setRedirectCourse} className="highlight">*/}
                 {/*    Courses</label>*/}
                 &nbsp;&nbsp;&nbsp;
                 {/*&nbsp;&nbsp;&nbsp;&nbsp;*/}
-                {this.renderRedirectLab()}
-                {this.renderLabButton(this.props.currentTab)}
+                {/*{this.renderRedirectLab()}*/}
+                {/*{this.renderLabButton(this.props.currentTab)}*/}
                 {this.renderLogoutButton()}
 
                 {/*<label onClick={this.setRedirectLab} >*/}

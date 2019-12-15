@@ -8,6 +8,7 @@ const SvgComponent =
          fill = "#dee4e4",
          equip = {},
          pre_fill_percent = equip.getFillPercent(),
+         degree = equip.rotate,
          fill_percent = (pre_fill_percent > 1) ? 1 : (pre_fill_percent < 0) ? 0 : pre_fill_percent,
 
 
@@ -31,6 +32,7 @@ const SvgComponent =
             height={size * 1.5}
             viewBox={viewBox}
             className={className}
+            transform={"rotate("+degree+")"}
             // viewBox="0 0 48 48" height={200} width={200} {...props}
 
         >

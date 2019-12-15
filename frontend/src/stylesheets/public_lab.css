@@ -1,0 +1,19 @@
+.public_lab
+{
+    text-align: left;
+    padding-left:20px;
+
+    margin-right: 40px;
+    margin-top: 10px;
+
+    border-style: dashed;
+    border-width: 1px;
+    border-radius:2px;
+    background-color: #5cab86;
+}
+
+.paginationItems
+{
+    display:inline-block;
+
+}

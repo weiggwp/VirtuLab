@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -197,5 +198,32 @@ public class Equipment {
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
+
+
+    public Equipment clone(){
+        Equipment clone = new Equipment();
+        clone.setCapacity(capacity);
+        clone.setAmount(amount);
+        clone.setColor(color);
+        clone.setDisabled(disabled);
+        clone.setImage(image);
+
+        clone.setName(name);
+        clone.setSize(size);
+        clone.setState(state);
+        clone.setTemperature(temperature);
+        clone.setType(type);
+        clone.setWeight(weight);
+        clone.setX(x);
+        clone.setY(y);
+
+        LinkedList<Equipment> itemsClone = new LinkedList<>();
+        for (Equipment item: items){
+            itemsClone.add(item.clone());
+        }
+        clone.setItems(itemsClone);
+        return clone;
+    }
+
 
 }

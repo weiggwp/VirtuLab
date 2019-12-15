@@ -44,7 +44,6 @@ export class create_course extends Component {
         };
         var classArr=[];
         var classArray=[];
-        alert("sending back "+course);
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'create_course', course, axiosConfig)
@@ -53,7 +52,6 @@ export class create_course extends Component {
 
             })
             .catch((error) => {
-                    console.log("doot" + error)
                 }
             );
     }

@@ -1,6 +1,7 @@
 import InstructorHeader from "./instructorHeader";
 import {Button, Col, Container, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import Redirect from "react-router-dom/es/Redirect";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import React from "react";
@@ -24,6 +25,7 @@ class view_lab_course extends React.Component
             loaded: false,
             students:[],
             due_date: "",
+            redirectStat: false,
         }
 
     }
@@ -36,12 +38,11 @@ class view_lab_course extends React.Component
     };
     handleChangeDueDate = (e)=>{
         e.preventDefault();
-        console.log(this.state.due_date)
 
 
     }
     handleChangeDate= (e) =>{
-        alert("date is "+this.state.due_date)
+        // alert("date is "+this.state.due_date)
         e.preventDefault();
         let labs =[];
         const lab = {
@@ -80,7 +81,6 @@ class view_lab_course extends React.Component
 
 
     getStudents(){
-        console.log()
         let labs =[];
         const lab = {
             labID:this.props.location.state.labID
@@ -100,21 +100,26 @@ class view_lab_course extends React.Component
         };
 
         var studentList=[];
-        console.log("state is "+JSON.stringify(this.props.location.state))
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'get_students', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'get_completion', course, axiosConfig)
             .then((response) => {
-                console.log("resp is "+JSON.stringify(response))
+
                 for (let i=0; i<response.data.length; i++){
+                    let comp= "N/A";
+                    if (response.data[i].completed==1){
+                        if (response.data[i].dateCompleted==null){
+                            comp="Completed, date unavailable"
+                        }
+                        else comp=response.data[i].dateCompleted.substring(0,10) + ", "+response.data[i].dateCompleted.substring(11,19)
+                        console.log("date is ")
+                        console.log(response.data[i])
+                        console.log(response.data[i].dateCompleted)
+                    }
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
-                    completed:"N/A"};
+                        completed:comp};
                 }
                 let date =new Date(this.props.location.state.due_date);
-                console.log("date is " +date)
-
-             //   date.setDate(date.getDate()-1);
-                console.log("date is " +date)
                 this.setState({
                    loaded: true,
                     students:studentList,
@@ -125,7 +130,7 @@ class view_lab_course extends React.Component
 
             })
             .catch((error) => {
-                console.log("beep")
+
                 for (let i=0; i<4; i++){
                     studentList[i]={name:"yeet",email:"yeetmail",completed:"N/A"};
                 }
@@ -137,8 +142,18 @@ class view_lab_course extends React.Component
             );
     }
 
+    redirectstats=()=>{
+        this.setState({
+            redirectStat: true
+        })
+
+    }
 render() {
 
+
+    if (this.state.redirectStat) {
+        return <Redirect exact to='/statistics' />
+    }
 
     if (this.state.loaded==false){
         this.getStudents();
@@ -159,6 +174,10 @@ render() {
                     </Navbar.Collapse>
                 </Navbar>
 
+                <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
+                        onClick={this.redirectstats}>
+                    Statistics
+                </Button>
 
                 <div>
                     <div>
@@ -242,7 +261,10 @@ render() {
 
 
                 </div>
+
             </div>
+
+
 
 
         )

@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
-import icon from "../Images/v.jpg";
+import React from 'react';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
-import {Button, Col, Container, FormControl, FormGroup, Image, Jumbotron, Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Col, Container, Image, Nav, Navbar, Row} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
 import {Workspace} from "./Droppable_space";
 import StudentHeader from './studentHeader.jsx';
 import {EquipmentList} from "./EquipmentList";
-class do_lab extends React.Component {
+import axios from "axios";
+import GLOBALS from "../Globals";
+class dolab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,15 +20,45 @@ class do_lab extends React.Component {
         };
     }
     setRedirectHome = () => {
+
         this.setState({
             redirectHome: true
         })
+    };
+    completeLab(){
+
+        const lab = {
+            labID:this.props.location.state.labID,
+        };
+        let labs =[];
+        labs[0]=lab;
+        const courselab= {
+            labs:labs,
+            email: this.props.email,
+            code:this.props.location.state.courseID,
+
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
+            .then(() => {
+
+            })
+            .catch(() => {
+
+                }
+            );
     }
     setRestart = () => {
         this.setState({
             restart: true
         })
-    }
+    };
     renderRedirect = () => {
         if (this.state.redirectHome) {
             return <Redirect to='/student_home' />
@@ -43,7 +74,7 @@ class do_lab extends React.Component {
         // {
         //     return <Redirect to='/do_lab' />
         // }
-    }
+    };
 
     banner() {
         return (
@@ -51,14 +82,6 @@ class do_lab extends React.Component {
       )
 
     }
-    tab()
-    {
-        return(
-            <label className="tab"  >Lab workspace</label>
-        )
-
-    }
-
     toolbar()
     {
         return (
@@ -82,7 +105,7 @@ class do_lab extends React.Component {
     }
     render(){
         this.renderRedirect();
-
+        this.completeLab();
         return(
             <div >
 
@@ -117,4 +140,4 @@ class do_lab extends React.Component {
 }
 
 
-export default do_lab;
+export default dolab;
