@@ -36,6 +36,15 @@ public class User {
     private boolean isStudent;
     private int completed;
     private Date dateCompleted;
+    private int tries;
+
+    public int getTries() {
+        return tries;
+    }
+
+    public void setTries(int tries) {
+        this.tries = tries;
+    }
 
     public int getCompleted() {
         return completed;

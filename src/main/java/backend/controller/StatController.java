@@ -2,12 +2,10 @@ package backend.controller;
 
 import backend.dto.CourseDTO;
 import backend.dto.UserDTO;
-import backend.model.Course;
-import backend.model.User;
-import backend.model.UserCourse;
-import backend.model.UserCourseLab;
+import backend.model.*;
 import backend.service.CourseService;
 import backend.service.UserCourseLabService;
+import backend.service.UserCourseLabStepService;
 import backend.service.UserService;
 import backend.util.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +30,9 @@ public class StatController {
 
     @Autowired
     UserCourseLabService userCourseLabService;
+
+    @Autowired
+    UserCourseLabStepService userCourseLabStepService;
 
     @Autowired
     CourseService courseService;
@@ -56,19 +58,63 @@ public class StatController {
 //    }
 
 
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/step_stats", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity stepStats(@RequestBody CourseDTO courseDTO) {
+        Optional<Course> optional = courseService.findCourseByNameOrCode(courseDTO.getCode(),0);
+        if (optional.isPresent()) {
+            Course course = optional.get();
+            System.out.println("course is "+course);
+            HashMap<Long, LinkedList<User>> map = new HashMap<>(); //maps stepnum to list of tries
+            List<UserCourseLabStep> list = userCourseLabStepService.findAll();
+            for (UserCourseLabStep userCourseLabStep: list) {
+//                System.out.println(userCourseLab);
+                if (userCourseLabStep.getUserCourseLab().getUser().getRole().toLowerCase().equals("student")
+                        && userCourseLabStep.getUserCourseLab().getLab().getLabID() == courseDTO.getLabs().get(0).getLabID()
+                        &&userCourseLabStep.getUserCourseLab().getCourse().getCourseID()==course.getCourseID()
+                ) {
+                    LinkedList<User> lis = map.get(userCourseLabStep.getStep().getStepNum());
+                    if (lis==null){
+                        lis= new LinkedList<User>();
+                        User user = new User();
+                        user.setTries(userCourseLabStep.getTriesPerStep());
+                        user.setEmail(userCourseLabStep.getUserCourseLab().getUser().getEmail());
+                        lis.add(user);
+                        map.put(userCourseLabStep.getStep().getStepNum(),lis);
+                    }
+                    else if (!lis.contains(userCourseLabStep.getUserCourseLab().getUser())) {
+                        User user = new User();
+                        user.setTries(userCourseLabStep.getTriesPerStep());
+                        user.setEmail(userCourseLabStep.getUserCourseLab().getUser().getEmail());
+
+                 /*       System.out.println("stepnum is "+userCourseLabStep.getStep().getStepNum() + " tries is "
+                                +userCourseLabStep.getUserCourseLab().getUser().getTries() +"index is "+lis.size());*/
+                        lis.add(user);
+                        map.put(userCourseLabStep.getStep().getStepNum(),lis);
+                    }
+
+                }
+            }
+
+            return new ResponseEntity( map,HttpStatus.OK);
+
+        }
+        return new ResponseEntity( HttpStatus.NOT_FOUND);
+    }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/lab_stats", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity courseStats(@RequestBody CourseDTO courseDTO) {
         System.out.println("StatController course stats: ");
-
+        System.out.println("coursedto is "+courseDTO);
         double[] res = new double[3];
         String code = courseDTO.getCode();
 //        long courseID = courseDTO.getCourseID();
         long courseID = 9;
 
-        Optional<Course> optional = courseService.findCourseById(courseID);
+        Optional<Course> optional = courseService.findCourseByNameOrCode(courseDTO.getCode(),0);
         if (optional.isPresent()) {
             Course course = optional.get();
             List<UserCourseLab> list = userCourseLabService.findAllByCourse(course);
@@ -77,12 +123,22 @@ public class StatController {
             /* size is the number of students in the course */
             int size = list.size();
             int n = 0;
+            LinkedList<User> studentIDs = new LinkedList<>();
             for (UserCourseLab userCourseLab: list) {
 //                System.out.println(userCourseLab);
-                if (userCourseLab.getUser().getRole().toLowerCase().equals("student") &&
-                    userCourseLab.getComplete() > 0)
-                    n ++;
+                if (userCourseLab.getUser().getRole().toLowerCase().equals("student")
+                        &&userCourseLab.getLab().getLabID()==courseDTO.getLabs().get(0).getLabID()&&
+                !studentIDs.contains(userCourseLab.getUser().getId())) {
+                    User user = new User();
+                    user.setId(userCourseLab.getUser().getId());
+                    user.setCompleted(userCourseLab.getComplete());
+                    n+=user.getCompleted();
+                    studentIDs.add(user);
+                }
+
             }
+            System.out.println("n is "+n + "studids are "+studentIDs.toString() + " size is " +size + " len is " +studentIDs.size());
+            size=studentIDs.size();
             /* stats[0] = finish percentage */
             /* stats[1] = 1 - stats[0] */
             double[] percentages = Statistic.findPercentage(n, size);
@@ -97,6 +153,7 @@ public class StatController {
 
             return new ResponseEntity(res, HttpStatus.OK);
         }
+
         res[1] = 100;
         return new ResponseEntity(res, HttpStatus.NOT_FOUND);
     }

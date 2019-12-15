@@ -142,7 +142,7 @@ class student_home extends React.Component
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Signed in as: SummerBagel
+                            Signed in as: {this.props.email}
                         {/*    <a href="#login"> </a>*/}
                         </Navbar.Text>
                     </Navbar.Collapse>

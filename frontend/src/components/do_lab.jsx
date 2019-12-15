@@ -123,35 +123,6 @@ class DoLab extends React.Component {
     /* */
 
 
-    /* function call to verify if current step is correct */
-    verifyStep(studentEquips, stepEquips) {
-        let m = stepEquips.length;
-        let n = studentEquips.length;
-
-        let arr = []
-        for (let i = 0; i < m; i ++) {
-            arr.push(false)
-        }
-
-        for (let i = 0; i < m; i ++) {
-            let equip1 = stepEquips[i]
-            for (let j = 0; j < n; j ++) {
-                let equip2 = studentEquips[j]
-                /* check for same type equipment and same volume, amount */
-                if (equip1.name === equip2.name &&
-                    equip1.amount === equip2.amount) {
-                    arr[i] = true
-                }
-            }
-        }
-
-        let res = true
-        for (let i = 0; i < arr.length; i ++) {
-            res &= arr[i];
-        }
-        return res;
-
-    }
 
     /* function call to filter the equipments selected with 0, 0... they should not be on workspace */
     filerInitalEquips(equips){
@@ -383,7 +354,9 @@ class DoLab extends React.Component {
 
     }
     setRedirectHome = () => {
-        if ((!!this.state.completed)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
+        console.log("props is ");
+        console.log(this.props)
+        if ((!this.state.completed)&&!(this.props.location.state.isComplete)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
             return null;
         }
         this.setState({
@@ -800,7 +773,7 @@ class DoLab extends React.Component {
                 container={this.ref.current}
                 containerPadding={20}
                 rootClose={true}
-                onHide={() => this.onHide(source)}
+                //onHide={() => this.onHide(source)}
                 style={{width:900}}
             >
                 <Popover id="popover-contained" >
@@ -981,7 +954,7 @@ class DoLab extends React.Component {
 
 
     arraysEqual(arr1,arr2){
-         if (arr1.length!=arr2.length)return false;
+        if (arr1.length!=arr2.length)return false;
 
 
 
@@ -991,15 +964,15 @@ class DoLab extends React.Component {
         }
 
 
-         for (let i=0; i<arr1.length; i++){
-             let item1 = arr1[i]
-             for (let j=0; j<arr1.length; j++) {
-                 let item2 = arr2[j]
-                 if (item1.name == item2.name && item1.weight == item2.weight && this.verifyAmounts(item1,item2)) {
-                     arr[i]=true;
-                 }
-             }
-         }
+        for (let i=0; i<arr1.length; i++){
+            let item1 = arr1[i]
+            for (let j=0; j<arr1.length; j++) {
+                let item2 = arr2[j]
+                if (item1.name == item2.name && item1.weight == item2.weight && this.verifyAmounts(item1,item2)) {
+                    arr[i]=true;
+                }
+            }
+        }
 
 
         let res = true
@@ -1015,16 +988,18 @@ class DoLab extends React.Component {
     }
 
     verifyAmounts(eq1, eq2){
-         let grace = Math.min(eq2.capacity/10,5);
-         console.log("comparing")
-         console.log(eq1)
-         console.log(eq2)
-         return Math.abs(eq1.amount-eq2.amount)<grace;
+        let grace = Math.min(eq2.capacity/10,5);
+        console.log("comparing")
+        console.log(eq1)
+        console.log(eq2)
+        return Math.abs(eq1.amount-eq2.amount)<grace;
     }
 
     verifyStep( stepEquips,studentEquips) {
         let m = stepEquips.length;
         let n = studentEquips.length;
+        console.log("step equip is ");console.log((stepEquips))
+        console.log("verifying step, studentEquips = ");console.log((studentEquips));
 
         const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
 
@@ -1044,7 +1019,7 @@ class DoLab extends React.Component {
                 if (equip1.name === equip2.name &&
                     this.verifyAmounts(equip1,equip2)
                     &&equip1.capacity==equip2.capacity
-                &&this.arraysEqual(equip1.items,equip2.items)&&unused[j]) {
+                    &&this.arraysEqual(equip1.items,equip2.items)&&unused[j]) {
                     arr[i] = true
                     unused[j]=false;
                     break;
@@ -1054,14 +1029,17 @@ class DoLab extends React.Component {
                     unused[j]=false;
                     break;
                 }
-             /*   else if (equip1.items!=equip2.items){
-                }*/
+                /*   else if (equip1.items!=equip2.items){
+                       console.log("First items: ");console.log(equip1.items);
+                       console.log("second items: ");console.log(equip2.items);
+                   }*/
 
             }
         }
 
         let res = true
         for (let i = 0; i < arr.length; i ++) {
+            console.log("first arr is "+arr[i])
             res &= arr[i];
         }
 
@@ -1070,7 +1048,47 @@ class DoLab extends React.Component {
     }
 
 
+    sendFailedStep(){
+         if (this.props.isComplete)return
+        let labs =[];
+        const lab = {
+            labID:this.props.location.state.labID
+        }
+        labs[0]=lab
+        console.log("course id is "+this.props.location.state.courseID)
+        console.log(this.state)
+        const course= {
+            email:this.props.email,
+            courseCode: this.props.location.state.courseID,
+            labID:this.props.location.state.labID,
+            stepID:this.state.steps[this.state.completedSteps].stepID,
+        };
+        console.log("curr stpe is ");console.log(this.state.steps);
+        console.log("Steps completed is "+this.state.completedSteps)
+        console.log("course is ");
+        console.log(course)
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+
+        var studentList=[];
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'set_tries', course, axiosConfig)
+            .then((response) => {
+
+            })
+            .catch((error) => {
+
+            });
+
+    }
     completeStep  = (step_id) => {{
+        this.sendFailedStep()
         let currentStep = this.state.completedSteps;
         
         if (this.state.equipments[0]==null){
@@ -1082,6 +1100,7 @@ class DoLab extends React.Component {
         }
         if (!this.verifyStep(this.state.steps[currentStep].equipments,this.state.equipments[currentStep+1])){
             ToastsStore.error("Step failed. Try again.")
+            this.sendFailedStep();
             return null;
         }
         if (currentStep+2>this.state.steps.length){

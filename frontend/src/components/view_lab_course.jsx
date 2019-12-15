@@ -152,7 +152,18 @@ render() {
 
 
     if (this.state.redirectStat) {
-        return <Redirect exact to='/statistics' />
+        console.log("props is ");console.log(this.props);
+        console.log("props is ");console.log(this.props.labID);
+        console.log("props is ");console.log(this.props.location.state.labID);
+        return <Redirect exact to={{
+            pathname: '/statistics',
+            state: {
+                labID: this.props.location.state.labID,
+                courseID: this.props.location.state.courseID,
+                lab_name:this.props.location.state.lab_name
+
+            },
+        }}/>
     }
 
     if (this.state.loaded==false){
@@ -160,14 +171,18 @@ render() {
         this.setState({loaded:true})
         return null;
     }
+    console.log("abname is "+this.props.location.state.lab_name)
         return (
             <div>
 
                 <InstructorHeader currentTab="Labs"/>
+                {this.toolbar()}
                 <Navbar>
                     <Navbar.Brand href="#instructor_home"></Navbar.Brand>
                     <Navbar.Toggle/>
+
                     <Navbar.Collapse className="justify-content-end">
+
                         <Navbar.Text>
                             Instructor: {this.props.name}
                         </Navbar.Text>
@@ -267,6 +282,24 @@ render() {
 
 
 
+        )
+    }
+    toolbar()
+    {
+        return (
+            <Navbar style={{ marginLeft:40,marginRight:40,marginTop:10,marginBottom:10}}  className={"justify-content-between bar"}>
+                <Nav >
+                   { this.props.location.state.lab_name}
+                </Nav>
+
+                <Nav >
+
+                    <Link to="/instructor_home">
+                        <Image  onClick={this.setRedirectHome} className={"config_image"} src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/exit-512.png" rounded />
+                    </Link>
+                </Nav>
+
+            </Navbar>
         )
     }
 
