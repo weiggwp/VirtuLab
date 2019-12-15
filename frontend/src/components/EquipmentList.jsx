@@ -90,7 +90,9 @@ class EquipmentList extends React.Component
                             equipment.disabled=true
                         ))
                         this.forceUpdate()
-                        console.log(equipments)
+                        this.props.update();
+
+
                     }
                     )
             }
@@ -105,41 +107,90 @@ class EquipmentList extends React.Component
                         equipments.map((equipment) => (
                             equipment.disabled=this.state.type[type]
                         ))
+
                         this.forceUpdate()
-                        console.log(equipments)
+                        this.props.update();
+
+
                     }
                 )
 
             }
+
 
         }
 
     }
 
     createCollapsible(eventIndex, type, equipments) {
-        return (
-            <div style={{width: "100%"}}>
+        if(this.props.step===0){
+
+            return (
+                <div style={{width: "100%"}}>
+
+                    <div className={"tabRow"} style={{backgroundColor: "#b5c7c9"}}>
+
+                    <Accordion.Toggle className={"equipmentCollapsible"} as={Card.Header} eventKey={eventIndex}>
 
 
-                <Accordion.Toggle className={"row1 equipmentCollapsible"} as={Card.Header} eventKey={eventIndex}>
+                        <div className={"columnTab"}>{type}</div>
 
-
-                    <div className={"column1"}>{type}</div>
+                    </Accordion.Toggle>
                     <img className={this.addClassName(type)} onClick={()=>this.handleDisable(type,equipments)} src={this.getImg(type)} alt={"404"}/>
 
-                </Accordion.Toggle>
-
-                <Accordion.Collapse style={{width: "100%"}} eventKey={eventIndex}>
-                    <div>
-                        {equipments.map((equipment) => (
-                            this.renderButton(equipment)
-                        ))}
                     </div>
-                </Accordion.Collapse>
-            </div>
+
+                    <Accordion.Collapse style={{width: "100%"}} eventKey={eventIndex}>
+                        <div>
+                            {equipments.map((equipment) => (
+                                this.renderButton(equipment)
+                            ))}
+                        </div>
+                    </Accordion.Collapse>
+                </div>
 
 
-        )
+            )
+        }
+        const disabled = this.checkDisabledCollapsible(equipments)
+        if(!disabled) {
+                return (
+                    <div style={{width: "100%"}}>
+
+                        <Accordion.Toggle className={"row1 equipmentCollapsible1"} as={Card.Header} eventKey={eventIndex}>
+
+
+                            <div className={"column1"}>{type}</div>
+                            <img className={"column2"} src={more} alt={"404"}/>
+
+                        </Accordion.Toggle>
+
+                        <Accordion.Collapse style={{width: "100%"}} eventKey={eventIndex}>
+                            <div>
+                                {equipments.map((equipment) => (
+                                    this.renderButton(equipment)
+                                ))}
+                            </div>
+                        </Accordion.Collapse>
+                    </div>
+
+
+                )
+        }
+
+    }
+
+    checkDisabledCollapsible(equipments)
+    {
+        for (var i = 0; i < equipments.length; i++)
+        {
+            console.log(equipments[i])
+            if(!equipments[i].disabled)
+                return false;
+            //if there's at least an element not disabled
+        }
+        return true;
+
     }
 
     renderButton(equipment) {

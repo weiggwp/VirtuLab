@@ -94,10 +94,11 @@ class create_lab extends React.Component {
         this.getInfo = this.getInfo.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
         this.hidePopOver=this.hidePopOver.bind(this);
-    }
-
+        this.update=this.update.bind(this);
         // this.addColorChangeRule = this.addColorChangeRule.bind(this);
         // this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
+    }
+
 
     // addColorChangeRule(eq,color){
     //
@@ -345,18 +346,18 @@ class create_lab extends React.Component {
         this.forceUpdate()
     }
 
+    update=()=>
+    {
+        this.forceUpdate()
+    }
+
     setRestart = () => {
 
         // console.log(this.state.equipments)
         const temp = this.state.steps;
-        const temp_equip = this.state.equipments;
-        temp_equip[this.state.currentStep]=[];
+        this.state.equipments[this.state.currentStep]=[];
+        this.forceUpdate();
 
-        this.setState({
-            // restart: true,      //should probably just be restarting a single step
-            temp_equip,
-
-        });
     };
 
 
@@ -414,6 +415,7 @@ class create_lab extends React.Component {
                 // console.log("id is "+response.data);
                 if(this.state.lab_id===0)  //only if not set
                     this.setState({lab_id:response.data});
+                ToastsStore.success("lab saved successfully")
 
 
             })
@@ -421,6 +423,7 @@ class create_lab extends React.Component {
                     this.setState({
                         errors: 'Saving error',
                     });
+                    ToastsStore.error("Error saving lab")
                 }
             );
     };
@@ -571,12 +574,13 @@ class create_lab extends React.Component {
         //TODO: initial step equipment setup for future equipment set
         instructions.push(<Tab.Pane eventKey={0}>
 
-            <EquipmentList step={0} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
+            <EquipmentList step={0} update={this.update} set={this.equipmentSet.getEquipments()} handleAddEquipment={this.handleAddEquipment}/>
 
             {this.setupInstruction(0,"This is the setup stage. " +
 
             "Click on equipments you would like to disable for the duration of the lab (click again to unselect). "
-            + "Right click on a equipment to remove liquids, change fill color, view info, delete equipment ") }</Tab.Pane>);
+            + "For convenience, you may also click on the checkmarks next to equipment types to enable/disable a whole category of equipments."
+                +"Right click on a equipment to remove liquids, change fill color, view info, delete equipment ") }</Tab.Pane>);
 
         for (let i = 1; i <= this.state.step_num; i += 1) {
             // instructions.push(<Tab.Pane eventKey={i}> {this.state.steps[i].instruction} </Tab.Pane>);
@@ -610,7 +614,7 @@ class create_lab extends React.Component {
             return  <div>
                 <EquipmentList style={{height:"8vh"}} set={this.equipmentSet.getEquipments()} step={i} handleAddEquipment={this.handleAddEquipment}/>
 
-                <span>instruction for step {i} </span>
+                <span style={{fontFamily:"monospace",fontSize:14}}>Instruction for step {i} </span>
                 {this.instruction(i)}
             </div>
     }
@@ -692,9 +696,7 @@ class create_lab extends React.Component {
         // console.log(data);
     }
     handleInputChange(e){
-        console.log("e is abc123")
-        console.log(e.target.value)
-        console.log()
+
         this.setState({input: e.target.value},);
 
     }
@@ -854,7 +856,6 @@ class create_lab extends React.Component {
     }
     workspacePane(){
         const workspaces = [];
-        console.log("workspacePane")
         // workspaces.push(<Tab.Pane eventKey={0}> {this.state.steps[0].workspace} </Tab.Pane>);
         workspaces.push(<Tab.Pane eventKey={0}>
             <span>workspace for step {0}</span>
@@ -939,7 +940,6 @@ class create_lab extends React.Component {
     }
 
     handleDelChild = (curStep) => {
-        console.log("in create ",curStep)
 
         /* should probably toast a error msg, step 0 can't be removed */
         if (curStep === 0) {
@@ -948,7 +948,6 @@ class create_lab extends React.Component {
         curStep = parseInt(curStep)
         let newSteps= []
         let steps = this.state.steps
-        console.log("old steps",steps)
         newSteps[0] = steps[0]
         let newEquips=[[]]
 
@@ -956,8 +955,6 @@ class create_lab extends React.Component {
         if(this.state.step_num<2)
         {
             //do nothing
-            console.log("do nothing")
-
 
             this.setState({
                 steps: newSteps,
@@ -994,7 +991,6 @@ class create_lab extends React.Component {
                 equipments:newEquips
             })
         }
-        console.log("new steps",this.state.steps," total:",this.state.step_num)
 
 
 
@@ -1070,7 +1066,7 @@ class create_lab extends React.Component {
     };
 
 
-    selectStep(e,i){
+    selectStep(i){
         this.setState({
                 currentStep:i,
 
@@ -1145,8 +1141,6 @@ class create_lab extends React.Component {
         source_dm.style.left = x + 'px';
         source_dm.style.top = y + 'px';
 
-        console.log("client",ev.clientX,"x",x);
-        console.log("client",ev.clientY,"y",y);
 
 
 
@@ -1194,9 +1188,6 @@ class create_lab extends React.Component {
 
         var src_x=(ev.clientX + parseInt(offset[0],10));
         var src_y=(ev.clientY + parseInt(offset[1],10));
-        console.log("unverified original",[src_x,src_y]);
-
-        console.log(src_element,targ_element)
 
         const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
         src_x=verify[0];

@@ -36,6 +36,12 @@
     width: 90%;
 }
 
+.columnTab
+{
+    float:left;
+    padding-left:20px;
+    width: 100%;
+}
 .column2 {
     float: right;
     width: 10%;
@@ -114,6 +120,23 @@ p {
 }
 
 .equipmentCollapsible
+ {
+     margin-right:0;
+     width:90%;
+     height:50px;
+     background-color: #b5c7c9;
+     font-weight:bold;
+     user-select: none;
+ }
+.equipmentCollapsible:hover
+{
+
+    background-color: #9fafb1;
+
+
+}
+
+.equipmentCollapsible1
 {
     margin-right:0;
     width:100%;
@@ -122,7 +145,7 @@ p {
     font-weight:bold;
     user-select: none;
 }
-.equipmentCollapsible:hover
+.equipmentCollapsible1:hover
 {
 
     background-color: #9fafb1;
@@ -131,11 +154,27 @@ p {
 }
 .disable
 {
+    padding-top: 5px;
 
+    height:45px;
 }
 .disable:hover
 {
     box-shadow :0px 4px 8px ;
+}
+
+.tabRow:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.tabRow {
+
+
+    display: flex;
+
+    flex-wrap: wrap;
+
 }
 
 

@@ -21,7 +21,6 @@ class Slides extends React.Component {
             // addChild: props.addChild,
             curStep: 0,
             delFun: this.props.delChild,
-            active:0
         }
 
         this.handleDelButton = this.handleDelButton.bind(this);
@@ -42,8 +41,8 @@ class Slides extends React.Component {
     handleOnSelectedKey(selectedKey){
         this.setState({
             curStep: selectedKey,
-            active:selectedKey,
         })
+        this.props.onSelect(selectedKey)
     }
 
     handleDelButton() {
@@ -115,7 +114,7 @@ class Slides extends React.Component {
                     </div>
 
 
-                    <Nav activeKey={this.state.active} variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
+                    <Nav variant="pills" className="flex-column" onSelect={selectedKey => this.handleOnSelectedKey(selectedKey)}>
                         {children}
                     </Nav>
                 </div>
