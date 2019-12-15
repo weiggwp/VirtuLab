@@ -591,6 +591,46 @@ public class LabController {
     }
 
 
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/unassign_lab", method = RequestMethod.POST)
+    public ResponseEntity unassignLab(@RequestBody CourseDTO courseDTO) {
+        try {
+            System.out.println("Lab Controller: Uassign_lab operation from course");
+            System.out.println("course is " + courseDTO);
+
+            long courseID = courseDTO.getCourseID();
+            long labID = 1;
+            Optional<Course> optional = courseService.findCourseById(courseID);
+
+            if (optional.isPresent()) {
+                Course course = optional.get();
+                List<CourseLab> courseLabs = course.getCourseLabList();
+
+                for (Iterator<CourseLab> it = courseLabs.iterator(); it.hasNext();) {
+                    CourseLab courseLab = it.next();
+                    if (courseLab.getCourse().getCourseID() == courseID &&
+                            courseLab.getLab().getLabID() == labID){
+                        it.remove();
+                    }
+                }
+
+                for (Iterator<UserCourseLab> it = course.getUserCourseLabList().iterator(); it.hasNext();) {
+                    UserCourseLab userCourseLab = it.next();
+                    if (userCourseLab.getLab().getLabID() == labID &&
+                            userCourseLab.getCourse().getCourseID() == courseID){
+                        it.remove();
+                        userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
+                    }
+                }
+
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 
