@@ -7,6 +7,7 @@ import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";
 import InstructorHeader from "./instructorHeader";
+import StudentHeader from "./studentHeader";
 
 export class account_settings extends Component {
     constructor(props) {
@@ -141,13 +142,18 @@ export class account_settings extends Component {
 
         }
 
-        else
-        {const errorMessage = this.state.errors;
+
+        const errorMessage = this.state.errors;
+        let header = "";
+        if (this.props.role=="instructor"){
+            header = <InstructorHeader currentTab="Account"/>
+
+        }
+        else header =  <StudentHeader currentTab="Courses"/>
 
             return (
                 <div>
-                    <InstructorHeader currentTab="Account"/>
-
+                    {header}
                     <div className={"lightblue centered"}>
 
                     <Container fluid className="noPadding">
@@ -280,7 +286,7 @@ export class account_settings extends Component {
 
                 </div>
             );
-        }
+
     }
 }
 
