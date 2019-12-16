@@ -136,9 +136,9 @@ class create_lab extends React.Component {
     popOff(workspace_id, eq_id) {
         let old_tartget = this.interaction_map[workspace_id + "," + eq_id];
         if (old_tartget[0].name === "Scale") {
-
-            this.state.equipments[workspace_id][old_tartget[2]].value = 0;
-            this.state.equipments[workspace_id][old_tartget[2]].items = [];
+            this.state.equipments[workspace_id][old_tartget[2]].removeItems();
+            // this.state.equipments[workspace_id][old_tartget[2]].value = 0;
+            // this.state.equipments[workspace_id][old_tartget[2]].items = [];
             this.state.equipments[workspace_id][old_tartget[2]].interacting = false;
 
             delete  this.interaction_map[[workspace_id + "," + eq_id]];

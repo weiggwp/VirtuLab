@@ -223,12 +223,7 @@ export default class Glassware extends Equipment{
 
     }
 
-    detach(target)
-    {
-        if(target.name==="Scale"){
-            target.value = 0;
-        }
-    }
+
     toString()
     {
         return this.capacity+" mL "+this.name;

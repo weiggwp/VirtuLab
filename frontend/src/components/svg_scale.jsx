@@ -18,7 +18,7 @@ class SvgComponent extends Component {
         const size= this.equip.size;
         const viewBox= "-25 0 250 100";
         console.log("this.equip.items",this.equip.items,"this.equip.items ===[]",this.equip.items <1);
-        const mass = (this.equip.items.length<1)? 0:this.equip.items[0].getWeight();
+        const mass = (this.equip.items.length<1)? 0:this.equip.items[0].getWeight()-this.equip.offset;
         return (
             <svg
                 id={this.props.id + "scale"}
