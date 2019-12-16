@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
 
@@ -361,7 +362,10 @@ public class LabController {
                 CourseLab courseLab = new CourseLab();
                 courseLab.setCourse(course);
                 courseLab.setLab(lab);
-                courseLab.setDate(courseDTO.getDate());
+                System.out.println("received date was "+courseDTO.getDate().toString());
+                Date dayAfter = new Date(courseDTO.getDate().getTime() + TimeUnit.DAYS.toMillis(1));
+                System.out.println("received date was "+dayAfter);
+                courseLab.setDate(dayAfter);
 //                System.out.println(courseLab);
                 course.getCourseLabList().add(courseLab);
                 lab.getCourseLabList().add(courseLab);
@@ -563,8 +567,11 @@ public class LabController {
                     TimeZone.setDefault(TimeZone.getTimeZone("EST"));
 
 
-                    Date date2 = new Date();
-                    userCourseLab.setSubmittedDate(new Date());
+                    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("US/Eastern"));
+
+                    Date currentDate = calendar.getTime();
+                    System.out.println("date is "+currentDate.toString());
+                    userCourseLab.setSubmittedDate(currentDate);
                 }
             }
             userService.save(user);
@@ -602,18 +609,24 @@ public class LabController {
             System.out.println("Lab Controller: Uassign_lab operation from course");
             System.out.println("course is " + courseDTO);
 
-            long courseID = courseDTO.getCourseID();
-            long labID = 1;
-            Optional<Course> optional = courseService.findCourseById(courseID);
+            String courseCode = courseDTO.getCourseNumber();
+            long labID = courseDTO.getLabs().get(0).getLabID();
+            Optional<Course> optional = courseService.findCourseByNameOrCode(courseCode,0);
 
             if (optional.isPresent()) {
                 Course course = optional.get();
+                long courseID=course.getCourseID();
+                System.out.println("course is "+course);
                 List<CourseLab> courseLabs = course.getCourseLabList();
 
                 for (Iterator<CourseLab> it = courseLabs.iterator(); it.hasNext();) {
                     CourseLab courseLab = it.next();
+                    System.out.println("labid is "+courseLab.getLab().getLabID() + " courseid is "+courseLab.getCourse().getCourseID());
                     if (courseLab.getCourse().getCourseID() == courseID &&
                             courseLab.getLab().getLabID() == labID){
+                        System.out.println("removing");
+
+                        courseLabService.delAssociateion(courseLab.getCourseLabID());
                         it.remove();
                     }
                 }
@@ -626,6 +639,8 @@ public class LabController {
                         userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
                     }
                 }
+
+                courseService.addCourse(course);
 
                 return new ResponseEntity(HttpStatus.OK);
             }

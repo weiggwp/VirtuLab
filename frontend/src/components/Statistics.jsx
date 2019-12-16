@@ -32,7 +32,7 @@ class Statistics extends Component {
             data: [ true, false, false, false ]
         };
         this.computeStats() // for completion
-        this.computeStepStats()
+        //this.computeStepStats()
     }
     banner() {
         return (
@@ -103,7 +103,7 @@ class Statistics extends Component {
 
         axios.post(GLOBALS.BASE_URL + 'lab_stats', course, axiosConfig)
             .then((response) => {
-                alert("came back")
+
                 let arr = response.data
                 this.setState({
                     numOfStudents: arr[2],

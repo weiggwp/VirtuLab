@@ -3,7 +3,9 @@ import {Button, Col, Form, FormControl, Row} from "react-bootstrap";
 import axios from "axios";
 import GLOBALS from "../Globals";
 import '../stylesheets/account_settings.css';
+
 import {ToastsStore} from "react-toasts";
+
 
 class Droppable_course extends React.Component
 {
@@ -23,42 +25,74 @@ class Droppable_course extends React.Component
 
 
     handleDropCourse = (e) => {
-
-
-        const course = {
-            code: this.state.code,
-            course_id: e.id,
+        console.log("e is ")
+        console.log(e)
+        let pass = prompt("Please enter password to confirm dropping of class. Note that lab" +
+            " completion data will be lost.");
+        if (pass==""||pass==null||pass==undefined)return null
+        console.log(pass )
+        const user = {
+            password:pass,
             email: this.props.email
-        };
+        }
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
             }
         };
-        //axio sends message to backend to handle authentication
-        // 'aws_website:8080/userPost'
-        axios.post(GLOBALS.BASE_URL + 'drop', course, axiosConfig)
+        axios.post(GLOBALS.BASE_URL + 'verify_password',user, axiosConfig)
             .then((response) => {
-                ToastsStore.success("Course is dropped")
-                    this.render()
-                    window.location.reload();
 
+
+                const course = {
+                    code: this.state.code,
+                    course_id: e,
+                    email: this.props.email
+                };
+                //console.log("where we droppin")
+
+
+                axios.post(GLOBALS.BASE_URL + 'drop', course, axiosConfig)
+                    .then((response) => {
+                        ToastsStore.success("Course is dropped")
+                        this.render()
+                        window.location.reload();
+
+                    })
+                    .catch((error) => {
+                        //console.log("rip")
+                            this.setState({
+                                errors: 'Error! No course found with the code.',
+                                code: '',
+                            });
+                            //    this.render()
+                            //  window.location.reload();
+
+                        }
+                    );
 
             })
             .catch((error) => {
-                    this.setState({
-                        errors: 'Error! No course found with the code.',
-                        code: '',
-                    });
-                    ToastsStore.error("Error in dropping")
+                ToastsStore.error("Incorrect Password.")
+                   //console.log("naw")
+
+
+            })
+
                     //    this.render()
                     //  window.location.reload();
 
-                }
-            );
+    }
 
-    };
+
+
+
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+
+
 
 
 
@@ -79,12 +113,14 @@ class Droppable_course extends React.Component
                             </Col>
 
                             <Col md={{span: 1, offset: 0}}>
-                                <Form inline onSubmit={this.handleDropCourse.bind(null, {id: classItem.classID})}>
 
-                                    <button className={"dropButton"} block bsSize="small" type="submit">
+                                    <Button className={"dropButton"}
+                                            style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit"
+                                            onClick=
+                                        {() => this.handleDropCourse(classItem.classID)}>
                                         Drop Class
-                                    </button>
-                                </Form>
+                                    </Button>
+
 
                             </Col>
                         </Row>

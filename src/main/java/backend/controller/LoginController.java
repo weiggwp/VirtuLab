@@ -123,4 +123,16 @@ public class LoginController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/verify_password", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity verifyPassword(@RequestBody UserDTO userDTO) {
+        System.out.println("user is " +userDTO);
+        String pass = userDTO.getPassword();
+        User existing = userService.findByEmail(userDTO.getEmail_address());
+        if (!passwordEncoder.matches(userDTO.getPassword(),existing.getPassword()))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

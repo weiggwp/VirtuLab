@@ -11,7 +11,9 @@ public class CourseLabService {
 
     @Autowired
     CourseLabRepository courseLabRepository;
-
+    public void delAssociateion(long CourseLabID) {
+        courseLabRepository.deleteById(CourseLabID);
+    }
     public void saveOrUpdate(CourseLab courseLab) {
         courseLabRepository.save(courseLab);
     }

@@ -184,6 +184,9 @@ class EquipmentList extends React.Component
     {
         for (var i = 0; i < equipments.length; i++)
         {
+
+           // console.log(equipments[i])
+
             if(!equipments[i].disabled)
                 return false;
             //if there's at least an element not disabled

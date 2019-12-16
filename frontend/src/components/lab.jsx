@@ -89,7 +89,9 @@ class Lab extends React.Component
         }
         else {
             // console.log("date is " +this.props.due_date)
-            date =   this.props.due_date.substring(0,10)
+            let realDate=new Date(this.props.due_date)
+          //  realDate.setDate(realDate.getDate()-1);
+            date =   realDate.toString().substring(0,10)
         }
         let isComplete='incomplete'
         if (this.props.complete){

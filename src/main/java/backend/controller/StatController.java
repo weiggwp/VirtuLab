@@ -17,10 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 @Controller
@@ -210,6 +209,9 @@ public class StatController {
                         add.setCompleted(userCourseLab.getComplete());
                         if (add.getCompleted()==1){
                             add.setDateCompleted(userCourseLab.getSubmittedDate());
+                            System.out.println("date copletd it "+add.getDateCompleted());
+                            Date dayAfter = new Date(add.getDateCompleted().getTime() - TimeUnit.HOURS.toMillis(5));
+                            add.setDateCompleted(dayAfter);
                         }
                         students.add(userCourseLab.getUser());
                     }

@@ -458,8 +458,11 @@ public class CourseController {
 
             Course course = optional.get();
             for (CourseLab courseLab: course.getCourseLabList()) {
-                if (courseLab.getLab().getLabID() == labID)
+                if (courseLab.getLab().getLabID() == labID) {
+
+
                     courseLab.setDate(courseDTO.getDate());
+                }
             }
 
             courseService.addCourse(course);

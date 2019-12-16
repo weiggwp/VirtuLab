@@ -214,15 +214,15 @@ class student_home extends React.Component
 
 
                         </Nav>
-
-                        <Nav >
-                            <label className="contain">
-                                Show Completed Labs
-                                <input type="checkbox" onClick={() => this.handleCheckBox()} onChange={e => this.updateInputValue(e)}/>
-                                <span className="checkmark">
+                        <label className="contain">
+                            Show Completed Labs
+                            <input type="checkbox" onClick={() => this.handleCheckBox()} onChange={e => this.updateInputValue(e)}/>
+                            <span className="checkmark">
 
                                     </span>
-                            </label>
+                        </label>
+                        <Nav >
+
                             <OverlayTrigger
                                 overlay={
                                     <Tooltip>
