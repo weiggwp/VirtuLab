@@ -150,6 +150,6 @@ const SvgComponent =
                 </g>
             </g>
         </svg>
-    )
+    );
 
 export default SvgComponent

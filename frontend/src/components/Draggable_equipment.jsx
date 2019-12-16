@@ -295,7 +295,7 @@ class Draggable_equipment extends React.Component {
                         Delete
                     </MenuItem>
 
-                    <MenuItem disabled={disable} data={{foo: 'bar'}} onClick={this.handleClick}>
+                    <MenuItem disabled={disable} data={{"equip": equip}} onClick={this.props.removeContainingElements}>
                         Remove Containing Elements
                     </MenuItem>
                     <MenuItem divider/>

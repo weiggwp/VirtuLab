@@ -85,8 +85,16 @@ class create_lab extends React.Component {
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
         this.hidePopOver=this.hidePopOver.bind(this);
         this.update=this.update.bind(this);
+        this.removeContainingElements = this.removeContainingElements.bind(this);
         // this.addColorChangeRule = this.addColorChangeRule.bind(this);
         // this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
+    }
+
+    removeContainingElements(e, data){
+        const equip = data["equip"];
+        equip.setItems([]);
+        equip.amount = 0;
+        this.forceUpdate();
     }
 
 
@@ -910,6 +918,7 @@ class create_lab extends React.Component {
                                                  hide={this.hidePopOver}
                                                  interaction_map={this.interaction_map}
                                                  popOff={this.popOff}
+                                                 removeContainingElements = {this.removeContainingElements}
                                 // addColorChangeRule={this.addColorChangeRule}
                             />
 
