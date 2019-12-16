@@ -146,6 +146,7 @@ class create_lab extends React.Component {
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
+            console.log("current",current)
 
                 if(solutions.includes(current.type))
                 {
@@ -158,6 +159,7 @@ class create_lab extends React.Component {
                     equip.setDisabled(current.disabled)
                     equip.setLocation(current.left,current.top)
                     equip.setColor(current.color)
+
 
                     result.push(equip)
                 }

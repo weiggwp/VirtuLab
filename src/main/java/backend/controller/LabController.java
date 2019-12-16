@@ -74,7 +74,7 @@ public class LabController {
     public ResponseEntity saveLab(@RequestBody LabDTO labDTO) {
 
         // System.out.println("lab Controller is called: save_lab");
-//        System.out.println(labDTO);
+        System.out.println(labDTO);
         Lab existing = labService.findByLabID(labDTO.getLabID());
 
 
@@ -132,7 +132,9 @@ public class LabController {
 //            Equipment equipment = modelMapper.map(dto, Equipment.class);
             Equipment equipment1 = new Equipment();
             copyVals(equipment1, dto);
+            equipment1.setItems(mapEquipmentDTO(dto.getItems()));
             equipmentService.saveEquipment(equipment1);
+            System.out.println(equipment1);
             equipments.add(equipment1);
         }
         return equipments;
@@ -166,6 +168,8 @@ public class LabController {
         equip.setDisabled(dto.getDisabled());
         equip.setSize(dto.getSize());
         equip.setColor(dto.getColor());
+        equip.setChemProp(dto.getChemProp());
+
     }
 
     @CrossOrigin(origins = "*")
