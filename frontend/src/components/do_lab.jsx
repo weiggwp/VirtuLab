@@ -442,10 +442,10 @@ class DoLab extends React.Component {
             console.log("props is ");
             console.log(this.props.location.state.lab_name)
             return (
-                <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
+                <Navbar style={{backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
                     <Nav>
-                        {this.props.location.state.lab_name}
+                        <font color = "white">{this.props.location.state.lab_name}</font>
 
                     </Nav>
 
@@ -893,6 +893,16 @@ class DoLab extends React.Component {
 
     };
 
+
+
+
+    createNewEquipment(equipment)
+    {
+        return deepCloneWithType(equipment);
+    }
+
+
+
     handleAddEquipment= (step,equipment) =>
     {
         if(step===0)
@@ -917,7 +927,7 @@ class DoLab extends React.Component {
         }
         else
         {
-            current[step].push(equipment);
+            current[step].push(this.createNewEquipment(equipment));
             //            <Draggable_equipment image={image} x={500} y={100} width={this.state.equipments.length*100} height={this.state.equipments.length*100}/>
 
             this.setState(
@@ -1297,16 +1307,15 @@ class DoLab extends React.Component {
         let x=this.state.completedSteps+1
         let container= <Tab.Container id="steps" activeKey={x}>
             <Row>
-                <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
-                    {/*{this.slides()}*/}
+                <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
+                {/*{this.slides()}*/}
                     {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
                     {this.state.slide}
                 </Col>
-                <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
+                <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                     {this.instructionPane()}
                 </Col>
-
-                <Col lg={{span:7}} className="darkerBack"  >
+                <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                     {this.workspacePane()}
 
 
@@ -1332,7 +1341,7 @@ class DoLab extends React.Component {
 
             let container= <Tab.Container id="steps" defaultActiveKey={x}>
                 <Row>
-                    <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
+                    <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
                         {/*{this.slides()}*/}
                         {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
                         {this.state.slide}
@@ -1340,7 +1349,6 @@ class DoLab extends React.Component {
                     <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                         {this.instructionPane()}
                     </Col>
-
                     <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                         {this.workspacePane()}
 

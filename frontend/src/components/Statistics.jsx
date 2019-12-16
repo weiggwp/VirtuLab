@@ -12,18 +12,27 @@ class Statistics extends Component {
         super(props);
         this.state = {
 
+            courseID: props.courseID,
             numOfStudents: 0,
             completePercentage: 0,
             incompletePercentage: 0,
             renderedStats:false,
             completed: 75,
             noRetries:25,
+
+
+            stepsArr: [],
+
+
             stepMap:null,
             stepData: [],
             currentBarData: 'avg',
             currentStepIndex: 0,
+
             data: [ true, false, false, false ]
         };
+        this.computeStats() // for completion
+        //this.computeStepStats()
     }
     banner() {
         return (
@@ -71,16 +80,18 @@ class Statistics extends Component {
 
 
     computeStats = () => {
-        console.log("props is ");console.log(this.props);
-        let labs =[];
+        console.log("props is ");
+        console.log(this.props);
+        let labs = [];
         const lab = {
-            labID:this.props.location.state.labID
+            labID: this.props.location.state.labID
         }
-        labs[0]=lab
+        labs[0] = lab
         const course = {
             email: this.props.email,
             labs: labs,
             code: this.props.location.state.courseID,
+
         };
 
         let axiosConfig = {
@@ -103,25 +114,57 @@ class Statistics extends Component {
                 console.log(this.state)
             })
             .catch((error) => {
+                    console.log(error)
 
                 }
             );
-
 
         axios.post(GLOBALS.BASE_URL + 'step_stats', course, axiosConfig)
             .then((response) => {
 
                 console.log("resp is ");
                 console.log(response)
-                this.setState({stepMap:response.data},this.callbackCalculate);
+                this.setState({stepMap: response.data}, this.callbackCalculate);
             })
             .catch((error) => {
                     console.log("wawawaaaa")
                 }
             );
-
-
     }
+
+
+//     data={[
+//             { title: 'step1', value: 20, color: '#E38627' },
+// { title: 'step2', value: 25, color: '#C13C37' },
+// { title: 'step3', value: 25, color: '#f3b2a3' }
+//
+// ]}
+    formatStepStats(arr){
+
+        let items = []
+        if (arr.length === 1 && arr[0] === 100) {
+            let color='#' + parseInt(Math.random() * 0xffffff).toString(16)
+            items.push({
+                title: "perfect",
+                value: 100,
+                color: color
+            })
+            return items
+        }
+
+        for (let i = 0; i < arr.length; i ++) {
+            let color='#' + parseInt(Math.random() * 0xffffff).toString(16)
+            items.push({
+                title: 'step' + (i + 1),
+                value: arr[i],
+                color: color
+            })
+        }
+        return items
+    }
+
+
+
     callbackCalculate(){
         console.log("stepmap is ");
         console.log(this.state.stepMap)
@@ -185,10 +228,11 @@ class Statistics extends Component {
         this.setState({renderedStats:true},this.render)
     }
 
-displayStep(i){
-        console.log("i is "+i)
-    this.setState({currentStepIndex:i},this.render)
-}
+    displayStep(i){
+            console.log("i is "+i)
+        this.setState({currentStepIndex:i},this.render)
+    }
+
 
 
     render() {
@@ -236,6 +280,7 @@ displayStep(i){
         percentNoRetries = Math.round(parseFloat(noRetries) / total * 100);
         const data = [
 
+
         ];
         let title ="";
         if (this.state.currentBarData=='avg')
@@ -274,6 +319,7 @@ displayStep(i){
                                 View Step
                             </Dropdown.Toggle>
 
+
                             <Dropdown.Menu>
 
 
@@ -288,9 +334,10 @@ displayStep(i){
 
 
                         {/*<PieChart
+
                             data={[
-                                { title: 'Completed', value: this.state.completePercentage, color: '#2246c7' },
-                                { title: 'Incompletes', value: this.state.incompletePercentage, color: '#408fff' },
+                                { title: 'Completed', value: this.state.completePercentage, color: '#E38627', label: "Completed" },
+                                { title: 'Incompletes', value: this.state.incompletePercentage, color: '#C13C37', label: "Incomplete" },
 
                             ]}
                             label={"Percent completed"}
@@ -307,12 +354,13 @@ displayStep(i){
                             labelStyle={{ color: 'black' }}
                         />
                         <PieChart
-                            data={[
-                                { title: 'step1', value: 20, color: '#E38627' },
-                                { title: 'step2', value: 25, color: '#C13C37' },
-                                { title: 'step3', value: 25, color: '#f3b2a3' }
-
-                            ]}
+                            // data={[
+                            //     { title: 'step1', value: 20, color: '#E38627' },
+                            //     { title: 'step2', value: 25, color: '#C13C37' },
+                            //     { title: 'step3', value: 25, color: '#f3b2a3' }
+                            //
+                            // ]}
+                            data={stepData}
                             label={"Retries per instruction"}
                             labelStyle={{ color: 'black' }}
                         />*/}

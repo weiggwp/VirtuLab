@@ -3,7 +3,9 @@ import {Button, Col, Form, FormControl, Row} from "react-bootstrap";
 import axios from "axios";
 import GLOBALS from "../Globals";
 import '../stylesheets/account_settings.css';
-import Dropdown from "react-bootstrap/Dropdown";
+
+import {ToastsStore} from "react-toasts";
+
 
 class Droppable_course extends React.Component
 {
@@ -25,7 +27,8 @@ class Droppable_course extends React.Component
     handleDropCourse = (e) => {
         console.log("e is ")
         console.log(e)
-        let pass = prompt("Please enter password to confirm dropping of class.");
+        let pass = prompt("Please enter password to confirm dropping of class. Note that lab" +
+            " completion data will be lost.");
         if (pass==""||pass==null||pass==undefined)return null
         console.log(pass )
         const user = {
@@ -41,6 +44,7 @@ class Droppable_course extends React.Component
         axios.post(GLOBALS.BASE_URL + 'verify_password',user, axiosConfig)
             .then((response) => {
 
+
                 const course = {
                     code: this.state.code,
                     course_id: e,
@@ -51,9 +55,10 @@ class Droppable_course extends React.Component
 
                 axios.post(GLOBALS.BASE_URL + 'drop', course, axiosConfig)
                     .then((response) => {
-
+                        ToastsStore.success("Course is dropped")
                         this.render()
                         window.location.reload();
+
                     })
                     .catch((error) => {
                         //console.log("rip")
@@ -69,13 +74,17 @@ class Droppable_course extends React.Component
 
             })
             .catch((error) => {
-                     alert("Incorrect Password.")
+                ToastsStore.error("Incorrect Password.")
                    //console.log("naw")
+
+
+            })
+
                     //    this.render()
                     //  window.location.reload();
 
-                }
-            );
+    }
+
 
 
 
@@ -83,7 +92,7 @@ class Droppable_course extends React.Component
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
 
-    };
+
 
 
 

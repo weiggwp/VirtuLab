@@ -7,4 +7,7 @@ module.exports = {
 
 
     //http://virtulab.us-east-2.elasticbeanstalk.com
+    //no server for online backend
+    //http://localhost:5000/
 };
+

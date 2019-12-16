@@ -12,6 +12,10 @@ public interface UserCourseLabStepRepository extends CrudRepository<UserCourseLa
 
     boolean existsByUserCourseLabAndStep(UserCourseLab userCourseLab, Step step);
 
+    int countUserCourseLabStepByStep(Step step);
+
+    List<UserCourseLabStep> findAllByStep(Step step);
+
 
     List<UserCourseLabStep> findAll();
 }

@@ -19,6 +19,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import {Course} from "./Course";
 import Accordion from "react-bootstrap/Accordion";
+import {ToastsStore, ToastsContainer} from "react-toasts";
 
 class labOjb {
     constructor(id, name, author, keywords, description, courses) {
@@ -92,12 +93,14 @@ class instructor_labs extends React.Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'clone_lab', lab, axiosConfig)
             .then((response) => {
+                ToastsStore.success("Cloning is done")
                 this.render();
                 window.location.reload()
 
             })
             .catch((error) => {
                     console.log("doot" + error)
+                ToastsStore.error("Error in Cloning")
                 }
             );
     }
@@ -183,6 +186,7 @@ class instructor_labs extends React.Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'del_lab', labToDel, axiosConfig)
             .then((response) => {
+                ToastsStore.success("Selected Lab is deleted")
                 this.render()
                 window.location.reload()
             })
@@ -267,7 +271,7 @@ class instructor_labs extends React.Component {
             // 'aws_website:8080/userPost'
             axios.post(GLOBALS.BASE_URL + 'publish_lab', labpub, axiosConfig)
                 .then((response) => {
-                  //  console.log("success!")
+                    ToastsStore.success("lab is published")
                     this.render()
                     window.location.reload()
                 })
@@ -795,6 +799,7 @@ class instructor_labs extends React.Component {
 
                         </div>
                     </div>
+
                 </div>
 
 

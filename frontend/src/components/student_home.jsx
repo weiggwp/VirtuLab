@@ -26,6 +26,9 @@ class student_home extends React.Component
             user: '',
             loading_course:true,
             classes:[],
+            classesWithInCompletesOnly: [],
+            classesWithFull: [],
+            inputValue: false
         };
     }
     renderRedirect = () => {
@@ -52,6 +55,7 @@ class student_home extends React.Component
         };
         var classArr=[];
         var classArray=[];
+        let classesWithIncompletesOnly=[]
         // console.log("sending email of "+user.email)
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
@@ -61,17 +65,44 @@ class student_home extends React.Component
                 // console.log("resp is " +response.json())
 
                 // console.log("resp is "+JSON.stringify(response))
-
+                console.log("----------------------------------------------------")
+                console.log(response.data)
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
-                        clicked:false,labs:response.data[i].labDTOS,accessCode:response.data[i].code};
+                        clicked:false, labs:response.data[i].labDTOS, accessCode:response.data[i].code};
+                    classesWithIncompletesOnly[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
+                        clicked:false, labs: response.data[i].labDTOS, accessCode:response.data[i].code};
 
                 }
+
+                for (let i=0; i<classesWithIncompletesOnly.length; i++) {
+                    let filter = []
+                    for(let j = 0; j < classesWithIncompletesOnly[i].labs.length; j++){
+                        if (classesWithIncompletesOnly[i].labs[j].complete !== true){
+                            console.log("filter")
+                            filter.push(response.data[i].labDTOS[j])
+                        }
+                    }
+                    classesWithIncompletesOnly[i]['labs'] = filter
+                }
+
+                console.log(classesWithIncompletesOnly)
+                console.log("----------------------------------------------------")
+
+
+
+
+
                 console.log("class arr is ");
                 console.log(classArray)
+
                 // console.log("AAA classarray is "+classArray);
-                this.setState({classes:classArray,loading_course:false});
+                this.setState({
+                    classesWithFull: classArray,
+                    classesWithIncompletesOnly: classesWithIncompletesOnly,
+                    classes:classesWithIncompletesOnly,
+                    loading_course:false});
                 // this.render()
             })
             .catch((error) => {
@@ -100,9 +131,9 @@ class student_home extends React.Component
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'enroll',course,axiosConfig)
             .then((response) => {
-
+                ToastsStore.success("Enrollment success")
                 window.location.reload();
-                // console.log("success!");
+
             })
             .catch((error) => {
                     this.setState({
@@ -117,8 +148,22 @@ class student_home extends React.Component
 
     };
 
-    handleCheckBox = () => {
-        this.updateClasses()
+    handleCheckBox(){
+
+    }
+
+    updateInputValue(e) {
+        let isChecked = e.target.checked;
+        if (isChecked) {
+            this.setState({
+                classes: this.state.classesWithFull,
+            })
+        } else{
+            this.setState({
+                classes: this.state.classesWithIncompletesOnly,
+            })
+        }
+
     }
 
 
@@ -169,15 +214,15 @@ class student_home extends React.Component
 
 
                         </Nav>
-
-                        <Nav >
-                            <label className="contain">
-                                Show Completed Labs
-                                <input type="checkbox" onClick={this.handleCheckBox}/>
-                                <span className="checkmark">
+                        <label className="contain">
+                            Show Completed Labs
+                            <input type="checkbox" onClick={() => this.handleCheckBox()} onChange={e => this.updateInputValue(e)}/>
+                            <span className="checkmark">
 
                                     </span>
-                            </label>
+                        </label>
+                        <Nav >
+
                             <OverlayTrigger
                                 overlay={
                                     <Tooltip>

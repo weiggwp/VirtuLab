@@ -21,6 +21,7 @@ public class UserCourseLabStep {
     private Step step;
 
     private int triesPerStep;
+    private int complete;
 
     public UserCourseLabStep() {
     }
@@ -61,5 +62,13 @@ public class UserCourseLabStep {
 
     public void setTriesPerStep(int triesPerStep) {
         this.triesPerStep = triesPerStep;
+    }
+
+    public int getComplete() {
+        return complete;
+    }
+
+    public void setComplete(int complete) {
+        this.complete = complete;
     }
 }

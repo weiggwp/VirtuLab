@@ -7,7 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import React from "react";
 import axios from "axios";
 import GLOBALS from "../Globals";
-import {ToastsStore} from "react-toasts";
+import {ToastsStore, ToastsContainer} from "react-toasts";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 class view_lab_course extends React.Component
@@ -24,8 +24,12 @@ class view_lab_course extends React.Component
             classes : props.classes,
             loaded: false,
             students:[],
+            ontimeStudents:[],
+            showAllStudents:true,
             due_date: "",
             redirectStat: false,
+            redirectHone:false,
+            courseID: this.props.location.state.courseID,
         }
 
     }
@@ -64,8 +68,9 @@ class view_lab_course extends React.Component
         };
         axios.post(GLOBALS.BASE_URL + 'set_date', course, axiosConfig)
             .then((response) => {
+                ToastsStore.success("New date has been set.")
                 this.setState({
-                    redirect: true
+                    redirectHome: true
                 })
 
                 this.render()
@@ -98,13 +103,17 @@ class view_lab_course extends React.Component
 
             }
         };
-
+        let date =new Date(this.props.location.state.due_date);
+        date.setHours(23)
+        date.setMinutes(59)
+        date.setSeconds(59)
         var studentList=[];
+        let ontimeStudentList=[];
         //axio sends message to backend to handle authentication
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'get_completion', course, axiosConfig)
             .then((response) => {
-
+                let count=0;
                 for (let i=0; i<response.data.length; i++){
                     let comp= "N/A";
                     if (response.data[i].completed==1){
@@ -118,11 +127,22 @@ class view_lab_course extends React.Component
                     }
                     studentList[i]={name:response.data[i].firstName+" "+response.data[i].lastName,email:response.data[i].email,
                         completed:comp};
+                    if (new Date(response.data[i].dateCompleted)<date&&response.data[i].completed==1){
+                        ontimeStudentList[count++]=studentList[i];
+                    }
+                    else{
+                        console.log("respdate is ")
+                        console.log(response.data[i].dateCompleted)
+                        console.log("duedate is ")
+                        console.log(date)
+
+                    }
                 }
-                let date =new Date(this.props.location.state.due_date);
+
                 this.setState({
                    loaded: true,
                     students:studentList,
+                    ontimeStudents:ontimeStudentList,
                     due_date: date,
                 })
 
@@ -142,16 +162,78 @@ class view_lab_course extends React.Component
             );
     }
 
-    redirectstats=()=>{
+    redirectstats(){
         this.setState({
             redirectStat: true
         })
 
     }
+    unassign(){
+
+        if (!window.confirm("Are you sure you would like to unassign this class? All data will be lost.")){
+            return null
+        }
+
+        let labs =[];
+        const lab = {
+            labID:this.props.location.state.labID
+        }
+        labs[0]=lab
+        const course= {
+            email:this.props.email,
+            course_number: this.props.location.state.courseID,
+            labs: labs
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+        var classArr=[];
+        var classArray=[];
+
+        console.log(course)
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'unassign_lab', course, axiosConfig)
+            .then((response) => {
+                //console.log("Success")
+                this.setState({redirectHome:true})
+                this.render()
+
+
+            })
+            .catch((error) => {
+
+                console.log(error)
+
+            })
+
+    }
+    updateInputValue(e){
+        let isChecked = e.target.checked;
+        if (isChecked) {
+            this.setState({showAllStudents:false})
+
+        }
+        else{
+            this.setState({showAllStudents:true})
+        }
+    }
+    handleCheckBox(){
+
+    }
 render() {
+    if (this.state.redirectHome){
+        return <Redirect exact to={{
+            pathname: '/instructor_home',
+        }}/>
 
-
+    }
     if (this.state.redirectStat) {
+
         console.log("props is ");console.log(this.props);
         console.log("props is ");console.log(this.props.labID);
         console.log("props is ");console.log(this.props.location.state.labID);
@@ -164,6 +246,7 @@ render() {
 
             },
         }}/>
+
     }
 
     if (this.state.loaded==false){
@@ -172,6 +255,12 @@ render() {
         return null;
     }
     console.log("abname is "+this.props.location.state.lab_name)
+    console.log("ontime is");
+    console.log(this.state.ontimeStudents)
+    let students = this.state.students;
+    if (!this.state.showAllStudents){
+        students=this.state.ontimeStudents
+    }
         return (
             <div>
 
@@ -190,11 +279,15 @@ render() {
                 </Navbar>
 
                 <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
-                        onClick={this.redirectstats}>
+                        onClick={() => this.redirectstats()}>
                     Statistics
                 </Button>
-
+                <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
+                        onClick={() => this.unassign()}>
+                    Unassign Lab
+                </Button>
                 <div>
+
                     <div>
                         <form onSubmit={this.handleChangeDate}>
                         <FormGroup controlId="formBasicText" bsSize="large">
@@ -209,22 +302,31 @@ render() {
                             Update Due Date
                         </Button>
                     </FormGroup>
+
                         </form>
                         <Container fluid className="noPadding">
 
                         <Row className="noMargin">
-                        <Col md={{span:3,offset:2}} >
+                            <label className="contain">
+                                Only show labs completed on time
+                                <input type="checkbox"onClick={() => this.handleCheckBox()}  onChange={e => this.updateInputValue(e)}/>
+                                <span className="checkmark">
+
+                                    </span>
+                            </label>
+                        <Col md={{span:2,offset:1}} >
+
                             <h3 className="accountH3">Name</h3>
 
                         </Col>
 
 
-                        <Col md={{span:3,offset:1}} >
+                        <Col md={{span:2,offset:1}} >
                             <h3 className="accountH3">E-mail Address</h3>
 
                         </Col>
 
-                        <Col md={{span:3,offset:0}} >
+                        <Col md={{span:2,offset:1}} >
                             <h3 className="accountH3">Submitted</h3>
 
                         </Col>
@@ -234,7 +336,7 @@ render() {
 
 
 
-                        {this.state.students.map(student=> (
+                        {students.map(student=> (
                             <div style={{
                                 textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10,
                                 borderStyle: "dashed", borderWidth: 1
@@ -273,7 +375,7 @@ render() {
 
                     </div>
                     {/*{<Expandable_Classes style={"settingsH3"}/>}*/}
-
+                    <ToastsContainer store={ToastsStore} />
 
                 </div>
 
