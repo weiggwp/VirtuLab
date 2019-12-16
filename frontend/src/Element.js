@@ -7,15 +7,14 @@ import deepCloneWithType from "./clone"
 
 export default class Element extends Equipment{
 
-    constructor(name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity)
+    constructor(name, image ,capacity, weight, state=1,size=100,chemProp=name,amount=capacity)
     {
+        // console.log("creating ", name, image ,capacity, weight, state,size,chemProp,amount);
         super(name,image,weight,"Solution",0,size);
         this.amount=amount;
         this.capacity=capacity;
-        this.image=image;
-        this.state=state;
         this.chemProp=chemProp;
-        // console.log("creating ",chemProp)
+        // this.chemProp=(chemProp!== undefined)? "chemProp":"name";
         this.state_names= ["solid", "liquid", "gas"];
 
     }
@@ -143,7 +142,7 @@ export default class Element extends Equipment{
     toString()
     {
         if(this.chemProp)
-            return this.name+" ("+this.chemProp+")"
+            return this.name+ ((this.name===this.chemProp)? "":" ("+this.chemProp+")");
 
         return this.name;
     }
