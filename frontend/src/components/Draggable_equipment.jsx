@@ -71,7 +71,7 @@ class Draggable_equipment extends React.Component {
         //pop off old equip
         const key = this.props.wkspace_id +","+this.props.equip_id;
         if(key in this.props.interaction_map){
-            console.log("eq was interacting");
+            // console.log("eq was interacting");
             this.props.popOff( this.props.wkspace_id, this.props.equip_id);
         }
 

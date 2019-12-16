@@ -17,6 +17,8 @@ class SvgComponent extends Component {
     render() {
         const size= this.equip.size;
         const viewBox= "-25 0 250 100";
+        console.log("this.equip.items",this.equip.items,"this.equip.items ===[]",this.equip.items <1);
+        const mass = (this.equip.items.length<1)? 0:this.equip.items[0].getWeight();
         return (
             <svg
                 id={this.props.id + "scale"}
@@ -151,7 +153,7 @@ class SvgComponent extends Component {
                             fontFamily="Silom"
                             fill="#0f0"
                         >
-                            {parseFloat(this.equip.value).toFixed(4).toString() + ' g'}
+                            {parseFloat(mass).toFixed(4).toString() + ' g'}
                         </tspan>
                     </text>
                     <text

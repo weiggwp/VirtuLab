@@ -126,12 +126,14 @@ class create_lab extends React.Component {
     // }
 
     popOff(workspace_id, eq_id) {
-        let old_tartget = this.interaction_map[[workspace_id + "," + eq_id]];
+        let old_tartget = this.interaction_map[workspace_id + "," + eq_id];
         if (old_tartget[0].name === "Scale") {
 
             this.state.equipments[workspace_id][old_tartget[2]].value = 0;
             this.state.equipments[workspace_id][old_tartget[2]].items = [];
+            this.state.equipments[workspace_id][old_tartget[2]].interacting = false;
 
+            delete  this.interaction_map[[workspace_id + "," + eq_id]];
             this.forceUpdate();
 
         }
@@ -143,13 +145,12 @@ class create_lab extends React.Component {
         let equip;
         var result =[];
         const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
-        const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"]
+        const glassware=['Titration Flasks','Graduated Cylinders',"Beakers","Volumetric Flasks","Pipettes"];
 
 
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-            console.log("current",current)
 
             if(solutions.includes(current.type))
             {
@@ -159,9 +160,9 @@ class create_lab extends React.Component {
                 );
                 // name, image ,capacity, weight, state=1,size=100,chemProp,amount=capacity
                 equip.setType(current.type);
-                equip.setDisabled(current.disabled)
-                equip.setLocation(current.left,current.top)
-                equip.setColor(current.color)
+                equip.setDisabled(current.disabled);
+                equip.setLocation(current.left,current.top);
+                equip.setColor(current.color);
 
 
                 result.push(equip)
@@ -169,9 +170,9 @@ class create_lab extends React.Component {
             else if(!glassware.includes(current.type))
             {
                 equip = new Tool(current.name, current.image);
-                equip.setDisabled(current.disabled)
-                equip.setLocation(current.left,current.top)
-                equip.setColor(current.color)
+                equip.setDisabled(current.disabled);
+                equip.setLocation(current.left,current.top);
+                equip.setColor(current.color);
 
 
 
@@ -183,11 +184,11 @@ class create_lab extends React.Component {
 
                 equip = new Glassware(current.name, current.image, current.capacity,
                     current.weight,current.state, current.size,current.amount);
-                equip.setItems(current.items)
+                equip.setItems(current.items);
                 equip.setDisabled(current.disabled);
                 equip.setType(current.type);
                 equip.setLocation(current.left,current.top);
-                equip.setColor(current.color)
+                equip.setColor(current.color);
 
                 result.push(equip);
 
@@ -203,6 +204,7 @@ class create_lab extends React.Component {
     }
 
     populateEquipmentSetup() {
+        let equip;
         var equipList = this.props.location.state.equipments;
         if (equipList !== undefined)//opening a previously saved lab
         {
@@ -216,14 +218,14 @@ class create_lab extends React.Component {
             const solutions = ['General', 'Acids', 'Indicators', 'Bases', 'Stock Solutions'];
             const glassware = ['Titration Flasks', 'Graduated Cylinders', "Beakers", "Volumetric Flasks", "Pipettes"];
 
-            for (var i = equipList.length - 1; i >= 0; i--) {
-                var current = equipList[i];
+            for (let i = equipList.length - 1; i >= 0; i--) {
+                const current = equipList[i];
 
                 if (solutions.includes(current.type)) {
                     if (result['Solution'][current.type] === undefined)
                         result['Solution'][current.type] = [];
 
-                    var equip = new Element(current.name, current.image, current.capacity,
+                    equip = new Element(current.name, current.image, current.capacity,
                         current.weight, current.state, current.size, current.chemProp, current.amount);
 
                     equip.setType(current.type);
@@ -231,7 +233,7 @@ class create_lab extends React.Component {
                     result['Solution'][current.type].push(equip)
 
                 } else if (!glassware.includes(current.type)) {
-                    var equip = new Tool(current.name, current.image, current.weight);
+                    equip = new Tool(current.name, current.image, current.weight);
                     equip.setType(current.type);
                     equip.setDisabled(current.disabled);
                     result['Tools'].push(equip);
@@ -239,7 +241,7 @@ class create_lab extends React.Component {
                     if (result['Glassware'][current.type] === undefined)
                         result['Glassware'][current.type] = [];
 
-                    var equip = new Glassware(current.name, current.image, current.capacity, current.weight, 1, current.size);
+                    equip = new Glassware(current.name, current.image, current.capacity, current.weight, 1, current.size);
                     equip.setDisabled(current.disabled);
                     equip.setType(current.type);
                     result['Glassware'][current.type].push(equip);
@@ -340,12 +342,11 @@ class create_lab extends React.Component {
     update=()=>
     {
         this.forceUpdate()
-    }
+    };
 
     setRestart = () => {
 
         // console.log(this.state.equipments)
-        const temp = this.state.steps;
         this.state.equipments[this.state.currentStep]=[];
         this.forceUpdate();
 
@@ -431,7 +432,6 @@ class create_lab extends React.Component {
     };
 
     toolbar() {
-        {
             return (
                 <Navbar style={{
                     backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",
@@ -502,7 +502,6 @@ class create_lab extends React.Component {
 
                 </Navbar>
             )
-        }
 
     }
 
@@ -623,6 +622,8 @@ class create_lab extends React.Component {
         const interactable = source.canInteract(target);
 
         if (interactable) {
+            // console.log("interactable",this.state.equipments);
+
             this.eq1 = source;
             this.eq2 = target;
             let actions = source.getActions(target);
@@ -635,13 +636,12 @@ class create_lab extends React.Component {
             this.target = target_ev;
             if (actions) {
                 this.setState({showPopover: true});
-                this.forceUpdate()
             } else {
                 source.interact(target);
                 target.items = [source];
-
-                this.forceUpdate()
             }
+
+            this.forceUpdate()
         }
 
 
@@ -657,9 +657,7 @@ class create_lab extends React.Component {
         // delete temp[workspace_id][eq_id];
         // console.log(temp[workspace_id][1]);
         // console.log(temp);
-
-        const removed = temp[workspace_id].splice(eq_id, 1);
-
+        temp[workspace_id].splice(eq_id, 1);
         this.setState({equipments: temp});
         // console.log(removed);
         // console.log(temp);
@@ -719,7 +717,7 @@ class create_lab extends React.Component {
         temp[step] = temp[this.state.importStep];
         this.setState(
             {equipments: temp}
-        )
+        );
         if(temp[step].length===0)
         {
             ToastsStore.warning("Imported from an empty step")
@@ -747,8 +745,12 @@ class create_lab extends React.Component {
 
 
     onHide = (source) => {
-        source.setDegree(0);
-        source.setInteracting(false);
+        const target = this.eq2;
+        // console.log(source)
+        if(! Tool.prototype.isPrototypeOf(target)){
+            source.setDegree(0);
+            source.setInteracting(false);
+        }
 
         this.setState({showPopover: false})
     };
@@ -790,7 +792,7 @@ class create_lab extends React.Component {
             <Overlay
                 show={this.state.showPopover}
                 target={this.target}
-                placement="bottom"
+                placement="right"
                 container={this.ref.current}
                 containerPadding={20}
                 rootClose={true}
@@ -917,7 +919,9 @@ class create_lab extends React.Component {
                         {this.popover()}
 
 
-                        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER}/>
+                        <ToastsContainer store={ToastsStore}
+                                         // position={ToastsContainerPosition.TOP_CENTER}
+                        />
                     </div>
                 </Tab.Pane>);
         }
@@ -1291,9 +1295,6 @@ class create_lab extends React.Component {
             this.populateSteps();
             return null;
         }
-
-        let size = this.state.steps.length - 1;
-
         return (
             <div>
 
