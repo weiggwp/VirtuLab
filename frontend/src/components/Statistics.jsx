@@ -266,7 +266,9 @@ class Statistics extends Component {
         let stepData=this.state.stepData;
 
         let stepOutput=[];
+
         if (stepData[this.state.currentStepIndex] === undefined || stepData[this.state.currentStepIndex].max===0){
+
             stepOutput = ["No students have completed this step."]
             this.state.stepData[this.state.currentStepIndex].min=0
         }
@@ -352,37 +354,6 @@ class Statistics extends Component {
 
 
 
-                        {/*<PieChart
-
-                            data={[
-                                { title: 'Completed', value: this.state.completePercentage, color: '#E38627', label: "Completed" },
-                                { title: 'Incompletes', value: this.state.incompletePercentage, color: '#C13C37', label: "Incomplete" },
-
-                            ]}
-                            label={"Percent completed"}
-                            labelStyle={{ color: 'black' }}
-                        />
-                        <PieChart
-                            data={[
-                                { title: 'Completed', value: 30, color: '#E38627' },
-                                { title: 'Incompletes', value: 25, color: '#C13C37' },
-
-
-                            ]}
-                            label={"Percent completed with no retries"}
-                            labelStyle={{ color: 'black' }}
-                        />
-                        <PieChart
-                            // data={[
-                            //     { title: 'step1', value: 20, color: '#E38627' },
-                            //     { title: 'step2', value: 25, color: '#C13C37' },
-                            //     { title: 'step3', value: 25, color: '#f3b2a3' }
-                            //
-                            // ]}
-                            data={stepData}
-                            label={"Retries per instruction"}
-                            labelStyle={{ color: 'black' }}
-                        />*/}
                         <div style={{paddingTop:20,width:"50vh",height:"60vh",backgroundColor:"lightgray"}}>
                             <b> Statistics for Step {index+1}</b>
                             {stepOutput.map(step => (
