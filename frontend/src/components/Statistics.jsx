@@ -246,8 +246,9 @@ class Statistics extends Component {
         let stepData=this.state.stepData;
 
         let stepOutput=[];
-        if (stepData[this.state.currentStepIndex].max==0){
+        if (stepData[this.state.currentStepIndex]==undefined||stepData[this.state.currentStepIndex].max==0){
             stepOutput = ["No students have completed this step."]
+            this.state.stepData[this.state.currentStepIndex].min=0
         }
         else{
             stepOutput[0]="Average number of tries: "+ this.state.stepData[this.state.currentStepIndex].avg
