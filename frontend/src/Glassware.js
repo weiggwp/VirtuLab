@@ -20,20 +20,20 @@ export default class Glassware extends Equipment{
     getAmount(){
 
 
-        let amount = 0;
-            // console.log("items:", this.items,"total amount",this.amount);
-        for (const [, item] of Object.entries(this.items)) {
-            // console.log("item:", item);
-            // out[key] = obj.output(obj.amount*percentage);
-            amount+=item.amount;
-        }
-        // console.log("amount:", amount," method over");
+        // let amount = 0;
+        //     // console.log("items:", this.items,"total amount",this.amount);
+        // for (const [, item] of Object.entries(this.items)) {
+        //     // console.log("item:", item);
+        //     // out[key] = obj.output(obj.amount*percentage);
+        //     amount+=item.amount;
+        // }
+        // // console.log("amount:", amount," method over");
 
         return this.amount;
     }
     getFillPercent(){
 
-        // console.log("getting fill percent");
+        console.log("getting fill percent");
         return this.getAmount()/this.capacity;
     }
     getWeight(){
@@ -214,7 +214,6 @@ export default class Glassware extends Equipment{
         if(target.name==="Scale")
         {
             target.value=this.getWeight();
-            // alert(this.name +" is "+ target.value +"g.");
         }
         else
         {
@@ -223,6 +222,8 @@ export default class Glassware extends Equipment{
         }
 
     }
+
+
     toString()
     {
         return this.capacity+" mL "+this.name;
