@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
 
@@ -100,6 +101,7 @@ public class LabController {
             existing.setLastModified(labDTO.getLastModified());
             existing.setSteps(steps);
             existing.setEquipments(equipments);
+            existing.setLastModified(new Date());
             labService.saveLab(existing);
 
         }
@@ -110,6 +112,7 @@ public class LabController {
             lab.setSteps(steps);
             lab.setEquipments(equipments);
             lab.setOpen(0);
+            lab.setLastModified(new Date());
             returnid = labService.createNewLab(lab);
             //  System.out.println("return id is"+returnid +" lab is " +labService.findByLabID(returnid));
             //System.out.println("return id is "+returnid);
@@ -132,7 +135,7 @@ public class LabController {
             copyVals(equipment1, dto);
             equipment1.setItems(mapEquipmentDTO(dto.getItems()));
             equipmentService.saveEquipment(equipment1);
-            System.out.println(equipment1);
+//            System.out.println(equipment1);
             equipments.add(equipment1);
         }
         return equipments;
@@ -173,7 +176,7 @@ public class LabController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/get_labs", method = RequestMethod.POST)
     public ResponseEntity getLabs(@RequestBody PageRequestDTO dto) {
-        System.out.println("LabController get_labs is called: ");
+//        System.out.println("LabController get_labs is called: ");
 
         User user = userService.findByEmail(dto.getEmail());
         if(user == null)
@@ -359,7 +362,10 @@ public class LabController {
                 CourseLab courseLab = new CourseLab();
                 courseLab.setCourse(course);
                 courseLab.setLab(lab);
-                courseLab.setDate(courseDTO.getDate());
+                System.out.println("received date was "+courseDTO.getDate().toString());
+                Date dayAfter = new Date(courseDTO.getDate().getTime() + TimeUnit.DAYS.toMillis(1));
+                System.out.println("received date was "+dayAfter);
+                courseLab.setDate(dayAfter);
 //                System.out.println(courseLab);
                 course.getCourseLabList().add(courseLab);
                 lab.getCourseLabList().add(courseLab);
@@ -561,8 +567,11 @@ public class LabController {
                     TimeZone.setDefault(TimeZone.getTimeZone("EST"));
 
 
-                    Date date2 = new Date();
-                    userCourseLab.setSubmittedDate(new Date());
+                    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("US/Eastern"));
+
+                    Date currentDate = calendar.getTime();
+                    System.out.println("date is "+currentDate.toString());
+                    userCourseLab.setSubmittedDate(currentDate);
                 }
             }
             userService.save(user);
@@ -591,5 +600,57 @@ public class LabController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/unassign_lab", method = RequestMethod.POST)
+    public ResponseEntity unassignLab(@RequestBody CourseDTO courseDTO) {
+        try {
+            System.out.println("Lab Controller: Uassign_lab operation from course");
+            System.out.println("course is " + courseDTO);
+
+            String courseCode = courseDTO.getCourseNumber();
+            long labID = courseDTO.getLabs().get(0).getLabID();
+            Optional<Course> optional = courseService.findCourseByNameOrCode(courseCode,0);
+
+            if (optional.isPresent()) {
+                Course course = optional.get();
+                long courseID=course.getCourseID();
+                System.out.println("course is "+course);
+                List<CourseLab> courseLabs = course.getCourseLabList();
+
+                for (Iterator<CourseLab> it = courseLabs.iterator(); it.hasNext();) {
+                    CourseLab courseLab = it.next();
+                    System.out.println("labid is "+courseLab.getLab().getLabID() + " courseid is "+courseLab.getCourse().getCourseID());
+                    if (courseLab.getCourse().getCourseID() == courseID &&
+                            courseLab.getLab().getLabID() == labID){
+                        System.out.println("removing");
+
+                        courseLabService.delAssociateion(courseLab.getCourseLabID());
+                        it.remove();
+                    }
+                }
+
+                for (Iterator<UserCourseLab> it = course.getUserCourseLabList().iterator(); it.hasNext();) {
+                    UserCourseLab userCourseLab = it.next();
+                    if (userCourseLab.getLab().getLabID() == labID &&
+                            userCourseLab.getCourse().getCourseID() == courseID){
+                        it.remove();
+                        userCourseLabService.delAssociateion(userCourseLab.getUserCourseLabID());
+                    }
+                }
+
+                courseService.addCourse(course);
+
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
 }

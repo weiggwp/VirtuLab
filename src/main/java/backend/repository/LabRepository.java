@@ -48,7 +48,7 @@ public interface LabRepository extends PagingAndSortingRepository<Lab, Long> {
 
     Page<Lab> findByTagsIn(List<String> list, Pageable pageable);
 
-    @Query("select lab from User p inner join p.labs lab where p = :parent")
+    @Query("select lab from User p inner join p.labs lab where p = :parent order by lab.lastModified desc")
     Page<Lab> findBy(@Param("parent") User user, Pageable pageable);
 
 

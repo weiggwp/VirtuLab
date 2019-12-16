@@ -24,7 +24,6 @@ class EquipmentInfo extends React.Component{
 
         this.state ={
 
-
         }
     }
     createTableData() {

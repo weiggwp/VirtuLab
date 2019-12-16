@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import icon from "../Images/v.jpg";
+import React from 'react';
 import '../stylesheets/banner.css';
 import '../stylesheets/student_lab.css';
-import {Button, Col, Container, FormControl, FormGroup, Image, Jumbotron, Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Col, Container, Image, Nav, Navbar, Row} from "react-bootstrap";
 import Redirect from "react-router-dom/es/Redirect";
 import {Link} from "react-router-dom";
 import {Instruction} from "./instruction";
@@ -25,12 +24,12 @@ class dolab extends React.Component {
         this.setState({
             redirectHome: true
         })
-    }
+    };
     completeLab(){
 
         const lab = {
             labID:this.props.location.state.labID,
-        }
+        };
         let labs =[];
         labs[0]=lab;
         const courselab= {
@@ -47,11 +46,10 @@ class dolab extends React.Component {
             }
         };
         axios.post(GLOBALS.BASE_URL + 'set_completion', courselab, axiosConfig)
-            .then((response) => {
+            .then(() => {
 
             })
-            .catch((error) => {
-                    alert("doot" + error)
+            .catch(() => {
 
                 }
             );
@@ -60,7 +58,7 @@ class dolab extends React.Component {
         this.setState({
             restart: true
         })
-    }
+    };
     renderRedirect = () => {
         if (this.state.redirectHome) {
             return <Redirect to='/student_home' />
@@ -76,7 +74,7 @@ class dolab extends React.Component {
         // {
         //     return <Redirect to='/do_lab' />
         // }
-    }
+    };
 
     banner() {
         return (
@@ -84,14 +82,6 @@ class dolab extends React.Component {
       )
 
     }
-    tab()
-    {
-        return(
-            <label className="tab"  >Lab workspace</label>
-        )
-
-    }
-
     toolbar()
     {
         return (
@@ -115,7 +105,7 @@ class dolab extends React.Component {
     }
     render(){
         this.renderRedirect();
-        this.completeLab()
+        this.completeLab();
         return(
             <div >
 

@@ -63,15 +63,27 @@ export class Scale extends Tool{
         this.value = 0;
         this.capacity = 3000;
         this.type = name;
+        this.offset =0;
     }
     zero(){
+        this.offset +=this.value;
         this.value=0;
     }
     toStateString()
     {
         return " "
     }
-
+    setValue(v){
+        this.value = v;
+    }
+    removeItems(){
+        this.items=[];
+        this.offset=this.value=0;
+    }
+    add_item(item) {
+        this.value = item.getWeight();
+        super.add_item(item);
+    }
 
 
 }

@@ -140,6 +140,7 @@ export class assign_lab extends Component {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'add_lab_class', course, axiosConfig)
             .then((response) => {
+                ToastsStore.success("Lab is assigned to class")
                 this.setState({
                     redirect: true
                 })
@@ -261,6 +262,7 @@ export class assign_lab extends Component {
                         </div>
 
                     </div>
+                    <ToastsContainer store={ToastsStore} />
 
 
                 </div>

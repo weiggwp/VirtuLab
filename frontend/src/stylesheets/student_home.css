@@ -145,3 +145,15 @@
     margin-right: -15px;
 
 }
+.labs
+{
+    color:black;
+    /*font-family:monospace, serif;*/
+    background-color: #c7cfc0;
+    border-color: #c9c0b5;
+}
+.labs:hover,.labs:active
+{
+    background-color: #8d9a9c;
+    border-color: #c9c0b5;
+}

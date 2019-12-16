@@ -122,6 +122,13 @@ class EquipmentList extends React.Component
 
     }
 
+    taggle(index){
+        const id = "moreIcon"+index;
+        let element = document.getElementById(id);
+        console.log(id,element);
+        if(element)
+        element.classList.toggle("rotate");
+    }
     createCollapsible(eventIndex, type, equipments) {
         if(this.props.step===0){
 
@@ -157,11 +164,14 @@ class EquipmentList extends React.Component
                 return (
                     <div style={{width: "100%"}}>
 
-                        <Accordion.Toggle className={"row1 equipmentCollapsible1"} as={Card.Header} eventKey={eventIndex}>
+                        <Accordion.Toggle className={"row1 equipmentCollapsible1"}
+                                          as={Card.Header} eventKey={eventIndex}
+                                          onClick={()=>this.taggle(eventIndex)}>
 
 
                             <div className={"column1"}>{type}</div>
-                            <img className={"column2"} src={more} alt={"404"}/>
+                            <img id={"moreIcon"+eventIndex}
+                                     className={"column2"} src={more} alt={"404"}/>
 
                         </Accordion.Toggle>
 
@@ -184,6 +194,9 @@ class EquipmentList extends React.Component
     {
         for (var i = 0; i < equipments.length; i++)
         {
+
+           // console.log(equipments[i])
+
             if(!equipments[i].disabled)
                 return false;
             //if there's at least an element not disabled

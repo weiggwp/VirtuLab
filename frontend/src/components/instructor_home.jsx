@@ -29,6 +29,7 @@ class instructor_home extends React.Component {
             loading_course:true,
             classes:[],
         };
+        this.update=this.update.bind(this);
     }
 
     setRedirectAcct = () => {
@@ -46,6 +47,12 @@ class instructor_home extends React.Component {
             return <Redirect to='/account_settings'/>
         }
 
+    };
+
+    update=()=>
+    {
+        this.updateClasses()
+        this.forceUpdate()
     };
 
     updateClasses(){
@@ -150,7 +157,7 @@ class instructor_home extends React.Component {
                                 </Nav>
                             </Navbar>
                         </div>
-                        {<Expandable_Classes style={"settingsH3"} classes={this.state.classes} role={this.props.role}/>}
+                        {<Expandable_Classes style={"settingsH3"} update={this.update} classes={this.state.classes} role={this.props.role}/>}
 
 
                     </div>

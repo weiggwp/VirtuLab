@@ -3,3 +3,20 @@
     margin-left:50px;
     margin-right:50px;
 }
+.updateButton
+{
+    background-color: orange;
+    color: white;
+
+}
+.updateButton:hover
+{
+    background-color: #57d191;
+}
+
+.statToggle
+{
+    background-color: #236090;
+    margin-left:10px;
+    min-width:175px;
+}

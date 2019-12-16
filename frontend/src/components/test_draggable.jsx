@@ -18,8 +18,6 @@ class test_draggable extends React.Component{
     onStop = (event) => {
         event.preventDefault()
         // event.target.style.opacity="0.6";
-        console.log("stopping")
-        console.log(event.target===this.object);
         this.object.style.opacity="1";
         this.object.style.border="0px";
         this.object.style.cursor="default";
@@ -63,8 +61,6 @@ class test_draggable extends React.Component{
 
         if(ui.node!==e.target)
         {
-            console.log(ui.node);
-            console.log(e.target);
         }
 
 
@@ -115,7 +111,6 @@ class test_draggable extends React.Component{
         event.target.style.opacity="0.5";
         event.target.classname="pop";
 
-        console.log("start dragging"+event.target)
         this.object = event.target;
         this.object.style.zIndex=2;
         //setting z index
@@ -134,7 +129,6 @@ class test_draggable extends React.Component{
     }
     onDragOver=(event)=>{
 
-        alert("dragging over")
     }
 
 //                defaultPosition={{x:this.props.x,y:this.props.y}}>

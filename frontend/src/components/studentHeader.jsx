@@ -34,6 +34,36 @@ class StudentHeader extends React.Component {
 
     };
 
+    setRedirectCourse = () => {
+        this.setState({
+            redirectCourse: true
+        })
+    }
+    renderRedirectCourse = () => {
+        if (this.state.redirectCourse) {
+            return <Redirect to='/instructor_home' />
+        }
+    }
+    renderCourseButton =(currentTab) =>{
+        if( currentTab==="Courses") {
+            return (
+
+                <Button onClick={this.setRedirectCourse} >
+                    Courses
+                </Button>
+
+            );
+        }
+        else{
+            return (
+
+                <Button onClick={this.setRedirectCourse} className="lowlight" >
+                    Courses
+                </Button>
+            )
+        }
+    };
+
 
     renderLogoutButton()
     {
@@ -59,10 +89,9 @@ class StudentHeader extends React.Component {
                 <img src={icon} alt="icon" width="30px" height="30px"/>
                 <i >VirtuLab</i>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {/*{this.renderRedirectCourse()}*/}
+                {this.renderRedirectCourse()}
                 {/*{this.renderCourseButton(this.props.currentTab)}*/}
-                {/*<label onClick={this.setRedirectCourse} className="highlight">*/}
-                {/*    Courses</label>*/}
+
                 &nbsp;&nbsp;&nbsp;
                 {/*&nbsp;&nbsp;&nbsp;&nbsp;*/}
                 {/*{this.renderRedirectLab()}*/}

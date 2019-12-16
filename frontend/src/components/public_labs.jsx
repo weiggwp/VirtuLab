@@ -104,7 +104,6 @@ handlePage(event) {
         currentPage: Number(event.target.id)
     })
 
-    alert(event.target.id)
     let pageNum = event.target.id
     let pagingReq = {
         pageNum: pageNum,
@@ -243,7 +242,11 @@ handleFieldChange = (e, field) => {
           //  alert("data is "+JSON.stringify(response))
             if (response.data.length==0){
                 this.state.notFound="No matching labs found.";
-                this.setState({labs:labArray,loading_labs:false});
+                this.setState({labs:labArray,loading_labs:false,
+                            totalPages: 0,
+                            currentPage: 1
+                });
+                this.handlePageFrontend(1)
                 return
             }
             this.state.notFound="";
@@ -261,6 +264,7 @@ handleFieldChange = (e, field) => {
                         loading_labs:false,
                         totalPages: totalPages,
                         currentPage: 1});
+            this.handlePageFrontend(1)
 
         })
         .catch((error) => {
@@ -334,8 +338,9 @@ handleFieldChange = (e, field) => {
         // 'aws_website:8080/userPost'
         axios.post(GLOBALS.BASE_URL + 'clone_lab', labpub, axiosConfig)
             .then((response) => {
-                this.render();
-                window.location.reload()
+                ToastsStore.success("Cloning is done. Check your private Labs")
+                // this.render();
+                // window.location.reload()
 
             })
             .catch((error) => {

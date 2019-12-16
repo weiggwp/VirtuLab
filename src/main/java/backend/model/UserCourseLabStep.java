@@ -10,6 +10,8 @@ public class UserCourseLabStep {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userCourseLabStepID;
 
+
+
     @ManyToOne
     @JoinColumn(name = "userCourseLabID")
     private UserCourseLab userCourseLab;
@@ -19,6 +21,7 @@ public class UserCourseLabStep {
     private Step step;
 
     private int triesPerStep;
+    private int complete;
 
     public UserCourseLabStep() {
     }
@@ -59,5 +62,13 @@ public class UserCourseLabStep {
 
     public void setTriesPerStep(int triesPerStep) {
         this.triesPerStep = triesPerStep;
+    }
+
+    public int getComplete() {
+        return complete;
+    }
+
+    public void setComplete(int complete) {
+        this.complete = complete;
     }
 }

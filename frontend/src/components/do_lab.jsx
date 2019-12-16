@@ -123,35 +123,6 @@ class DoLab extends React.Component {
     /* */
 
 
-    /* function call to verify if current step is correct */
-    verifyStep(studentEquips, stepEquips) {
-        let m = stepEquips.length;
-        let n = studentEquips.length;
-
-        let arr = []
-        for (let i = 0; i < m; i ++) {
-            arr.push(false)
-        }
-
-        for (let i = 0; i < m; i ++) {
-            let equip1 = stepEquips[i]
-            for (let j = 0; j < n; j ++) {
-                let equip2 = studentEquips[j]
-                /* check for same type equipment and same volume, amount */
-                if (equip1.name === equip2.name &&
-                    equip1.amount === equip2.amount) {
-                    arr[i] = true
-                }
-            }
-        }
-
-        let res = true
-        for (let i = 0; i < arr.length; i ++) {
-            res &= arr[i];
-        }
-        return res;
-
-    }
 
     /* function call to filter the equipments selected with 0, 0... they should not be on workspace */
     filerInitalEquips(equips){
@@ -203,7 +174,8 @@ class DoLab extends React.Component {
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-
+            // console.log("current is");
+            // console.log(current)
 
 
             if(solutions.includes(current.type))
@@ -327,13 +299,18 @@ class DoLab extends React.Component {
 
             //get steps from prop
             var step_list = this.props.location.state.steps;
+            // console.log("steplist is");
+            // console.log(step_list)
             step_list.sort(this.compare)
+            // console.log("steplist is");
+            // console.log(step_list)
             //opening a previously saved lab
             if (step_list !== undefined)
             {
                 for (var i = 1; i <step_list.length ; i++) {
                     this.state.steps.push(step_list[i]);
-
+                    // console.log("pushed");
+                    // console.log(step_list[i])
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i-1].equipments);
 
 
@@ -383,7 +360,9 @@ class DoLab extends React.Component {
 
     }
     setRedirectHome = () => {
-        if ((!!this.state.completed)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
+        // console.log("props is ");
+        // console.log(this.props)
+        if ((!this.state.completed)&&!(this.props.location.state.isComplete)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
             return null;
         }
         this.setState({
@@ -460,16 +439,14 @@ class DoLab extends React.Component {
     toolbar()
     {
         {
+            // console.log("props is ");
+            // console.log(this.props.location.state.lab_name)
             return (
-                <Navbar style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
+                <Navbar style={{backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
                     <Nav>
-                        <EditableLabel labelClass="lab_title_label" inputClass="lab_title_input"
-                                       initialValue={this.state.lab_title}
-                                       save={value => {
-                                           this.setState({lab_title:value});}
-                                       }
-                        />
+                        <font color = "white">{this.props.location.state.lab_name}</font>
+
                     </Nav>
 
                     <Nav>
@@ -800,7 +777,7 @@ class DoLab extends React.Component {
                 container={this.ref.current}
                 containerPadding={20}
                 rootClose={true}
-                onHide={() => this.onHide(source)}
+                //onHide={() => this.onHide(source)}
                 style={{width:900}}
             >
                 <Popover id="popover-contained" >
@@ -916,6 +893,16 @@ class DoLab extends React.Component {
 
     };
 
+
+
+
+    createNewEquipment(equipment)
+    {
+        return deepCloneWithType(equipment);
+    }
+
+
+
     handleAddEquipment= (step,equipment) =>
     {
         if(step===0)
@@ -940,7 +927,7 @@ class DoLab extends React.Component {
         }
         else
         {
-            current[step].push(equipment);
+            current[step].push(this.createNewEquipment(equipment));
             //            <Draggable_equipment image={image} x={500} y={100} width={this.state.equipments.length*100} height={this.state.equipments.length*100}/>
 
             this.setState(
@@ -981,7 +968,7 @@ class DoLab extends React.Component {
 
 
     arraysEqual(arr1,arr2){
-         if (arr1.length!=arr2.length)return false;
+        if (arr1.length!=arr2.length)return false;
 
 
 
@@ -991,20 +978,20 @@ class DoLab extends React.Component {
         }
 
 
-         for (let i=0; i<arr1.length; i++){
-             let item1 = arr1[i]
-             for (let j=0; j<arr1.length; j++) {
-                 let item2 = arr2[j]
-                 if (item1.name == item2.name && item1.weight == item2.weight && this.verifyAmounts(item1,item2)) {
-                     arr[i]=true;
-                 }
-             }
-         }
+        for (let i=0; i<arr1.length; i++){
+            let item1 = arr1[i]
+            for (let j=0; j<arr1.length; j++) {
+                let item2 = arr2[j]
+                if (item1.name == item2.name && item1.weight == item2.weight && this.verifyAmounts(item1,item2)) {
+                    arr[i]=true;
+                }
+            }
+        }
 
 
         let res = true
         for (let i = 0; i < arr.length; i ++) {
-            console.log("first arr is "+arr[i])
+            // console.log("first arr is "+arr[i])
             res &= arr[i];
         }
 
@@ -1015,16 +1002,18 @@ class DoLab extends React.Component {
     }
 
     verifyAmounts(eq1, eq2){
-         let grace = Math.min(eq2.capacity/10,5);
-         console.log("comparing")
-         console.log(eq1)
-         console.log(eq2)
-         return Math.abs(eq1.amount-eq2.amount)<grace;
+        let grace = Math.min(eq2.capacity/10,5);
+        // console.log("comparing")
+        // console.log(eq1)
+        // console.log(eq2)
+        return Math.abs(eq1.amount-eq2.amount)<grace;
     }
 
     verifyStep( stepEquips,studentEquips) {
         let m = stepEquips.length;
         let n = studentEquips.length;
+        console.log("step equip is ");console.log((stepEquips))
+        console.log("verifying step, studentEquips = ");console.log((studentEquips));
 
         const solutions=['General','Acids','Indicators','Bases','Stock Solutions'];
 
@@ -1044,7 +1033,7 @@ class DoLab extends React.Component {
                 if (equip1.name === equip2.name &&
                     this.verifyAmounts(equip1,equip2)
                     &&equip1.capacity==equip2.capacity
-                &&this.arraysEqual(equip1.items,equip2.items)&&unused[j]) {
+                    &&this.arraysEqual(equip1.items,equip2.items)&&unused[j]) {
                     arr[i] = true
                     unused[j]=false;
                     break;
@@ -1054,14 +1043,17 @@ class DoLab extends React.Component {
                     unused[j]=false;
                     break;
                 }
-             /*   else if (equip1.items!=equip2.items){
-                }*/
+                /*   else if (equip1.items!=equip2.items){
+                       console.log("First items: ");console.log(equip1.items);
+                       console.log("second items: ");console.log(equip2.items);
+                   }*/
 
             }
         }
 
         let res = true
         for (let i = 0; i < arr.length; i ++) {
+            console.log("first arr is "+arr[i])
             res &= arr[i];
         }
 
@@ -1070,7 +1062,47 @@ class DoLab extends React.Component {
     }
 
 
+    sendFailedStep(){
+         if (this.props.isComplete)return
+        let labs =[];
+        const lab = {
+            labID:this.props.location.state.labID
+        }
+        labs[0]=lab
+        console.log("course id is "+this.props.location.state.courseID)
+        console.log(this.state)
+        const course= {
+            email:this.props.email,
+            courseCode: this.props.location.state.courseID,
+            labID:this.props.location.state.labID,
+            stepID:this.state.steps[this.state.completedSteps].stepID,
+        };
+        console.log("curr stpe is ");console.log(this.state.steps);
+        console.log("Steps completed is "+this.state.completedSteps)
+        console.log("course is ");
+        console.log(course)
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+
+        var studentList=[];
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'set_tries', course, axiosConfig)
+            .then((response) => {
+
+            })
+            .catch((error) => {
+
+            });
+
+    }
     completeStep  = (step_id) => {{
+        this.sendFailedStep()
         let currentStep = this.state.completedSteps;
         
         if (this.state.equipments[0]==null){
@@ -1082,6 +1114,7 @@ class DoLab extends React.Component {
         }
         if (!this.verifyStep(this.state.steps[currentStep].equipments,this.state.equipments[currentStep+1])){
             ToastsStore.error("Step failed. Try again.")
+            this.sendFailedStep();
             return null;
         }
         if (currentStep+2>this.state.steps.length){
@@ -1274,16 +1307,15 @@ class DoLab extends React.Component {
         let x=this.state.completedSteps+1
         let container= <Tab.Container id="steps" activeKey={x}>
             <Row>
-                <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
-                    {/*{this.slides()}*/}
+                <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
+                {/*{this.slides()}*/}
                     {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
                     {this.state.slide}
                 </Col>
-                <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#50c8cf"}}  lg={{span:3}} >
+                <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                     {this.instructionPane()}
                 </Col>
-
-                <Col lg={{span:7}} className="darkerBack"  >
+                <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                     {this.workspacePane()}
 
 
@@ -1309,7 +1341,7 @@ class DoLab extends React.Component {
 
             let container= <Tab.Container id="steps" defaultActiveKey={x}>
                 <Row>
-                    <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#65bc93"}}  lg={{span:1}} className={"darkerBack"}>
+                    <Col style={{marginLeft:"4%",justifyContent:'center',alignItems:"center",height: '80vh',overflowY:"scroll",backgroundColor:"#136389"}}  lg={{span:1}} >
                         {/*{this.slides()}*/}
                         {/*<Slides slide_num={this.state.steps.length} addChild={this.handleAddChild}/>*/}
                         {this.state.slide}
@@ -1317,7 +1349,6 @@ class DoLab extends React.Component {
                     <Col style={{justifyContent:'center',alignItems:"center",height: '80vh',backgroundColor:"#388a9c"}}  lg={{span:3}} >
                         {this.instructionPane()}
                     </Col>
-
                     <Col lg={{span:7}} style={{backgroundColor:"#67a8a1"}} >
                         {this.workspacePane()}
 

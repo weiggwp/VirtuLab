@@ -9,6 +9,8 @@ import {Button} from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import Redirect from "react-router-dom/es/Redirect";
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 const imagesPath = {
     minus: "https://www.materialui.co/materialIcons/navigation/expand_more_black_192x192.png",
@@ -51,7 +53,6 @@ class Instructor_Course extends React.Component {
             due_date:date,
             courseID:courseID
         }
-        console.log(this.redirect)
         this.setState(
             {
                 redirectRoster:true
@@ -68,12 +69,52 @@ class Instructor_Course extends React.Component {
             due_date:date,
             courseID:courseID
         }
-        console.log(this.redirect)
         this.setState(
             {
                 redirectStat:true
             }
         )
+
+    }
+    unassign=(labID,date,courseID)=>
+    {
+
+        if (!window.confirm("Are you sure you would like to unassign this class? All data will be lost.")){
+            return null
+        }
+
+        let labs =[];
+        const lab = {
+            labID:labID
+        }
+        labs[0]=lab
+        const course= {
+            email:this.props.email,
+            course_number: courseID,
+            labs: labs
+        };
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+
+            }
+        };
+
+        //axio sends message to backend to handle authentication
+        // 'aws_website:8080/userPost'
+        axios.post(GLOBALS.BASE_URL + 'unassign_lab', course, axiosConfig)
+            .then((response) => {
+                //console.log("Success")
+                this.props.update()
+
+
+            })
+            .catch((error) => {
+
+                console.log(error)
+
+            })
 
     }
 
@@ -92,7 +133,14 @@ class Instructor_Course extends React.Component {
         }
 
         if (this.state.redirectStat) {
-            return <Redirect exact to='/statistics' />
+            return <Redirect exact to={{
+                pathname: '/statistics',
+                state: {
+                    labID: this.redirect.labID,
+                    due_date:this.redirect.due_date,
+                    courseID: this.redirect.courseID,
+                },
+            }}/>;
         }
         // console.log(this.props.class);
         // console.log("props is "+JSON.stringify(this.props.class))
@@ -147,7 +195,7 @@ class Instructor_Course extends React.Component {
                                                    onClick={()=>this.redirectToStat(classItem.labID,classItem.date,this.props.courseID)}
                                                    eventKey="2">View statistics</Dropdown.Item>
                                     <Dropdown.Item class={"dropdown-item"}
-                                                   onClick={()=>this.redirectToStat(classItem.labID,classItem.date,this.props.courseID)}
+                                                   onClick={()=>this.unassign(classItem.labID,classItem.date,this.props.courseID)}
                                                    eventKey="3">Unassign</Dropdown.Item>
 
 

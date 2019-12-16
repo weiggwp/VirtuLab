@@ -51,24 +51,33 @@ class Lab extends React.Component
             this.setState({renderLab: false})
             return null;
         } else if (this.state.renderStudent) {
+            // console.log("complete is "+this.props.complete)
+            // console.log("steps are ")
+            // console.log(this.props.steps,)
             return <Redirect exact to={{
                 pathname: '/do_lab',
+
                 state: {
                     labID: this.props.labID,
+                    lab_name:this.props.lab_name,
                     due_date:this.props.due_date,
                     courseID: this.props.courseID,
                     steps:this.props.steps,
                     equipments:this.props.equipments,
+                    isComplete:this.props.complete,
                 },
             }}/>
         } else if (this.state.renderInstructor) {
             //  alert("classes are " +this.props.courseID)
+            // console.log("labname is "+this.props.lab_name);
             return <Redirect exact to={{
                 pathname: '/view_lab_course',
                 state: {
                     labID: this.props.labID,
                     due_date:this.props.due_date,
+                    lab_name:this.props.lab_name,
                     courseID: this.props.courseID,
+
                 },
             }}/>;
 
@@ -80,7 +89,9 @@ class Lab extends React.Component
         }
         else {
             // console.log("date is " +this.props.due_date)
-            date =   this.props.due_date.substring(0,10)
+            let realDate=new Date(this.props.due_date)
+          //  realDate.setDate(realDate.getDate()-1);
+            date =   realDate.toString().substring(0,10)
         }
         let isComplete='incomplete'
         if (this.props.complete){

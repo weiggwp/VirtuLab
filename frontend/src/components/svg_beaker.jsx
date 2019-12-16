@@ -11,7 +11,7 @@ const SvgComponent =
 
          degree = equip.rotate,
 
-         viewBox="5 0 40 50",
+         viewBox="3 0 40 50",
          size = 100,
 
          y_top = 15.5,
@@ -150,6 +150,6 @@ const SvgComponent =
                 </g>
             </g>
         </svg>
-    )
+    );
 
 export default SvgComponent

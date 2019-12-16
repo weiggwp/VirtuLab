@@ -6,6 +6,7 @@ import axios from 'axios';
 import '../stylesheets/banner.css';
 import '../stylesheets/signup.css';
 import GLOBALS from '../Globals';
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 // const GLOBAL = require('../Globals');
 
@@ -78,9 +79,10 @@ class signup extends Component {
         axios.post(GLOBALS.BASE_URL + 'signup', user, axiosConfig).then(
             (response) => {
                 // console.log(response);
-                // alert("Signed up successfully");
+                ToastsStore.success("signed up successfully")
                 //console.log(response);
                 this.setState({ redirect: true });
+
             },
             (error) => {
                 this.setState({

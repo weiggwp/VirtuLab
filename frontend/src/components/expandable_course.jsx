@@ -63,6 +63,7 @@ class Expandable_Classes extends React.Component
                 <Instructor_Course style={this.props.style}
                         role={this.props.role}
                         courseID={classItem.accessCode} class={classItem}
+                                   update={this.props.update}
                         icount={this.getCount()} fcount={this.addAndGetCount()}/>
             )
 
