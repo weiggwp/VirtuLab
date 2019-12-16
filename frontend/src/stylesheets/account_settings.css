@@ -44,10 +44,13 @@
 }
 .dropButton
 {
-    background-color:white;
-    color:royalblue;
     border-style:none;
-    font-size:6px;
+    font-size:10px;
+    border-radius: 3px;
+}
+.dropButton:hover
+{
+    color:black;
 }
 .centered
 {
@@ -63,8 +66,9 @@
     font-family:arial regular;
     font-size:16px;
     background-color: #84aac2;
+    border-width:1px;
+    border-style:dashed;
 
-    margin: auto;
     padding: 10px;
 }
 
@@ -72,6 +76,16 @@
 {
     background-color: #c3b0d6;
 
+}
+.back
+{
+    background-color: #b8d1c9;
+    padding-bottom:20px;
+}
+
+
+* {
+    user-select:none;
 }
 
 

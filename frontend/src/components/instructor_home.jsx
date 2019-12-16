@@ -82,6 +82,7 @@ class instructor_home extends React.Component {
 
                 //    console.log("class array[i] is " +classArray[i].classname+ " id is " + classArray[i].accessCode)
                 }
+                console.log("classes",classArray)
                 this.setState({classes:classArray,loading_course:false});
             })
             .catch((error) => {
@@ -149,7 +150,7 @@ class instructor_home extends React.Component {
                                 </Nav>
                             </Navbar>
                         </div>
-                        {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}role={this.props.role}/>}
+                        {<Expandable_Classes style={"settingsH3"} classes={this.state.classes} role={this.props.role}/>}
 
 
                     </div>

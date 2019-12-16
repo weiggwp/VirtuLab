@@ -192,7 +192,7 @@ class student_home extends React.Component
                     </Navbar>
                 </div>
 
-                {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
+                {<Expandable_Classes style={"settingsH3"}classes={this.state.classes} role={this.props.role}/>}
                { <add_course />}
 
             </div>

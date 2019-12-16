@@ -149,6 +149,7 @@ class view_lab_course extends React.Component
 
     }
 render() {
+        console.log("current due ",this.props.due_date)
 
 
     if (this.state.redirectStat) {

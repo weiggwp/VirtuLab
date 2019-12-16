@@ -64,8 +64,6 @@ class Droppable_course extends React.Component
     {
         let style = this.props.style;
         let classes = this.props.classes;
-        console.log("classes is " + JSON.stringify(classes));
-        console.log("classes is " +classes+",len is "+classes.length);
 
             return (
 
@@ -81,8 +79,8 @@ class Droppable_course extends React.Component
                             <Col md={{span: 1, offset: 0}}>
                                 <Form inline onSubmit={this.handleDropCourse.bind(null, {id: classItem.classID})}>
 
-                                    <button className={"dropButton"} block bsSize="small" type="submit">
-                                        Drop Class
+                                    <button className={"dropButton"}  type="submit">
+                                        Drop
                                     </button>
                                 </Form>
 

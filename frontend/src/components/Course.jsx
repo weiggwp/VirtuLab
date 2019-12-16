@@ -16,22 +16,22 @@ class Course extends React.Component {
 
     constructor(props) {
         super(props);
-        this.states = {
+        this.state = {
             open : false
         }
 
     }
     clicked()
     {
-        this.states.open = this.states.open === false;
+        this.state.open = this.state.open === false;
         // console.log("clicked");
     }
     toggleImage = () => {
-        let x = !(this.states.open);
-        this.setState({open: !this.states.open});
+        let x = !(this.state.open);
+        this.setState({open: !this.state.open});
         // console.log(this.states.open);
     };
-    getImageName = () => this.states.open ? 'plus' : 'minus';
+    getImageName = () => this.state.open ? 'plus' : 'minus';
 
 
     render()
@@ -40,9 +40,9 @@ class Course extends React.Component {
         // console.log("props is "+JSON.stringify(this.props.class))
         const imageName = this.getImageName();
         return(
-            <Card style={{borderWidth:2,borderColor:"black"}} >
+            <Card style={{borderWidth:2}} >
                 <Accordion.Toggle as={Card.Header} onClick={this.toggleImage}
-                                  eventKey={this.props.icount} style={{backgroundColor:"#DDB57E"}}>
+                                  eventKey={this.props.icount} style={{backgroundColor:"#9fbcc2"}}>
                     <Navbar  className={"justify-content-between"}>
                         <Nav >
 
@@ -74,36 +74,6 @@ class Course extends React.Component {
 
 
                         ))}
-
-
-
-
-                        {/*import React from 'react';*/}
-
-                        {/*class Course {*/}
-                        {/*    constructor(id, name, semester, instructor, labs, students) {*/}
-                        {/*        this.id = id;*/}
-                        {/*        this.name = name;*/}
-                        {/*        this.semester =  semester;*/}
-                        {/*        this.instructor = instructor;*/}
-                        {/*        this.labs = labs;*/}
-                        {/*        this.students = students;*/}
-
-                        {/*    }*/}
-                        {/*    add_lab(lab){*/}
-                        {/*        this.labs.append(lab);*/}
-                        {/*    }*/}
-
-                        {/*}*/}
-
-                        {/*class Course_component extends React.Component{*/}
-                        {/*    constructor(props){*/}
-                        {/*        super(props);*/}
-                        {/*        this.state = {*/}
-                        {/*            course: new Course(props.id,props.name, props.semester, props.instructor, props.labs, props.students),*/}
-                        {/*        }*/}
-                        {/*    }*/}
-                        {/*}*/}
 
 
 

@@ -6,6 +6,8 @@ import Card from "react-bootstrap/Card";
 import {Course} from './Course.jsx'
 import axios from "axios";
 import GLOBALS from "../Globals";
+import {Instructor_Course} from "./Instructor_Course";
+import '../stylesheets/Courses.css';
 
 const expand_icons = {
     less: "https://www.materialui.co/materialIcons/navigation/expand_less_black_192x192.png",
@@ -45,6 +47,28 @@ class Expandable_Classes extends React.Component
         this.state.count = 0;
     }
 
+    getTabType(classItem)
+    {
+        if(this.props.role==="student")
+        {
+            return(
+                <Course style={this.props.style}
+                        role={this.props.role}
+                        courseID={classItem.accessCode} class={classItem}
+                        icount={this.getCount()} fcount={this.addAndGetCount()}/>
+            )
+        }
+        else {
+            return(
+                <Instructor_Course style={this.props.style}
+                        role={this.props.role}
+                        courseID={classItem.accessCode} class={classItem}
+                        icount={this.getCount()} fcount={this.addAndGetCount()}/>
+            )
+
+        }
+    }
+
     render()
     {
 
@@ -56,14 +80,9 @@ class Expandable_Classes extends React.Component
 
             return(
                 <div>
-                    <Accordion className={"box border"}>
+                    <Accordion className={"box"}>
                         {classes.map(classItem => (
-                            <Course style={this.props.style}
-                                   role={this.props.role}
-                                    courseID={classItem.accessCode} class={classItem}
-                                    icount={this.getCount()} fcount={this.addAndGetCount()}/>
-
-
+                            this.getTabType(classItem)
 
 
                                     ))}

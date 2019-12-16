@@ -17,3 +17,8 @@
     display:inline-block;
 
 }
+
+
+* {
+    user-select:none;
+}

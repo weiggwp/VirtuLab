@@ -148,7 +148,7 @@ export class account_settings extends Component {
                 <div>
                     <InstructorHeader currentTab="Account"/>
 
-                    <div className={"lightblue centered"}>
+                    <div className={"back centered"}>
 
                     <Container fluid className="noPadding">
                         <Row className="noMargin">

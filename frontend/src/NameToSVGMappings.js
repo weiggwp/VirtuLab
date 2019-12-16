@@ -37,7 +37,6 @@ export default function GetSVG(props) {
     {
 
         const notDefined = props.equip.chemProp===undefined||props.equip.chemProp===null;
-        console.log("mapping ",props.equip,notDefined)
         var variable = notDefined?"Water":props.equip.chemProp;
     }
     else
