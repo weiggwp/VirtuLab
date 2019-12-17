@@ -21,7 +21,7 @@ class signup extends Component {
             email_address: '',
             password: '',
             confirm_password: '',
-            formErrors: {email: '', password: '', confirm_password:''},
+            formErrors: {email: '', password: '', confirm_password:'',existed:''},
             emailValid: false,
             passwordValid: false,
             password2Valid: false,
@@ -83,6 +83,9 @@ class signup extends Component {
     handleSignUp = (e) => {
         e.preventDefault();
 
+        const passwordBox = document.getElementById("passwordBox");
+        const password2Box = document.getElementById("password2Box");
+        console.log(passwordBox);
         if (this.state.password !== this.state.confirm_password) {
             this.setState({
                 errors: 'Error: Passwords do not match.',
@@ -90,16 +93,22 @@ class signup extends Component {
                 password: '',
                 confirm_password: ''
             });
+            passwordBox.value="";
+            password2Box.value="";
+
             return;
         }
-        if (this.state.password.length <= 3) {
+        if (this.state.password.length < 6) {
             //console.log("pass is "+this.state.password)
             this.setState({
-                errors: 'Error: Password must be at least 4 characters.',
+                errors: 'Error: Password must be at least 6 characters.',
                 username: '',
                 password: '',
                 confirm_password: ''
             });
+            passwordBox.value="";
+            password2Box.value="";
+
             return;
         }
         const user = {
@@ -131,12 +140,17 @@ class signup extends Component {
                 this.setState({redirect: true});
             },
             (error) => {
+                let formerr = this.state.formErrors;
+                formerr.existed= "There is already an account registered with that e-mail address.";
                 this.setState({
-
+                    formErrors:formerr,
                     errors: "There is already an account registered with that e-mail address.",
                     username: '',
                     password: ''
                 });
+
+                passwordBox.value="";
+                password2Box.value="";
             }
         );
     };
@@ -191,7 +205,7 @@ class signup extends Component {
                         </Row>
                         <Row>
                             <Col md={{span: 5, offset: 0}}>
-                                <FormGroup controlId="formBasicText" bsSize="large">
+                                <FormGroup controlId="formBasicText" >
                                     <FormControl
                                         autoFocus
                                         type="text"
@@ -202,7 +216,7 @@ class signup extends Component {
                                 </FormGroup>
                             </Col>
                             <Col md={{span: 5, offset: 0}}>
-                                <FormGroup controlId="formBasicText" bsSize="large">
+                                <FormGroup controlId="formBasicText" >
                                     <FormControl
                                         onChange={(e) => this.handleFieldChange(e, 'last_name')}
                                         type="text"
@@ -222,8 +236,9 @@ class signup extends Component {
 
                         <Row>
                             <Col md={{span: 10, offset: 0}}>
-                                <FormGroup controlId="formBasicText" bsSize="large">
+                                <FormGroup controlId="formBasicText" >
                                     <FormControl
+                                        id={"emailBox"}
                                         autoFocus
                                         type="email"
                                         placeholder="Email Address"
@@ -248,8 +263,9 @@ class signup extends Component {
                         </Row>
                         <Row>
                             <Col md={{span: 5, offset: 0}}>
-                                <FormGroup controlId="formBasicText" bsSize="large">
+                                <FormGroup controlId="formBasicText" >
                                     <FormControl
+                                        id={"passwordBox"}
                                         autoFocus
                                         type="password"
                                         placeholder="Password"
@@ -259,8 +275,9 @@ class signup extends Component {
                                 </FormGroup>
                             </Col>
                             <Col md={{span: 5, offset: 0}}>
-                                <FormGroup controlId="formBasicText" bsSize="large">
+                                <FormGroup controlId="formBasicText" >
                                     <FormControl
+                                        id={"password2Box"}
                                         onChange={(e) => this.handleFieldChange(e, 'confirm_password')}
                                         type="password"
                                         placeholder="Enter Password"
@@ -278,9 +295,14 @@ class signup extends Component {
                                 {this.FormErrors(this.state.formErrors,"confirm_password")}
                             </Col>
                         </Row>
+                        <Row>
+                            <Col md={{span: 10, offset: 0}}>
+                                {this.FormErrors(this.state.formErrors,"existed")}
+                            </Col>
+                        </Row>
                         <Row style={{paddingTop: 20}}>
                             <Col md={{span: 5, offset: 0}}>
-                                <Button style={{backgroundColor: 'blue', color: "white"}} block bsSize="large"
+                                <Button style={{backgroundColor: 'blue', color: "white"}} block
                                         type="submit">
                                     Create {this.state.role} Account
                                 </Button>
