@@ -92,10 +92,21 @@ class DoLab extends React.Component {
         this.handleAction = this.handleAction.bind(this);
         this.canInteract = this.canInteract.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.move_element = this.move_element.bind(this)
+        this.move_element = this.move_element.bind(this);
+        this.popOff = this.popOff.bind(this);
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
         this.getInfo = this.getInfo.bind(this);
         this.selectStep = this.selectStep.bind(this);
+        this.removeContainingElements = this.removeContainingElements.bind(this);
+        // this.addColorChangeRule = this.addColorChangeRule.bind(this);
+        // this.checkColorChangeRule = this.checkColorChangeRule.bind(this);
+    }
+
+    removeContainingElements(e, data){
+        const equip = data["equip"];
+        equip.setItems([]);
+        equip.amount = 0;
+        this.forceUpdate();
     }
     selectStep(e,i){
         this.setState({currentStep:i})}
@@ -634,33 +645,54 @@ class DoLab extends React.Component {
 
     }
 
+    popOff(workspace_id, eq_id) {
+        let old_tartget = this.interaction_map[workspace_id + "," + eq_id];
+        if (old_tartget[0].name === "Scale") {
+            this.state.equipments[workspace_id][old_tartget[2]].removeItems();
+            // this.state.equipments[workspace_id][old_tartget[2]].value = 0;
+            // this.state.equipments[workspace_id][old_tartget[2]].items = [];
+            this.state.equipments[workspace_id][old_tartget[2]].interacting = false;
 
+            delete  this.interaction_map[[workspace_id + "," + eq_id]];
+            this.forceUpdate();
+
+        }
+    }
 
     canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
         return eq1.canInteract(eq2);
     }
-    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2){
+
+    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2) {
         const source = this.state.equipments[workspace_id1][eq_id1];
         const target = this.state.equipments[workspace_id2][eq_id2];
         const interactable = source.canInteract(target);
-        if(interactable){
+
+        if (interactable) {
+            // console.log("interactable",this.state.equipments);
+
             this.eq1 = source;
             this.eq2 = target;
             let actions = source.getActions(target);
-            this.target = target_ev;
-            if(actions){
-                this.setState({showPopover:true});
-                this.forceUpdate()
+
+            //dec 11
+            if (target.name === "Scale") {
+                this.interaction_map[workspace_id1 + "," + eq_id1] = [target, workspace_id2, eq_id2];
             }
-            else{
+
+            this.target = target_ev;
+            if (actions) {
+                this.setState({showPopover: true});
+            } else {
                 source.interact(target);
                 target.items = [source];
-                this.forceUpdate()
-            }
-        }
 
+            }
+
+            this.forceUpdate()
+        }
 
 
     }
@@ -862,6 +894,7 @@ class DoLab extends React.Component {
                                                  interation_handler= {this.interaction_handler}
                                                  viewInfo={this.getInfo}
                                                  canInteract = {this.canInteract}
+                                                 interaction_map={this.interaction_map}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
                                                  role="student"
@@ -1145,7 +1178,6 @@ class DoLab extends React.Component {
         }
         if (!this.verifyStep(this.state.steps[currentStep].equipments,this.state.equipments[currentStep+1])){
             ToastsStore.error("Step failed. Try again.")
-            this.sendFailedStep();
             return null;
         }
         if (currentStep+2>this.state.steps.length){
@@ -1317,6 +1349,8 @@ class DoLab extends React.Component {
         targ_element.style.left=targ_x+'px';
         targ_element.style.top=targ_y+'px';
         targ.setLocation(targ_x,targ_y);
+
+
     }
     render(){
 

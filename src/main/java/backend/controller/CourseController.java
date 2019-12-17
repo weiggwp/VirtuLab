@@ -186,7 +186,7 @@ public class CourseController {
                 labDTO.setDescription(lab.getDescription());
                 labDTO.setLabID(lab.getLabID());
 
-                Optional<Lab> optional = labService.findLabByLabID(labDTO.getLabID());
+                /*Optional<Lab> optional = labService.findLabByLabID(labDTO.getLabID());
                 if (optional.isPresent()) {
                     labDTO.setSteps(optional.get().getSteps());
 
@@ -196,7 +196,7 @@ public class CourseController {
                 }
 
 
-                labDTO.setReturnEquips(lab.getEquipments());
+                labDTO.setReturnEquips(lab.getEquipments())*/;
                 for (UserCourseLab userCourseLab: user.getUserCourseLabList()){
 //                    System.out.println("this userCourseLab: userid is "+userCourseLab.getUser().getId()
 //                        +"\ncourse id is "+userCourseLab.getCourse().getCourseID()+

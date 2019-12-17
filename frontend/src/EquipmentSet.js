@@ -94,12 +94,14 @@ export default class EquipmentSet {
 
     createStockSolutions()
     {
-        return [new Element("19M NaOH", flame, 2000, 1.515, 1,100,"Sodium Hydroxide"),
-            new Element("11.6M HCI",flame,2000,1.18,1,130,"Hydrochloric Acid"),
-            new Element("17.6M H\u2082SO\u2084",flame,2000,1.83,1,100,"Sulfuric Acid"),
-            new Element("15.4M HNO\u2083",flame,2000,1.51,1,130,"Nitric Acid"),
-            new Element("14.6M H\u2083PO\u2084",flame,2000,1.87,1,100,"Phosphoric Acid"),
-            new Element("15.4M NH\u2083",flame,2000,0.68,1,100,'Ammonia')
+        const size = 100;
+        return [
+            new Element("19M NaOH",             flame,2000,1.515,   1,size,"Sodium Hydroxide"),
+            new Element("11.6M HCI",            flame,2000,1.18,    1,size,"Hydrochloric Acid"),
+            new Element("17.6M H\u2082SO\u2084",flame,2000,1.83,    1,size,"Sulfuric Acid"),
+            new Element("15.4M HNO\u2083",      flame,2000,1.51,    1,size,"Nitric Acid"),
+            new Element("14.6M H\u2083PO\u2084",flame,2000,1.87,    1,size,"Phosphoric Acid"),
+            new Element("15.4M NH\u2083",       flame,2000,0.68,    1,size,'Ammonia')
         ]
 
     }
