@@ -467,9 +467,9 @@ public class LabController {
     @RequestMapping(value = "/clone_lab", method = RequestMethod.POST)
     public ResponseEntity cloneLab(@RequestBody LabDTO labDTO) {
         try {
-//            System.out.println("received lab was "+labDTO);
+            System.out.println("received lab was "+labDTO);
             Lab realLab = labService.findByLabID(labDTO.getLabID());
-//            System.out.println("Mapped lab to "+realLab);
+            System.out.println("Mapped lab to "+realLab);
             List<Step> steps = realLab.getSteps();
             List<Equipment> equips = new LinkedList<>();
             for (Equipment equip: realLab.getEquipments()){

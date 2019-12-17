@@ -226,6 +226,7 @@ public class Equipment {
         clone.setWeight(weight);
         clone.setX(x);
         clone.setY(y);
+        clone.setChemProp(chemProp);
 
         LinkedList<Equipment> itemsClone = new LinkedList<>();
         for (Equipment item: items){

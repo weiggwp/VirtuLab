@@ -132,7 +132,7 @@ export default class EquipmentSet {
     createGeneral()
     {
         return[
-            new Element("Distilled Water", water, 3000, 1, 1, 130,),
+            new Element("Distilled Water", water, 3000, 1, 1, 130,"Distilled Water"),
             new Element("1M C\u2086H\u2081\u2082O\u2086", no_flame, 250, 1.56, 1, 75,"Glucose Solution",)
 
         ]

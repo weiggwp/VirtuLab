@@ -31,6 +31,9 @@ export default function GetSVG(props) {
 
 
     };
+    console.log(props)
+
+
 
 
 
@@ -38,13 +41,18 @@ export default function GetSVG(props) {
     {
         // const notDefined = props.equip.chemProp===undefined||props.equip.chemProp===null;
         variable = props.equip.chemProp;
+        console.log("before mapping",variable)
+
     }
     else
     {
         variable = props.type;
+        console.log("before mapping",variable)
     }
 
+
     const Component = mappings[variable];
+    console.log("mapping component ",variable," to ",Component)
 
 
     return (
