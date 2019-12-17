@@ -1300,7 +1300,7 @@ class create_lab extends React.Component {
     }
 
     render() {
-
+        console.log("equipments",this.state.equipments);
         if (!this.state.lab_loaded) {
             this.populateSteps();
             return null;

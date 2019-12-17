@@ -55,6 +55,7 @@ class DoLab extends React.Component {
         this.equipmentSet = new EquipmentSet();
         this.target = null;
         this.ref = React.createRef();
+        this.interaction_map = {};
 
         this.state = {
             showPopover: false,
@@ -842,7 +843,12 @@ class DoLab extends React.Component {
                                                  move_element={this.move_element}
                                                  adjust={this.adjust_interactive_element}
                                                  width={200} height={200}
-                                                 hide={this.hidePopOver}/>
+                                                 hide={this.hidePopOver}
+                                                interaction_map={this.interaction_map}
+                                                popOff={this.popOff}
+                                                removeContainingElements = {this.removeContainingElements}
+                            // addColorChangeRule={this.addColorChangeRule}
+                            />
 
 
                         ))
