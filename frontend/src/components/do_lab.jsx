@@ -467,7 +467,10 @@ class DoLab extends React.Component {
                 <Navbar style={{backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
                     <Nav>
-                        <font color = "white">{this.props.location.state.lab_name}</font>
+                        {/*<font color = "white">{this.props.location.state.lab_name}</font>*/}
+                        <div>
+                            <span className={"lab_title_label"}> {this.props.location.state.lab_name}</span>
+                        </div>
 
                     </Nav>
 
@@ -653,6 +656,7 @@ class DoLab extends React.Component {
             }
             else{
                 source.interact(target);
+                target.items = [source];
                 this.forceUpdate()
             }
         }
