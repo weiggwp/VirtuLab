@@ -169,6 +169,8 @@ class instructor_labs extends React.Component {
 
     handleDeleteLab(lab) {
 
+        if (!window.confirm("Are you sure you would like to delete this lab?")) return null;
+
         let labToDel = {
             email: this.props.email,
             labID: lab.labID

@@ -691,6 +691,7 @@ class create_lab extends React.Component {
     }
 
     handleSubmit(e) {
+        e.preventDefault();
         e.persist();
         const source = this.eq1;
         const target = this.eq2;

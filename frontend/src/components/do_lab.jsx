@@ -610,32 +610,53 @@ class DoLab extends React.Component {
 
     }
 
+    popOff(workspace_id, eq_id) {
+        let old_tartget = this.interaction_map[workspace_id + "," + eq_id];
+        if (old_tartget[0].name === "Scale") {
+            this.state.equipments[workspace_id][old_tartget[2]].removeItems();
+            // this.state.equipments[workspace_id][old_tartget[2]].value = 0;
+            // this.state.equipments[workspace_id][old_tartget[2]].items = [];
+            this.state.equipments[workspace_id][old_tartget[2]].interacting = false;
 
+            delete  this.interaction_map[[workspace_id + "," + eq_id]];
+            this.forceUpdate();
+
+        }
+    }
 
     canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
         return eq1.canInteract(eq2);
     }
-    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2){
+
+    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2) {
         const source = this.state.equipments[workspace_id1][eq_id1];
         const target = this.state.equipments[workspace_id2][eq_id2];
         const interactable = source.canInteract(target);
-        if(interactable){
+
+        if (interactable) {
+            // console.log("interactable",this.state.equipments);
+
             this.eq1 = source;
             this.eq2 = target;
             let actions = source.getActions(target);
-            this.target = target_ev;
-            if(actions){
-                this.setState({showPopover:true});
-                this.forceUpdate()
-            }
-            else{
-                source.interact(target);
-                this.forceUpdate()
-            }
-        }
 
+            //dec 11
+            if (target.name === "Scale") {
+                this.interaction_map[workspace_id1 + "," + eq_id1] = [target, workspace_id2, eq_id2];
+            }
+
+            this.target = target_ev;
+            if (actions) {
+                this.setState({showPopover: true});
+            } else {
+                source.interact(target);
+                target.items = [source];
+            }
+
+            this.forceUpdate()
+        }
 
 
     }
@@ -837,6 +858,7 @@ class DoLab extends React.Component {
                                                  interation_handler= {this.interaction_handler}
                                                  viewInfo={this.getInfo}
                                                  canInteract = {this.canInteract}
+                                                 interaction_map={this.interaction_map}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
                                                  role="student"
