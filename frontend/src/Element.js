@@ -78,7 +78,7 @@ export default class Element extends Equipment{
     }
     pour(target,amount,callback=null)
     {
-        // console.log(amount);
+        console.log(amount);
         amount=amount>this.amount?this.amount:amount;
 
         // console.log(amount);

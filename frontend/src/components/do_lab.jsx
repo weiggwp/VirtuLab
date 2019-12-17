@@ -51,6 +51,7 @@ class DoLab extends React.Component {
     constructor(props) {
         super(props);
 
+
         this.steps = [];
         this.equipmentSet = new EquipmentSet();
         this.target = null;
@@ -96,7 +97,26 @@ class DoLab extends React.Component {
         this.adjust_interactive_element=this.adjust_interactive_element.bind(this);
         this.getInfo = this.getInfo.bind(this);
         this.selectStep = this.selectStep.bind(this);
+
+        this.popOff = this.popOff.bind(this);
+        this.hidePopOver=this.hidePopOver.bind(this);
+        this.update=this.update.bind(this);
+        this.removeContainingElements = this.removeContainingElements.bind(this);
     }
+
+    removeContainingElements(e, data){
+        const equip = data["equip"];
+        equip.setItems([]);
+        equip.amount = 0;
+        this.forceUpdate();
+    }
+
+
+    update=()=>
+    {
+        this.forceUpdate()
+    };
+
     selectStep(e,i){
         this.setState({currentStep:i})}
 
@@ -755,14 +775,16 @@ class DoLab extends React.Component {
 
     }
 
-    onHide=(source)=>
-    {
-        source.setDegree(0);
-        source.setInteracting(false);
+    onHide = (source) => {
+        const target = this.eq2;
+        // console.log(source)
+        if(! Tool.prototype.isPrototypeOf(target)){
+            source.setDegree(0);
+            source.setInteracting(false);
+        }
 
-        this.setState({ showPopover: false })
-    }
-
+        this.setState({showPopover: false})
+    };
     hidePopOver=()=>
     {
         if(this.eq1!==undefined)
@@ -887,7 +909,6 @@ class DoLab extends React.Component {
                                                  adjust={this.adjust_interactive_element}
                                                  width={200} height={200}
                                                  hide={this.hidePopOver}
-                                                interaction_map={this.interaction_map}
                                                 popOff={this.popOff}
                                                 removeContainingElements = {this.removeContainingElements}
                             // addColorChangeRule={this.addColorChangeRule}
@@ -1226,35 +1247,47 @@ class DoLab extends React.Component {
         else
             return difference;
     }
-    adjust_interactive_element(ev,workspace,src_equip,target_equip){
-        const src_id = "workspace"+workspace+"equip"+src_equip;
-        const targ_id = "workspace"+workspace+"equip"+target_equip;
-        const workspace_id="workspace"+workspace;
 
+    adjust_interactive_element(ev, workspace, src_equip, target_equip) {
+
+
+        let targ_pos;
+        let src_pos;
+
+        //ids
+        const src_id = "workspace" + workspace + "equip" + src_equip;
+        const targ_id = "workspace" + workspace + "equip" + target_equip;
+        const workspace_id = "workspace" + workspace;
+
+        //js equips on states
         const src = this.state.equipments[workspace][src_equip];
         const targ = this.state.equipments[workspace][target_equip];
 
+        //ev offset
         const offset = ev.dataTransfer.getData("text/offset").split(',');
 
+        //doms
         const src_element = document.getElementById(src_id);
         const targ_element = document.getElementById(targ_id);
-        const workspace_element=document.getElementById(workspace_id)
+        const workspace_element = document.getElementById(workspace_id);
 
-        var src_x=(ev.clientX + parseInt(offset[0],10));
-        var src_y=(ev.clientY + parseInt(offset[1],10));
+        //x and y of source
+        var src_x = (ev.clientX + parseInt(offset[0], 10));
+        var src_y = (ev.clientY + parseInt(offset[1], 10));
+        console.log("unverified original", [src_x, src_y]);
 
 
-        const verify = this.getBoundingXY(src_x,src_y,workspace_element,src_element);
-        src_x=verify[0];
-        src_y=verify[1];
+        // verify src is within bound
+        const verify = this.getBoundingXY(src_x, src_y, workspace_element, src_element);
+        src_x = verify[0];
+        src_y = verify[1];
 
+        // target x and y
         var targ_x = targ.left;
         var targ_y = targ.top;
 
-
-
-        if(Tool.prototype.isPrototypeOf(targ))
-        {
+        // tool handler
+        if (Tool.prototype.isPrototypeOf(targ)) {
 
             const tartg_width = targ_element.getBoundingClientRect().width;
             const tartg_height = targ_element.getBoundingClientRect().height;
@@ -1263,13 +1296,12 @@ class DoLab extends React.Component {
             let targ_diff_center_x = 0;
             let targ_diff_center_y = 0;
 
-            if(targ.name==="Scale"){
-                targ_diff_center_x  = tartg_width * .45;
-                targ_diff_center_y  = tartg_height * .35;
+            if (targ.name === "Scale") {
+                targ_diff_center_x = tartg_width * .45;
+                targ_diff_center_y = tartg_height * .35;
 
 
-            }
-            else if (targ.name==="Bunsen Burner"){
+            } else if (targ.name === "Bunsen Burner") {
                 targ_diff_center_x = tartg_width * .5;
                 targ_diff_center_y = tartg_height * .1;
 
@@ -1286,56 +1318,123 @@ class DoLab extends React.Component {
             const y_diff = (src_height * .9);
 
             // var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
-            var src_pos = this.getBoundingXY(targ_center_x-x_diff,targ_center_y-y_diff, workspace_element,src_element);
+            src_pos = this.getBoundingXY(targ_center_x - x_diff, targ_center_y - y_diff, workspace_element, src_element);
 
+            // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
+            // if(difference[1]!==targ_height)
+            // {
+            //     alert("moving scale up")
+            //     var targ_pos = this.getBoundingXY(src_x-difference[0],src_y+difference[1],workspace_element,targ_element);
+            // }
+            // else
             const new_src_x = src_pos[0];
             const new_src_y = src_pos[1];
-            const new_targ_x = new_src_x+ x_diff -targ_diff_center_x;
-            const new_targ_y = new_src_y+y_diff - targ_diff_center_y;
+            // console.log("src_pos_x new",new_src_x,"src_pos_y new ",new_src_y);
+            const new_targ_x = new_src_x + x_diff - targ_diff_center_x;
+            const new_targ_y = new_src_y + y_diff - targ_diff_center_y;
+            // console.log("src_pos_x new",new_targ_x,"src_pos_y new ",new_targ_y);
 
 
-            var targ_pos = [new_targ_x,new_targ_y];
+            targ_pos = [new_targ_x, new_targ_y];
 
             src.setInteracting(true);
 
 
-        }
-        else {
+        } else {//glassware handler
 
             src.setDegree(45);
             src.setInteracting(true);
+            // old***********
+
+            const tartg_width = targ_element.getBoundingClientRect().width;
+            const tartg_height = targ_element.getBoundingClientRect().height;
+            // targ x and targ y is where we want the right bottom of src to be
+
+            let targ_diff_center_x = 0;
+            let targ_diff_center_y = 0;
+
+            if (src.name === "Pipette") {
+                targ_diff_center_x = tartg_width * .5;
+                targ_diff_center_y = tartg_height * .25;
+            } else if (src.name === 'Distilled Water') {
+                targ_diff_center_x = tartg_width * .23;
+                targ_diff_center_y = tartg_height * -.05;
+                src.setDegree(0);
+            } else {
+
+                targ_diff_center_x = tartg_width * .25;
+                targ_diff_center_y = tartg_height * .25;
+            }
+
+            const targ_center_x = targ_x + targ_diff_center_x;
+            const targ_center_y = targ_y + targ_diff_center_y;
+
+            const src_height = src_element.getBoundingClientRect().height;
+            const src_width = src_element.getBoundingClientRect().width;
 
 
-            const width = src_element.getBoundingClientRect().width / 4;
-            const height = src_element.getBoundingClientRect().height / 4;
-            var src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
+            const x_diff = (src_width * .5);
+            const y_diff = (src_height * .9);
 
-            const difference = [this.getDifference(src_pos[0], src_x, width), this.getDifference(src_pos[1], src_y, height)];
+            // var src_pos = this.getBoundingXY(targ_x+30,targ_y-(src_height/2+5),workspace_element,src_element);
+            src_pos = this.getBoundingXY(targ_center_x - x_diff, targ_center_y - y_diff, workspace_element, src_element);
+
+            // const difference=[this.getDifference(src_pos[0],src_x,src.size/2),this.getDifference(src_pos[1],src_y,0)];
+            // if(difference[1]!==targ_height)
+            // {
+            //     alert("moving scale up")
+            //     var targ_pos = this.getBoundingXY(src_x-difference[0],src_y+difference[1],workspace_element,targ_element);
+            // }
+            // else
+            const new_src_x = src_pos[0];
+            const new_src_y = src_pos[1];
+            // console.log("src_pos_x new",new_src_x,"src_pos_y new ",new_src_y);
+            const new_targ_x = new_src_x + x_diff - targ_diff_center_x;
+            const new_targ_y = new_src_y + y_diff - targ_diff_center_y;
+            // console.log("src_pos_x new",new_targ_x,"src_pos_y new ",new_targ_y);
 
 
-            var targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
+            targ_pos = [new_targ_x, new_targ_y];
 
 
-            //position moved back, meaning it went out of bounds
-            // if(src_y===src_pos[1])
+            // // old *************
+            // const width = src_element.getBoundingClientRect().width / 4;
+            // const height = src_element.getBoundingClientRect().height / 4;
+            // // console.log("src rect", src_element.getBoundingClientRect());
+            // src_pos = this.getBoundingXY(targ_x - width, targ_y - height, workspace_element, src_element);
+            //
+            // const difference = [this.getDifference(src_pos[0], src_x, width), this.getDifference(src_pos[1], src_y, height)];
+            //
+            // // console.log("original ", [src_x, src_y], "new ", src_pos, " difference ", difference)
+            //
+            // targ_pos = this.getBoundingXY(targ_x + difference[0], targ_y + difference[1], workspace_element, targ_element);
+            //
+            //
+            // //position moved back, meaning it went out of bounds
+            // // if(src_y===src_pos[1])
         }
 
-        targ_x=targ_pos[0]
-        targ_y=targ_pos[1]
-        src_x=src_pos[0];
-        src_y=src_pos[1];
+        targ_x = targ_pos[0];
+        targ_y = targ_pos[1];
+        src_x = src_pos[0];
+        src_y = src_pos[1];
 
 
         //src move up, no need to reposition target
 
-        src_element.style.left=src_x+'px';
-        src_element.style.top=src_y+'px';
-        src.setLocation(src_x,src_y);
+        src_element.style.left = src_x + 'px';
+        src_element.style.top = src_y + 'px';
+        src.setLocation(src_x, src_y);
+        // src_element.zIndex = 100;
+        targ_element.style.left = targ_x + 'px';
+        targ_element.style.top = targ_y + 'px';
+        targ.setLocation(targ_x, targ_y);
 
-        targ_element.style.left=targ_x+'px';
-        targ_element.style.top=targ_y+'px';
-        targ.setLocation(targ_x,targ_y);
+        src_element.style.zIndex = 1;
+
+        console.log("src.zIndex ", src_element, "targ.zIndex", targ_element.zIndex);
     }
+
     render(){
 
         if(!this.state.lab_loaded)

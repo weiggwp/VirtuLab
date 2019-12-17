@@ -66,7 +66,7 @@ export class Scale extends Tool{
         this.offset =0;
     }
     zero(){
-        this.offset +=this.value;
+        this.offset =this.items[0].getWeight();
         this.value=0;
     }
     toStateString()
