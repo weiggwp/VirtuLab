@@ -40,7 +40,7 @@ import {Draggable_equipment} from "./Draggable_equipment";
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import Element from "../Element";
 import water from "../Images/water.svg";
-import Tool from "../Tool";
+import Tool, {BunsenBurner, Scale} from "../Tool";
 import Glassware from "../Glassware";
 import small_volFlask from "../Images/100mLVolumetricFlask.svg";
 import Workspace from "../Workspace"
@@ -194,10 +194,20 @@ class DoLab extends React.Component {
             }
             else if(!glassware.includes(current.type))
             {
-                equip = new Tool(current.name, current.image);
-                equip.setDisabled(current.disabled)
-                equip.setLocation(current.left,current.top)
-                equip.setColor(current.color)
+                if(current.name==="Bunsen Burner")
+                {
+                    equip = new BunsenBurner(current.name, current.image,current.weight,current.unit,current.size)
+                    equip.setDisabled(current.disabled);
+                    equip.setLocation(current.left,current.top);
+                    equip.setColor(current.color);
+                }
+                else
+                {
+                    equip = new Scale(current.name, current.image);
+                    equip.setDisabled(current.disabled);
+                    equip.setLocation(current.left,current.top);
+                    equip.setColor(current.color);
+                }
 
 
 
@@ -261,9 +271,20 @@ class DoLab extends React.Component {
                 }
                 else if(!glassware.includes(current.type))
                 {
-                    var equip =new Tool(current.name, current.image,current.weight);
-                    equip.setType(current.type);
-                    equip.setDisabled(current.disabled)
+                    if(current.name==="Bunsen Burner")
+                    {
+                        equip = new BunsenBurner(current.name, current.image,current.weight,current.unit,current.size)
+                        equip.setDisabled(current.disabled);
+                        equip.setLocation(current.left,current.top);
+                        equip.setColor(current.color);
+                    }
+                    else
+                    {
+                        equip = new Scale(current.name, current.image);
+                        equip.setDisabled(current.disabled);
+                        equip.setLocation(current.left,current.top);
+                        equip.setColor(current.color);
+                    }
                     result['Tools'].push(equip);
                 }
                 else {

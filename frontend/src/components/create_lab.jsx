@@ -30,11 +30,13 @@ import GLOBALS from "../Globals";
 import {Draggable_equipment} from "./Draggable_equipment";
 import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts';
 import Element from "../Element";
-import Tool from "../Tool";
+import Tool, {BunsenBurner, Scale} from "../Tool";
 import Glassware from "../Glassware";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EditableLabel from "./EditableLabel";
 import deepCloneWithType, {floatEqual, sortArrayByAttr} from "../clone"
+import bunsun_burner from "../Images/bunsenBurner.svg";
+import scale from "../Images/scale.svg";
 
 class create_lab extends React.Component {
     constructor(props) {
@@ -177,10 +179,21 @@ class create_lab extends React.Component {
             }
             else if(!glassware.includes(current.type))
             {
-                equip = new Tool(current.name, current.image);
-                equip.setDisabled(current.disabled);
-                equip.setLocation(current.left,current.top);
-                equip.setColor(current.color);
+                if(current.name==="Bunsen Burner")
+                {
+                    equip = new BunsenBurner(current.name, current.image,current.weight,current.unit,current.size)
+                    equip.setDisabled(current.disabled);
+                    equip.setLocation(current.left,current.top);
+                    equip.setColor(current.color);
+                }
+                else
+                {
+                    equip = new Scale(current.name, current.image);
+                    equip.setDisabled(current.disabled);
+                    equip.setLocation(current.left,current.top);
+                    equip.setColor(current.color);
+                }
+
 
 
 
@@ -241,9 +254,22 @@ class create_lab extends React.Component {
                     result['Solution'][current.type].push(equip)
 
                 } else if (!glassware.includes(current.type)) {
-                    equip = new Tool(current.name, current.image, current.weight);
-                    equip.setType(current.type);
-                    equip.setDisabled(current.disabled);
+
+                    if(current.name==="Bunsen Burner")
+                    {
+                        equip = new BunsenBurner(current.name, current.image,current.weight,current.unit,current.size)
+                        equip.setDisabled(current.disabled);
+                        equip.setLocation(current.left,current.top);
+                        equip.setColor(current.color);
+                    }
+                    else
+                    {
+                        equip = new Scale(current.name, current.image);
+                        equip.setDisabled(current.disabled);
+                        equip.setLocation(current.left,current.top);
+                        equip.setColor(current.color);
+                    }
+
                     result['Tools'].push(equip);
                 } else {
                     if (result['Glassware'][current.type] === undefined)
