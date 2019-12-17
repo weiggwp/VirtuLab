@@ -37,7 +37,7 @@ const SvgComponent =
          current_top_y_radius = y_radius_bot- (y_radius_bot-y_radius_top) *fill_percent,
 
          opacity = ((fill_percent === 0) ? 0 : .6),
-
+         clip_id = equip.name+id+"clip",
 
      }) => (
         <svg

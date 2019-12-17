@@ -2,6 +2,7 @@ import React from 'react'
 
 const SvgComponent =
     ({
+        id,
          style = {},
          className = '',
          fill = "#dee4e4",
@@ -22,6 +23,7 @@ const SvgComponent =
         x_top = 1.35,
         x_bot = .3,
         current_x = x_bot + (x_top-x_bot) * fill_percent,
+         clip_id = equip.name+id+"clip",
 
 
      }) => (

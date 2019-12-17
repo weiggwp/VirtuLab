@@ -22,7 +22,7 @@ const SvgComponent =
          y_radius_bot = 3,
          current_y_radius = y_radius_bot - (y_radius_bot - y_radius_top) * fill_percent,
          opacity = ((fill_percent === 0) ? 0 : .6),
-
+         clip_id = equip.name+id+"clip",
 
      }) => (
         <svg
@@ -37,7 +37,7 @@ const SvgComponent =
 
         >
             <defs>
-                <clipPath clipPathUnits="userSpaceOnUse" id="a">
+                <clipPath clipPathUnits="userSpaceOnUse" id={clip_id}>
                     <path
                         fill="#fff"
                         strokeWidth={0.4}
@@ -54,10 +54,10 @@ const SvgComponent =
                     cy={current_y}
                     rx={12.1}
                     ry={current_y_radius}
-                    clipPath="url('#a')"
+                    clipPath={"url('#"+clip_id+"')"}
                 />
                 <rect x={11.5} y={current_y} width={26} height={31}
-                      clipPath="url('#a')"
+                      clipPath={"url('#"+clip_id+"')"}
                       opacity={0.6}
                 />
             </g>

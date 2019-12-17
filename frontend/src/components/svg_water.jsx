@@ -17,7 +17,7 @@ const SvgComponent =
          y_bot = 42.5,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
          opacity = ((fill_percent === 0) ? 0 : .6),
-
+         clip_id = equip.name+id+"clip",
 
      }) => (
         <svg

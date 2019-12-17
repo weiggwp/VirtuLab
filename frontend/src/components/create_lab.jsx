@@ -47,7 +47,7 @@ class create_lab extends React.Component {
         this.colorRules = {};
         this.rules = {};
         this.interaction_map = {};
-
+        this.workspaceLimit=50;
 
         this.state = {
             showPopover: false,
@@ -1041,7 +1041,7 @@ class create_lab extends React.Component {
         // var image = equipment;
 
         const current = this.state.equipments;
-        if (current[step].length >= 10) {
+        if (current[step].length >= this.workspaceLimit) {
             ToastsStore.error("Workspace full! Only ten equipments allowed")
         } else {
             current[step].push(this.createNewEquipment(equipment));

@@ -2,6 +2,7 @@ import React from 'react'
 
 const SvgComponent =
     ({
+        id,
          style = {},
          className = '',
          fill = "#dee4e4",
@@ -18,6 +19,7 @@ const SvgComponent =
          y_bot = 40.55,
          current_y = y_bot - (y_bot - y_top) * fill_percent,
          opacity = ((fill_percent === 0) ? 0 : 1),
+         clip_id = equip.name+id+"clip",
 
      }) => (
         <svg

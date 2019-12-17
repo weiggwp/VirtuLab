@@ -9,6 +9,7 @@ class SvgComponent extends Component {
 
 
     render() {
+        const clip_id = this.equip.name+this.props.id+"clip";
         const size= this.equip.size;
         const degree = this.equip.rotate;
 
