@@ -149,7 +149,7 @@ class login extends Component {
                                                 <FormControl
                                                     style={{height: 60}}
                                                     autoFocus
-                                                    type="text"
+                                                    type="email"
                                                     placeholder="E-mail Address"
                                                     onChange={(e) => this.handleCredentialChange(e, 'email_address')}
                                                     required

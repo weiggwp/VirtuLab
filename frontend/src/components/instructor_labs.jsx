@@ -189,7 +189,8 @@ class instructor_labs extends React.Component {
         axios.post(GLOBALS.BASE_URL + 'del_lab', labToDel, axiosConfig)
             .then((response) => {
                 ToastsStore.success("Selected Lab is deleted")
-                this.render()
+                // this.render()
+                this.forceUpdate();
                 window.location.reload()
             })
             .catch((error) => {
