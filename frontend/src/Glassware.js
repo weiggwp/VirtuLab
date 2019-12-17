@@ -33,7 +33,7 @@ export default class Glassware extends Equipment{
     }
     getFillPercent(){
 
-        console.log("getting fill percent");
+        // console.log("getting fill percent");
         return this.getAmount()/this.capacity;
     }
     getWeight(){

@@ -30,7 +30,7 @@
     "react-native": "^0.61.5",
     "react-notifications": "^1.4.3",
     "react-notifications-component": "^2.2.3",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "react-tag-input": "^6.4.1",
     "react-toasts": "^3.0.6",
     "reactcss": "latest",

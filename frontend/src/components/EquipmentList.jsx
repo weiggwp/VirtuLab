@@ -125,7 +125,7 @@ class EquipmentList extends React.Component
     taggle(index){
         const id = "moreIcon"+index;
         let element = document.getElementById(id);
-        console.log(id,element);
+        // console.log(id,element);
         if(element)
         element.classList.toggle("rotate");
     }
