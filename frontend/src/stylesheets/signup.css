@@ -41,3 +41,23 @@
     font-family:arial regular;
     font-size:20px;
 }
+
+.backButton
+{
+
+    height:100%;
+    text-align:center;
+    padding-top:15px;
+    background-color: transparent;
+    color: black;
+    /*font-family:monospace;*/
+    border-style:none;
+    border-width:0px;
+}
+.backButton:hover
+{
+    background-color: transparent;
+    color: #236090;
+    text-decoration: underline;
+
+}

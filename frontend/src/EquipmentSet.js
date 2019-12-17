@@ -174,7 +174,8 @@ export default class EquipmentSet {
         };
 
         //solution and tool types are set in constructor, as they don't have nested def's
-        this.equipmentList['Tools'] = [new BunsenBurner('Bunsen Burner', bunsun_burner,215,'°C',100),
+        //new BunsenBurner('Bunsen Burner', bunsun_burner,215,'°C',100),
+        this.equipmentList['Tools'] = [
             new Scale('Scale', scale)];
 
         this.assignTypes();
