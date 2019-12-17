@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import icon from "../Images/v.jpg";
-import {Button, Col, Container, FormControl, FormGroup, Row} from "react-bootstrap";
+import {Button, Col, Container, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
 import {Droppable_course} from './droppable_course.jsx'
 import axios from "axios";
@@ -132,6 +132,33 @@ export class account_settings extends Component {
     }
 
 
+    renderNavigation() {
+        var ref;
+        if(this.props.role==="student")
+        {
+            ref="student_home"
+        }
+        else {
+            ref="instructor_home"
+        }
+        return (
+            <div>
+                <Navbar style={{backgroundColor: "lightgray", marginLeft: 100, marginRight: 200}}
+                        className={"justify-content-between"}>
+                    <Nav>
+                        <Button href={ref} className="goBack" variant="primary">Go
+                            Back</Button>
+                    </Nav>
+                    <Nav>
+                        <h1 className={"title"}>Account Settings</h1>
+                    </Nav>
+
+                </Navbar>
+            </div>
+        )
+    }
+
+
     render() {
         if (this.state.redirect) {
             if(this.props.role==="student")
@@ -157,21 +184,19 @@ export class account_settings extends Component {
 
             return (
                 <div>
+
                     {header}
-                    <div className={"lightblue centered"}>
+                    {this.renderNavigation()}
+                    <div className={"back centered"}>
+
 
                     <Container fluid className="noPadding">
-                        <Row className="noMargin">
-                            <Col lg={{span:6, offset:2}} >
-                                <h1 className={"accountH1"}>Account Settings</h1>
-                            </Col>
-                        </Row>
 
                         <Row className="noMargin" >
 
                             <Col lg={{span:6, offset:2}} >
 
-                                <h2 className="accountH2">Change Password</h2>
+                                <h2 className="accountH2" style={{marginTop:20}}>Change Password</h2>
                             </Col>
                         </Row>
 

@@ -69,9 +69,9 @@ class StudentHeader extends React.Component {
     {
         return(
 
-            <Button style={{backgroundColor: "white", color: "black", float:"right"}}
-                    onClick={this.handleLogout}
-                    className={"logout"}>
+            <Button
+                onClick={this.handleLogout}
+                className={"logout"}>
                 Logout
             </Button>
         );
@@ -84,13 +84,13 @@ class StudentHeader extends React.Component {
         }
         return (
 
-            <div className="banner">
+            <div className="banner" style={{paddingBottom:10}}>
 
                 <img src={icon} alt="icon" width="30px" height="30px"/>
                 <i >VirtuLab</i>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {this.renderRedirectCourse()}
-                {this.renderCourseButton(this.props.currentTab)}
+                {/*{this.renderCourseButton(this.props.currentTab)}*/}
 
                 &nbsp;&nbsp;&nbsp;
                 {/*&nbsp;&nbsp;&nbsp;&nbsp;*/}

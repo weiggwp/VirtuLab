@@ -726,7 +726,7 @@ class instructor_labs extends React.Component {
                                                   class={"dropdown-menu-right dropdown-button-drop-right"}>
 
 
-                                            <Dropdown.Toggle style={{textAlign: "left",height:"50px"}} variant="info">
+                                            <Dropdown.Toggle className={"labs"} style={{textAlign: "left",height:"50px"}} >
                                                 {lab.name}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu class="dropdown-menu">

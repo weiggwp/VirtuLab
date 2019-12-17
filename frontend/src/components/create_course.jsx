@@ -3,19 +3,23 @@ import {Redirect} from 'react-router-dom';
 import icon from "../Images/v.jpg";
 import {Button, Col, Container, FormControl, FormGroup, Image, Nav, Navbar, Row} from "react-bootstrap";
 import '../stylesheets/account_settings.css';
+import '../stylesheets/create_course.css';
 import {Droppable_course} from './droppable_course.jsx'
 import {ToastsContainer, ToastsStore} from "react-toasts";
 import axios from "axios";
 import GLOBALS from "../Globals";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export class create_course extends Component {
     constructor(props) {
         super(props);
+        this.semesters=['Fall 2019','Spring 2020','Fall 2020','Spring 2021','Fall 2021']
         this.state = {
             instructor: props.instructor,
             course_name: '',
             course_number: '',
-            semester: '',
+            semester:'e.g. Fall 2019',
             description: '',
             redirect: false,
             errors: '',
@@ -30,6 +34,10 @@ export class create_course extends Component {
 
     handleCreateCourse  = (e) => {
         e.preventDefault()
+        if(this.state.semester==='e.g. Fall 2019')
+        {
+            ToastsStore.warning("Choose a semester for your course")
+        }
         const course= {
             email:this.props.email,
             course_number: this.state.course_number,
@@ -70,6 +78,14 @@ export class create_course extends Component {
             </div>
         )
     }
+    setRedirect=()=>
+    {
+        this.setState(
+            {
+                redirect:true
+            }
+        )
+    }
 
     renderNavigation() {
         return (
@@ -82,13 +98,36 @@ export class create_course extends Component {
                     </Nav>
 
                     <Nav>
-                        <Image onClick={this.setRedirectAcct} className={"config_image"}
+                        <Image onClick={this.setRedirect} className={"config_image"}
                                src="https://icon-library.net/images/config-icon/config-icon-21.jpg" rounded/>
                     </Nav>
                 </Navbar>
             </div>
         )
     }
+
+    handleChangeSem=(semester)=>
+    {
+        this.setState(
+            {
+                semester:semester
+            }
+        )
+    }
+
+    getDropList = () => {
+        const year = new Date().getFullYear();
+        var array = [];
+        for(var i =0;i<2;i++)
+        {
+            array.push("Spring "+(year+i))
+            array.push("Fall "+(year+i))
+
+        }
+        return array
+
+    };
+
 
     render() {
         if (this.state.redirect) {
@@ -101,7 +140,7 @@ export class create_course extends Component {
                     {this.renderNavigation()}
 
                     <div className={"lightblue centered"}
-                         style={{display: 'flex', justifyContent: 'center', alignItems: 'top', height: '100vh'}}>
+                         style={{display: 'flex', justifyContent: 'center', alignItems: 'top', height: '80vh'}}>
                         <br/>
                         <div className="box-container" style={{width: '50vh'}}>
                             <form onSubmit={this.handleCreateCourse}>
@@ -132,17 +171,26 @@ export class create_course extends Component {
                                 </FormGroup>
 
                                 <h3 className="accountH3">Course Term</h3>
-                                <FormGroup controlId="formBasicText" bsSize="large">
-                                    <FormControl
-                                        autoFocus
-                                        type="text"
-                                        placeholder="e.g. Fall 2019"
-                                        onChange={(e) => this.handleFieldChange(e, 'semester')}
-                                        required
-                                    />
-                                </FormGroup>
 
-                                <Button style={{backgroundColor: 'orange', color: "white"}} block bsSize="large"
+                                <Dropdown as={ButtonGroup} style={{width: "100%"}}
+                                          class={"dropdown-menu-right dropdown-button-drop-right"}>
+
+                                    <Dropdown.Toggle variant="info">
+                                        {this.state.semester}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu class="dropdown-menu">
+                                        {this.getDropList().map(semester => (
+                                        <Dropdown.Item class={"dropdown-item"}
+                                                       onClick=
+                                                           {() => this.handleChangeSem(semester)}
+                                                       eventKey="1">{semester}</Dropdown.Item>
+
+                                            ))}
+
+                                    </Dropdown.Menu>
+                                </Dropdown>
+
+                                <Button className={"save"} block bsSize="large"
                                         type="submit">
                                     Save
                                 </Button>
@@ -150,6 +198,7 @@ export class create_course extends Component {
 
                             </form>
 
+                            <ToastsContainer store={ToastsStore}/>
 
                         </div>
 

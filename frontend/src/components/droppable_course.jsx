@@ -25,12 +25,12 @@ class Droppable_course extends React.Component
 
 
     handleDropCourse = (e) => {
-        console.log("e is ")
-        console.log(e)
+        // console.log("e is ")
+        // console.log(e)
         let pass = prompt("Please enter password to confirm dropping of class. Note that lab" +
             " completion data will be lost.");
         if (pass==""||pass==null||pass==undefined)return null
-        console.log(pass )
+        // console.log(pass )
         const user = {
             password:pass,
             email: this.props.email
@@ -115,12 +115,11 @@ class Droppable_course extends React.Component
                             <Col md={{span: 1, offset: 0}}>
 
                                     <Button className={"dropButton"}
-                                            style={{ backgroundColor: 'orange',color:"white"}} block bsSize="large" type="submit"
+                                            block bsSize="large" type="submit"
                                             onClick=
                                         {() => this.handleDropCourse(classItem.classID)}>
-                                        Drop Class
+                                        Drop
                                     </Button>
-
 
                             </Col>
                         </Row>

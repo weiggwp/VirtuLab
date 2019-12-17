@@ -174,8 +174,8 @@ class DoLab extends React.Component {
 
         for (var i = 0; i < equipList.length; i++) {
             var current = equipList[i];
-            console.log("current is");
-            console.log(current)
+            // console.log("current is");
+            // console.log(current)
 
 
             if(solutions.includes(current.type))
@@ -299,18 +299,18 @@ class DoLab extends React.Component {
 
             //get steps from prop
             var step_list = this.props.location.state.steps;
-            console.log("steplist is");
-            console.log(step_list)
+            // console.log("steplist is");
+            // console.log(step_list)
             step_list.sort(this.compare)
-            console.log("steplist is");
-            console.log(step_list)
+            // console.log("steplist is");
+            // console.log(step_list)
             //opening a previously saved lab
             if (step_list !== undefined)
             {
                 for (var i = 1; i <step_list.length ; i++) {
                     this.state.steps.push(step_list[i]);
-                    console.log("pushed");
-                    console.log(step_list[i])
+                    // console.log("pushed");
+                    // console.log(step_list[i])
                     this.state.equipments[i]=this.populateStepEquipment(step_list[i-1].equipments);
 
 
@@ -360,8 +360,8 @@ class DoLab extends React.Component {
 
     }
     setRedirectHome = () => {
-        console.log("props is ");
-        console.log(this.props)
+        // console.log("props is ");
+        // console.log(this.props)
         if ((!this.state.completed)&&!(this.props.location.state.isComplete)&&!window.confirm("Are you sure you would like to leave? Progess will not be saved.")){
             return null;
         }
@@ -439,8 +439,8 @@ class DoLab extends React.Component {
     toolbar()
     {
         {
-            console.log("props is ");
-            console.log(this.props.location.state.lab_name)
+            // console.log("props is ");
+            // console.log(this.props.location.state.lab_name)
             return (
                 <Navbar style={{backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}}
                         className={"justify-content-between bar"}>
@@ -609,32 +609,53 @@ class DoLab extends React.Component {
 
     }
 
+    popOff(workspace_id, eq_id) {
+        let old_tartget = this.interaction_map[workspace_id + "," + eq_id];
+        if (old_tartget[0].name === "Scale") {
+            this.state.equipments[workspace_id][old_tartget[2]].removeItems();
+            // this.state.equipments[workspace_id][old_tartget[2]].value = 0;
+            // this.state.equipments[workspace_id][old_tartget[2]].items = [];
+            this.state.equipments[workspace_id][old_tartget[2]].interacting = false;
 
+            delete  this.interaction_map[[workspace_id + "," + eq_id]];
+            this.forceUpdate();
+
+        }
+    }
 
     canInteract(workspace_id1, eq_id1, workspace_id2, eq_id2){
         const eq1 = this.state.equipments[workspace_id1][eq_id1];
         const eq2 = this.state.equipments[workspace_id2][eq_id2];
         return eq1.canInteract(eq2);
     }
-    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2){
+
+    interaction_handler(target_ev, workspace_id1, eq_id1, workspace_id2, eq_id2) {
         const source = this.state.equipments[workspace_id1][eq_id1];
         const target = this.state.equipments[workspace_id2][eq_id2];
         const interactable = source.canInteract(target);
-        if(interactable){
+
+        if (interactable) {
+            // console.log("interactable",this.state.equipments);
+
             this.eq1 = source;
             this.eq2 = target;
             let actions = source.getActions(target);
-            this.target = target_ev;
-            if(actions){
-                this.setState({showPopover:true});
-                this.forceUpdate()
-            }
-            else{
-                source.interact(target);
-                this.forceUpdate()
-            }
-        }
 
+            //dec 11
+            if (target.name === "Scale") {
+                this.interaction_map[workspace_id1 + "," + eq_id1] = [target, workspace_id2, eq_id2];
+            }
+
+            this.target = target_ev;
+            if (actions) {
+                this.setState({showPopover: true});
+            } else {
+                source.interact(target);
+                target.items = [source];
+            }
+
+            this.forceUpdate()
+        }
 
 
     }
@@ -836,6 +857,7 @@ class DoLab extends React.Component {
                                                  interation_handler= {this.interaction_handler}
                                                  viewInfo={this.getInfo}
                                                  canInteract = {this.canInteract}
+                                                 interaction_map={this.interaction_map}
                                                  handle_equip_delete={this.handle_equip_delete}
                                                  equipment={equipment}
                                                  role="student"
@@ -991,7 +1013,7 @@ class DoLab extends React.Component {
 
         let res = true
         for (let i = 0; i < arr.length; i ++) {
-            console.log("first arr is "+arr[i])
+            // console.log("first arr is "+arr[i])
             res &= arr[i];
         }
 
@@ -1003,9 +1025,9 @@ class DoLab extends React.Component {
 
     verifyAmounts(eq1, eq2){
         let grace = Math.min(eq2.capacity/10,5);
-        console.log("comparing")
-        console.log(eq1)
-        console.log(eq2)
+        // console.log("comparing")
+        // console.log(eq1)
+        // console.log(eq2)
         return Math.abs(eq1.amount-eq2.amount)<grace;
     }
 

@@ -105,38 +105,48 @@ export default class EquipmentSet {
     }
     createAcids()
     {
-        return [new Element("3M HBr", no_flame, 250, 1.49, 1,100,"Hydrobromic Acid",100),
-            new Element("3M HCI",no_flame,250,1.18,1,130,"Hydrochloric Acid",100),
-            new Element("3M H\u2082SO\u2084",no_flame,250,1.83,1,100,"Sulfuric Acid",100),
-            new Element("3M HNO\u2083",no_flame,250,1.51,1,100,"Nitric Acid",100),
-            new Element("3M H\u2083PO\u2084",no_flame,250,1.87,1,100,"Phosphoric Acid",100)
+
+        return [new Element("3M HBr",// name
+            no_flame, // image
+            250, // capacity
+            1.49, // weight
+            1, // state
+            75, //size
+            "Hydrobromic Acid",
+            ),
+            new Element("3M HCI",no_flame,250,1.18,1,75,"Hydrochloric Acid"),
+            new Element("3M H\u2082SO\u2084",no_flame,250,1.83,1,75,"Sulfuric Acid"),
+            new Element("3M HNO\u2083",no_flame,250,1.51,1,75,"Nitric Acid"),
+            new Element("3M H\u2083PO\u2084",no_flame,250,1.87,1,75,"Phosphoric Acid")
             ]
     }
 
     createBases()
     {
         return [
-            new Element("3M NaOH", no_flame, 250, 1.515, 1,100,"Sodium Hydroxide",100),
-            new Element("3M NH\u2083",no_flame,250,0.68,1,100,'Ammonia',100)
+            new Element("3M NaOH", no_flame, 250, 1.515, 1,75,"Sodium Hydroxide"),
+            new Element("3M NH\u2083",no_flame,250,0.68,1,75,'Ammonia')
         ]
     }
 
     createGeneral()
     {
         return[
-            new Element("Distilled Water", water, 3000, 1, 1, 130),
-            new Element("1M C\u2086H\u2081\u2082O\u2086", no_flame, 250, 1.56, 1, 100,"Glucose Solution",100)
+            new Element("Distilled Water", water, 3000, 1, 1, 130,),
+            new Element("1M C\u2086H\u2081\u2082O\u2086", no_flame, 250, 1.56, 1, 75,"Glucose Solution",)
 
         ]
     }
 
     createIndicators()
     {
+        const size = 75;
+
         return [
-            new Element("Methyl Orange",indicator,100,1,1,100),
-            new Element("Methyl Red",indicator,100,1,1,100),
-            new Element("Phenolphthalein",indicator,100,1,1,100),
-            new Element("Bromocresol Green",indicator,100,1,1,100),
+            new Element("Methyl Orange",indicator,100,1,1,size),
+            new Element("Methyl Red",indicator,100,1,1,size),
+            new Element("Phenolphthalein",indicator,100,1,1,size),
+            new Element("Bromocresol Green",indicator,100,1,1,size),
 
 
         ]

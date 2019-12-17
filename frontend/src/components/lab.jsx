@@ -6,6 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import '../stylesheets/account_settings.css';
 import '../stylesheets/student_home.css';
 import Redirect from "react-router-dom/es/Redirect";
+import axios from "axios";
+import GLOBALS from "../Globals";
 
 const check={
     incomplete:"https://cdn4.iconfinder.com/data/icons/176-material-design-outline-core/24/check-box-blank-512.png",
@@ -24,6 +26,7 @@ class Lab extends React.Component
             due : Date,
             isInstructor:false,
             gottenRole:false,
+            lab:undefined,
             renderLab:true,
             renderStudent:false,
             renderInstructor:false,
@@ -36,7 +39,30 @@ class Lab extends React.Component
             this.render()
         }
         else{
-            this.setState({renderStudent:true});
+            const lab = {
+
+                labID:this.props.labID
+            };
+            let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*",
+                    'responseType': 'json'
+                }
+            };
+            axios.post(GLOBALS.BASE_URL + 'get_lab', lab, axiosConfig)
+                .then((response) => {
+                    console.log("resp is ");
+                    console.log(response.data)
+                    this.setState({lab:response.data,renderStudent:true})
+                })
+                .catch((error) => {
+                    alert("Lab not found.");
+                    return null
+                    }
+                );
+
+
             this.render()
         }
         //window.location.href="http://localhost:3001/do_lab";
@@ -51,25 +77,25 @@ class Lab extends React.Component
             this.setState({renderLab: false})
             return null;
         } else if (this.state.renderStudent) {
-            console.log("complete is "+this.props.complete)
-            console.log("steps are ")
-            console.log(this.props.steps,)
+            // console.log("complete is "+this.props.complete)
+            // console.log("steps are ")
+            // console.log(this.props.steps,)
             return <Redirect exact to={{
                 pathname: '/do_lab',
 
                 state: {
                     labID: this.props.labID,
-                    lab_name:this.props.lab_name,
+                    lab_name:this.state.lab.name,
                     due_date:this.props.due_date,
                     courseID: this.props.courseID,
-                    steps:this.props.steps,
-                    equipments:this.props.equipments,
+                    steps:this.state.lab.steps,
+                    equipments:this.state.lab.equipments,
                     isComplete:this.props.complete,
                 },
             }}/>
         } else if (this.state.renderInstructor) {
             //  alert("classes are " +this.props.courseID)
-            console.log("labname is "+this.props.lab_name);
+            // console.log("labname is "+this.props.lab_name);
             return <Redirect exact to={{
                 pathname: '/view_lab_course',
                 state: {

@@ -10,6 +10,7 @@ import GLOBALS from "../Globals";
 import {ToastsStore, ToastsContainer} from "react-toasts";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import '../stylesheets/stats.css';
 class view_lab_course extends React.Component
 {
 
@@ -168,6 +169,7 @@ class view_lab_course extends React.Component
         })
 
     }
+
     unassign(){
 
         if (!window.confirm("Are you sure you would like to unassign this class? All data will be lost.")){
@@ -191,8 +193,7 @@ class view_lab_course extends React.Component
 
             }
         };
-        var classArr=[];
-        var classArray=[];
+
 
         console.log(course)
         //axio sends message to backend to handle authentication
@@ -225,7 +226,8 @@ class view_lab_course extends React.Component
     handleCheckBox(){
 
     }
-render() {
+
+    render() {
     if (this.state.redirectHome){
         return <Redirect exact to={{
             pathname: '/instructor_home',
@@ -234,9 +236,6 @@ render() {
     }
     if (this.state.redirectStat) {
 
-        console.log("props is ");console.log(this.props);
-        console.log("props is ");console.log(this.props.labID);
-        console.log("props is ");console.log(this.props.location.state.labID);
         return <Redirect exact to={{
             pathname: '/statistics',
             state: {
@@ -266,30 +265,22 @@ render() {
 
                 <InstructorHeader currentTab="Labs"/>
                 {this.toolbar()}
-                <Navbar>
-                    <Navbar.Brand href="#instructor_home"></Navbar.Brand>
-                    <Navbar.Toggle/>
 
-                    <Navbar.Collapse className="justify-content-end">
+                <div >
 
-                        <Navbar.Text>
-                            Instructor: {this.props.name}
-                        </Navbar.Text>
-                    </Navbar.Collapse>
-                </Navbar>
+                    <div >
+                        <div style={{width:"100%",textAlign:"left",marginLeft:20}}>
+                            <label className="contain" style={{}}>
+                                Only show labs completed on time
+                                <input type="checkbox"onClick={() => this.handleCheckBox()}  onChange={e => this.updateInputValue(e)}/>
+                                <span className="checkmark">
 
-                <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
-                        onClick={() => this.redirectstats()}>
-                    Statistics
-                </Button>
-                <Button style={{backgroundColor: 'orange', color: "white",display:"inline-block"}}
-                        onClick={() => this.unassign()}>
-                    Unassign Lab
-                </Button>
-                <div>
+                                    </span>
+                            </label>
+                        </div>
 
-                    <div>
-                        <form onSubmit={this.handleChangeDate}>
+
+                        <form onSubmit={this.handleChangeDate} style={{marginTop:5}}>
                         <FormGroup controlId="formBasicText" bsSize="large">
 
                         <DatePicker
@@ -297,42 +288,39 @@ render() {
 
                             onChange={(e) => this.handleDateChange(e)}
                         />&nbsp;
-                        <Button style={{backgroundColor: 'orange', color: "white"}}
+                        <button className="updateButton" style={{}}
                                 type="submit">
                             Update Due Date
-                        </Button>
+                        </button>
                     </FormGroup>
 
                         </form>
-                        <Container fluid className="noPadding">
+                        <div style={{
+                            textAlign: "left", marginLeft: 40, marginRight: 40, marginTop: 10
+                        }}>
 
                         <Row className="noMargin">
-                            <label className="contain">
-                                Only show labs completed on time
-                                <input type="checkbox"onClick={() => this.handleCheckBox()}  onChange={e => this.updateInputValue(e)}/>
-                                <span className="checkmark">
 
-                                    </span>
-                            </label>
-                        <Col md={{span:2,offset:1}} >
 
-                            <h3 className="accountH3">Name</h3>
+                        <Col md={{span:3,offset:2}} >
+
+                            <h3 className="accountH3" >Name</h3>
 
                         </Col>
 
 
-                        <Col md={{span:2,offset:1}} >
+                        <Col md={{span:3,offset:1}} >
                             <h3 className="accountH3">E-mail Address</h3>
 
                         </Col>
 
-                        <Col md={{span:2,offset:1}} >
+                        <Col md={{span:3,offset:0}} >
                             <h3 className="accountH3">Submitted</h3>
 
                         </Col>
                         </Row>
 
-                        </Container>
+                        </div>
 
 
 
@@ -386,7 +374,7 @@ render() {
 
         )
     }
-    toolbar()
+    toolbar_obselete()
     {
         return (
             <Navbar style={{ marginLeft:40,marginRight:40,marginTop:10,marginBottom:10}}  className={"justify-content-between bar"}>
@@ -402,6 +390,26 @@ render() {
                 </Nav>
 
             </Navbar>
+        )
+    }
+
+    toolbar(){
+        return (
+            <div>
+                <Navbar style={{backgroundColor: "#bcc2d7",marginLeft:40,marginRight:40,marginBottom:20}}
+                        className={"justify-content-between"}>
+                    <Nav>
+                        <Nav>
+                            <Button href="instructor_home" className="goBack" variant="primary">Go
+                                Back</Button>
+                        </Nav>
+                    </Nav>
+
+                    <Nav>
+                        <h1 className={"title"}>Roster</h1>
+                    </Nav>
+                </Navbar>
+            </div>
         )
     }
 

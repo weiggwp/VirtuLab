@@ -7,6 +7,7 @@ import axios from "axios";
 import GLOBALS from "../Globals";
 import Dropdown from "react-bootstrap/Dropdown";
 import BarChart from 'react-bar-chart';
+import '../stylesheets/stats.css';
 class Statistics extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +23,7 @@ class Statistics extends Component {
 
 
             stepsArr: [],
+            StatOption:"Bar Display Data",
 
 
             stepMap:null,
@@ -44,6 +46,14 @@ class Statistics extends Component {
         )
 
     }
+    changeStatDisplay=(option)=>
+    {
+        this.setState(
+            {
+                StatOption:option
+            }
+        )
+    }
     toolbar()
     {
         return (
@@ -64,18 +74,8 @@ class Statistics extends Component {
     }
 
     displayBar(input){
-        if (input==0){
-                this.setState({currentBarData:'avg'})
-        }
-        else if (input==1){
-            this.setState({currentBarData:'med'})
-        }
-        else if (input==2){
-            this.setState({currentBarData:'max'})
-        }
-        else if (input==3){
-            this.setState({currentBarData:'min'})
-        }
+        this.changeStatDisplay(input);
+
     }
 
 
@@ -234,6 +234,26 @@ class Statistics extends Component {
     }
 
 
+    renderNavigation() {
+
+        return (
+            <div>
+                <Navbar style={{backgroundColor: "#bcc2d7"}}
+                        className={"justify-content-between"}>
+                    <Nav>
+                        <Button href="instructor_home" className="goBack" variant="primary">Go
+                            Back</Button>
+                    </Nav>
+                    <Nav>
+                        <h1 className={"title"}>Statistics</h1>
+                    </Nav>
+
+                </Navbar>
+            </div>
+        )
+    }
+
+
 
     render() {
         if (this.state.renderedStats==false||this.state.stepData==[]) {
@@ -246,7 +266,9 @@ class Statistics extends Component {
         let stepData=this.state.stepData;
 
         let stepOutput=[];
-        if (stepData[this.state.currentStepIndex]==undefined||stepData[this.state.currentStepIndex].max==0){
+
+        if (stepData[this.state.currentStepIndex] === undefined || stepData[this.state.currentStepIndex].max===0){
+
             stepOutput = ["No students have completed this step."]
             this.state.stepData[this.state.currentStepIndex].min=0
         }
@@ -283,15 +305,7 @@ class Statistics extends Component {
 
 
         ];
-        let title ="";
-        if (this.state.currentBarData=='avg')
-            title="Average"
-        if (this.state.currentBarData=='med')
-            title="Median"
-        if (this.state.currentBarData=='max')
-            title="Max"
-        if (this.state.currentBarData=='min')
-            title="Min"
+
         for (let i=0; i<stepData.length; i++){
             if (this.state.currentBarData=='avg')
             data[i]={text:'Step '+(i+1), value:stepData[i].avg}
@@ -305,18 +319,24 @@ class Statistics extends Component {
         const margin = {top: 20, right: 20, bottom: 30, left: 40};
 
         return (
-            <div className="charts">
+            <div>
                 {this.banner()}
-                {this.toolbar()}
+                {/*{this.toolbar()}*/}
+
+
+            <div className="charts">
+                {this.renderNavigation()}
+
+
                 <h2> {this.state.mode} </h2>
                 <div className="header">
 
 
                 </div>
-                <div  style={{marginLeft:40,marginTop:20}}>
+                <div  style={{marginLeft:20,marginTop:20}}>
                     <div className="row" style={{marginRight:50}}>
                         <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            <Dropdown.Toggle className={"statToggle"} id="dropdown-basic">
                                 View Step
                             </Dropdown.Toggle>
 
@@ -381,8 +401,8 @@ class Statistics extends Component {
 
                         </div>
                         <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                Bar Display Data
+                            <Dropdown.Toggle className={"statToggle"} id="dropdown-basic">
+                                {this.state.StatOption}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
@@ -390,19 +410,19 @@ class Statistics extends Component {
 
 
                                     <Dropdown.Item onClick=
-                                                       {() => this.displayBar(0)}>Average attempts</Dropdown.Item>
+                                                       {() => this.displayBar('Average attempts')}>Average attempts</Dropdown.Item>
                                 <Dropdown.Item onClick=
-                                                   {() => this.displayBar(1)}>Median attempts</Dropdown.Item>
+                                                   {() => this.displayBar('Median attempts')}>Median attempts</Dropdown.Item>
                                 <Dropdown.Item onClick=
-                                                   {() => this.displayBar(2)}>Max attempts</Dropdown.Item>
+                                                   {() => this.displayBar('Max attempts')}>Max attempts</Dropdown.Item>
                                 <Dropdown.Item onClick=
-                                                   {() => this.displayBar(3)}>Minimum attempts</Dropdown.Item>
+                                                   {() => this.displayBar('Minimum attempts')}>Minimum attempts</Dropdown.Item>
 
                             </Dropdown.Menu>
                         </Dropdown>
                         <div ref='root'>
                             <div style={{width: '50%'}}>
-                                <b> {title}</b>
+                                {/*<b> {title}</b>*/}
                                 <BarChart ylabel='Attempts'
 
                                           width={500}
@@ -418,6 +438,7 @@ class Statistics extends Component {
 
                     </div>
                 </div>
+            </div>
         );
     }
 

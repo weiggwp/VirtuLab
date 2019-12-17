@@ -12,8 +12,9 @@ import svg_bottle from "./components/svg_bottle"
 import React from "react";
 
 export default function GetSVG(props) {
+    let variable;
     const mappings = {
-        "Water":Watersvg,
+        "Distilled Water":Watersvg,
         "Glucose Solution":svg_bottle,
         "Acids":svg_bottle,
         "Bases":svg_bottle,
@@ -35,11 +36,12 @@ export default function GetSVG(props) {
 
     if(props.type==="General")
     {
-        var variable = props.equip.chemProp===undefined?"Water":props.equip.chemProp;
+        // const notDefined = props.equip.chemProp===undefined||props.equip.chemProp===null;
+        variable = props.equip.chemProp;
     }
     else
     {
-        var variable= props.type;
+        variable = props.type;
     }
 
     const Component = mappings[variable];

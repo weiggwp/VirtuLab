@@ -28,6 +28,11 @@ public class LabDTO {
     @NotEmpty
     private List<StepDTO> stepsDTO;
 
+    @NotNull
+    @NotEmpty
+    @JsonProperty("steps")
+    private List<Step> steps;
+
     private Date date;
     @JsonProperty("complete")
     private boolean complete;
@@ -78,10 +83,7 @@ public class LabDTO {
     //    @NotNull
 //    @NotEmpty
 //    private String password;
-    @NotNull
-    @NotEmpty
-    @JsonProperty("steps")
-    private List<Step> steps;
+
     @JsonProperty("open")
     private int open;
 
@@ -180,7 +182,7 @@ public class LabDTO {
                 ", tags=" + tags +
                 ", lastModified=" + lastModified +
                 ", creator='" + creator + '\'' +
-                ", steps=" + steps +
+                ", steps=" + stepsDTO +
                 ", equipments=" + equipments+
                 ", isPublic=" + open +
                 ", completed=" + complete +

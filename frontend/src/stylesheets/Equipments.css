@@ -42,12 +42,17 @@
     padding-left:20px;
     width: 100%;
 }
+
 .column2 {
     float: right;
     width: 10%;
     margin-bottom: 5px;
 
 }
+.rotate {
+    transform: rotate(90deg);
+}
+
 .rowTab
 {
 

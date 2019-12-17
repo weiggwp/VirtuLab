@@ -65,8 +65,8 @@ class student_home extends React.Component
                 // console.log("resp is " +response.json())
 
                 // console.log("resp is "+JSON.stringify(response))
-                console.log("----------------------------------------------------")
-                console.log(response.data)
+                // console.log("----------------------------------------------------")
+                // console.log(response.data)
 
                 for (let i=0; i<response.data.length; i++){
                     classArray[i]={classname:response.data[i].course_name,classID:response.data[i].courseID,
@@ -80,22 +80,22 @@ class student_home extends React.Component
                     let filter = []
                     for(let j = 0; j < classesWithIncompletesOnly[i].labs.length; j++){
                         if (classesWithIncompletesOnly[i].labs[j].complete !== true){
-                            console.log("filter")
+                            // console.log("filter")
                             filter.push(response.data[i].labDTOS[j])
                         }
                     }
                     classesWithIncompletesOnly[i]['labs'] = filter
                 }
 
-                console.log(classesWithIncompletesOnly)
-                console.log("----------------------------------------------------")
+                // console.log(classesWithIncompletesOnly)
+                // console.log("----------------------------------------------------")
 
 
 
 
 
-                console.log("class arr is ");
-                console.log(classArray)
+                // console.log("class arr is ");
+                // console.log(classArray)
 
                 // console.log("AAA classarray is "+classArray);
                 this.setState({
@@ -214,14 +214,15 @@ class student_home extends React.Component
 
 
                         </Nav>
-                        <label className="contain">
-                            Show Completed Labs
-                            <input type="checkbox" onClick={() => this.handleCheckBox()} onChange={e => this.updateInputValue(e)}/>
-                            <span className="checkmark">
+
+                        <Nav >
+                            <label className="contain">
+                                Show Completed Labs
+                                <input type="checkbox" onClick={() => this.handleCheckBox()} onChange={e => this.updateInputValue(e)}/>
+                                <span className="checkmark">
 
                                     </span>
-                        </label>
-                        <Nav >
+                            </label>
 
                             <OverlayTrigger
                                 overlay={
@@ -239,7 +240,7 @@ class student_home extends React.Component
                     </Navbar>
                 </div>
 
-                {<Expandable_Classes style={"settingsH3"}classes={this.state.classes}/>}
+                {<Expandable_Classes style={"settingsH3"}classes={this.state.classes} role={this.props.role}/>}
                { <add_course />}
 
             </div>

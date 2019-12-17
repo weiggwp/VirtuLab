@@ -583,7 +583,7 @@ handleDrag(tag, currPos, newPos) {
                 <div style={{height:"60vh"}}>
                     {labs.map(lab => (
                         <div >
-                            <Dropdown as={ButtonGroup} style={{width: "95%"}}
+                            <Dropdown as={ButtonGroup} style={{width: "95%",borderWidth:0}}
                                       class={"dropdown-menu-right dropdown-button-drop-right"}>
 
                             <Dropdown.Toggle className={"public_lab"} variant="info">

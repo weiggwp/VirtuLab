@@ -44,10 +44,16 @@
 }
 .dropButton
 {
-    background-color:white;
-    color:royalblue;
     border-style:none;
-    font-size:6px;
+    background-color: #7f918b;
+    font-size:10px;
+    height:80%;
+    border-radius: 3px;
+}
+.dropButton:hover
+{
+    color:white;
+    background-color: #171d52;
 }
 .centered
 {
@@ -63,8 +69,9 @@
     font-family:arial regular;
     font-size:16px;
     background-color: #84aac2;
+    border-width:1px;
+    border-style:dashed;
 
-    margin: auto;
     padding: 10px;
 }
 
@@ -72,6 +79,65 @@
 {
     background-color: #c3b0d6;
 
+}
+.back
+{
+    background-color: #b8d1c9;
+    padding-bottom:20px;
+}
+
+.goBack
+{
+    background-color: #194568;
+    color:white;
+
+}
+.goBack:hover
+{
+    background-color: #5f9895;
+    color:white;
+
+}
+.goBack:active
+{
+    box-shadow :0px 4px 8px ;
+    transform :scale(.98);
+}
+.back_image
+{
+    width:25px;
+    height:28px;
+    margin: 0px 0px 0px 10px;
+    transition:all .3s;
+    cursor:pointer;
+
+
+
+}
+.back_image:hover
+{
+    box-shadow :0px 15px 25px -5px ;
+}
+.back_image:active
+{
+    box-shadow :0px 4px 8px ;
+    transform :scale(.98);
+}
+
+.title
+{
+    color:black;
+    font-size:26px;
+    font-family:'Chronicle SSm A', 'Chronicle SSm B', Georgia, serif;
+
+    text-align:left;
+    margin-top:10px;
+
+}
+
+
+* {
+    user-select:none;
 }
 
 
